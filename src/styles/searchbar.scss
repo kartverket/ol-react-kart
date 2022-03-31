@@ -1,0 +1,22 @@
+.search-field {
+  position: relative;
+  display: inline-block;
+
+  .search-icon {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+  }
+}
+
+.search-text {
+  height: 40px;
+  font-family: Mulish;
+  font-size: 0.875rem;
+  width: 344px;
+  border: 1px solid #222222;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 0 40px 0 8px;
+  margin-left: 42px;
+}

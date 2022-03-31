@@ -1,0 +1,20 @@
+.margin-bottom {
+  margin-bottom: 1rem !important;
+}
+
+.margin-top {
+  margin-top: 1rem;
+}
+
+.margin-right-sm {
+  margin-right: 8px !important;
+}
+
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
