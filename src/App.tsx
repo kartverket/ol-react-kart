@@ -1,6 +1,6 @@
 import React from 'react';
 
-function App(): any {
+function App() {
   return (
     <div className="App">
       <div className="logo-overlay">
