@@ -3,9 +3,7 @@ import React from 'react';
 import App from './App';
 
 test('renders learn react link', () => {
-  render(
-      <App />
-  );
+  render(<App />);
   const heading1 = screen.getByText(/Norgeskart/i);
   expect(heading1).toBeInTheDocument();
 });

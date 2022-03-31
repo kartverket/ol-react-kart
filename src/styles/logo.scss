@@ -1,18 +1,17 @@
-
 .logo-overlay {
   z-index: 12;
   position: absolute;
   bottom: 0px;
   left: 19px;
-  width:105px;
+  width: 105px;
 }
 
-.logo-kartverket{
+.logo-kartverket {
   width: 100%;
-  padding-bottom: calc(100% * 5/7);
+  padding-bottom: calc(100% * 5 / 7);
   position: relative;
-  bottom:25px;
-  background-image:url('../assets/KV_logo_staa.svg');
+  bottom: 25px;
+  background-image: url('../assets/KV_logo_staa.svg');
   height: 0;
 }
 /*
