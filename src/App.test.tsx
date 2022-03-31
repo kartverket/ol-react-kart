@@ -6,6 +6,6 @@ test('renders learn react link', () => {
   render(
       <App />
   );
-  const heading1 = screen.getByText(/Kart/i);
+  const heading1 = screen.getByText(/Norgeskart/i);
   expect(heading1).toBeInTheDocument();
 });

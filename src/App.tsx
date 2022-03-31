@@ -7,7 +7,7 @@ function App(): any {
       <div className="logo-overlay">
         <a className="logo-kartverket" href="https://kartverket.no/">kartverket.no</a>
       </div>
-      <h1>Kart</h1>
+      <h1>Norgeskart</h1>
     </div>
   );
 }
