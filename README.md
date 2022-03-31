@@ -23,6 +23,14 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### ` npm start:dev`
+### `npm run lint`
 
-starts the development server
+This option instructs ESLint to try to fix as many issues as possible. The fixes are made to the actual files themselves and only the remaining unfixed issues are output. Not all problems are fixable using this option, and the option does not work in these situations:
+
+### `npm run prettier:check`
+
+Run prettier --check . in CI to make sure that your project stays formatted.
+
+### `npm run prettier:fix`
+
+Great for formatting everything, but for a big project it might take a little while. You may run prettier --write app/ to format a certain directory, or prettier --write app/components/Button.js to format a certain file. Or use a glob like prettier --write "app/\*_/_.test.js" to format all tests in a directory
