@@ -1,5 +1,6 @@
 import * as ol from 'ol';
 import React, { useEffect, useRef, useState } from 'react';
+import { TileLayer } from '../Layers';
 import './Map.css';
 import MapContext, { IMapContext } from './MapContext';
 
@@ -42,7 +43,6 @@ const Map = ({ children, zoom, center }: Props) => {
 
     map.map.getView().setCenter(center);
   }, [center, map]);
-  console.log('CHILDREN: ', map.map);
   return (
     <MapContext.Provider value={{ map: map.map }}>
       <div ref={mapRef} className="ol-map">
