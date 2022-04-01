@@ -1,6 +1,11 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
   plugins: ['@typescript-eslint', 'react'],
   extends: [
     'eslint:recommended',
@@ -11,7 +16,7 @@ module.exports = {
   ],
   env: {
     browser: true,
-    amd: true,
+    es2021: true,
     node: true,
   },
   settings: {
