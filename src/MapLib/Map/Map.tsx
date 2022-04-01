@@ -24,24 +24,24 @@ const Map = ({ children, zoom, center }: Props) => {
     };
     const mapObject = new ol.Map(options);
     mapObject.setTarget(mapRef.current || undefined);
-
     setMap({ map: mapObject });
     return () => mapObject.setTarget(undefined);
-  }, [center, zoom]);
+  }, []);
 
   // zoom change handler
   useEffect(() => {
     if (!map?.map) return;
 
     map.map.getView().setZoom(zoom);
-  }, [map, zoom]);
+  }, [zoom]);
 
   // center change handler
   useEffect(() => {
     if (!map?.map) return;
 
     map.map.getView().setCenter(center);
-  }, [center, map]);
+  }, [center]);
+
   return (
     <MapContext.Provider value={{ map: map.map }}>
       <div ref={mapRef} className="ol-map">
