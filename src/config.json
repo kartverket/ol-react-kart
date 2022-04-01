@@ -1,0 +1,71 @@
+{
+  "center": [10.4541344, 63.4473703],
+  "geojsonObject": {
+    "features": [
+      {
+        "geometry": {
+          "coordinates": [
+            [
+              [10.448725492930912, 63.44683327368606],
+              [10.455499286917826, 63.44565795432471],
+              [10.457348147290954, 63.4492360554323],
+              [10.45162683157437, 63.45013588017783],
+              [10.448725492930912, 63.44683327368606]
+            ]
+          ],
+          "type": "Polygon",
+          "properties": {
+            "kind": "park",
+            "name": "Ringve"
+          }
+        },
+        "id": "00923307-8827-0312-2f51-4783400aea9c",
+        "properties": {
+          "measurement": "0.1324 km&sup2;",
+          "style": {
+            "fill": {
+              "color": "rgba(255, 165, 0, 0.5)"
+            },
+            "stroke": {
+              "color": "rgb(255, 165, 0)",
+              "width": 2
+            }
+          }
+        },
+        "type": "Feature"
+      }
+    ],
+    "type": "FeatureCollection"
+  },
+  "geojsonObject2": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "kind": "marina",
+          "name": "Grillstad"
+        },
+        "geometry": {
+          "type": "MultiPolygon",
+          "coordinates": [
+            [
+              [
+                [10.501850552903065, 63.44158449215261],
+                [10.49879942590082, 63.436839728448554],
+                [10.513618819411056, 63.43511865645352],
+                [10.517455186522454, 63.43978070638609],
+                [10.501850552903065, 63.44158449215261]
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "lerkendalLonLat": [10.404454970039685, 63.412331311492146],
+  "ntnuLonLat": [10.401956354245954, 63.41946010623115],
+  "markerImage24": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-24.png",
+  "markerImage32": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-32.png",
+  "markerImage64": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png"
+}
