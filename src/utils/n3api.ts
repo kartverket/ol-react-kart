@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+// import queryString from 'query-string';
 /**
  * Sammling av url api's brukt i norgeskart.no ( ekstraktet fra gammel noprgeskart, bare for å finne de som er brukt i norgeskart.no )
  */
@@ -14,190 +14,147 @@ const urlAdresseSok = 'https://ws.geonorge.no/adresser/v1/sok';
 const urlAdressePunktsok = 'https://ws.geonorge.no/adresser/v1/punktsok';
 
 export const generateWhat3WordsServiceUrl = () => {
-  return url + 'ws/w3w.py';
+  return `${url}ws/w3w.py`;
 };
 
 export const uploadGpxFileService = () => {
-  return url + 'ws/upload-gpx.py';
+  return `${url}ws/upload-gpx.py`;
 };
 
-export const generateElevationChartServiceUrl = (gpxFile) => {
-  return (
-    urlOpenWps +
-    'wps.elevation2?request=Execute&service=WPS&version=1.0.0&identifier=elevationChart&dataInputs=gpx=@xlink:href=' +
-    gpxFile
-  );
+export const generateElevationChartServiceUrl = (gpxFile: string) => {
+  return `${urlOpenWps}wps.elevation2?request=Execute&service=WPS&version=1.0.0&identifier=elevationChart&dataInputs=gpx=@xlink:href=${gpxFile}`;
 };
 
-export const generateMapLinkServiceUrl = (config) => {
-  var service = encodeURIComponent(config.service);
-  var request = encodeURIComponent(config.request);
-  var crs = encodeURIComponent(config.CRS);
-  var format = encodeURIComponent(config.FORMAT);
-  var bgcolor = encodeURIComponent(config.BGCOLOR);
-  var transparent = encodeURIComponent(config.TRANSPARENT);
-  var layers = encodeURIComponent(config.LAYERS);
-  var version = encodeURIComponent(config.VERSION);
-  var width = encodeURIComponent(config.WIDTH);
-  var height = encodeURIComponent(config.HEIGHT);
-  var bbox = encodeURIComponent(config.BBOX);
+export const generateMapLinkServiceUrl = (config: {
+  service: string | number | boolean;
+  request: string | number | boolean;
+  CRS: string | number | boolean;
+  FORMAT: string | number | boolean;
+  BGCOLOR: string | number | boolean;
+  TRANSPARENT: string | number | boolean;
+  LAYERS: string | number | boolean;
+  VERSION: string | number | boolean;
+  WIDTH: string | number | boolean;
+  HEIGHT: string | number | boolean;
+  BBOX: string | number | boolean;
+}) => {
+  const service = encodeURIComponent(config.service);
+  const request = encodeURIComponent(config.request);
+  const crs = encodeURIComponent(config.CRS);
+  const format = encodeURIComponent(config.FORMAT);
+  const bgcolor = encodeURIComponent(config.BGCOLOR);
+  const transparent = encodeURIComponent(config.TRANSPARENT);
+  const layers = encodeURIComponent(config.LAYERS);
+  const version = encodeURIComponent(config.VERSION);
+  const width = encodeURIComponent(config.WIDTH);
+  const height = encodeURIComponent(config.HEIGHT);
+  const bbox = encodeURIComponent(config.BBOX);
 
-  return (
-    urlOpenWms +
-    'wms.topo4?service=' +
-    service +
-    '&request=' +
-    request +
-    '&CRS=' +
-    crs +
-    '&FORMAT=' +
-    format +
-    '&BGCOLOR=' +
-    bgcolor +
-    '&TRANSPARENT=' +
-    transparent +
-    '&LAYERS=' +
-    layers +
-    '&VERSION=' +
-    version +
-    '&WIDTH=' +
-    width +
-    '&HEIGHT=' +
-    height +
-    '&BBOX=' +
-    bbox
-  );
+  return `${urlOpenWms}wms.topo4?service=${service}&request=${request}&CRS=${crs}&FORMAT=${format}&BGCOLOR=${bgcolor}&TRANSPARENT=${transparent}&LAYERS=${layers}&VERSION=${version}&WIDTH=${width}&HEIGHT=${height}&BBOX=${bbox}`;
 };
 
-export const generateEmergencyPosterServiceUrl = (config) => {
-  var locationName = encodeURIComponent(config.locationName);
-  var position1 = encodeURIComponent(config.position1);
-  var position2 = encodeURIComponent(config.position2);
-  var street = encodeURIComponent(config.street);
-  var place = encodeURIComponent(config.place);
-  var matrikkel = encodeURIComponent(config.matrikkel);
-  var utm = encodeURIComponent(config.utm);
-  var posDez = encodeURIComponent(config.posDez);
-  var map = encodeURIComponent(config.map);
+export const generateEmergencyPosterServiceUrl = (config: {
+  locationName: string | number | boolean;
+  position1: string | number | boolean;
+  position2: string | number | boolean;
+  street: string | number | boolean;
+  place: string | number | boolean;
+  matrikkel: string | number | boolean;
+  utm: string | number | boolean;
+  posDez: string | number | boolean;
+  map: string | number | boolean;
+}) => {
+  const locationName = encodeURIComponent(config.locationName);
+  const position1 = encodeURIComponent(config.position1);
+  const position2 = encodeURIComponent(config.position2);
+  const street = encodeURIComponent(config.street);
+  const place = encodeURIComponent(config.place);
+  const matrikkel = encodeURIComponent(config.matrikkel);
+  const utm = encodeURIComponent(config.utm);
+  const posDez = encodeURIComponent(config.posDez);
+  const map = encodeURIComponent(config.map);
 
-  return (
-    urlGeonorge +
-    '/fop/fop?locationName=' +
-    locationName +
-    '&position1=' +
-    position1 +
-    '&position2=' +
-    position2 +
-    '&street=' +
-    street +
-    '&place=' +
-    place +
-    '&matrikkel=' +
-    matrikkel +
-    '&utm=' +
-    utm +
-    '&posDez=' +
-    posDez +
-    '&map=' +
-    map
-  );
+  return `${urlGeonorge}/fop/fop?locationName=${locationName}&position1=${position1}&position2=${position2}&street=${street}&place=${place}&matrikkel=${matrikkel}&utm=${utm}&posDez=${posDez}&map=${map}`;
 };
 
-export const generateSearchMatrikkelVegUrl = (query) => {
-  return (
-    urlGeonorge + 'norgeskart/v1/matrikkel/veg/' + encodeURIComponent(query)
-  );
+export const generateSearchMatrikkelVegUrl = (
+  query: string | number | boolean,
+) => {
+  return `${urlGeonorge}norgeskart/v1/matrikkel/veg/${encodeURIComponent(
+    query,
+  )}`;
 };
 
-export const generateSearchMatrikkelAdresseUrl = (query) => {
-  return (
-    urlGeonorge + 'norgeskart/v1/matrikkel/adr/' + encodeURIComponent(query)
-  );
+export const generateSearchMatrikkelAdresseUrl = (
+  query: string | number | boolean,
+) => {
+  return `${urlGeonorge}norgeskart/v1/matrikkel/adr/${encodeURIComponent(
+    query,
+  )}`;
 };
 
-export const generateSearchStedsnavnUrl = (query, side, antall) => {
+export const generateSearchStedsnavnUrl = (
+  query: string,
+  side: any,
+  antall: any,
+) => {
   if (query) {
-    var testquery = query.split(',');
+    const testquery = query.split(',');
     if (testquery.length >= 2) {
-      query = testquery[0] + '*&fylkeKommuneNavnListe=+' + testquery[1].trim();
-      return (
-        urlGeonorge +
-        'stedsnavn/v1/navn?sok=' +
-        query +
-        '&treffPerSide=' +
-        antall +
-        '&side=' +
-        side
-      );
+      query = `${testquery[0]}*&fylkeKommuneNavnListe=+${testquery[1].trim()}`;
+      return `${urlGeonorge}stedsnavn/v1/navn?sok=${query}&treffPerSide=${antall}&side=${side}`;
     }
   }
-  return (
-    urlGeonorge +
-    'stedsnavn/v1/navn?sok=' +
-    query +
-    '*&treffPerSide=' +
-    antall +
-    '&side=' +
-    side
-  );
+  return `${urlGeonorge}stedsnavn/v1/navn?sok=${query}*&treffPerSide=${antall}&side=${side}`;
 };
 
-export const generateSearchAdresseUrl = (query) => {
-  return (
-    urlGeonorge +
-    'AdresseWS/adresse/sok?sokestreng=' +
-    encodeURIComponent(query) +
-    '&antPerSide=100&side=0'
-  );
+export const generateSearchAdresseUrl = (query: string | number | boolean) => {
+  return `${urlGeonorge}AdresseWS/adresse/sok?sokestreng=${encodeURIComponent(
+    query,
+  )}&antPerSide=100&side=0`;
 };
 
-export const generateElevationPointUrl = (lat, lon, epsgNumber) => {
-  return url + 'ws/elev.py?lat=' + lat + '&lon=' + lon + '&epsg=' + epsgNumber;
+export const generateElevationPointUrl = (
+  lat: string,
+  lon: string,
+  epsgNumber: string,
+) => {
+  return `${url}ws/elev.py?lat=${lat}&lon=${lon}&epsg=${epsgNumber}`;
 };
-export const generateAdresseSokUrl = (query) => {
+export const generateAdresseSokUrl = (query: string | number | boolean) => {
   query = typeof query === 'string' ? query : '';
   query = query.indexOf(',') !== -1 ? query.replace(',', '*') : query + '*';
-  return (
-    urlAdresseSok + '?sok=' + encodeURIComponent(query) + '&treffPerSide=100'
-  );
+  return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=100`;
 };
 
-export const generateAdressePunktsokUrl = (radius, lat, lon) => {
-  return (
-    urlAdressePunktsok +
-    '?radius=' +
-    radius +
-    '&lat=' +
-    lat +
-    '&lon=' +
-    lon +
-    '&treffPerSide=10'
-  );
+export const generateAdressePunktsokUrl = (
+  radius: string,
+  lat: string,
+  lon: string,
+) => {
+  return `${urlAdressePunktsok}?radius=${radius}&lat=${lat}&lon=${lon}&treffPerSide=10`;
 };
 
-export const generateMatrikkelInfoUrl = (minx, miny, maxx, maxy) => {
-  return (
-    url + 'ws/wfs.teig.py?bbox=' + minx + ',' + miny + ',' + maxx + ',' + maxy
-  );
+export const generateMatrikkelInfoUrl = (
+  minx: any,
+  miny: any,
+  maxx: any,
+  maxy: any,
+) => {
+  return `${url}ws/wfs.teig.py?bbox=${minx},${miny},${maxx},${maxy}`;
 };
 
-export const generateSeEiendomUrl = (knr, gnr, bnr, fnr, snr) => {
-  return (
-    urlSeEiendom +
-    'eiendom/' +
-    knr +
-    '/' +
-    gnr +
-    '/' +
-    bnr +
-    '/' +
-    fnr +
-    '/' +
-    snr
-  );
+export const generateSeEiendomUrl = (
+  knr: string,
+  gnr: string,
+  bnr: string,
+  fnr: string,
+  snr: string,
+) => {
+  return `${urlSeEiendom}eiendom/${knr}/${gnr}/${bnr}/${fnr}/${snr}`;
 };
 
-export const generateFaktaarkUrl = (stedsnummer) => {
+export const generateFaktaarkUrl = (stedsnummer: string) => {
   return urlFaktaark + stedsnummer;
 };
 
@@ -210,116 +167,83 @@ export const generateKoordTransUrl = (ost, nord, resSosiKoordSys, sosiKoordSys) 
 }
 */
 // Nytt transform API https://ws.geonorge.no/transformering/v1/
-export const generateKoordTransUrl = (x, y, tilEPSG, fraESPG) => {
-  return (
-    urlGeonorge +
-    'transformering/v1/transformer?x=' +
-    x +
-    '&y=' +
-    y +
-    '&fra=' +
-    fraESPG +
-    '&til=' +
-    tilEPSG
-  );
+export const generateKoordTransUrl = (
+  x: string,
+  y: string,
+  tilEPSG: string,
+  fraESPG: string,
+) => {
+  return `${urlGeonorge}transformering/v1/transformer?x=${x}&y=${y}&fra=${fraESPG}&til=${tilEPSG}`;
 };
 
-export const generateSeHavnivaaUrl = (lat, lon) => {
-  return (
-    urlHavnivaa +
-    'tideapi.php?lat=' +
-    lat +
-    '&lon=' +
-    lon +
-    '&lang=nb&year=' +
-    new Date().getFullYear() +
-    '&place=&tide_request=tidetable'
-  );
+export const generateSeHavnivaaUrl = (lat: string, lon: string) => {
+  return `${urlHavnivaa}tideapi.php?lat=${lat}&lon=${lon}&lang=nb&year=${new Date().getFullYear()}&place=&tide_request=tidetable`;
 };
 
 export const generateLagTurkartUrl = () => {
-  return urlGeonorge + 'freeprint/getprint_sverige.py';
+  return `${urlGeonorge}freeprint/getprint_sverige.py`;
 };
 
 export const generateLagFargeleggingskartUrl = () => {
-  return urlGeonorge + 'freeprint/getprint_f.py';
+  return `${urlGeonorge}freeprint/getprint_f.py`;
 };
 
-export const generateEmergencyPosterPointUrl = (lat, lon) => {
-  return url + 'ws/emergencyPoster.py?&lon=' + lon + ',lat=' + lat;
+export const generateEmergencyPosterPointUrl = (lat: string, lon: string) => {
+  return `${url}ws/emergencyPoster.py?&lon=${lon},lat=${lat}`;
 };
 
 export const generateEmergencyPosterPreviewImageUrl = (
-  minx,
-  miny,
-  maxx,
-  maxy,
+  minx: string,
+  miny: string,
+  maxx: string,
+  maxy: string,
 ) => {
-  return (
-    urlOpenWms +
-    'wms.topo4?service=WMS&request=GetMap&CRS=EPSG:32633&FORMAT=image%2Fjpeg&BGCOLOR=0xFFFFFF&TRANSPARENT=false&LAYERS=topo4_WMS&VERSION=1.3.0&WIDTH=' +
-    window.innerWidth +
-    '&HEIGHT=' +
-    window.innerHeight +
-    '&BBOX=' +
-    minx +
-    ',' +
-    miny +
-    ',' +
-    maxx +
-    ',' +
-    maxy
-  );
+  return `${urlOpenWms}wms.topo4?service=WMS&request=GetMap&CRS=EPSG:32633&FORMAT=image%2Fjpeg&BGCOLOR=0xFFFFFF&TRANSPARENT=false&LAYERS=topo4_WMS&VERSION=1.3.0&WIDTH=${window.innerWidth}&HEIGHT=${window.innerHeight}&BBOX=${minx},${miny},${maxx},${maxy}`;
 };
 
-export const generateGeoJSONUrl = (hash, save) => {
-  let params = {};
-  params.hash = hash;
-  if (save) {
-    params.save = true;
-  }
-  return url + 'ws/get-json.py?' + queryString.stringify(params);
-};
+// interface Params {
+//   hash: string;
+//   save: boolean;
+// }
+
+// export const generateGeoJSONUrl = (hash: string, save: boolean) => {
+//   const params: Params = {
+//     hash: '',
+//     save: false,
+//   };
+//   params.hash = hash;
+//   if (save) {
+//     params.save = true;
+//   }
+//   return url + 'ws/get-json.py?' + queryString.stringify(params);
+// };
 
 export const generateGeoJSONSaveUrl = () => {
-  return url + 'ws/upload-json.py';
+  return `${url}ws/upload-json.py`;
 };
 
-export const generateSearchMatrikkelNummerUrl = (query) => {
-  return urlGeonorge + 'norgeskart/v1/matrikkel/eie/' + query;
+export const generateSearchMatrikkelNummerUrl = (query: string) => {
+  return `${urlGeonorge}norgeskart/v1/matrikkel/eie/${query}`;
 };
 
-export const _constructMarkingFilter = (property) => {
-  return (
-    property.kommunenr +
-    '-' +
-    property.gardsnr +
-    '-' +
-    property.bruksnr +
-    '-' +
-    property.festenr +
-    '-' +
-    property.seksjonsnr
-  );
+export const _constructMarkingFilter = (property: any) => {
+  return `${property.kommunenr}-${property.gardsnr}-${property.bruksnr}-${property.festenr}-${property.seksjonsnr}`;
 };
 
-export const generateMatrikkelWfsFilterUrl = (property) => {
-  return (
-    urlGeonorge +
-    'norgeskart/v1/teiger/' +
-    _constructMarkingFilter(property) +
-    '/'
-  );
+export const generateMatrikkelWfsFilterUrl = (property: any) => {
+  return `${urlGeonorge}norgeskart/v1/teiger/${_constructMarkingFilter(
+    property,
+  )}/`;
 };
 
 export const generateEiendomAddress = (
-  kommunenr,
-  gardsnr,
-  bruksnr,
-  festnr,
-  sectionsnr,
+  kommunenr: string,
+  gardsnr: string,
+  bruksnr: string,
+  festnr: string,
+  sectionsnr: string,
 ) => {
-  let baseUrl = url + 'ws/eiendom.py?';
+  let baseUrl = `${url}ws/eiendom.py?`;
   if (festnr !== '0') {
     if (sectionsnr === '0') {
       baseUrl += kommunenr + '-' + gardsnr + '/' + bruksnr + '/' + festnr;
@@ -338,23 +262,11 @@ export const generateEiendomAddress = (
   } else {
     baseUrl += kommunenr + '-' + gardsnr + '/' + bruksnr;
   }
-  return (
-    baseUrl +
-    '&KILDE:Eiendom KOMMUNENR:' +
-    kommunenr +
-    ' GARDSNR:' +
-    gardsnr +
-    ' BRUKSNR:' +
-    bruksnr +
-    ' SEKSJONSNR:' +
-    sectionsnr +
-    ' FESTENR:' +
-    festnr
-  );
+  return `${baseUrl}&KILDE:Eiendom KOMMUNENR:${kommunenr} GARDSNR:${gardsnr} BRUKSNR:${bruksnr} SEKSJONSNR:${sectionsnr} FESTENR:${festnr}`;
 };
 
-export const generateFaqUrl = (code) => {
-  return url + 'ws/faq.py?code=' + code;
+export const generateFaqUrl = (code: string) => {
+  return `${url}ws/faq.py?code=${code}`;
 };
 
 /*
@@ -697,29 +609,32 @@ const sosiCodes = [
   //{'ESRI': null, 'EPSG': 4322, 'SOSI': 4322, 'name': 'WGS72 Geografisk, grader'},
   //{'ESRI': 4326, 'EPSG': 4326, 'SOSI': 4326, 'name': 'EU89/WGS84 Geografisk, grader'}
 ];
-export const getSOSIfromEPSG = (epsg) => {
-  return sosiCodes.filter((el) => el.EPSG === epsg).map((obj) => obj.SOSI)[0];
+export const getSOSIfromEPSG = (epsg: number | null) => {
+  return sosiCodes.filter(el => el.EPSG === epsg).map(obj => obj.SOSI)[0];
 };
-export const getCoordinateSystems = (type) => {
-  let result = {};
+export const getCoordinateSystems = (type: string) => {
+  const result: any = {};
   sosiCodes
-    .filter((el) => el.type === type)
+    .filter(el => el.type === type)
     .filter(Boolean)
-    .map((obj) => {
-      let rObj = {};
+    .map((obj: any) => {
+      const rObj: any = {};
       rObj[obj.SOSI] = obj.key;
       return rObj;
     })
-    .forEach((element) => {
-      for (let i in element) {
+    .forEach((element: any) => {
+      for (const i in element) {
         result[i] = element[i];
       }
     });
   return result;
 };
-export const isOutOfBounds = (coordinates) => {
+export const isOutOfBounds = (coordinates: any) => {
   return sosiCodes
-    .filter((el) => {
+    .filter(el => {
+      if (el.bbox.MinX === undefined) {
+        throw new Error('Bounds undefined');
+      }
       return (
         coordinates.north.value < el.bbox.MinX ||
         coordinates.north.value > el.bbox.MaxX ||
@@ -727,11 +642,14 @@ export const isOutOfBounds = (coordinates) => {
         coordinates.east.value > el.bbox.MaxY
       );
     })
-    .map((obj) => obj);
+    .map(obj => obj);
 };
-export const isNotOutOfBounds = (coordinates) => {
+export const isNotOutOfBounds = (coordinates: any) => {
   return sosiCodes
-    .filter((el) => {
+    .filter(el => {
+      if (el.bbox.MinX === undefined) {
+        throw new Error('Bounds undefined');
+      }
       return (
         coordinates.north.value > el.bbox.MinX &&
         coordinates.north.value < el.bbox.MaxX &&
@@ -739,20 +657,20 @@ export const isNotOutOfBounds = (coordinates) => {
         coordinates.east.value < el.bbox.MaxY
       );
     })
-    .map((obj) => obj);
+    .map(obj => obj);
 };
-export const generateUrlPrintCapabilities = (appId) => {
+export const generateUrlPrintCapabilities = (appId: string) => {
   return urlGeonorge + 'print/' + appId + '/capabilities.json';
 };
-export const generatePrintUrl = (appId) => {
+export const generatePrintUrl = (appId: string) => {
   return urlGeonorge + 'print/' + appId + '/report.pdf';
 };
-export const generatePrintDownloadUrl = (downloadUrl) => {
+export const generatePrintDownloadUrl = (downloadUrl: string) => {
   return urlGeonorge.slice(0, -1) + downloadUrl;
 };
-export const generateStatusPrintDownloadUrl = (statusUrl) => {
+export const generateStatusPrintDownloadUrl = (statusUrl: string) => {
   return urlGeonorge.slice(0, -1) + statusUrl;
 };
-export const generateCancelPrintUrl = (refNum) => {
+export const generateCancelPrintUrl = (refNum: string) => {
   return urlGeonorge + 'print/cancel/' + refNum;
 };
