@@ -24,6 +24,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "ol": "6.4.3",
     "prettier": "2.6.1",
     "prettier-plugin-organize-imports": "^2.3.4",
     "react-scripts": "5.0.0",
