@@ -1,14 +1,20 @@
 import OLTileLayer from 'ol/layer/Tile';
+import TileSource from 'ol/source/Tile';
 import { useContext, useEffect } from 'react';
-import MapContext from './MapContext';
+import MapContext, { IMapContext } from './MapContext';
 
-const TileLayer = ({ source, zIndex = 0 }) => {
-  const { map } = useContext(MapContext);
+interface Props {
+  source: TileSource;
+  zIndex: number;
+}
+
+const TileLayer = ({ source, zIndex = 0 }: Props) => {
+  const { map } = useContext(MapContext) as IMapContext;
 
   useEffect(() => {
     if (!map) return;
 
-    let tileLayer = new OLTileLayer({
+    const tileLayer = new OLTileLayer({
       source,
       zIndex,
     });
