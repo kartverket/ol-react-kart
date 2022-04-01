@@ -84,6 +84,7 @@ function App() {
       </Map>
       <div className="overlayLayer">
         <h1>Norgeskart</h1>
+        <input placeholder='Søk i Norgeskart'></input>
         <div>
           <input
             type="checkbox"

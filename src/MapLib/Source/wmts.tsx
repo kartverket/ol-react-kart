@@ -1,7 +1,21 @@
 import { WMTS as WmtsSource } from 'ol/source';
-import { Options } from 'ol/source/WMTS';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
 
-function wmts(options: Options) {
-  return new WmtsSource(options);
+interface WmtsProps {
+  url: string
+  style: string;
+  tileGrid: WMTSTileGrid;
+  layer: string;
+  matrixSet: string;
+}
+function wmts({ url, style, tileGrid, layer, matrixSet }: WmtsProps) {
+  return new WmtsSource({
+    url,
+    style,
+    tileGrid,
+    layer,
+    matrixSet,
+    format: 'image/png',
+  });
 }
 export default wmts;
