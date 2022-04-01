@@ -1,3 +1,4 @@
+import { Coordinate } from 'ol/coordinate';
 import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 import Point from 'ol/geom/Point';
@@ -15,7 +16,7 @@ const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
 const markersLonLat = [mapConfig.lerkendalLonLat, mapConfig.ntnuLonLat];
 
-function addMarkers(lonLatArray: any) {
+function addMarkers(lonLatArray: Coordinate[]) {
   const iconStyle = new Style({
     image: new Icon({
       anchorXUnits: IconAnchorUnits.FRACTION,
@@ -23,7 +24,7 @@ function addMarkers(lonLatArray: any) {
       src: mapConfig.markerImage32,
     }),
   });
-  const features = lonLatArray.map((item: any) => {
+  const features = lonLatArray.map((item: Coordinate) => {
     const feature = new Feature({
       geometry: new Point(fromLonLat(item)),
     });
@@ -34,17 +35,16 @@ function addMarkers(lonLatArray: any) {
 }
 
 function App() {
-  const [center, setCenter] = useState(mapConfig.center);
-  const [zoom, setZoom] = useState(12);
+  const [center, /*setCenter*/] = useState(mapConfig.center);
+  const [zoom, /*setZoom*/] = useState(12);
 
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(true);
   const [showMarker, setShowMarker] = useState(false);
 
-  const [features, setFeatures] = useState(addMarkers(markersLonLat));
+  const [features, /*setFeatures*/] = useState(addMarkers(markersLonLat));
   return (
     <div className="App">
-      <h1>Norgeskart</h1>
       <Map center={fromLonLat(center)} zoom={zoom}>
         <Layers>
           <TileLayer source={osm()} zIndex={0} />
@@ -82,36 +82,40 @@ function App() {
         {/* <FullScreenControl /> */}
         {/* </Controls> */}
       </Map>
-      <div>
-        <input
-          type="checkbox"
-          checked={showLayer1}
-          onChange={event => setShowLayer1(event.target.checked)}
-        />{' '}
-        Ringve botaniske
+      <div className='overlayLayer'>
+        <h1>Norgeskart</h1>
+        <div>
+          <input
+            type="checkbox"
+            checked={showLayer1}
+            onChange={event => setShowLayer1(event.target.checked)}
+          />{' '}
+          Ringve botaniske
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            checked={showLayer2}
+            onChange={event => setShowLayer2(event.target.checked)}
+          />{' '}
+          Grillstad marina
+        </div>
+        <hr />
+        <div>
+          <input
+            type="checkbox"
+            checked={showMarker}
+            onChange={event => setShowMarker(event.target.checked)}
+          />{' '}
+          Show markers
+        </div>
+        <div className="logo-overlay fixed-bottom">
+          <a className="logo-kartverket" href="https://kartverket.no/">
+            kartverket.no
+          </a>
+        </div>
       </div>
-      <div>
-        <input
-          type="checkbox"
-          checked={showLayer2}
-          onChange={event => setShowLayer2(event.target.checked)}
-        />{' '}
-        Grillstad marina
-      </div>
-      <hr />
-      <div>
-        <input
-          type="checkbox"
-          checked={showMarker}
-          onChange={event => setShowMarker(event.target.checked)}
-        />{' '}
-        Show markers
-      </div>
-      <div className="logo-overlay">
-        <a className="logo-kartverket" href="https://kartverket.no/">
-          kartverket.no
-        </a>
-      </div>
+      
     </div>
   );
 }

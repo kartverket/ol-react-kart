@@ -4,3 +4,9 @@
 @use 'searchbar';
 @use 'kart';
 @use 'logo';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+body {
+    margin: 0;
+    overflow: hidden;
+}

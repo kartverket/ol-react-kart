@@ -1,6 +1,6 @@
 .logo-overlay {
   z-index: 12;
-  position: absolute;
+  // position: absolute;
   bottom: 0px;
   left: 19px;
   width: 105px;
@@ -10,9 +10,12 @@
   width: 100%;
   padding-bottom: calc(100% * 5 / 7);
   position: relative;
-  bottom: 25px;
+  bottom: 20px;
   background-image: url('../assets/KV_logo_staa.svg');
+  background-repeat: no-repeat;
   height: 0;
+  text-indent: -9999px;
+  display: inline-block;
 }
 /*
 .logo-polar{
