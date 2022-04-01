@@ -35,7 +35,7 @@ function addMarkers(lonLatArray: Coordinate[]) {
 }
 
 function App() {
-  const [center /*setCenter*/] = useState(mapConfig.center);
+  const [center, setCenter] = useState(mapConfig.center);
   const [zoom /*setZoom*/] = useState(12);
 
   const [showLayer1, setShowLayer1] = useState(true);
@@ -101,7 +101,6 @@ function App() {
           />{' '}
           Grillstad marina
         </div>
-        <hr />
         <div>
           <input
             type="checkbox"
