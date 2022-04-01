@@ -1,6 +1,5 @@
 import * as ol from 'ol';
 import React, { useEffect, useRef, useState } from 'react';
-import { TileLayer } from '../Layers';
 import './Map.css';
 import MapContext, { IMapContext } from './MapContext';
 

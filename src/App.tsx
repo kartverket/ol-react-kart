@@ -35,14 +35,14 @@ function addMarkers(lonLatArray: Coordinate[]) {
 }
 
 function App() {
-  const [center, /*setCenter*/] = useState(mapConfig.center);
-  const [zoom, /*setZoom*/] = useState(12);
+  const [center /*setCenter*/] = useState(mapConfig.center);
+  const [zoom /*setZoom*/] = useState(12);
 
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(true);
   const [showMarker, setShowMarker] = useState(false);
 
-  const [features, /*setFeatures*/] = useState(addMarkers(markersLonLat));
+  const [features /*setFeatures*/] = useState(addMarkers(markersLonLat));
   return (
     <div className="App">
       <Map center={fromLonLat(center)} zoom={zoom}>
@@ -82,7 +82,7 @@ function App() {
         {/* <FullScreenControl /> */}
         {/* </Controls> */}
       </Map>
-      <div className='overlayLayer'>
+      <div className="overlayLayer">
         <h1>Norgeskart</h1>
         <div>
           <input
@@ -115,7 +115,6 @@ function App() {
           </a>
         </div>
       </div>
-      
     </div>
   );
 }
