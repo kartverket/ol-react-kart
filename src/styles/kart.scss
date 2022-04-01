@@ -7,10 +7,13 @@
 }
 
 .ol-map {
-  min-width: 600px;
-  min-height: 500px;
-  height: calc(100vh - 60px);
-  width: 100%;
+  // min-width: 600px;
+  // min-height: 500px;
+  // height: calc(100vh - 60px);
+  // width: 100%;
+     width: 100%;
+    height: 100vh;
+    position: fixed;
 }
 .ol-control {
   position: absolute;
