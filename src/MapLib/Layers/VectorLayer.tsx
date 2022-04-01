@@ -1,11 +1,12 @@
 import OLVectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import { Style } from 'ol/style';
 import { useContext, useEffect } from 'react';
 import MapContext from '../Map/MapContext';
 
 interface Props {
   source: VectorSource;
-  style: any;
+  style: Style;
   zIndex: number;
 }
 

@@ -1,3 +1,4 @@
+import { Coordinate } from 'ol/coordinate';
 import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 import Point from 'ol/geom/Point';
@@ -15,7 +16,7 @@ const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
 const markersLonLat = [mapConfig.lerkendalLonLat, mapConfig.ntnuLonLat];
 
-function addMarkers(lonLatArray: any) {
+function addMarkers(lonLatArray: Coordinate[]) {
   const iconStyle = new Style({
     image: new Icon({
       anchorXUnits: IconAnchorUnits.FRACTION,
@@ -23,7 +24,7 @@ function addMarkers(lonLatArray: any) {
       src: mapConfig.markerImage32,
     }),
   });
-  const features = lonLatArray.map((item: any) => {
+  const features = lonLatArray.map((item: Coordinate) => {
     const feature = new Feature({
       geometry: new Point(fromLonLat(item)),
     });
@@ -34,14 +35,14 @@ function addMarkers(lonLatArray: any) {
 }
 
 function App() {
-  const [center, setCenter] = useState(mapConfig.center);
-  const [zoom, setZoom] = useState(12);
+  const [center, /*setCenter*/] = useState(mapConfig.center);
+  const [zoom, /*setZoom*/] = useState(12);
 
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(true);
   const [showMarker, setShowMarker] = useState(false);
 
-  const [features, setFeatures] = useState(addMarkers(markersLonLat));
+  const [features, /*setFeatures*/] = useState(addMarkers(markersLonLat));
   return (
     <div className="App">
       <h1>Norgeskart</h1>
