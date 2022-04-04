@@ -77,27 +77,15 @@ export const generateEmergencyPosterServiceUrl = (config: {
   return `${urlGeonorge}/fop/fop?locationName=${locationName}&position1=${position1}&position2=${position2}&street=${street}&place=${place}&matrikkel=${matrikkel}&utm=${utm}&posDez=${posDez}&map=${map}`;
 };
 
-export const generateSearchMatrikkelVegUrl = (
-  query: string | number | boolean,
-) => {
-  return `${urlGeonorge}norgeskart/v1/matrikkel/veg/${encodeURIComponent(
-    query,
-  )}`;
+export const generateSearchMatrikkelVegUrl = (query: string | number | boolean) => {
+  return `${urlGeonorge}norgeskart/v1/matrikkel/veg/${encodeURIComponent(query)}`;
 };
 
-export const generateSearchMatrikkelAdresseUrl = (
-  query: string | number | boolean,
-) => {
-  return `${urlGeonorge}norgeskart/v1/matrikkel/adr/${encodeURIComponent(
-    query,
-  )}`;
+export const generateSearchMatrikkelAdresseUrl = (query: string | number | boolean) => {
+  return `${urlGeonorge}norgeskart/v1/matrikkel/adr/${encodeURIComponent(query)}`;
 };
 
-export const generateSearchStedsnavnUrl = (
-  query: string,
-  side: any,
-  antall: any,
-) => {
+export const generateSearchStedsnavnUrl = (query: string, side: any, antall: any) => {
   if (query) {
     const testquery = query.split(',');
     if (testquery.length >= 2) {
@@ -109,16 +97,10 @@ export const generateSearchStedsnavnUrl = (
 };
 
 export const generateSearchAdresseUrl = (query: string | number | boolean) => {
-  return `${urlGeonorge}AdresseWS/adresse/sok?sokestreng=${encodeURIComponent(
-    query,
-  )}&antPerSide=100&side=0`;
+  return `${urlGeonorge}AdresseWS/adresse/sok?sokestreng=${encodeURIComponent(query)}&antPerSide=100&side=0`;
 };
 
-export const generateElevationPointUrl = (
-  lat: string,
-  lon: string,
-  epsgNumber: string,
-) => {
+export const generateElevationPointUrl = (lat: string, lon: string, epsgNumber: string) => {
   return `${url}ws/elev.py?lat=${lat}&lon=${lon}&epsg=${epsgNumber}`;
 };
 export const generateAdresseSokUrl = (query: string | number | boolean) => {
@@ -127,30 +109,15 @@ export const generateAdresseSokUrl = (query: string | number | boolean) => {
   return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=100`;
 };
 
-export const generateAdressePunktsokUrl = (
-  radius: string,
-  lat: string,
-  lon: string,
-) => {
+export const generateAdressePunktsokUrl = (radius: string, lat: string, lon: string) => {
   return `${urlAdressePunktsok}?radius=${radius}&lat=${lat}&lon=${lon}&treffPerSide=10`;
 };
 
-export const generateMatrikkelInfoUrl = (
-  minx: any,
-  miny: any,
-  maxx: any,
-  maxy: any,
-) => {
+export const generateMatrikkelInfoUrl = (minx: any, miny: any, maxx: any, maxy: any) => {
   return `${url}ws/wfs.teig.py?bbox=${minx},${miny},${maxx},${maxy}`;
 };
 
-export const generateSeEiendomUrl = (
-  knr: string,
-  gnr: string,
-  bnr: string,
-  fnr: string,
-  snr: string,
-) => {
+export const generateSeEiendomUrl = (knr: string, gnr: string, bnr: string, fnr: string, snr: string) => {
   return `${urlSeEiendom}eiendom/${knr}/${gnr}/${bnr}/${fnr}/${snr}`;
 };
 
@@ -167,12 +134,7 @@ export const generateKoordTransUrl = (ost, nord, resSosiKoordSys, sosiKoordSys) 
 }
 */
 // Nytt transform API https://ws.geonorge.no/transformering/v1/
-export const generateKoordTransUrl = (
-  x: string,
-  y: string,
-  tilEPSG: string,
-  fraESPG: string,
-) => {
+export const generateKoordTransUrl = (x: string, y: string, tilEPSG: string, fraESPG: string) => {
   return `${urlGeonorge}transformering/v1/transformer?x=${x}&y=${y}&fra=${fraESPG}&til=${tilEPSG}`;
 };
 
@@ -192,13 +154,10 @@ export const generateEmergencyPosterPointUrl = (lat: string, lon: string) => {
   return `${url}ws/emergencyPoster.py?&lon=${lon},lat=${lat}`;
 };
 
-export const generateEmergencyPosterPreviewImageUrl = (
-  minx: string,
-  miny: string,
-  maxx: string,
-  maxy: string,
-) => {
-  return `${urlOpenWms}wms.topo4?service=WMS&request=GetMap&CRS=EPSG:32633&FORMAT=image%2Fjpeg&BGCOLOR=0xFFFFFF&TRANSPARENT=false&LAYERS=topo4_WMS&VERSION=1.3.0&WIDTH=${window.innerWidth}&HEIGHT=${window.innerHeight}&BBOX=${minx},${miny},${maxx},${maxy}`;
+export const generateEmergencyPosterPreviewImageUrl = (minx: string, miny: string, maxx: string, maxy: string) => {
+  const topo4 =
+    'wms.topo4?service=WMS&request=GetMap&CRS=EPSG:32633&FORMAT=image%2Fjpeg&BGCOLOR=0xFFFFFF&TRANSPARENT=false&LAYERS=topo4_WMS&VERSION=1.3.0&WIDTH=';
+  return `${urlOpenWms}${topo4}${window.innerWidth}&HEIGHT=${window.innerHeight}&BBOX=${minx},${miny},${maxx},${maxy}`;
 };
 
 // interface Params {
@@ -231,9 +190,7 @@ export const _constructMarkingFilter = (property: any) => {
 };
 
 export const generateMatrikkelWfsFilterUrl = (property: any) => {
-  return `${urlGeonorge}norgeskart/v1/teiger/${_constructMarkingFilter(
-    property,
-  )}/`;
+  return `${urlGeonorge}norgeskart/v1/teiger/${_constructMarkingFilter(property)}/`;
 };
 
 export const generateEiendomAddress = (
@@ -248,16 +205,7 @@ export const generateEiendomAddress = (
     if (sectionsnr === '0') {
       baseUrl += kommunenr + '-' + gardsnr + '/' + bruksnr + '/' + festnr;
     } else {
-      baseUrl +=
-        kommunenr +
-        '-' +
-        gardsnr +
-        '/' +
-        bruksnr +
-        '/' +
-        festnr +
-        '/' +
-        sectionsnr;
+      baseUrl += kommunenr + '-' + gardsnr + '/' + bruksnr + '/' + festnr + '/' + sectionsnr;
     }
   } else {
     baseUrl += kommunenr + '-' + gardsnr + '/' + bruksnr;
