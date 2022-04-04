@@ -1,13 +1,8 @@
 //src/components/MainMap.tsx
-import { Coordinate } from 'ol/coordinate';
 import { getTopLeft, getWidth } from 'ol/extent';
-import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
-import Point from 'ol/geom/Point';
 import { fromLonLat, get } from 'ol/proj';
 import Projection from 'ol/proj/Projection';
-import { Icon, Style } from 'ol/style';
-import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import React, { useState } from 'react';
 import mapConfig from '../config.json';
 import FeatureStyles from '../MapLib/Features/Styles';
@@ -16,29 +11,12 @@ import Map from '../MapLib/Map';
 import { osm, vector } from '../MapLib/Source';
 import wmts from '../MapLib/Source/wmts';
 import wmtsTileGrid from '../MapLib/TileGrid/wmts';
+import addMarkers from './Markers';
 import SearchInput from './search/SearchInput';
 
 const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
 const markersLonLat = [mapConfig.lerkendalLonLat, mapConfig.ntnuLonLat];
-
-function addMarkers(lonLatArray: Coordinate[]) {
-  const iconStyle = new Style({
-    image: new Icon({
-      anchorXUnits: IconAnchorUnits.FRACTION,
-      anchorYUnits: IconAnchorUnits.PIXELS,
-      src: mapConfig.markerImage32,
-    }),
-  });
-  const features = lonLatArray.map((item: Coordinate) => {
-    const feature = new Feature({
-      geometry: new Point(fromLonLat(item)),
-    });
-    feature.setStyle(iconStyle);
-    return feature;
-  });
-  return features;
-}
 
 export default function OverLayLayer() {
   const [center, setCenter] = useState(mapConfig.center);
