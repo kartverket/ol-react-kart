@@ -13,6 +13,7 @@ import wmts from '../MapLib/Source/wmts';
 import wmtsTileGrid from '../MapLib/TileGrid/wmts';
 import addMarkers from './Markers';
 import SearchInput from './search/SearchInput';
+import Logo from './Logo';
 
 const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
@@ -27,6 +28,17 @@ export default function OverLayLayer() {
   const [showWmts, setShowWmts] = useState(true);
   const [showOsm, setShowOsm] = useState(false);
   const [showMarker, setShowMarker] = useState(false);
+  const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
+
+  const wmtsLayers = [
+    { label: 'Toporaster 4', value: 'toporaster4' },
+    { label: 'Norges grunnkart', value: 'norges_grunnkart' },
+    { label: 'Norges grunnkart gråtone', value: 'norges_grunnkart_graatone' },
+    { label: 'Europeisk grunnkart', value: 'egk' },
+    { label: 'Havbunn grunnkart', value: 'havbunn_grunnkart' },
+    { label: 'Terreng norgeskart', value: 'terreng_norgeskart' },
+    { label: 'Sjøkartraster', value: 'sjokartraster' },
+  ];
 
   const [features /*setFeatures*/] = useState(addMarkers(markersLonLat));
   const sProjection = 'EPSG:3857';
@@ -66,7 +78,7 @@ export default function OverLayLayer() {
             <VectorLayer
               source={vector({
                 features: new GeoJSON().readFeatures(geojsonObject, {
-                  featureProjection: get('EPSG:3857') || undefined,
+                  featureProjection: get(sProjection) || undefined,
                 }),
               })}
               style={FeatureStyles.MultiPolygon}
@@ -77,7 +89,7 @@ export default function OverLayLayer() {
             <VectorLayer
               source={vector({
                 features: new GeoJSON().readFeatures(geojsonObject2, {
-                  featureProjection: get('EPSG:3857') || undefined,
+                  featureProjection: get(sProjection) || undefined,
                 }),
               })}
               style={FeatureStyles.MultiPolygon}
@@ -88,7 +100,7 @@ export default function OverLayLayer() {
             <TileLayer
               source={wmts({
                 url: 'http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-                layer: 'norges_grunnkart',
+                layer: wmtsLayer,
                 matrixSet: sProjection,
                 projection: projection,
                 tileGrid: tileGrid,
@@ -113,6 +125,18 @@ export default function OverLayLayer() {
         </div>
         <div>
           <input type="checkbox" checked={showWmts} onChange={event => setShowWmts(event.target.checked)} /> WMTS
+          {!showWmts && (
+            <select
+              value={wmtsLayer}
+              onChange={event => setWmtsLayer(event.target.value)}
+            >
+              {wmtsLayers.map(l => (
+                <option key={l.value} value={l.value}>
+                  {l.label}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         <div>
@@ -127,11 +151,7 @@ export default function OverLayLayer() {
           <input type="checkbox" checked={showMarker} onChange={event => setShowMarker(event.target.checked)} /> Show
           markers
         </div>
-        <div className="logo-overlay fixed-bottom">
-          <a className="logo-kartverket" href="https://kartverket.no/">
-            kartverket.no
-          </a>
-        </div>
+        <Logo />
       </div>
     </>
   );
