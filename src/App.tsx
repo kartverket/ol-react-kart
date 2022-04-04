@@ -6,6 +6,7 @@ import { fromLonLat, get } from 'ol/proj';
 import { Icon, Style } from 'ol/style';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import React, { useState } from 'react';
+import SearchInput from './components/search/SearchInput';
 import mapConfig from './config.json';
 import FeatureStyles from './MapLib/Features/Styles';
 import { Layers, TileLayer, VectorLayer } from './MapLib/Layers';
@@ -84,7 +85,7 @@ function App() {
       </Map>
       <div className="overlayLayer">
         <h1>Norgeskart</h1>
-        <input placeholder='Søk i Norgeskart'></input>
+        <SearchInput/>
         <div>
           <input
             type="checkbox"
