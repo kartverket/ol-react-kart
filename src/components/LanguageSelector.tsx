@@ -17,13 +17,16 @@ const LanguageSelector = () => {
     <>
       <div>
         {Object.keys(lngs).map((lng, index) => (
-          <a
-            key={lng}
-            style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }}
-            onClick={() => i18n.changeLanguage(lng)}
-          >
-            {lngs[lng].nativeName} {index < 2 ? ' | ' : ''}
-          </a>
+          <>
+            <a
+              key={lng}
+              style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }}
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </a>
+            <span> {index < 2 ? ' | ' : ''}</span>
+          </>
         ))}
       </div>
     </>
