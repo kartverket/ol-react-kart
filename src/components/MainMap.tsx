@@ -77,55 +77,76 @@ export default function OverLayLayer() {
     return setWmtsLayerSelected({ checked: event.target.checked, layer: wmtsLayerSelected.layer });
   };
   const handleSetWmtsLayer = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    console.table(wmtsLayerSelected);
     setWmtsLayerSelected({ checked: wmtsLayerSelected.checked, layer: event.target.value });
-    console.table(wmtsLayerSelected);
   };
   const handleShowLayer1 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer1(event.target.checked);
   const handleShowLayer2 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer2(event.target.checked);
   const handleShowMarkers = (event: React.ChangeEvent<HTMLInputElement>): void => setShowMarker(event.target.checked);
 
+  const osmTileLayer = <TileLayer source={osm()} zIndex={0} />;
+  const markerLayer = <VectorLayer source={vector({ features })} style={FeatureStyles.MultiPolygon} zIndex={0} />;
+
+  const wmtsVectorLayer = (
+    <TileLayer
+      source={wmts({
+        url: 'http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
+        layer: wmtsLayerSelected.layer,
+        matrixSet: sProjection,
+        projection: projection,
+        tileGrid: tileGrid,
+        style: 'default',
+        format: 'image/png',
+      })}
+      zIndex={0}
+    />
+  );
+
+  const geoJsonVectorLayer = getGeoJson(geojsonObject);
+  const geoJson2VectorLayer = getGeoJson(geojsonObject2);
+
   const layerSelection = (
     <Layers>
-      {showOsm && <TileLayer source={osm()} zIndex={0} />}
-      {showLayer1 && (
-        <VectorLayer
-          source={vector({
-            features: new GeoJSON().readFeatures(geojsonObject, {
-              featureProjection: get(sProjection) || undefined,
-            }),
-          })}
-          style={FeatureStyles.MultiPolygon}
-          zIndex={0}
-        />
-      )}
-      {showLayer2 && (
-        <VectorLayer
-          source={vector({
-            features: new GeoJSON().readFeatures(geojsonObject2, {
-              featureProjection: get(sProjection) || undefined,
-            }),
-          })}
-          style={FeatureStyles.MultiPolygon}
-          zIndex={0}
-        />
-      )}
-      {wmtsLayerSelected.checked && (
-        <TileLayer
-          source={wmts({
-            url: 'http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-            layer: wmtsLayerSelected.layer,
-            matrixSet: sProjection,
-            projection: projection,
-            tileGrid: tileGrid,
-            style: 'default',
-            format: 'image/png',
-          })}
-          zIndex={0}
-        />
-      )}
-      {showMarker && <VectorLayer source={vector({ features })} style={FeatureStyles.MultiPolygon} zIndex={0} />}
+      {showOsm && osmTileLayer}
+      {showLayer1 && geoJsonVectorLayer}
+      {showLayer2 && geoJson2VectorLayer}
+      {wmtsLayerSelected.checked && wmtsVectorLayer}
+      {showMarker && markerLayer}
     </Layers>
+  );
+
+  const selectLayerBox = (
+    <div>
+      <input type="checkbox" checked={wmtsLayerSelected.checked} onChange={handleCheckboxWmts} /> WMTS
+      {wmtsLayerSelected.checked && (
+        <select value={wmtsLayerSelected.layer} onChange={handleSetWmtsLayer}>
+          {wmtsLayers.map(selectedLayer => (
+            <option key={selectedLayer.value} value={selectedLayer.value}>
+              {selectedLayer.label}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
+  );
+
+  const menuItems = (
+    <div className="overlayLayer">
+      <TopLeftMenu />
+      <div>
+        <input type="checkbox" checked={showOsm} onChange={handleCheckboxOsm} /> OSM
+      </div>
+      {selectLayerBox}
+      <div>
+        <input type="checkbox" checked={showLayer1} onChange={handleShowLayer1} /> Ringve botaniske
+      </div>
+      <div>
+        <input type="checkbox" checked={showLayer2} onChange={handleShowLayer2} /> Grillstad marina
+      </div>
+      <div>
+        <input type="checkbox" checked={showMarker} onChange={handleShowMarkers} /> Show markers
+      </div>
+      <Logo />
+    </div>
   );
 
   return (
@@ -136,35 +157,21 @@ export default function OverLayLayer() {
         {/* <FullScreenControl /> */}
         {/* </Controls> */}
       </Map>
-      <div className="overlayLayer">
-        <TopLeftMenu />
-        <div>
-          <input type="checkbox" checked={showOsm} onChange={handleCheckboxOsm} /> OSM
-        </div>
-        <div>
-          <input type="checkbox" checked={wmtsLayerSelected.checked} onChange={handleCheckboxWmts} /> WMTS
-          {wmtsLayerSelected.checked && (
-            <select value={wmtsLayerSelected.layer} onChange={handleSetWmtsLayer}>
-              {wmtsLayers.map(selectedLayer => (
-                <option key={selectedLayer.value} value={selectedLayer.value}>
-                  {selectedLayer.label}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-
-        <div>
-          <input type="checkbox" checked={showLayer1} onChange={handleShowLayer1} /> Ringve botaniske
-        </div>
-        <div>
-          <input type="checkbox" checked={showLayer2} onChange={handleShowLayer2} /> Grillstad marina
-        </div>
-        <div>
-          <input type="checkbox" checked={showMarker} onChange={handleShowMarkers} /> Show markers
-        </div>
-        <Logo />
-      </div>
+      {menuItems}
     </>
   );
+
+  function getGeoJson(geojsonObject: GeoJSON | unknown) {
+    return (
+      <VectorLayer
+        source={vector({
+          features: new GeoJSON().readFeatures(geojsonObject, {
+            featureProjection: get(sProjection) || undefined,
+          }),
+        })}
+        style={FeatureStyles.MultiPolygon}
+        zIndex={0}
+      />
+    );
+  }
 }
