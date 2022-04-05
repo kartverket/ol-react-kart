@@ -18,6 +18,7 @@ import TopLeftMenu from './TopLeftMenu';
 const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
 const markersLonLat = [mapConfig.lerkendalLonLat, mapConfig.ntnuLonLat];
+let layerSelected = '';
 
 export default function OverLayLayer() {
   const [center, setCenter] = useState(mapConfig.center);
@@ -29,8 +30,8 @@ export default function OverLayLayer() {
   const [showOsm, setShowOsm] = useState(false);
   const [showMarker, setShowMarker] = useState(false);
   // const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
-  const [wmtsLayerSelected, setWmtsLayerSelected] = useState({ checked: true, layer: 'terreng_norgeskart' });
-
+  const [wmtsLayerSelected, setWmtsLayerSelected] = useState({ checked: true, layer: 'norges_grunnkart_graatone' });
+  layerSelected = wmtsLayerSelected.layer;
   const wmtsLayers = [
     { label: 'Toporaster 4', value: 'toporaster4' },
     { label: 'Norges grunnkart', value: 'norges_grunnkart' },
@@ -78,6 +79,7 @@ export default function OverLayLayer() {
   };
   const handleSetWmtsLayer = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     setWmtsLayerSelected({ checked: wmtsLayerSelected.checked, layer: event.target.value });
+    layerSelected = wmtsLayerSelected.layer;
   };
   const handleShowLayer1 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer1(event.target.checked);
   const handleShowLayer2 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer2(event.target.checked);
@@ -90,7 +92,7 @@ export default function OverLayLayer() {
     <TileLayer
       source={wmts({
         url: 'http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-        layer: wmtsLayerSelected.layer,
+        layer: layerSelected,
         matrixSet: sProjection,
         projection: projection,
         tileGrid: tileGrid,
