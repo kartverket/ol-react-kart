@@ -11,6 +11,7 @@ import Map from '../MapLib/Map';
 import { osm, vector } from '../MapLib/Source';
 import wmts from '../MapLib/Source/wmts';
 import wmtsTileGrid from '../MapLib/TileGrid/wmts';
+import LanguageSelector from './LanguageSelector';
 import Logo from './Logo';
 import addMarkers from './Markers';
 import TopLeftMenu from './TopLeftMenu';
@@ -147,6 +148,7 @@ export default function OverLayLayer() {
       <div>
         <input type="checkbox" checked={showMarker} onChange={handleShowMarkers} /> Show markers
       </div>
+      <LanguageSelector />
       <Logo />
     </div>
   );
