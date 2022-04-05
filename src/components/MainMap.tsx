@@ -126,7 +126,7 @@ export default function OverLayLayer() {
           <input type="checkbox" checked={showOsm} onChange={handleCheckboxOsm} /> OSM
         </div>
         <div>
-          <input type="checkbox" checked={showWmts} onChange={handleCheckboxWmts} /> WMTS
+          <input type="checkbox" checked={showWmts.checked} onChange={handleCheckboxWmts} /> WMTS
           {showWmts && (
             <select value={wmtsLayer} onChange={handleSetWmtsLayer}>
               {wmtsLayers.map(selectedLayer => (
