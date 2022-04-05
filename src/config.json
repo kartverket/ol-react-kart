@@ -67,5 +67,18 @@
   "ntnuLonLat": [10.401956354245954, 63.41946010623115],
   "markerImage24": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-24.png",
   "markerImage32": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-32.png",
-  "markerImage64": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png"
+  "markerImage64": "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",
+  "wmtsLayers": [
+    { "label": "Toporaster 4", "value": "toporaster4" },
+    { "label": "Norges grunnkart", "value": "norges_grunnkart" },
+    { "label": "Norges grunnkart gråtone", "value": "norges_grunnkart_graatone" },
+    { "label": "Europeisk grunnkart", "value": "egk" },
+    { "label": "Havbunn grunnkart", "value": "havbunn_grunnkart" },
+    { "label": "Terreng norgeskart", "value": "terreng_norgeskart" },
+    { "label": "Sjøkartraster", "value": "sjokartraster" }
+  ],
+  "extent": {
+    "EPSG:3857": [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
+    "EPSG:32633": [-2500000, 3500000, 3045984, 9045984]
+  }
 }
