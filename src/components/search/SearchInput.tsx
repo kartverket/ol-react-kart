@@ -1,10 +1,21 @@
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const SearchInput = () => {
   const { t } = useTranslation();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      const response = await axios.get('https://reqres.in/api/users');
+      console.log(response.data.data);
+      setUsers(response.data.data);
+    };
+    loadUsers();
+  }, []);
 
   return (
     <>
