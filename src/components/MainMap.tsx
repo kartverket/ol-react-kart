@@ -29,25 +29,14 @@ export default function OverLayLayer() {
   const [showMarker, setShowMarker] = useState(false);
   const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
 
-  const wmtsLayers = [
-    { label: 'Toporaster 4', value: 'toporaster4' },
-    { label: 'Norges grunnkart', value: 'norges_grunnkart' },
-    { label: 'Norges grunnkart gråtone', value: 'norges_grunnkart_graatone' },
-    { label: 'Europeisk grunnkart', value: 'egk' },
-    { label: 'Havbunn grunnkart', value: 'havbunn_grunnkart' },
-    { label: 'Terreng norgeskart', value: 'terreng_norgeskart' },
-    { label: 'Sjøkartraster', value: 'sjokartraster' },
-  ];
+  const wmtsLayers = mapConfig.wmtsLayers;
 
   const [features /*setFeatures*/] = useState(addMarkers(markersLonLat));
   const sProjection = 'EPSG:3857';
-  const extent = {
-    'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
-    'EPSG:32633': [-2500000, 3500000, 3045984, 9045984] as [number, number, number, number],
-  };
+  const extent = mapConfig.extent;
   const projection = new Projection({
     code: sProjection,
-    extent: extent[sProjection],
+    extent: extent[sProjection] as [number, number, number, number],
   });
 
   const projectionExtent = projection.getExtent();
