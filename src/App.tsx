@@ -6,11 +6,6 @@ import { useTranslation, Trans } from 'react-i18next';
 interface Lng {
   nativeName: string;
 }
-interface Lngs {
-  en: Lng
-  no: Lng
-  nn: Lng
-}
 const lngs:{[index: string]:Lng} = {
   en: { nativeName: 'English' },
   no: { nativeName: 'Norsk' },

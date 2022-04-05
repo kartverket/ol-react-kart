@@ -1,7 +1,11 @@
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 const SearchInput = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <button
@@ -17,7 +21,7 @@ const SearchInput = () => {
           console.log('searchbox type');
         }}
         alt="Søkeboks"
-        placeholder="Søk i Norgeskart"
+        placeholder={t('search_text')}
       />
       <button
         onClick={() => {
