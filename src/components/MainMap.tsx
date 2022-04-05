@@ -13,6 +13,7 @@ import wmts from '../MapLib/Source/wmts';
 import wmtsTileGrid from '../MapLib/TileGrid/wmts';
 import Logo from './Logo';
 import addMarkers from './Markers';
+import TopLeftMenu from './TopLeftMenu';
 
 const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
@@ -28,7 +29,7 @@ export default function OverLayLayer() {
   const [showOsm, setShowOsm] = useState(false);
   const [showMarker, setShowMarker] = useState(false);
   // const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
-  const [wmtsLayerSelected, setWmtsLayerSelected] = useState({ checked: true, layer: 'norges_grunnkart' });
+  const [wmtsLayerSelected, setWmtsLayerSelected] = useState({ checked: true, layer: 'terreng_norgeskart' });
 
   const wmtsLayers = [
     { label: 'Toporaster 4', value: 'toporaster4' },
@@ -76,7 +77,9 @@ export default function OverLayLayer() {
     return setWmtsLayerSelected({ checked: event.target.checked, layer: wmtsLayerSelected.layer });
   };
   const handleSetWmtsLayer = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    console.table(wmtsLayerSelected);
     setWmtsLayerSelected({ checked: wmtsLayerSelected.checked, layer: event.target.value });
+    console.table(wmtsLayerSelected);
   };
   const handleShowLayer1 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer1(event.target.checked);
   const handleShowLayer2 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer2(event.target.checked);
@@ -134,6 +137,7 @@ export default function OverLayLayer() {
         {/* </Controls> */}
       </Map>
       <div className="overlayLayer">
+        <TopLeftMenu />
         <div>
           <input type="checkbox" checked={showOsm} onChange={handleCheckboxOsm} /> OSM
         </div>
