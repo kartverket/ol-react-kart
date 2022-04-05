@@ -161,7 +161,7 @@ export default function OverLayLayer() {
     </>
   );
 
-  function getGeoJson(geojsonObject: GeoJSON | unknown) {
+  function getGeoJson(geojsonObject: GeoJSON | any) {
     return (
       <VectorLayer
         source={vector({
