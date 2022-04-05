@@ -24,10 +24,11 @@ export default function OverLayLayer() {
 
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(true);
-  const [showWmts, setShowWmts] = useState(true);
+  // const [showWmts, setShowWmts] = useState(true);
   const [showOsm, setShowOsm] = useState(false);
   const [showMarker, setShowMarker] = useState(false);
-  const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
+  // const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
+  const [wmtsLayerSelected, setWmtsLayerSelected] = useState({ checked: true, layer: 'norges_grunnkart' });
 
   const wmtsLayers = [
     { label: 'Toporaster 4', value: 'toporaster4' },
@@ -72,10 +73,10 @@ export default function OverLayLayer() {
     return setShowOsm(event.target.checked);
   };
   const handleCheckboxWmts = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    return setShowWmts(event.target.checked);
+    return setWmtsLayerSelected({ checked: event.target.checked, layer: wmtsLayerSelected.layer });
   };
   const handleSetWmtsLayer = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    setWmtsLayer(event.target.value);
+    setWmtsLayerSelected({ checked: wmtsLayerSelected.checked, layer: event.target.value });
   };
   const handleShowLayer1 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer1(event.target.checked);
   const handleShowLayer2 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer2(event.target.checked);
@@ -106,11 +107,11 @@ export default function OverLayLayer() {
           zIndex={0}
         />
       )}
-      {showWmts && (
+      {wmtsLayerSelected.checked && (
         <TileLayer
           source={wmts({
             url: 'http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-            layer: wmtsLayer,
+            layer: wmtsLayerSelected.layer,
             matrixSet: sProjection,
             projection: projection,
             tileGrid: tileGrid,
@@ -137,9 +138,9 @@ export default function OverLayLayer() {
           <input type="checkbox" checked={showOsm} onChange={handleCheckboxOsm} /> OSM
         </div>
         <div>
-          <input type="checkbox" checked={showWmts} onChange={handleCheckboxWmts} /> WMTS
-          {showWmts && (
-            <select value={wmtsLayer} onChange={handleSetWmtsLayer}>
+          <input type="checkbox" checked={wmtsLayerSelected.checked} onChange={handleCheckboxWmts} /> WMTS
+          {wmtsLayerSelected.checked && (
+            <select value={wmtsLayerSelected.layer} onChange={handleSetWmtsLayer}>
               {wmtsLayers.map(selectedLayer => (
                 <option key={selectedLayer.value} value={selectedLayer.value}>
                   {selectedLayer.label}
