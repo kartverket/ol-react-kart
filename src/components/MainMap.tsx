@@ -24,19 +24,30 @@ export default function OverLayLayer() {
 
   const [showLayer1, setShowLayer1] = useState(true);
   const [showLayer2, setShowLayer2] = useState(true);
-  const [showWmts, setShowWmts] = useState({ checked: true, wmtsLabel: 'norges_grunnkart' });
+  const [showWmts, setShowWmts] = useState(true);
   const [showOsm, setShowOsm] = useState(false);
   const [showMarker, setShowMarker] = useState(false);
   const [wmtsLayer, setWmtsLayer] = useState('norges_grunnkart');
 
-  const wmtsLayers = mapConfig.wmtsLayers;
+  const wmtsLayers = [
+    { label: 'Toporaster 4', value: 'toporaster4' },
+    { label: 'Norges grunnkart', value: 'norges_grunnkart' },
+    { label: 'Norges grunnkart gråtone', value: 'norges_grunnkart_graatone' },
+    { label: 'Europeisk grunnkart', value: 'egk' },
+    { label: 'Havbunn grunnkart', value: 'havbunn_grunnkart' },
+    { label: 'Terreng norgeskart', value: 'terreng_norgeskart' },
+    { label: 'Sjøkartraster', value: 'sjokartraster' },
+  ];
 
   const [features /*setFeatures*/] = useState(addMarkers(markersLonLat));
   const sProjection = 'EPSG:3857';
-  const extent = mapConfig.extent;
+  const extent = {
+    'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
+    'EPSG:32633': [-2500000, 3500000, 3045984, 9045984] as [number, number, number, number],
+  };
   const projection = new Projection({
     code: sProjection,
-    extent: extent[sProjection] as [number, number, number, number],
+    extent: extent[sProjection],
   });
 
   const projectionExtent = projection.getExtent();
@@ -61,7 +72,7 @@ export default function OverLayLayer() {
     return setShowOsm(event.target.checked);
   };
   const handleCheckboxWmts = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    return setShowWmts({ checked: event.target.checked, wmtsLabel: 'norges_grunnkart' });
+    return setShowWmts(event.target.checked);
   };
   const handleSetWmtsLayer = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     setWmtsLayer(event.target.value);
@@ -126,7 +137,7 @@ export default function OverLayLayer() {
           <input type="checkbox" checked={showOsm} onChange={handleCheckboxOsm} /> OSM
         </div>
         <div>
-          <input type="checkbox" checked={showWmts.checked} onChange={handleCheckboxWmts} /> WMTS
+          <input type="checkbox" checked={showWmts} onChange={handleCheckboxWmts} /> WMTS
           {showWmts && (
             <select value={wmtsLayer} onChange={handleSetWmtsLayer}>
               {wmtsLayers.map(selectedLayer => (
