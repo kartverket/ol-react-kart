@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-
 const { API_KEY } = process.env;
 const API_URL = 'https://ws.geonorge.no/stedsnavn/v1/navn?sok=';
-
+import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import React, { Component } from 'react';
 class Search extends Component {
   state = {
     query: '',
@@ -39,14 +39,33 @@ class Search extends Component {
 
   render() {
     return (
-      <form>
+      <>
+        <button
+          onClick={() => {
+            console.log('menu click');
+          }}
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </button>
         <input
           placeholder="Søk på stedsnavn..."
           ref={input => (this.search = input)}
           onChange={this.handleInputChange}
         />
         {/* <Suggestions results={this.state.results} /> */}
-      </form>
+        <button
+          onClick={() => {
+            console.log('search click');
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            onClick={() => {
+              console.log('menu click');
+            }}
+          />
+        </button>
+      </>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import SearchInput from './search/SearchInput';
+import Search from './search/Search';
 
 const TopLeftMenu = () => {
   const { t, i18n } = useTranslation();
@@ -15,7 +15,7 @@ const TopLeftMenu = () => {
         </h1>
       </div>
       {/* <Trans i18nKey="description.part1" />  */}
-      <SearchInput />
+      <Search />
     </>
   );
 };
