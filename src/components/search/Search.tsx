@@ -4,6 +4,42 @@ import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { Component } from 'react';
+
+type RepresentasjonsPunkt = {
+  koordsys: number;
+  nord: number;
+  øst: number;
+};
+
+type Fylke = { fylkesnavn: string; fylkesnummer: string };
+type Kommune = { kommunenummer: string; kommunenavn: string };
+interface StedsNavn {
+  skrivemåte: string;
+  skrivemåtestatus: string;
+  navnestatus: string;
+  språk: string;
+  navneobjekttype: string;
+  stedsnummer: number;
+  stedstatus: string;
+  representasjonspunkt: RepresentasjonsPunkt;
+  fylker: Fylke;
+  kommuner: Kommune;
+}
+
+interface Metadata {
+  treffPerSide: number;
+  side: number;
+  totaltAntallTreff: number;
+  viserFra: number;
+  viserTil: number;
+  sokeStreng: string;
+}
+
+type GeoNorge = {
+  metadata: Metadata;
+  navn: StedsNavn[];
+};
+
 class Search extends Component {
   state = {
     query: '',
@@ -26,11 +62,11 @@ class Search extends Component {
       () => {
         if (this.state.query && this.state.query.length > 1) {
           this.getInfo();
-          const stedsNavnArray: any = this.state.results;
-          // const stedsNavn = stedsNavnArray.forEach((element: { skrivemåte: any; }) => {
-          //     return element.skrivemåte;
-          // });
-          console.table(stedsNavnArray);
+          const data: any = this.state.results;
+
+          console.table(data);
+          const geoNorgeResult: StedsNavn[] = data;
+          console.log('her kommer stedsnavn: ', geoNorgeResult);
         }
       },
     );
