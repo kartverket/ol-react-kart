@@ -46,12 +46,16 @@ class Search extends Component {
     results: {},
   };
 
-  getInfo = () => {
-    axios.get(`${API_URL}${this.state.query}*&treffPerSide=15&side=1`).then(({ data }) => {
-      this.setState({
-        results: data.navn,
+  getInfo = async () => {
+    try {
+      await axios.get(`${API_URL}${this.state.query}*&treffPerSide=15&side=1`).then(({ data }) => {
+        this.setState({
+          results: data.navn,
+        });
       });
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   handleInputChange = () => {
@@ -87,6 +91,7 @@ class Search extends Component {
           placeholder="Søk på stedsnavn..."
           ref={input => (this.search = input)}
           onChange={this.handleInputChange}
+          // onChange={(s) => this.setState({ selected: s })}
         />
         {/* <Suggestions results={this.state.results} /> */}
         <button
