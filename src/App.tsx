@@ -1,4 +1,5 @@
 import React from 'react';
+import ChangeBaseLayer from './components/change-base-layer/ChangeBaseLayer';
 import MainMap from './components/MainMap';
 import MapTest from './components/MapTest';
 import Logo from './components/Logo';
@@ -7,10 +8,8 @@ import Logo from './components/Logo';
 function App() {
   return (
     <div className="App">
-      {/* <MainMap /> */}
-      {/* <SearchInput /> */}
-      <Logo />
-      <MapTest />
+      <MainMap />
+      <ChangeBaseLayer />
     </div>
   );
 }
