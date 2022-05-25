@@ -106,7 +106,7 @@ const MapApi = function() {
   // const [myMap, setMap] = useState(map());
   const layers = Layers();
   return {
-    init: function (projectConfig: IProjectConfig) {
+    init(projectConfig: IProjectConfig) {
       
       projectConfig.config.wmts.forEach(w => {
         layers.addWmtsLayer(w);
@@ -130,16 +130,16 @@ const MapApi = function() {
       return myMap;
     },
 
-    setCenter: function() {
+    setCenter() {
       myMap.getView().setCenter([1187255.1082210522, 9258443.652733022]);
       myMap.getView().setZoom(6);
     },
 
-    getCenter: function() {
+    getCenter() {
       console.log('get center: ', myMap.getView().getCenter());
     },
 
-    showLayer: function() {
+    showLayer() {
       const source = vector({
         features: new GeoJSON().readFeatures(geojsonObject2, {
           featureProjection: get('EPSG:3857') || undefined,        
