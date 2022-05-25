@@ -5,15 +5,16 @@ import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
 import { WMTS } from 'ol/source';
 import Projection from 'ol/proj/Projection';
-import wmtsTileGrid from '../MapLib/TileGrid/wmts';
+import { wmtsTileGrid } from './TileGrid/wmts';
 import { getTopLeft, getWidth } from 'ol/extent';
 import OLVectorLayer from 'ol/layer/Vector';
-import FeatureStyles from '../MapLib/Features/Styles';
+import FeatureStyles from './Features/Styles';
 import mapConfig from '../config.json';
 import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
-import { osm, vector } from '../MapLib/Source';
+import { vector } from './Source/vector';
 import { useState } from 'react';
+import { IProjectConfig } from './Models/config-model';
 
 // const map = new Map({
 //   layers: [
@@ -103,7 +104,7 @@ const MapApi = function() {
   // constructor(){}
   // const [myMap, setMap] = useState(map());
   return {
-    init: function() {
+    init: function (projectConfig: IProjectConfig) {
       if (!myMap) {
         myMap = new Map({
           layers: [
