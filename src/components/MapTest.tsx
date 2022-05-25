@@ -8,8 +8,6 @@ const MapTest = () => {
   const mapApi = MapApi();
   useEffect(() => {
     mapApi.init(projectConfig);
-    // mapApi.showLayer();
-    // mapApi.setCenter();
   },[])
 
   useEffect(() => {
@@ -24,9 +22,9 @@ const MapTest = () => {
   
   return (
     <>
-      <div>
+      {/* <div>
         <input type="checkbox" checked={showLayer1} onChange={handleShowLayer1}/> Ringve botaniske
-      </div>
+      </div> */}
       <div id="map" className='ol-map'></div>
      </>
   );

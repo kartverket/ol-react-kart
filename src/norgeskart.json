@@ -17,9 +17,9 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "landkart",
-      "url": "https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/|https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/",
+      "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?",
       "params": {
-        "layers": "norgeskart_bakgrunn",
+        "layers": "norges_grunnkart_graatone",
         "format": "image/png"
       },
       "matrixprefix": "false",
