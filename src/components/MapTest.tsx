@@ -23,9 +23,9 @@ const MapTest = () => {
   
   return (
     <>
-      <div>
+      {/* <div>
         <input type="checkbox" checked={showLayer1} onChange={handleShowLayer1}/> Ringve botaniske
-      </div>
+      </div> */}
       <div id="map" className='ol-map'></div>
      </>
   );
