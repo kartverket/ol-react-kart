@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ol-react-kart/static/css/main.3304c77b.css",
-    "main.js": "/ol-react-kart/static/js/main.11605d4d.js",
+    "main.css": "/ol-react-kart/static/css/main.88fcf9ee.css",
+    "main.js": "/ol-react-kart/static/js/main.9222feb9.js",
     "static/js/787.a2b71f40.chunk.js": "/ol-react-kart/static/js/787.a2b71f40.chunk.js",
     "static/media/raster.png": "/ol-react-kart/static/media/raster.0073bbebd0d91fd7a6a9.png",
     "static/media/aerial.png": "/ol-react-kart/static/media/aerial.414d4d9f5a775194201e.png",
@@ -10,12 +10,12 @@
     "static/media/KV_logo_staa.svg": "/ol-react-kart/static/media/KV_logo_staa.81d2c2bf97a0055e14ea.svg",
     "index.html": "/ol-react-kart/index.html",
     "static/media/location_on-24px.svg": "/ol-react-kart/static/media/location_on-24px.4e94ed966c8d9b325239.svg",
-    "main.3304c77b.css.map": "/ol-react-kart/static/css/main.3304c77b.css.map",
-    "main.11605d4d.js.map": "/ol-react-kart/static/js/main.11605d4d.js.map",
+    "main.88fcf9ee.css.map": "/ol-react-kart/static/css/main.88fcf9ee.css.map",
+    "main.9222feb9.js.map": "/ol-react-kart/static/js/main.9222feb9.js.map",
     "787.a2b71f40.chunk.js.map": "/ol-react-kart/static/js/787.a2b71f40.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3304c77b.css",
-    "static/js/main.11605d4d.js"
+    "static/css/main.88fcf9ee.css",
+    "static/js/main.9222feb9.js"
   ]
 }
