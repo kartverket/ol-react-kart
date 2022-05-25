@@ -11,8 +11,11 @@ function App() {
   return (
     <div className="App">
       {/*<MainMap />*/}
-      <Search/>
+      
       <MapTest/>
+      <div className='position-absolute mt-3 ms-4'>
+        <Search />
+      </div>
       <MainMenuPanel/>
       <ChangeBaseLayer />
     </div>
