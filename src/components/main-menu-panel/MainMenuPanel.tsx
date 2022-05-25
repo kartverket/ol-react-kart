@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { faMap, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LanguageSelector from './../LanguageSelector';
 class MainMenuPanel extends Component {
     
     closeNav() {
@@ -13,8 +16,8 @@ class MainMenuPanel extends Component {
     
     render() {
         return <>
-            <div id="mySidenav" className="sidenav" style={{width: "395px", overflowY: "auto"}} >
-                <div id="sideMenuPosition" className="side-menu-position" style={{width: "395px"}}>
+            <div id="mySidenav" className="sidenav" style={{width: "0"}} >
+                <div id="sideMenuPosition" className="side-menu-position" style={{width: "0"}}>
                     <div className="norgeskart-logo">
                         <div className="container">
                             <div className="row">
@@ -33,8 +36,30 @@ class MainMenuPanel extends Component {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
-
+                    <div className="sidenav-group"></div>
+                    <ul>
+                        <li>
+                            <div className="row">
+                                <div className="col-1">
+                                    <FontAwesomeIcon icon={faMap} />
+                                </div>
+                                <div className="col">
+                                    <span className="text-uppercase"><span>BAKGRUNNSKART</span>:</span>
+                                    <span>&nbsp;Gråtone</span>
+                                    {/*<div className="bi bi-chevron-right">
+                                        <span className='bi-chevron-right'></span>
+                                    </div>*/}
+                                </div>
+                                <div className="col-1">
+                                    <FontAwesomeIcon icon={faChevronRight} />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div className="sidenav-group"></div>
+                    <LanguageSelector />
                     {/*<div ng-switch="mainMenuPanelLayout">
                         <div ng-switch-when="mainMenuSections" main-menu-sections></div>
                         <div ng-switch-when="mainMenuBaseLayers" main-menu-base-layers></div>
