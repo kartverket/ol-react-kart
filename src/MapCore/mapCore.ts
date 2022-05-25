@@ -149,7 +149,7 @@ const MapApi = function() {
       });
       vectorLayer.set('id', 'juraj');
       myMap.addLayer(vectorLayer);
-      console.log('ADDED layer: ', myMap.getAllLayers());
+      // console.log('ADDED layer: ', myMap.getAllLayers());
     },
     // getAllBaseLayers: function() {
     //   return myMap.getAllLayers().filter(l => l.isBaseLayer = true);
