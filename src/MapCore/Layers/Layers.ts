@@ -60,8 +60,7 @@ export const Layers = function() {
     },
 
     getVisibleBaseLayer(): TileLayer | undefined {
-      const visibleBaseLayer = wmtsLayers.find(w => w.get(ELayer.ISVISIBLE) && w.get(ELayer.ISBASELAYER));
-      return visibleBaseLayer;
+      return wmtsLayers.find(w => w.get(ELayer.ISVISIBLE) && w.get(ELayer.ISBASELAYER));
     }
     
   }
