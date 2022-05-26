@@ -32,20 +32,20 @@ export default function MainMenuPanel() {
     return (
         <div id="mySidenav" className="sidenav" style={{width: "0"}} >
             <div id="sideMenuPosition" className="side-menu-position" style={{width: "0"}}>
-                <div className="norgeskart-logo">
+                <div className="norgeskart-logo p-1 m-0">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-11">
+                        <div className="d-flex flex-row align-items-center">
+                            <div className="p-2">
                                 <h1>
                                     <a href=".">
-                                        <span className="norgeskart-logo-image"></span>
+                                        <span className="norgeskart-logo-image me-3"></span>
                                         Norgeskart
                                     </a>
                                 </h1>
                             </div>
-                            <div className="col-1">
-                                <button type="button" onClick={() => closeNav()}>
-                                    <span>&times;</span>
+                            <div className="ms-auto p-2">
+                                <button type="button" className='btn btn-light' onClick={() => closeNav()}>
+                                    <span className='fs-4'>&times;</span>
                                 </button>
                             </div>
                         </div>
