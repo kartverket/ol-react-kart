@@ -61,6 +61,10 @@ export const Layers = function() {
 
     getVisibleBaseLayer(): TileLayer | undefined {
       return wmtsLayers.find(w => w.get(ELayer.ISVISIBLE) && w.get(ELayer.ISBASELAYER));
+    },
+
+    getBaseLayers(): TileLayer[] | undefined { //TODO: FIX wfs, now return only wmts layers
+      return wmtsLayers.filter(w => w.get(ELayer.ISBASELAYER));
     }
     
   }
