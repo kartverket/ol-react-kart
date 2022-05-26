@@ -76,8 +76,8 @@ class Search extends Component {
   render() {
     return (
       <>
-        <div className="input-group mb-3">
-          <button className='btn btn-outline-secondary'
+        <div className="input-group mb-3 shadow bg-body rounded" style={{height: '50px'}}>
+          <button className='btn btn-outline-secondary border-end-0'
             onClick={() => {
               console.log('menu click');
               const mySidenav = document.getElementById("mySidenav");
@@ -92,13 +92,13 @@ class Search extends Component {
           >
             <FontAwesomeIcon icon={faBars} />
           </button>
-          <input style={{width: '300px'}}
+          <input style={{ width: '350px' }} className="border-start-0 border-end-0 border-secondary"
             placeholder="Søk på stedsnavn..."
             ref={input => (this.search = input)}
             onChange={this.handleInputChange}
           />
           {/* <Suggestions results={this.state.results} /> */}
-          <button className='btn btn-outline-secondary'
+          <span className='input-group-text border-start-0 bg-transparent border-secondary'
             onClick={() => {
               console.log('search click');
             }}
@@ -109,7 +109,7 @@ class Search extends Component {
                 console.log('menu click');
               }}
             />
-          </button>  
+          </span>  
         </div>
       </>
     );
