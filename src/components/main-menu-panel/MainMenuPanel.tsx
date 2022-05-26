@@ -32,8 +32,8 @@ export default function MainMenuPanel() {
     return (
         <div id="mySidenav" className="sidenav" style={{width: "0"}} >
             <div id="sideMenuPosition" className="side-menu-position" style={{width: "0"}}>
-                <div className="norgeskart-logo p-1 m-0">
-                    <div className="container">
+                <div className="norgeskart-logo ps-2 pt-0 pe-0 pb-0 m-0">
+                    <div className="container p-0">
                         <div className="d-flex flex-row align-items-center">
                             <div className="p-2">
                                 <h1>
