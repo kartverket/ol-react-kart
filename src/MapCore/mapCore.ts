@@ -32,15 +32,41 @@ const MapApi = function() {
         layers.addWmsLayer(w);
       })
 
+      const sm = new Projection({
+        code: projectConfig.config.project.mapepsg,
+        // extent: projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)
+        // units: mapConfig.extentUnits
+      });
+      const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
+      const newExtent = [0, 0, 0, 0] as [number, number, number, number];
+      if (projectExtent) {
+        projectExtent.split(',').map(e => Number(e)).forEach((v, index) => newExtent[index] = v);
+      }
+      sm.setExtent(newExtent);
+
+      // const newMapRes = [];
+      // newMapRes[0] = 21664;
+
+      // const mapScales = [];
+      // mapScales[0] = 81920000;
+      // for (let t = 1; t < 20; t++) {
+      //   newMapRes[t] = newMapRes[t - 1] / 2;
+      //   mapScales[t] = mapScales[t - 1] / 2;
+      // }
+
+
       if (!myMap) {
         myMap = new Map({
           layers: [],
           target: 'map',
           view: new View({
             center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
-
-            // center: [1187255.1082210522, 9258443.652733022],
-            zoom: 6,
+            projection: sm,
+            // constrainResolution: true,
+            // maxResolution: 21664,
+            // resolutions: newMapRes,
+            // numZoomLevels: 18,
+            zoom: 4
           }),
         });
         const baseLayer = layers.getVisibleBaseLayer();
@@ -59,6 +85,7 @@ const MapApi = function() {
 
     getCenter() {
       console.log('get center: ', myMap.getView().getCenter());
+      console.log('get epsg: ', myMap.getView().getProjection().getCode());
     },
 
     showLayer() {

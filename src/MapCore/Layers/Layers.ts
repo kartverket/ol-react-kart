@@ -5,10 +5,10 @@ import { wmtsTileGrid } from '../TileGrid/wmts';
 import { getTopLeft, getWidth } from 'ol/extent';
 import Projection from 'ol/proj/Projection';
 
-const sProjection = 'EPSG:3857';
+const sProjection = 'EPSG:25833';
 const extent = {
   'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
-  'EPSG:32633': [-2500000, 3500000, 3045984, 9045984] as [number, number, number, number],
+  'EPSG:25833': [-2500000, 3500000, 3045984, 9045984] as [number, number, number, number],
 };
 const projection = new Projection({
   code: sProjection,
@@ -31,6 +31,7 @@ for (let z = 0; z < 21; ++z) {
   resolutions[z] = size / Math.pow(2, z);
   matrixIds[z] = sProjection + ':' + z;
 }
+
 
 const tileGrid = wmtsTileGrid({
   origin: getTopLeft(projection.getExtent()),
@@ -74,10 +75,10 @@ export const Layers = function() {
     },
 
     getVisibleBaseLayer(): TileLayer | undefined {
-      return wmtsLayers.find(w => w.get(ELayer.ISVISIBLE) && w.get(ELayer.ISBASELAYER));
+      return wmtsLayers.concat(wmsLayers).find(w => w.get(ELayer.ISVISIBLE) && w.get(ELayer.ISBASELAYER));
     },
 
-    getBaseLayers(): TileLayer[] | undefined { //TODO: FIX wfs, now return only wmts layers
+    getBaseLayers(): TileLayer[] | undefined {
       return wmtsLayers.concat(wmsLayers).filter(w => w.get(ELayer.ISBASELAYER));
     }
     

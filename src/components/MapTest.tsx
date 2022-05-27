@@ -12,7 +12,7 @@ const MapTest = () => {
 
   useEffect(() => {
     if (showLayer1) {
-      mapApi.showLayer();
+      mapApi.getCenter();
     }
   }, [showLayer1, mapApi])
 
