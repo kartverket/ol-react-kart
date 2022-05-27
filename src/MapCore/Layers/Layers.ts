@@ -1,5 +1,5 @@
-import { IWmts } from '../Models/config-model';
-import { WMTS } from 'ol/source';
+import { IWms, IWmts } from '../Models/config-model';
+import { WMTS, TileWMS } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
 import { getTopLeft, getWidth } from 'ol/extent';
@@ -39,6 +39,7 @@ const tileGrid = wmtsTileGrid({
 });
 
 const wmtsLayers: TileLayer[] = [];
+const wmsLayers: TileLayer[] = [];
 
 export const Layers = function() {
   return {
@@ -59,12 +60,25 @@ export const Layers = function() {
       wmtsLayers.push(newTileLayer);
     },
 
+    addWmsLayer(wms: IWms) {
+      const newTileLayer = new TileLayer({
+        source: new TileWMS({
+          url: wms.url,
+          params: wms.params,
+          projection: projection,
+        })
+      });
+      newTileLayer.set(ELayer.ISVISIBLE, wms.options.visibility);
+      newTileLayer.set(ELayer.ISBASELAYER, wms.options.isbaselayer);
+      wmsLayers.push(newTileLayer);
+    },
+
     getVisibleBaseLayer(): TileLayer | undefined {
       return wmtsLayers.find(w => w.get(ELayer.ISVISIBLE) && w.get(ELayer.ISBASELAYER));
     },
 
     getBaseLayers(): TileLayer[] | undefined { //TODO: FIX wfs, now return only wmts layers
-      return wmtsLayers.filter(w => w.get(ELayer.ISBASELAYER));
+      return wmtsLayers.concat(wmsLayers).filter(w => w.get(ELayer.ISBASELAYER));
     }
     
   }

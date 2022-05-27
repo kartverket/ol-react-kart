@@ -28,13 +28,18 @@ const MapApi = function() {
       projectConfig.config.wmts.forEach(w => {
         layers.addWmtsLayer(w);
       })
+      projectConfig.config.wms.forEach(w => {
+        layers.addWmsLayer(w);
+      })
 
       if (!myMap) {
         myMap = new Map({
           layers: [],
           target: 'map',
           view: new View({
-            center: [1187255.1082210522, 9258443.652733022],
+            center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
+
+            // center: [1187255.1082210522, 9258443.652733022],
             zoom: 6,
           }),
         });
@@ -49,7 +54,7 @@ const MapApi = function() {
 
     setCenter() {
       myMap.getView().setCenter([1187255.1082210522, 9258443.652733022]);
-      myMap.getView().setZoom(6);
+      myMap.getView().setZoom(8);
     },
 
     getCenter() {
