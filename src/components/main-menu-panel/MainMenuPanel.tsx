@@ -3,11 +3,13 @@ import { faMap, faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
+import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
 
 export default function MainMenuPanel() {
     const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
     const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
     const [mainMenuActiveBaseLayer, setMainMenuActiveBaseLayer] = useState('Gråtone');
+    const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
 
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
@@ -63,17 +65,18 @@ export default function MainMenuPanel() {
                                 <span>&nbsp;{mainMenuActiveBaseLayer}</span>
                             </div>
                             <div className="col-1">
-                            {mainMenuPanelActive ? 
-                                <FontAwesomeIcon icon={faChevronRight} onClick={() => showMainMenuBaseLayerPanel()}/>
-                                : 
-                                <FontAwesomeIcon icon={faChevronLeft} onClick={() => showMainMenuPanel()}/>
-                            }
+                                {mainMenuPanelActive ? 
+                                    <FontAwesomeIcon icon={faChevronRight} onClick={() => showMainMenuBaseLayerPanel()}/>
+                                    : 
+                                    <FontAwesomeIcon icon={faChevronLeft} onClick={() => showMainMenuPanel()}/>
+                                }
                             </div>
                         </div>
                     </div>
                 <div className="sidenav-group"></div>
-                {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel changeBaseLayer = {setMainMenuActiveBaseLayer}/> : null}
-                {mainMenuPanelActive ? <LanguageSelector /> : null}
+                {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel changeBaseLayer = {setMainMenuActiveBaseLayer}/> : null }
+                {mainMenuPanelActive ? <MainMenuOverlayLayerPanel openOverlayLayergroup = {setMainMenuActiveOverlayLayergroup} layerGroupActive={mainMenuActiveOverlayLayergroup}/> : null }
+                {mainMenuPanelActive ? <LanguageSelector /> : null }
             </div>
         </div>
     )
