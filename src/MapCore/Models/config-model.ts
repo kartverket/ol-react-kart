@@ -14,14 +14,6 @@ export interface ICodeList {
   url: string;
 }
 
-interface ILayout {
-  enablemousepositionctrl: string;
-  enablenavigationctrl: string;
-  enablescalectrl: string;
-  enablescalelinectrl: string;
-  presetname: string;
-}
-
 export interface ISearchParam {
   hasurl: string;
   name: string;
@@ -139,17 +131,6 @@ export interface IWmsOptions {
   visibility: string;
 }
 
-// interface IFormat {
-//     0: string;
-//     1: string;
-//     2: string;
-//     3: string;
-//     4: string;
-//     5: string;
-//     6: string;
-//     7?: string;
-// }
-
 export interface IFeatureInfoFormats {
   format: any;
 }
@@ -204,14 +185,6 @@ export interface ICodeLists {
 
 export interface ISearchParams {
   searchparam: ISearchParam[];
-}
-
-interface IWebservices {
-  geointegrasjonplanurl: string;
-  usesinglegiurl: boolean;
-  geointegrasjonplankarturl: string;
-  geointegrasjonplanbasisurl: string;
-  geointegrasjonplanutvideturl: string;
 }
 
 export interface IProjectList {

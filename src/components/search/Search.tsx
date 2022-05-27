@@ -76,39 +76,41 @@ class Search extends Component {
   render() {
     return (
       <>
-        <button
-          onClick={() => {
-            console.log('menu click');
-            const mySidenav = document.getElementById("mySidenav");
-            const sideMenuPosition = document.getElementById("sideMenuPosition");
-            if (mySidenav !== null && sideMenuPosition != null) {
-                mySidenav.style.width = "395px";
-                sideMenuPosition.style.width = "395px";
-      
-                mySidenav.style.overflowY = "auto";
-            }
-          }}
-        >
-          <FontAwesomeIcon icon={faBars} />
-        </button>
-        <input
-          placeholder="Søk på stedsnavn..."
-          ref={input => (this.search = input)}
-          onChange={this.handleInputChange}
-        />
-        {/* <Suggestions results={this.state.results} /> */}
-        <button
-          onClick={() => {
-            console.log('search click');
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faMagnifyingGlass}
+        <div className="input-group mb-3 shadow bg-body rounded" style={{height: '50px'}}>
+          <button className='btn btn-outline-secondary border border-end-0'
             onClick={() => {
               console.log('menu click');
+              const mySidenav = document.getElementById("mySidenav");
+              const sideMenuPosition = document.getElementById("sideMenuPosition");
+              if (mySidenav !== null && sideMenuPosition != null) {
+                  mySidenav.style.width = "395px";
+                  sideMenuPosition.style.width = "395px";
+        
+                  mySidenav.style.overflowY = "auto";
+              }
             }}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+          <input style={{ width: '350px' }} className="border border-start-0 border-end-0"
+            placeholder="Søk på stedsnavn..."
+            ref={input => (this.search = input)}
+            onChange={this.handleInputChange}
           />
-        </button>
+          {/* <Suggestions results={this.state.results} /> */}
+          <span className='input-group-text border-start-0 bg-transparent border'
+            onClick={() => {
+              console.log('search click');
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              onClick={() => {
+                console.log('menu click');
+              }}
+            />
+          </span>  
+        </div>
       </>
     );
   }
