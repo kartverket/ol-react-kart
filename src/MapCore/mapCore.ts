@@ -17,10 +17,12 @@ import { useState } from 'react';
 import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
+import { MapMoveEnd } from './Events/MapMoveEnd';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
 const getClickCoordinates = GetClickCoordinates();
+const mapMoveEnd = MapMoveEnd();
 
 const MapApi = function() {
   const layers = Layers();
@@ -77,6 +79,7 @@ const MapApi = function() {
         }
       } else {
         getClickCoordinates.activate(myMap);
+        mapMoveEnd.activate(myMap);
       }
 
       return myMap;

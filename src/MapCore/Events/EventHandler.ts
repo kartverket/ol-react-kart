@@ -10,9 +10,16 @@ export interface MapClickInfo {
 
 }
 const getClickCoordinatesAction = new BehaviorSubject<MapClickInfo>({coordinate: [0,0]});
+const mapMoveEndAction = new BehaviorSubject<string>('');
 
 const EventHandler = {
-    getClickCoordinates$(): Observable<MapClickInfo> {
+  mapMoveEnd$(): Observable<string> {
+      return mapMoveEndAction.asObservable();
+  },
+  setMapMoveEnd(value: string) {
+    mapMoveEndAction.next(value);
+  },
+  getClickCoordinates$(): Observable<MapClickInfo> {
        return getClickCoordinatesAction.asObservable();
     },
     setClickCoordinates(value: MapClickInfo) {

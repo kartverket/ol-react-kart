@@ -24,7 +24,9 @@ const MapTest = () => {
   EventHandler.getClickCoordinates$().subscribe(value => {
     console.log('GetClick coordinates: ', value);
   })
-  
+  EventHandler.mapMoveEnd$().subscribe(value => {
+    console.log('MapMoveEnd: ', value);
+  })
   return (
     <>
       {/* <div>
