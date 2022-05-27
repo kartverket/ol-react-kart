@@ -1,12 +1,21 @@
+import { Coordinate } from 'ol/coordinate';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-const getClickCoordinatesAction = new BehaviorSubject<string>('');
+export interface MapClickInfo {
+  epsg?: string;
+  zoom?: number;
+  coordinate: Coordinate;
+  type?: string;
+  dragging?:boolean;
+
+}
+const getClickCoordinatesAction = new BehaviorSubject<MapClickInfo>({coordinate: [0,0]});
 
 const EventHandler = {
-    getClickCoordinates$(): Observable<string> {
+    getClickCoordinates$(): Observable<MapClickInfo> {
        return getClickCoordinatesAction.asObservable();
     },
-    setClickCoordinates(value: string) {
+    setClickCoordinates(value: MapClickInfo) {
       getClickCoordinatesAction.next(value);
     }
 }
