@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import MapApi  from '../MapCore/mapCore';
 import projectConfig from '../norgeskart.json';
+import EventHandler from '../MapCore/Events/EventHandler';
 
 const MapTest = () => {
   const [showLayer1, setShowLayer1] = useState(false);
+  // const eventHandler = EventHandler();
   
   const mapApi = MapApi();
   useEffect(() => {
@@ -12,13 +14,16 @@ const MapTest = () => {
 
   useEffect(() => {
     if (showLayer1) {
-      mapApi.getCenter();
+      mapApi.showLayer();
+      // EventHandler.setClickCoordinates('456');
     }
   }, [showLayer1, mapApi])
 
   const handleShowLayer1 = (event: React.ChangeEvent<HTMLInputElement>): void => setShowLayer1(event.target.checked);
 
-
+  EventHandler.getClickCoordinates$().subscribe(value => {
+    console.log('GetClick coordinates: ', value);
+  })
   
   return (
     <>

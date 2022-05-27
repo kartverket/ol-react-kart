@@ -16,9 +16,11 @@ import { vector } from './Source/vector';
 import { useState } from 'react';
 import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
+import { GetClickCoordinates } from './Events/GetClickCoordinates';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
+const getClickCoordinates = GetClickCoordinates();
 
 const MapApi = function() {
   const layers = Layers();
@@ -73,7 +75,9 @@ const MapApi = function() {
         if (baseLayer) {
           myMap.addLayer(baseLayer);
         }
-      }      
+      } else {
+        getClickCoordinates.activate(myMap);
+      }
 
       return myMap;
     },
