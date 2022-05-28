@@ -37,8 +37,11 @@ const MapTest = () => {
       {/* <div>
         <input type="checkbox" checked={showLayer1} onChange={handleShowLayer1}/> Ringve botaniske
       </div> */}
-      <div>{clickedCoordiantes.coordinate[0]}, {clickedCoordiantes.coordinate[1]}</div>
-      <div>{mapMoveEnd.coordinates}</div>
+      <div className='p-2'>
+      <div><h4>Only for test: </h4></div>
+      <div>Clicked coordinates: {clickedCoordiantes.coordinate[0]}, {clickedCoordiantes.coordinate[1]}</div>
+      <div>Map move end center coordinates: {mapMoveEnd.coordinates}</div>
+      </div>
       <div id="map" className='ol-map'></div>
      </>
   );
