@@ -21,10 +21,10 @@ const EventHandler = {
   },
   getClickCoordinates$(): Observable<MapClickInfo> {
        return getClickCoordinatesAction.asObservable();
-    },
-    setClickCoordinates(value: MapClickInfo) {
-      getClickCoordinatesAction.next(value);
-    }
+  },
+  setClickCoordinates(value: MapClickInfo) {
+    getClickCoordinatesAction.next(value);
+  }
 }
 
 export default EventHandler;

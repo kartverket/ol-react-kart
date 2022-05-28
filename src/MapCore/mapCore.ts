@@ -18,6 +18,7 @@ import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
+import { useEventStoreDispatch } from './Events/Event/eventHooks';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
@@ -26,6 +27,7 @@ const mapMoveEnd = MapMoveEnd();
 
 const MapApi = function() {
   const layers = Layers();
+  const dispatch = useEventStoreDispatch();
   return {
     init(projectConfig: IProjectConfig) {
       
@@ -78,8 +80,8 @@ const MapApi = function() {
           myMap.addLayer(baseLayer);
         }
       } else {
-        getClickCoordinates.activate(myMap);
-        mapMoveEnd.activate(myMap);
+        getClickCoordinates.activate(myMap, dispatch);
+        mapMoveEnd.activate(myMap, dispatch);
       }
 
       return myMap;
