@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { useEventStoreSelector } from '../../MapCore/Events/Event/eventHooks';
 
 type MainMenuBaseLayerPanelProps = {
     changeBaseLayer:(baseLayerName: string) => void
 };
 
-export default function MainMenuBaseLayerPanel(props : MainMenuBaseLayerPanelProps) {
+const MainMenuBaseLayerPanel = (props : MainMenuBaseLayerPanelProps) => {
 
     return (
         <>
@@ -29,3 +30,5 @@ export default function MainMenuBaseLayerPanel(props : MainMenuBaseLayerPanelPro
         </>
     )
 }
+
+export default MainMenuBaseLayerPanel;

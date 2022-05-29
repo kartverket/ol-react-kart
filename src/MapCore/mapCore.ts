@@ -19,7 +19,7 @@ import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
-import { getVisibleBaseLayer, addWmsLayer, addWmtsLayer } from './Layers/layersSlice';
+import { selectGetVisibleBaseLayer, addWmsLayer, addWmtsLayer } from './Layers/layersSlice';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
@@ -29,7 +29,7 @@ const MapApi = function() {
   const layers = Layers();
   const mapMoveEnd = MapMoveEnd(dispatch);
   const getClickCoordinates = GetClickCoordinates(dispatch);
-  const visibleBaseLayer = useEventStoreSelector(getVisibleBaseLayer);
+  const getVisibleBaseLayer = useEventStoreSelector(selectGetVisibleBaseLayer);
   return {
     init(projectConfig: IProjectConfig) {
       
@@ -79,8 +79,8 @@ const MapApi = function() {
       } else {
         getClickCoordinates.activate(myMap);
         mapMoveEnd.activate(myMap);
-        if (visibleBaseLayer) {
-          const newBaseLayer = layers.createTileLayer(visibleBaseLayer);
+        if (getVisibleBaseLayer) {
+          const newBaseLayer = layers.createTileLayer(getVisibleBaseLayer);
           if (newBaseLayer) {
             myMap.addLayer(newBaseLayer);
           }   

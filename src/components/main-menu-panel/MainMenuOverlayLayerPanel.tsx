@@ -7,7 +7,7 @@ type MainMenuOverlayLayerPanelProps = {
     layerGroupActive: string
 };
 
-export default function MainMenuOverlayLayerPanel(props : MainMenuOverlayLayerPanelProps) {
+ const MainMenuOverlayLayerPanel = (props : MainMenuOverlayLayerPanelProps) => {
 
     const [showLayerGroups, setShowLayerGroups] = useState(true);
     const [layerGroupActive, setLayerGroupActive] = useState(props.layerGroupActive);
@@ -59,3 +59,5 @@ export default function MainMenuOverlayLayerPanel(props : MainMenuOverlayLayerPa
         </>
     )
 }
+
+export default MainMenuOverlayLayerPanel;

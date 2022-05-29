@@ -26,6 +26,7 @@ export const getClickCoordinatesSlice = createSlice({
 
 export const { setClickCoordinates } = getClickCoordinatesSlice.actions;
 
-export const clickCoordinates = (state: EventStoreState) => state.clickCoordinates;
+// selectors
+export const selectClickCoordinates = (state: EventStoreState) => state.clickCoordinates;
 
 // export default getClickCoordinatesSlice.reducer;

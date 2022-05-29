@@ -21,5 +21,6 @@ export const mapMoveSlice = createSlice({
 
 export const { mapMoveEnd } = mapMoveSlice.actions;
 
-export const mapMoveEndCoordinates = (state: EventStoreState) => state.mapMoveEndCoordinates;
+// selectors
+export const selectMapMoveEndCoordinates = (state: EventStoreState) => state.mapMoveEndCoordinates;
 

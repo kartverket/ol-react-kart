@@ -27,7 +27,8 @@ export const layersSlice = createSlice({
 
 export const { addWmtsLayer, addWmsLayer } = layersSlice.actions;
 
-export const getVisibleBaseLayer = (state: EventStoreState) => {
+//selectors
+export const selectGetVisibleBaseLayer = (state: EventStoreState) => {
   const visibleBaseLayer = state.layers.wmtsLayers.find(l => l.options.isbaselayer && l.options.visibility);
   return visibleBaseLayer;
 };
