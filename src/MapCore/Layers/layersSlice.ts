@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EventStoreState } from '../Events/Event/eventStore';
-import { IWms, IWmts } from '../Models/config-model';
+import { ITileLayer } from '../Models/config-model';
 
 export interface ILayers {
-  wmtsLayers: IWmts[],
-  wmsLayers: IWms[],
+  wmtsLayers: ITileLayer[],
+  wmsLayers: ITileLayer[],
 }
 
 const initialState: ILayers = {
@@ -16,10 +16,10 @@ export const layersSlice = createSlice({
   name: 'layers',
   initialState,
   reducers: {
-    addWmtsLayer: (state, action: PayloadAction<IWmts>) => {
+    addWmtsLayer: (state, action: PayloadAction<ITileLayer>) => {
       state.wmtsLayers.push(action.payload);
     },
-    addWmsLayer: (state, action: PayloadAction<IWms>) => {
+    addWmsLayer: (state, action: PayloadAction<ITileLayer>) => {
       state.wmsLayers.push(action.payload);
     }
   }
@@ -28,7 +28,24 @@ export const layersSlice = createSlice({
 export const { addWmtsLayer, addWmsLayer } = layersSlice.actions;
 
 //selectors
-export const selectGetVisibleBaseLayer = (state: EventStoreState) => {
-  const visibleBaseLayer = state.layers.wmtsLayers.find(l => l.options.isbaselayer && l.options.visibility);
-  return visibleBaseLayer;
+export const selectVisibleBaseLayer = (state: EventStoreState) => {
+  // const visibleBaseLayer: IWms|IWmts = undefined;
+  // const wmtsBaseLayer = state.layers.wmtsLayers.find(l => l.options.isbaselayer && l.options.visibility);
+  // if (wmtsBaseLayer) {
+  //   return wmtsBaseLayer;
+  // }
+  // const wmsBaseLayer = state.layers.wmsLayers.find(l => l.options.isbaselayer && l.options.visibility);
+  // if (wmsBaseLayer) {
+  //   return wmsBaseLayer;
+  // }
+  return state.layers.wmtsLayers.concat(state.layers.wmsLayers).find(l => l.options.isbaselayer && l.options.visibility);
 };
+
+// export const selectBaseLayers = (state: EventStoreState) => {
+//   let baseLayers: IWms[] | IWmts[] = [];
+//   state.layers.wmsLayers.forEach(l => {
+//     if (l.options.isbaselayer) {
+//       baseLayers.push(l);
+//     }
+//   })
+// }

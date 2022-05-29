@@ -1,4 +1,4 @@
-import { IWms, IWmts } from '../Models/config-model';
+import { ITileLayer } from '../Models/config-model';
 import { WMTS, TileWMS } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
@@ -36,12 +36,12 @@ const tileGrid = wmtsTileGrid({
 
 export const Layers = function () {
   return {
-    createTileLayer(layer: IWms | IWmts): TileLayer | undefined {
-      if (layer as IWmts) {
+    createTileLayer(layer: ITileLayer): TileLayer | undefined {
+      if (layer.isWmts) {
         const newTileLayer = new TileLayer({
           source: new WMTS({
             url: layer.url,
-            layer: layer.params.layers,
+            layer: layer.params.layers ? layer.params.layers : '',
             matrixSet: sProjection,
             projection: projection,
             tileGrid: tileGrid,
@@ -51,7 +51,7 @@ export const Layers = function () {
         });
         return newTileLayer;
       }
-      if (layer as IWms) {
+      if (!layer.isWmts) {
         const newTileLayer = new TileLayer({
           source: new TileWMS({
             url: layer.url,

@@ -65,26 +65,6 @@ export interface IFeatureInfoProjectConfig {
   sendusername: string;
 }
 
-export interface IParams {
-  format: string;
-  getfeatureinfo: string;
-  request: string;
-  service: string;
-  srsdimension: string;
-  transparent: string;
-  typename: string;
-  version?: string;
-  customparams?: { Key: string; Value: string }[];
-}
-
-export interface IProtocol {
-  featuretype: string;
-  params: IParams;
-  type: string;
-  url: string;
-  version: string;
-}
-
 export interface IVectorOptions {
   visibility: string;
 }
@@ -125,58 +105,44 @@ export interface IWmsLayer {
   title: string;
 }
 
-export interface IWmsOptions {
-  isbaselayer: string;
-  singletile: string;
-  visibility: string;
-}
-
 export interface IFeatureInfoFormats {
   format: any;
 }
 
-export interface IParamsWms {
-  layers: string;
-  format: string;
-}
+// export interface IParamsWms {
+//   layers: string;
+//   format: string;
+// }
 
 export interface ILayers {
   Layer: IWmsLayer;
 }
 
-export interface IWms {
-  type: string;
-  Layers?: ILayers,
-  ticket?: string;
-  name: string;
-  url: string;
-  params: IParamsWms,
-  guid: string;
-  options: IWmsOptions;
+export interface ITileLayerParams {
+  layers?: string;
+  format?: string;
 }
 
-export interface IWmtsParams {
-  layers: string;
-  format: string;
-}
-
-export interface IwmtsOptions {
+export interface ITileLayerOptions {
   isbaselayer: string;
   singletile: string;
   visibility: string;
 }
 
-export interface IWmts {
+export interface ITileLayer {
   type: string;
   gatekeeper?: string;
   name: string;
   url: string;
-  params: IWmtsParams;
+  params: ITileLayerParams;
   matrixprefix?: string;
-  matrixset: string;
+  matrixset?: string;
   guid: string;
-  options: IwmtsOptions;
-  thumbnail?: string;
+  options: ITileLayerOptions;
+  thumbnail?: string;  
+  Layers?: ILayers,
+  ticket?: string;    
+  isWmts?: boolean;
 }
 
 export interface ICodeLists {
@@ -219,8 +185,8 @@ export interface IConfig {
   maplayer: IMapLayer[];
   project: IProject;
   vector: IVector[];
-  wms: IWms[];
-  wmts: IWmts[];
+  wms: ITileLayer[];
+  wmts: ITileLayer[];
 }
 
 export interface IProjectConfig {
