@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { useEventStoreSelector } from '../../MapCore/Events/Event/eventHooks';
+// import { useEventStoreSelector } from '../../MapCore/Events/Event/eventHooks';
+import { useEventSelector } from '../../index';
 import { selectBaseLayers } from '../../MapCore/Layers/layersSlice';
 
 type MainMenuBaseLayerPanelProps = {
@@ -7,7 +8,7 @@ type MainMenuBaseLayerPanelProps = {
 };
 
 const MainMenuBaseLayerPanel = (props : MainMenuBaseLayerPanelProps) => {
-    const baseLayers = useEventStoreSelector(selectBaseLayers);
+    const baseLayers = useEventSelector(selectBaseLayers);
     return (
         <>
             <ul className="list-group list-group-flush">

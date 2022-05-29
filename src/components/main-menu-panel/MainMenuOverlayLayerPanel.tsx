@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { faMap, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProjectsList from './projects-list/ProjectsList';
 
 type MainMenuOverlayLayerPanelProps = {
     openOverlayLayergroup:(layergroupName: string) => void,
@@ -37,8 +38,9 @@ type MainMenuOverlayLayerPanelProps = {
                     }
                 </div>
             </div>
-            {showLayerGroups ? <div>
-                <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('Eiendom')}>
+            {showLayerGroups ? <div className='mb-2'>
+                    <ProjectsList />
+                {/* <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('Eiendom')}>
                     <div className='col-1'></div>
                     <div className='col'>Eiendom</div>
                 </div>
@@ -53,7 +55,7 @@ type MainMenuOverlayLayerPanelProps = {
                 <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('...')}>
                     <div className='col-1'></div>
                     <div className='col'>...</div>
-                </div>
+                </div> */}
             </div> : null }
         </div>
         </>

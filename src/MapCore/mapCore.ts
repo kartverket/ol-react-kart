@@ -18,18 +18,19 @@ import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
-import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
+// import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
+import { useEventDispatch, useEventSelector } from '../../src/index';
 import { selectVisibleBaseLayer, addWmsLayer, addWmtsLayer } from './Layers/layersSlice';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
 
 const MapApi = function() {
-  const dispatch = useEventStoreDispatch();
+  const dispatch = useEventDispatch();
   const layers = Layers();
   const mapMoveEnd = MapMoveEnd(dispatch);
   const getClickCoordinates = GetClickCoordinates(dispatch);
-  const getVisibleBaseLayer = useEventStoreSelector(selectVisibleBaseLayer);
+  const getVisibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   return {
     init(projectConfig: IProjectConfig) {
       

@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import  MapApi  from '../MapCore/mapCore';
 import projectConfig from '../config/norgeskart.json';
-import { useEventStoreSelector } from '../MapCore/Events/Event/eventHooks';
+// import { useEventStoreSelector } from '../MapCore/Events/Event/eventHooks';
+import { useEventSelector } from '../../src/index';
 import { selectClickCoordinates } from '../MapCore/Events/getClickCoordinatesSlice';
 import { selectMapMoveEndCoordinates } from '../MapCore/Events/mapMoveSlice';
 
 const MapTest = () => {
   const [showLayer1, setShowLayer1] = useState(false);
   const [mapInit, setMapInit] = useState(false);
-  const clickCoordinates = useEventStoreSelector(selectClickCoordinates);
-  const mapMoveEndCoordinates = useEventStoreSelector(selectMapMoveEndCoordinates);
+  const clickCoordinates = useEventSelector(selectClickCoordinates);
+  const mapMoveEndCoordinates = useEventSelector(selectMapMoveEndCoordinates);
 
   const mapApi = MapApi();
   useEffect(() => {

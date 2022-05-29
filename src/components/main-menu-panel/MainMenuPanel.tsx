@@ -4,13 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
+// import listProjects from '../../config/listprojects.json';
+// import { IProject, addProject } from './projects-list/projectsListSlice';
+// import { useAppDispatch } from '../../app/hooks';
 
-export default function MainMenuPanel() {
+const MainMenuPanel = () => {
     const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
     const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
     const [mainMenuActiveBaseLayer, setMainMenuActiveBaseLayer] = useState('Gråtone');
     const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
-
+    // const dispatch = useAppDispatch();
+    // const projectsList = listProjects as IProject[];
+    // projectsList.forEach(p => {
+    //     console.log('Project: ', p);
+    //     dispatch(addProject(p));
+    // })
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
         const sideMenuPosition = document.getElementById("sideMenuPosition");
@@ -81,3 +89,5 @@ export default function MainMenuPanel() {
         </div>
     )
 }
+
+export default MainMenuPanel;
