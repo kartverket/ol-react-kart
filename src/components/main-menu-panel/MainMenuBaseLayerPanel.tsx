@@ -1,32 +1,23 @@
 import React, { Component } from 'react';
 import { useEventStoreSelector } from '../../MapCore/Events/Event/eventHooks';
+import { selectBaseLayers } from '../../MapCore/Layers/layersSlice';
 
 type MainMenuBaseLayerPanelProps = {
     changeBaseLayer:(baseLayerName: string) => void
 };
 
 const MainMenuBaseLayerPanel = (props : MainMenuBaseLayerPanelProps) => {
-
+    const baseLayers = useEventStoreSelector(selectBaseLayers);
     return (
         <>
-        <div className='container'>
-            <div className='row' style={{marginBottom: "12px"}} onClick={() => props.changeBaseLayer('Landkart')}>
-                <div className='col-1'></div>
-                <div className='col'>Landkart</div>
-            </div>
-            <div className='row' style={{marginBottom: "12px"}} onClick={() => props.changeBaseLayer('Flybilder')}>
-                <div className='col-1'></div>
-                <div className='col'>Flybilder</div>
-            </div>
-            <div className='row' style={{marginBottom: "12px"}} onClick={() => props.changeBaseLayer('Rasterkart')}>
-                <div className='col-1'></div>
-                <div className='col'>Rasterkart</div>
-            </div>
-            <div className='row' style={{marginBottom: "12px"}} onClick={() => props.changeBaseLayer('...')}>
-                <div className='col-1'></div>
-                <div className='col'>...</div>
-            </div>
-        </div>
+            <ul className="list-group list-group-flush">
+                {baseLayers.map((baseLayer, index) => 
+                    <li key={index} className="list-group-item pt-2 pb-2 text-capitalize" onClick={() => props.changeBaseLayer(baseLayer.Layers?.Layer.title ? baseLayer.Layers?.Layer.title : baseLayer.name)}>
+                        {baseLayer.Layers?.Layer.title ? baseLayer.Layers?.Layer.title : baseLayer.name}
+                    </li>
+                )}
+                
+            </ul>
         </>
     )
 }

@@ -29,23 +29,9 @@ export const { addWmtsLayer, addWmsLayer } = layersSlice.actions;
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {
-  // const visibleBaseLayer: IWms|IWmts = undefined;
-  // const wmtsBaseLayer = state.layers.wmtsLayers.find(l => l.options.isbaselayer && l.options.visibility);
-  // if (wmtsBaseLayer) {
-  //   return wmtsBaseLayer;
-  // }
-  // const wmsBaseLayer = state.layers.wmsLayers.find(l => l.options.isbaselayer && l.options.visibility);
-  // if (wmsBaseLayer) {
-  //   return wmsBaseLayer;
-  // }
-  return state.layers.wmtsLayers.concat(state.layers.wmsLayers).find(l => l.options.isbaselayer && l.options.visibility);
+  return state.layers.wmtsLayers.concat(state.layers.wmsLayers).find(l => l.options.isbaselayer === 'true' && l.options.visibility === 'true');
 };
 
-// export const selectBaseLayers = (state: EventStoreState) => {
-//   let baseLayers: IWms[] | IWmts[] = [];
-//   state.layers.wmsLayers.forEach(l => {
-//     if (l.options.isbaselayer) {
-//       baseLayers.push(l);
-//     }
-//   })
-// }
+export const selectBaseLayers = (state: EventStoreState) => {
+  return state.layers.wmtsLayers.concat(state.layers.wmsLayers).filter(l => l.options.isbaselayer === 'true');
+}
