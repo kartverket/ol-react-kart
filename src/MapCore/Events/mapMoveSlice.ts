@@ -5,13 +5,13 @@ export interface IMapMove {
   coordinates: string;
 }
 
-const initialStateMapMoveEnd: IMapMove = {
+const initialState: IMapMove = {
   coordinates: '0,0',
 };
 
 export const mapMoveSlice = createSlice({
   name: 'mapMoveEnd',
-  initialState: initialStateMapMoveEnd,
+  initialState,
   reducers: {
     mapMoveEnd: (state, action: PayloadAction<IMapMove>) => {
       state.coordinates = action.payload.coordinates;

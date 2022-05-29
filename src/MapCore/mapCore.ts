@@ -18,38 +18,21 @@ import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
-import { useEventStoreDispatch } from './Events/Event/eventHooks';
+import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
+import { getVisibleBaseLayer, addWmsLayer, addWmtsLayer } from './Layers/layersSlice';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
-const getClickCoordinates = GetClickCoordinates();
-const mapMoveEnd = MapMoveEnd();
 
 const MapApi = function() {
-  const layers = Layers();
   const dispatch = useEventStoreDispatch();
+  const layers = Layers();
+  const mapMoveEnd = MapMoveEnd(dispatch);
+  const getClickCoordinates = GetClickCoordinates(dispatch);
+  const visibleBaseLayer = useEventStoreSelector(getVisibleBaseLayer);
   return {
     init(projectConfig: IProjectConfig) {
       
-      projectConfig.config.wmts.forEach(w => {
-        layers.addWmtsLayer(w);
-      })
-      projectConfig.config.wms.forEach(w => {
-        layers.addWmsLayer(w);
-      })
-
-      const sm = new Projection({
-        code: projectConfig.config.project.mapepsg,
-        // extent: projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)
-        // units: mapConfig.extentUnits
-      });
-      const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
-      const newExtent = [0, 0, 0, 0] as [number, number, number, number];
-      if (projectExtent) {
-        projectExtent.split(',').map(e => Number(e)).forEach((v, index) => newExtent[index] = v);
-      }
-      sm.setExtent(newExtent);
-
       // const newMapRes = [];
       // newMapRes[0] = 21664;
 
@@ -60,8 +43,26 @@ const MapApi = function() {
       //   mapScales[t] = mapScales[t - 1] / 2;
       // }
 
-
       if (!myMap) {
+        projectConfig.config.wmts.forEach(w => {
+          dispatch(addWmtsLayer(w));
+        })
+        projectConfig.config.wms.forEach(w => {
+          dispatch(addWmsLayer(w));
+        })
+
+        const sm = new Projection({
+          code: projectConfig.config.project.mapepsg,
+          // extent: projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)
+          // units: mapConfig.extentUnits
+        });
+        const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
+        const newExtent = [0, 0, 0, 0] as [number, number, number, number];
+        if (projectExtent) {
+          projectExtent.split(',').map(e => Number(e)).forEach((v, index) => newExtent[index] = v);
+        }
+        sm.setExtent(newExtent);
+
         myMap = new Map({
           layers: [],
           target: 'map',
@@ -75,16 +76,16 @@ const MapApi = function() {
             zoom: 4
           }),
         });
-        const baseLayer = layers.getVisibleBaseLayer();
-        if (baseLayer) {
-          myMap.addLayer(baseLayer);
-        }
       } else {
-        getClickCoordinates.activate(myMap, dispatch);
-        mapMoveEnd.activate(myMap, dispatch);
+        getClickCoordinates.activate(myMap);
+        mapMoveEnd.activate(myMap);
+        if (visibleBaseLayer) {
+          const newBaseLayer = layers.createTileLayer(visibleBaseLayer);
+          if (newBaseLayer) {
+            myMap.addLayer(newBaseLayer);
+          }   
+        }
       }
-
-      return myMap;
     },
 
     setCenter() {
