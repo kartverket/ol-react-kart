@@ -1,0 +1,1080 @@
+{
+  "config": {
+    "project": {
+      "lat": 7197864,
+      "lon": 306722,
+      "mapepsg": "EPSG:25833",
+      "zoom": 3,
+      "mapbackgroundcolor": "#FFFFFF",
+      "displaycenterepsgcode": "EPSG:25833",
+      "displayCenter": "306722,7197864",
+      "displayprojectionepsgcode": "EPSG:25833",
+      "isygatekeeper": "https://www.norgeskart.no/ws/gkt.py",
+      "name": "geoportal"
+    },
+    "wmts": [{
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "Landkart",
+      "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
+      "params": {
+        "layers": "norgeskart_bakgrunn",
+        "format": "image/png"
+      },
+      "matrixprefix": "true",
+      "guid": "0.norgeskart_bakgrunn",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "true"
+      },
+      "thumbnail": "land"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "Flybilder",
+      "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
+      "params": {
+        "layers": "Nibcache_UTM33_EUREF89",
+        "format": "image/png"
+      },
+      "matrixset": "default028mm",
+      "guid": "0.ortofoto",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      },
+      "thumbnail": "aerial"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "Gråtone",
+      "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
+      "params": {
+        "layers": "norges_grunnkart_graatone",
+        "format": "image/png"
+      },
+      "matrixprefix": "true",
+      "guid": "0.norges_grunnkart_graatone",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      },
+      "thumbnail": "grey"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "Enkel",
+      "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
+      "params": {
+        "layers": "norges_grunnkart",
+        "format": "image/png"
+      },
+      "matrixprefix": "true",
+      "guid": "0.norges_grunnkart",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "Sjøkart",
+      "url": "https://cache.kartverket.no/wmts/1.0.0/sjokartraster?|https://cache.kartverket.no/wmts/1.0.0/sjokartraster?",
+      "params": {
+        "layers": "sjokartraster",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.sjokartraster",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }],
+    "vector": [{
+      "type": "overlay",
+      "name": "Raster N250",
+      "url": "https://www.norgeskart.no/json/dekning/raster/n250_ny.geojson",
+      "epsg": "EPSG:4326",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-n250",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Raster N50",
+      "url": "https://www.norgeskart.no/json/dekning/raster/n50.geojson",
+      "epsg": "EPSG:4326",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-n50",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Raster N500",
+      "url": "https://www.norgeskart.no/json/dekning/raster/n500_ny.geojson",
+      "epsg": "EPSG:4326",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-n500",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Raster N1000",
+      "url": "https://www.norgeskart.no/json/dekning/raster/n1000_ny.geojson",
+      "epsg": "EPSG:4326",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-n1000",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Raster UTM35",
+      "url": "https://www.norgeskart.no/json/dekning/raster/35.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-utm35",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Raster UTM33",
+      "url": "https://www.norgeskart.no/json/dekning/raster/33.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-utm33",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Raster UTM32",
+      "url": "https://www.norgeskart.no/json/dekning/raster/32.geojson",
+      "epsg": "EPSG:4326",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "raster-utm32",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Kommuner",
+      "url": "https://www.norgeskart.no/json/norge/kommuner2018.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "kommuner",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Kommuner UTM35",
+      "url": "https://www.norgeskart.no/json/norge/kommuner-utm35.json",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "kommuner-utm35",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Kommuner UTM33",
+      "url": "https://www.norgeskart.no/json/norge/kommuner-utm33.json",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "kommuner-utm33",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Kommuner UTM32",
+      "url": "https://www.norgeskart.no/json/norge/kommuner-utm32-2018.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "kommuner-utm32",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM50 Dekning sjø",
+      "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-sjo",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM50 Dekning sjø 50m",
+      "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50_50.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-sjo-50",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM50 Dekning sjø 25m",
+      "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50_25.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-sjo-25",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM50 Dekning sjø 5m",
+      "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50_5.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-sjo-5",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Fylker UTM32",
+      "url": "https://www.norgeskart.no/json/norge/fylker-utm32.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "fylker-utm32",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Fylker UTM33",
+      "url": "https://www.norgeskart.no/json/norge/fylker-utm33.json",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "fylker-utm33",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Fylker UTM35",
+      "url": "https://www.norgeskart.no/json/norge/fylker-utm35.json",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "fylker-utm35",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "Fylker",
+      "url": "https://www.norgeskart.no/json/norge/fylker2018.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "fylker",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM Dekning UTM35",
+      "url": "https://www.norgeskart.no/json/dekning/dtm/utm35.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-dekning-utm35",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM Dekning UTM33",
+      "url": "https://www.norgeskart.no/json/dekning/dtm/utm33.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-dekning-utm33",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM Dekning UTM33 100km grid",
+      "url": "https://www.norgeskart.no/json/dekning/dtm/utm33-100km.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-dekning-utm33-100km",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "name": "DTM Dekning UTM32",
+      "url": "https://www.norgeskart.no/json/dekning/dtm/utm32.geojson",
+      "epsg": "EPSG:25833",
+      "groupid": 1,
+      "params": {
+        "format": "application/json"
+      },
+      "guid": "dtm-dekning-utm32",
+      "options": {
+        "visibility": "false"
+      },
+      "style": {
+        "fill": {
+          "color": "rgba(128, 128, 128, 0.1)"
+        },
+        "stroke": {
+          "color": "rgb(64, 128, 64)",
+          "width": 1
+        },
+        "text": {
+          "text": "{n}",
+          "scale": 1.3,
+          "fill": {
+            "color": "#000000"
+          },
+          "stroke": {
+            "color": "#FFF9AA",
+            "width": 3.5
+          }
+        }
+      },
+      "includedfields": {
+        "field": [{
+          "name": "id",
+          "alias": "ID"
+        }, {
+          "name": "n",
+          "alias": "Navn"
+        }]
+      }
+    }],
+    "mapbounds": {
+      "mapbound": [{
+        "epsg": "EPSG:25832",
+        "extent": "-2000000.0, 3500000.0, 3545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25833",
+        "extent": "-2500000.0, 3500000.0, 3045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25834",
+        "extent": "-3000000.0, 3500000.0, 2545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25835",
+        "extent": "-3500000.0, 3500000.0, 2045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25836",
+        "extent": "-4000000.0, 3500000.0, 1545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32632",
+        "extent": "-2000000.0, 3500000.0, 3545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32633",
+        "extent": "-2500000.0, 3500000.0, 3045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32634",
+        "extent": "-3000000.0, 3500000.0, 2545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32635",
+        "extent": "-3500000.0, 3500000.0, 2045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32636",
+        "extent": "-4000000.0, 3500000.0, 1545984.0, 9045984.0"
+      }]
+    }
+  }
+}

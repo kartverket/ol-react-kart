@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import  MapApi  from '../MapCore/mapCore';
-import projectConfig from '../norgeskart.json';
+import projectConfig from '../config/norgeskart.json';
 import { useEventStoreSelector } from '../MapCore/Events/Event/eventHooks';
 import { selectClickCoordinates } from '../MapCore/Events/getClickCoordinatesSlice';
 import { selectMapMoveEndCoordinates } from '../MapCore/Events/mapMoveSlice';

@@ -1,0 +1,718 @@
+{
+  "config": {
+    "project": {
+      "lat": 7197864,
+      "lon": 396722,
+      "mapepsg": "EPSG:25833",
+      "zoom": 4,
+      "mapbackgroundcolor": "#FFFFFF",
+      "displaycenterepsgcode": "EPSG:25833",
+      "displayCenter": "396722,7197864",
+      "displayprojectionepsgcode": "EPSG:25833",
+      "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
+      "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
+      "name": "fastmerker"
+    },
+    "wmts": [{
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "landkart",
+      "url": "https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/|https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/",
+      "params": {
+        "layers": "norgeskart_bakgrunn",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.norgeskart_bakgrunn",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      },
+      "thumbnail": "land"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "flybilder",
+      "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
+      "params": {
+        "layers": "Nibcache_UTM33_EUREF89",
+        "format": "image/png"
+      },
+      "matrixset": "default028mm",
+      "guid": "0.ortofoto",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      },
+      "thumbnail": "aerial"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "rasterkart",
+      "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
+      "params": {
+        "layers": "toporaster",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.toporaster",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      },
+      "thumbnail": "raster"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "gratone",
+      "url": "https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/",
+      "params": {
+        "layers": "norges_grunnkart_graatone",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.norges_grunnkart_graatone",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "true"
+      },
+      "thumbnail": "grey"
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "enkel",
+      "url": "https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/",
+      "params": {
+        "layers": "norges_grunnkart",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.norges_grunnkart",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "terreng",
+      "url": "https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/|https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/",
+      "params": {
+        "layers": "terreng_norgeskart",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.terreng_norgeskart",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }, {
+      "type": "map",
+      "gatekeeper": "true",
+      "name": "sjokart",
+      "url": "https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/|https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/",
+      "params": {
+        "layers": "sjokartraster",
+        "format": "image/png"
+      },
+      "matrixprefix": "false",
+      "matrixset": "utm33n",
+      "guid": "0.sjokartraster",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }, {
+      "type": "map",
+      "name": "jan_mayen",
+      "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
+      "params": {
+        "layers": "Basisdata_NP_Basiskart_JanMayen_WMTS_25833",
+        "format": "image/png"
+      },
+      "matrixset": "default028mm",
+      "wmtsextent": "-393783.2540000008,7978220.98008712,-276963.7430000013,8084965.524000007",
+      "getcapabilities": "true",
+      "guid": "2.Basisdata_NP_Basiskart_JanMayen_WMTS_25833",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }, {
+      "type": "map",
+      "name": "svalbard",
+      "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
+      "params": {
+        "layers": "Basisdata_NP_Basiskart_Svalbard_WMTS_25833",
+        "format": "image/png"
+      },
+      "matrixset": "default028mm",
+      "wmtsextent": "369976.3899489096,8221306.539890718,878234.7199568129,9010718.76990194",
+      "getcapabilities": "true",
+      "guid": "2.Basisdata_NP_Basiskart_Svalbard_WMTS_25833",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "false",
+        "visibility": "false"
+      }
+    }],
+    "wms": [{
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "cells",
+          "queryable": "false",
+          "title": "Elektron. Sjøkart"
+        }
+      },
+      "ticket": "true",
+      "name": "elektron_sjokart",
+      "url": "https://wms.geonorge.no/skwms1/wms.ecc_enc",
+      "params": {
+        "layers": "cells",
+        "format": "image/png"
+      },
+      "guid": "0.cells",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "true",
+        "visibility": "false"
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
+          "queryable": "false",
+          "title": "Øk–1⋅utgåve"
+        }
+      },
+      "gatekeeper": "true",
+      "name": "ok_1_utgave",
+      "url": "https://wms.geonorge.no/skwms1/wms.n5raster2",
+      "params": {
+        "layers": "n5raster_foerstegang_metadata,n5raster_foerstegang",
+        "format": "image/png"
+      },
+      "guid": "0.n5raster_foerstegang_metadata,n5raster_foerstegang",
+      "options": {
+        "isbaselayer": "true",
+        "singletile": "true",
+        "visibility": "false"
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "Niv_fastmerker",
+          "queryable": "false",
+          "title": "Niv. fastmerker"
+        }
+      },
+      "gatekeeper": "true",
+      "name": "niv_fastmerker",
+      "info": "Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.",
+      "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "legendurl": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "groupid": 2,
+      "params": {
+        "layers": "Niv_fastmerker",
+        "format": "image/png"
+      },
+      "guid": "2.Niv_fastmerker",
+      "options": {
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
+      },
+      "includedfields": {
+        "field": [{
+          "alias": "Punktnummer",
+          "name": "punktnummer"
+        }, {
+          "alias": "Punktnavn",
+          "name": "punktnavn"
+        }, {
+          "alias": "Nord",
+          "name": "nord"
+        }, {
+          "alias": "Øst",
+          "name": "ost"
+        }, {
+          "alias": "Sone",
+          "name": "sone"
+        }, {
+          "alias": "Høyde_nn2000",
+          "name": "hoyde_nn2000",
+          "unit": " m"
+        }, {
+          "alias": "Høyde_nn1954",
+          "name": "hoyde_nn1954",
+          "unit": " m"
+        }, {
+          "alias": "Ellipsoidisk_høyde",
+          "name": "ellipsoidisk_hoyde"
+        }, {
+          "alias": "Punkttype",
+          "name": "punkttype"
+        }, {
+          "alias": "Underlag",
+          "name": "underlag"
+        }, {
+          "alias": "Kvalitet_nn1954",
+          "name": "kvalitet_nn1954",
+          "unit": " mm"
+        }, {
+          "alias": "Kvalitet_grunnriss",
+          "name": "kvalitet_grunnriss",
+          "unit": " mm"
+        }, {
+          "alias": "Status",
+          "name": "status"
+        }, {
+          "alias": "Status_år",
+          "name": "status_ar"
+        }, {
+          "alias": "Beskrivelse",
+          "name": "beskrivelse"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "Landsnettpunkt",
+          "queryable": "false",
+          "title": "Landsnettpunkter"
+        }
+      },
+      "gatekeeper": "true",
+      "name": "landsnettpunkter",
+      "info": "Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.",
+      "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "legendurl": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "groupid": 2,
+      "params": {
+        "layers": "Landsnettpunkt",
+        "format": "image/png"
+      },
+      "guid": "2.Landsnettpunkt",
+      "options": {
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
+      },
+      "includedfields": {
+        "field": [{
+          "alias": "Punktnummer",
+          "name": "punktnummer"
+        }, {
+          "alias": "Punktnavn",
+          "name": "punktnavn"
+        }, {
+          "alias": "Nord",
+          "name": "nord"
+        }, {
+          "alias": "Øst",
+          "name": "ost"
+        }, {
+          "alias": "Sone",
+          "name": "sone"
+        }, {
+          "alias": "Høyde_nn2000",
+          "name": "hoyde_nn2000",
+          "unit": " m"
+        }, {
+          "alias": "Høyde_nn1954",
+          "name": "hoyde_nn1954",
+          "unit": " m"
+        }, {
+          "alias": "Ellipsoidisk_høyde",
+          "name": "ellipsoidisk_hoyde"
+        }, {
+          "alias": "Punkttype",
+          "name": "punkttype"
+        }, {
+          "alias": "Underlag",
+          "name": "underlag"
+        }, {
+          "alias": "Kvalitet_nn1954",
+          "name": "kvalitet_nn1954",
+          "unit": " mm"
+        }, {
+          "alias": "Kvalitet_grunnriss",
+          "name": "kvalitet_grunnriss",
+          "unit": " mm"
+        }, {
+          "alias": "Status",
+          "name": "status"
+        }, {
+          "alias": "Status_år",
+          "name": "status_ar"
+        }, {
+          "alias": "Beskrivelse",
+          "name": "beskrivelse"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "Stamnettpunkt",
+          "queryable": "false",
+          "title": "Stamnettpunkter"
+        }
+      },
+      "gatekeeper": "true",
+      "name": "stamnettpunkter",
+      "info": "Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.",
+      "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "legendurl": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "groupid": 2,
+      "params": {
+        "layers": "Stamnettpunkt",
+        "format": "image/png"
+      },
+      "guid": "2.Stamnettpunkt",
+      "options": {
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
+      },
+      "includedfields": {
+        "field": [{
+          "alias": "Punktnummer",
+          "name": "punktnummer"
+        }, {
+          "alias": "Punktnavn",
+          "name": "punktnavn"
+        }, {
+          "alias": "Nord",
+          "name": "nord"
+        }, {
+          "alias": "Øst",
+          "name": "ost"
+        }, {
+          "alias": "Sone",
+          "name": "sone"
+        }, {
+          "alias": "Høyde_nn2000",
+          "name": "hoyde_nn2000",
+          "unit": " m"
+        }, {
+          "alias": "Høyde_nn1954",
+          "name": "hoyde_nn1954",
+          "unit": " m"
+        }, {
+          "alias": "Ellipsoidisk_høyde",
+          "name": "ellipsoidisk_hoyde"
+        }, {
+          "alias": "Punkttype",
+          "name": "punkttype"
+        }, {
+          "alias": "Underlag",
+          "name": "underlag"
+        }, {
+          "alias": "Kvalitet_nn1954",
+          "name": "kvalitet_nn1954",
+          "unit": " mm"
+        }, {
+          "alias": "Kvalitet_grunnriss",
+          "name": "kvalitet_grunnriss",
+          "unit": " mm"
+        }, {
+          "alias": "Status",
+          "name": "status"
+        }, {
+          "alias": "Status_år",
+          "name": "status_ar"
+        }, {
+          "alias": "Beskrivelse",
+          "name": "beskrivelse"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "Trekantpunkt",
+          "queryable": "false",
+          "title": "Trekantpunkter"
+        }
+      },
+      "gatekeeper": "true",
+      "name": "trekantpunkter",
+      "info": "Koordinatbestemte fastmerker er markert i terrenget med metallbolter som vanligvis er satt ned i fast fjell. Fastmerkene er inndelt i Stamnett, landsnett, trekantpunkter og høydefastmerker.",
+      "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "legendurl": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "groupid": 2,
+      "params": {
+        "layers": "Trekantpunkt",
+        "format": "image/png"
+      },
+      "guid": "2.Trekantpunkt",
+      "options": {
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
+      },
+      "includedfields": {
+        "field": [{
+          "alias": "Punktnummer",
+          "name": "punktnummer"
+        }, {
+          "alias": "Punktnavn",
+          "name": "punktnavn"
+        }, {
+          "alias": "Nord",
+          "name": "nord"
+        }, {
+          "alias": "Øst",
+          "name": "ost"
+        }, {
+          "alias": "Sone",
+          "name": "sone"
+        }, {
+          "alias": "Høyde_nn2000",
+          "name": "hoyde_nn2000",
+          "unit": " m"
+        }, {
+          "alias": "Høyde_nn1954",
+          "name": "hoyde_nn1954",
+          "unit": " m"
+        }, {
+          "alias": "Ellipsoidisk_høyde",
+          "name": "ellipsoidisk_hoyde"
+        }, {
+          "alias": "Punkttype",
+          "name": "punkttype"
+        }, {
+          "alias": "Underlag",
+          "name": "underlag"
+        }, {
+          "alias": "Kvalitet_nn1954",
+          "name": "kvalitet_nn1954",
+          "unit": " mm"
+        }, {
+          "alias": "Kvalitet_grunnriss",
+          "name": "kvalitet_grunnriss",
+          "unit": " mm"
+        }, {
+          "alias": "Status",
+          "name": "status"
+        }, {
+          "alias": "Status_år",
+          "name": "status_ar"
+        }, {
+          "alias": "Beskrivelse",
+          "name": "beskrivelse"
+        }]
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "UTMrutenett",
+          "queryable": "false",
+          "title": "UTM-rutenett"
+        }
+      },
+      "gatekeeper": "true",
+      "name": "utm_rutenett",
+      "url": "https://openwms.statkart.no/skwms1/wms.rutenett?",
+      "legendurl": "https://wms.geonorge.no/skwms1/wms.rutenett?",
+      "groupid": 5,
+      "params": {
+        "layers": "UTMrutenett",
+        "format": "image/png"
+      },
+      "guid": "5.UTMrutenett",
+      "options": {
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
+      }
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "Stasjoner",
+          "queryable": false,
+          "title": "Norske stasjoner"
+        }
+      },
+      "gatekeeper": true,
+      "name": "Norske stasjoner",
+      "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "groupid": 6,
+      "params": {
+        "layers": "Stasjoner",
+        "format": "image/png"
+      },
+      "guid": "6.Stasjoner",
+      "options": {
+        "isbaselayer": false,
+        "singletile": true,
+        "visibility": false
+      },
+      "includedfields": {
+        "field": [{
+          "alias": "Stasjonsnavn",
+          "name": "sitename"
+        },
+        {
+          "alias": "StasjonsId",
+          "name": "fourcharid"
+        },
+        {
+          "alias": "Status",
+          "name": "siteconfigstattypename"
+        }
+      ]}
+    }, {
+      "type": "overlay",
+      "Layers": {
+        "Layer": {
+          "name": "Svenske_finske_stasjoner",
+          "queryable": false,
+          "title": "Svenske og finske stasjoner"
+        }
+      },
+      "gatekeeper": true,
+      "name": "Svenske og finske stasjoner",
+      "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
+      "groupid": 6,
+      "params": {
+        "layers": "Svenske_finske_stasjoner",
+        "format": "image/png"
+      },
+      "guid": "6.Svenske_finske_stasjoner",
+      "options": {
+        "isbaselayer": false,
+        "singletile": true,
+        "visibility": false
+      },
+      "includedfields":  {
+        "field": [{
+          "alias": "Stasjonsnavn",
+          "name": "sitename"
+        },
+        {
+          "alias": "StasjonsId",
+          "name": "fourcharid"
+        },
+        {
+          "alias": "Status",
+          "name": "siteconfigstattypename"
+        }
+      ]}
+    }],
+    "maplayer": [{
+      "index": 2,
+      "name": "fastmerker",
+      "groupid": 2
+    }, {
+      "index": 6,
+      "name": "Basestasjoner",
+      "groupid": 6
+    }, {
+      "index": 5,
+      "name": "utm_rutenett",
+      "groupid": 5
+    }],
+    "featureDict": {
+      "Punkttype": {
+        "T": "Trekantpunkt",
+        "L": "Landsnett",
+        "S": "Stamnett",
+        "N": "Høydefastmerke"
+      }
+    },
+    "mapbounds": {
+      "mapbound": [{
+        "epsg": "EPSG:23031",
+        "extent": "-1500000.0, 3500000.0, 4045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:23032",
+        "extent": "-2000000.0, 3500000.0, 3545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:23033",
+        "extent": "-2500000.0, 3500000.0, 3045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:23034",
+        "extent": "-3000000.0, 3500000.0, 2545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:23035",
+        "extent": "-3500000.0, 3500000.0, 2045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:23036",
+        "extent": "-4000000.0, 3500000.0, 1545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25831",
+        "extent": "-1500000.0, 3500000.0, 4045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25832",
+        "extent": "-2000000.0, 3500000.0, 3545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25833",
+        "extent": "-2500000.0, 3500000.0, 3045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25834",
+        "extent": "-3000000.0, 3500000.0, 2545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25835",
+        "extent": "-3500000.0, 3500000.0, 2045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25836",
+        "extent": "-4000000.0, 3500000.0, 1545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32631",
+        "extent": "-1500000.0, 3500000.0, 4045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32632",
+        "extent": "-2000000.0, 3500000.0, 3545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:25833",
+        "extent": "-2500000.0, 3500000.0, 3045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32634",
+        "extent": "-3000000.0, 3500000.0, 2545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32635",
+        "extent": "-3500000.0, 3500000.0, 2045984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:32636",
+        "extent": "-4000000.0, 3500000.0, 1545984.0, 9045984.0"
+      }, {
+        "epsg": "EPSG:4326",
+        "extent": "-180, -90, 180, 90"
+      }, {
+        "epsg": "EPSG:3857",
+        "extent": "-20037508.34, -20037508.34, 20037508.34, 20037508.34"
+      }, {
+        "epsg": "EPSG:900913",
+        "extent": "-20037508.34, -20037508.34, 20037508.34, 20037508.34"
+      }, {
+        "epsg": "EPSG:54009",
+        "extent": "-18000000.0, -9000000.0, 18000000.0, 9000000.0"
+      }, {
+        "epsg": "EPSG:3006",
+        "extent": "-1200000.0, 4700000.0, 2600000.0, 8500000.0"
+      }]
+    }
+  }
+}
