@@ -142,7 +142,7 @@ export interface ITileLayer {
   thumbnail?: string;  
   Layers?: ILayers,
   ticket?: string;    
-  isWmts?: boolean;
+  source?: 'WMS' | 'WMTS';
 }
 
 export interface ICodeLists {

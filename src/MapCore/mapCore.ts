@@ -14,16 +14,19 @@ import { fromLonLat, get } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { vector } from './Source/vector';
 import { useState } from 'react';
-import { IProjectConfig } from './Models/config-model';
+import { IProjectConfig, ITileLayer } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 // import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
 import { useEventDispatch, useEventSelector } from '../../src/index';
 import { selectVisibleBaseLayer, addWmsLayer, addWmtsLayer } from './Layers/layersSlice';
+import { addProject, selectToken } from './Project/projectSlice';
+import { Project } from './Project/Project';
 
 let myMap: Map;
 const geojsonObject2 = mapConfig.geojsonObject2;
+let baseLayer: TileLayer;
 
 const MapApi = function() {
   const dispatch = useEventDispatch();
@@ -31,6 +34,13 @@ const MapApi = function() {
   const mapMoveEnd = MapMoveEnd(dispatch);
   const getClickCoordinates = GetClickCoordinates(dispatch);
   const getVisibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+  const appProject = Project(dispatch);
+  
+  const token = useEventSelector(selectToken);
+  if (token) {
+    console.log('TOKEN updated: ', token);
+    layers.updateLayerParams(baseLayer, token);
+  }
   return {
     init(projectConfig: IProjectConfig) {
       
@@ -45,12 +55,13 @@ const MapApi = function() {
       // }
 
       if (!myMap) {
+        dispatch(addProject(projectConfig.config.project));
         projectConfig.config.wmts.forEach(w => {
-          w.isWmts = true;
+          w.source = 'WMTS';
           dispatch(addWmtsLayer(w));
         })
         projectConfig.config.wms.forEach(w => {
-          w.isWmts = false;
+          w.source = 'WMS';
           dispatch(addWmsLayer(w));
         })
 
@@ -80,13 +91,15 @@ const MapApi = function() {
           }),
         });
       } else {
+        appProject.generateToken();
         getClickCoordinates.activate(myMap);
         mapMoveEnd.activate(myMap);
         if (getVisibleBaseLayer) {
-          const newBaseLayer = layers.createTileLayer(getVisibleBaseLayer);
+          const newBaseLayer = layers.createTileLayer(getVisibleBaseLayer, token);
           if (newBaseLayer) {
+            baseLayer = newBaseLayer;
             myMap.addLayer(newBaseLayer);
-          }   
+          }
         }
       }
     },
