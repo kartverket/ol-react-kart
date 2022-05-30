@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { faMap, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProjectsList from './projects-list/ProjectsList';
+import { useTranslation } from 'react-i18next';
 
 type MainMenuOverlayLayerPanelProps = {
     openOverlayLayergroup:(layergroupName: string) => void,
@@ -9,6 +10,7 @@ type MainMenuOverlayLayerPanelProps = {
 };
 
  const MainMenuOverlayLayerPanel = (props : MainMenuOverlayLayerPanelProps) => {
+    const { t } = useTranslation();
 
     const [showLayerGroups, setShowLayerGroups] = useState(true);
     const [layerGroupActive, setLayerGroupActive] = useState(props.layerGroupActive);
@@ -24,7 +26,7 @@ type MainMenuOverlayLayerPanelProps = {
             <div className='row' style={{marginBottom: "12px"}} onClick={() => setShowLayerGroups(!showLayerGroups)}>
                 <div className='col-1'><FontAwesomeIcon icon={faMap} /></div>
                 <div className='col'>
-                    <span>TEMAKART
+                    <span className="text-uppercase">{t('temakart')}
                         {layerGroupActive !== '' ?
                             <span>:&nbsp;{layerGroupActive}</span>
                         : null }

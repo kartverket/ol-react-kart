@@ -4,14 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
+import { useTranslation } from 'react-i18next';
 // import listProjects from '../../config/listprojects.json';
 // import { IProject, addProject } from './projects-list/projectsListSlice';
 // import { useAppDispatch } from '../../app/hooks';
 
 const MainMenuPanel = () => {
+    const { t } = useTranslation();
     const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
     const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
-    const [mainMenuActiveBaseLayer, setMainMenuActiveBaseLayer] = useState('Gråtone');
+    const [mainMenuActiveBaseLayer, setMainMenuActiveBaseLayerState] = useState('Gråtone');
     const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
     // const dispatch = useAppDispatch();
     // const projectsList = listProjects as IProject[];
@@ -37,6 +39,12 @@ const MainMenuPanel = () => {
     const showMainMenuBaseLayerPanel = () : void => {
         setMainMenuPanelActive(false);
         setMainMenuBaseLayerPanelActive(true);
+    }
+    const setMainMenuActiveBaseLayer = (value: string) : void => {
+        setMainMenuActiveBaseLayerState(value);
+        
+        // TODO: Actually set the new base layer..
+        console.log('CHANGE BASE LAYER TO:', value);
     }
     
     return (
@@ -69,7 +77,7 @@ const MainMenuPanel = () => {
                                 <FontAwesomeIcon icon={faMap} />
                             </div>
                             <div className="col">
-                                <span className="text-uppercase"><span>BAKGRUNNSKART</span>:</span>
+                                <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
                                 <span>&nbsp;{mainMenuActiveBaseLayer}</span>
                             </div>
                             <div className="col-1">
