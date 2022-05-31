@@ -5,6 +5,7 @@ import { ITileLayer } from '../Models/config-model';
 export interface ILayers {
   wmtsLayers: ITileLayer[],
   wmsLayers: ITileLayer[],
+  filterBaseLayers?: ITileLayer[]
 }
 
 const initialState: ILayers = {
@@ -18,9 +19,11 @@ export const layersSlice = createSlice({
   reducers: {
     addWmtsLayer: (state, action: PayloadAction<ITileLayer>) => {
       state.wmtsLayers.push(action.payload);
+      state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');      
     },
     addWmsLayer: (state, action: PayloadAction<ITileLayer>) => {
       state.wmsLayers.push(action.payload);
+      state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
     },
     setVisibleBaseLayer: (state, action: PayloadAction<string>) => {
       state.wmsLayers.map(w => w.options.visibility = ((w.options.isbaselayer && w.name === action.payload) ? 'true' : 'false'));
@@ -37,19 +40,22 @@ export const selectVisibleBaseLayer = (state: EventStoreState) => {
 };
 
 export const selectBaseLayers = (state: EventStoreState) => {
-  return state.layers.wmtsLayers.concat(state.layers.wmsLayers).filter(l => l.options.isbaselayer === 'true');
+  return state.layers.filterBaseLayers;
 }
 
-export const getAllLayers = (state: EventStoreState) => {
-  return state.layers;
-}
+// export const getAllLayers = (state: EventStoreState) => {
+//   return state.layers;
+// }
 
-export const selectLayerByName = (state: EventStoreState) => {
-  const wmtsLayers = JSON.parse(JSON.stringify(state.layers.wmtsLayers)) as ITileLayer[];
-  const wmsLayers = JSON.parse(JSON.stringify(state.layers.wmsLayers)) as ITileLayer[];
-  return wmtsLayers.concat(wmsLayers).filter(l => l.name === 'landkart');
+// export const selectLayerByName = (state: EventStoreState) => {
+  // const a = layersSlice.actions.filterBaseLayers();
+  // return state.layers.visibleBaseLayers;
+  
+  // const wmtsLayers = JSON.parse(JSON.stringify(state.layers.wmtsLayers)) as ITileLayer[];
+  // const wmsLayers = JSON.parse(JSON.stringify(state.layers.wmsLayers)) as ITileLayer[];
+  // return wmtsLayers.concat(wmsLayers).filter(l => l.name === 'landkart');
   // const test: ITileLayer[] = [];
   // state.layers.wmtsLayers.forEach(w => test.push(w));
   // return state.layers.wmtsLayers.concat(state.layers.wmsLayers);
   // return getVisibleBaseLayers(state.layers.wmtsLayers);
-}
+// }
