@@ -40,6 +40,16 @@ export const selectBaseLayers = (state: EventStoreState) => {
   return state.layers.wmtsLayers.concat(state.layers.wmsLayers).filter(l => l.options.isbaselayer === 'true');
 }
 
-export const selectLayerByName = (state: EventStoreState, name: string) => {
-  return state.layers.wmtsLayers.concat(state.layers.wmsLayers).filter(l => l.name === name);
+export const getAllLayers = (state: EventStoreState) => {
+  return state.layers;
+}
+
+export const selectLayerByName = (state: EventStoreState) => {
+  const wmtsLayers = JSON.parse(JSON.stringify(state.layers.wmtsLayers)) as ITileLayer[];
+  const wmsLayers = JSON.parse(JSON.stringify(state.layers.wmsLayers)) as ITileLayer[];
+  return wmtsLayers.concat(wmsLayers).filter(l => l.name === 'landkart');
+  // const test: ITileLayer[] = [];
+  // state.layers.wmtsLayers.forEach(w => test.push(w));
+  // return state.layers.wmtsLayers.concat(state.layers.wmsLayers);
+  // return getVisibleBaseLayers(state.layers.wmtsLayers);
 }

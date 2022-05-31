@@ -5,8 +5,11 @@ import { wmtsTileGrid } from '../TileGrid/wmts';
 import { getTopLeft, getWidth } from 'ol/extent';
 import Projection from 'ol/proj/Projection';
 import { useEventSelector } from '../../index';
+// import { useEventStoreSelector } from '../Events/Event/eventHooks';
+import { selectBaseLayers } from './layersSlice';
 import { selectToken } from '../Project/projectSlice';
-
+import Map from 'ol/Map';
+let map: Map;
 const sProjection = 'EPSG:25833';
 const extent = {
   'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
@@ -36,7 +39,38 @@ const tileGrid = wmtsTileGrid({
   matrixIds: matrixIds,
 });
 
-export const Layers = function () {
+const _getLayersWithGuid = function() {
+  return map.getLayers().getArray().filter(function (elem) {
+    return elem.get('guid') !== undefined;
+  });
+}
+
+const _getLayerByGuid = function(guid: string) {
+    const layers = _getLayersWithGuid();
+    for (let i = 0; i < layers.length; i++) {
+      const layer = layers[i];
+      if (layer.get('guid') === guid) {
+        return layer;
+      }
+    }
+    return null;
+}
+
+const _isLayerVisible = function(layerGuid: string) {
+  let layerexists = false;
+  map.getLayers().forEach(function (maplayer) {
+    if (!layerexists && maplayer.get('guid') === layerGuid) {
+      layerexists = true;
+    }
+  });
+  return layerexists;
+}
+
+
+export const Layers = function (myMap: Map) {
+  map = myMap;
+  // const baseLayers = useEventSelector(selectBaseLayers);
+  // console.log('BASE LAYERS from layers: ', baseLayers);
   return {
     createTileLayer(layer: ITileLayer, token: string): TileLayer | undefined {
       if (layer.source === 'WMTS') {
@@ -56,7 +90,7 @@ export const Layers = function () {
             format: layer.params.format,
           })
         });
-        
+        newTileLayer.set('guid', layer.guid);
         return newTileLayer;
       }
       if (layer.source === 'WMS') {
@@ -70,6 +104,16 @@ export const Layers = function () {
         return newTileLayer;
       }
     },
+
+    hideLayer(layerGuid: string): void{
+      if (_isLayerVisible(layerGuid)) {
+        const layer = _getLayerByGuid(layerGuid);
+        if (layer) {
+          map.removeLayer(layer);
+        }
+      }
+    },
+
     updateLayerParams(layer: TileLayer, token: string) {
       const source = layer.getSource() as WMTS;
       const urls = source.getUrls();
