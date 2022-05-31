@@ -1,10 +1,11 @@
 import React from 'react';
-import { useEventDispatch } from '../../index';
-import { setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice'
+import { useEventDispatch, useEventSelector } from '../../index';
+import { setVisibleBaseLayer, selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice'
 
 
 const ChangeBaseLayer = () =>  {
     const dispatch = useEventDispatch();
+    const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const baseLayers = [
         {
             id: "land",
@@ -40,7 +41,7 @@ const ChangeBaseLayer = () =>  {
         <>
             <div className="changeBaseLayer baseMapPanel baseLayerPanel">
                 {baseLayers.map((baseLayer, index) => 
-                    <button key={index} className="btn btn-default btn-toggle" onClick={() => toggleBaseLayer(index)}>
+                    <button key={index} className={`btn btn-default ${baseLayer.name === visibleBaseLayer?.name ? "activeBtn" : "btn-toggle"}`} onClick={() => toggleBaseLayer(index)}>
                         <div className={baseLayer.symbol} title={baseLayer.name}></div>
                     </button>
                 )}
