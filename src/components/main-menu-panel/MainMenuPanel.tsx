@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 // import listProjects from '../../config/listprojects.json';
 // import { IProject, addProject } from './projects-list/projectsListSlice';
 // import { useAppDispatch } from '../../app/hooks';
+import { useEventDispatch } from '../../../src/index';
+import { setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
@@ -21,6 +23,8 @@ const MainMenuPanel = () => {
     //     console.log('Project: ', p);
     //     dispatch(addProject(p));
     // })
+    const dispatch = useEventDispatch();
+
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
         const sideMenuPosition = document.getElementById("sideMenuPosition");
@@ -45,6 +49,8 @@ const MainMenuPanel = () => {
         
         // TODO: Actually set the new base layer..
         console.log('CHANGE BASE LAYER TO:', value);
+        dispatch(setVisibleBaseLayer(value));
+
     }
     
     return (
