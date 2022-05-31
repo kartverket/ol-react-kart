@@ -8,28 +8,20 @@ const ChangeBaseLayer = () =>  {
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const baseLayers = [
         {
-            id: "land",
             name: "landkart",
-            symbol: "baseMap baseMap-land",
-            isSelected: false
+            symbol: "baseMap baseMap-land"
         },
         {
-            id: "raster",
             name: "rasterkart",
-            symbol: "baseMap baseMap-raster",
-            isSelected: false
+            symbol: "baseMap baseMap-raster"
         },
         {
-            id: "aerial",
             name: "flybilder",
-            symbol: "baseMap baseMap-aerial",
-            isSelected: false
+            symbol: "baseMap baseMap-aerial"
         },
         {
-            id: "grey",
             name: "gratone",
-            symbol: "baseMap baseMap-grey",
-            isSelected: false
+            symbol: "baseMap baseMap-grey"
         }
     ];
 
