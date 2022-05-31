@@ -69,8 +69,6 @@ const _isLayerVisible = function(layerGuid: string) {
 
 export const Layers = function (myMap: Map) {
   map = myMap;
-  // const baseLayers = useEventSelector(selectBaseLayers);
-  // console.log('BASE LAYERS from layers: ', baseLayers);
   return {
     createTileLayer(layer: ITileLayer, token: string): TileLayer | undefined {
       if (layer.source === 'WMTS') {
@@ -78,7 +76,6 @@ export const Layers = function (myMap: Map) {
         if (layer.gatekeeper === 'true') {
           tokenUrl = layer.url + '&gkt=' + token;
         }
-        console.log('TOKEN URL: ', tokenUrl, layer.gatekeeper, token);
         const newTileLayer = new TileLayer({
           source: new WMTS({
             url: tokenUrl ? tokenUrl : layer.url,

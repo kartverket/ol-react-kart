@@ -42,22 +42,6 @@ type MainMenuOverlayLayerPanelProps = {
             </div>
             {showLayerGroups ? <div className='mb-2'>
                     <ProjectsList />
-                {/* <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('Eiendom')}>
-                    <div className='col-1'></div>
-                    <div className='col'>Eiendom</div>
-                </div>
-                <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('Friluftsliv')}>
-                    <div className='col-1'></div>
-                    <div className='col'>Friluftsliv</div>
-                </div>
-                <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('Stedsnavn')}>
-                    <div className='col-1'></div>
-                    <div className='col'>Stedsnavn</div>
-                </div>
-                <div className='row' style={{marginBottom: "12px"}} onClick={() => changeLayerGroupActive('...')}>
-                    <div className='col-1'></div>
-                    <div className='col'>...</div>
-                </div> */}
             </div> : null }
         </div>
         </>

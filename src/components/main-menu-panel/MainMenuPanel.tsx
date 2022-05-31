@@ -5,25 +5,15 @@ import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
 import { useTranslation } from 'react-i18next';
-// import listProjects from '../../config/listprojects.json';
-// import { IProject, addProject } from './projects-list/projectsListSlice';
-// import { useAppDispatch } from '../../app/hooks';
-import { useEventDispatch } from '../../../src/index';
-import { setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import { useEventSelector } from '../../../src/index';
+import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
     const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
     const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
-    const [mainMenuActiveBaseLayer, setMainMenuActiveBaseLayerState] = useState('Gråtone');
     const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
-    // const dispatch = useAppDispatch();
-    // const projectsList = listProjects as IProject[];
-    // projectsList.forEach(p => {
-    //     console.log('Project: ', p);
-    //     dispatch(addProject(p));
-    // })
-    const dispatch = useEventDispatch();
+    const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
 
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
@@ -43,14 +33,6 @@ const MainMenuPanel = () => {
     const showMainMenuBaseLayerPanel = () : void => {
         setMainMenuPanelActive(false);
         setMainMenuBaseLayerPanelActive(true);
-    }
-    const setMainMenuActiveBaseLayer = (value: string) : void => {
-        setMainMenuActiveBaseLayerState(value);
-        
-        // TODO: Actually set the new base layer..
-        console.log('CHANGE BASE LAYER TO:', value);
-        dispatch(setVisibleBaseLayer(value));
-
     }
     
     return (
@@ -84,7 +66,7 @@ const MainMenuPanel = () => {
                             </div>
                             <div className="col">
                                 <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
-                                <span>&nbsp;{mainMenuActiveBaseLayer}</span>
+                                <span>&nbsp;{visibleBaseLayer?.name}</span>
                             </div>
                             <div className="col-1">
                                 {mainMenuPanelActive ? 
@@ -96,7 +78,7 @@ const MainMenuPanel = () => {
                         </div>
                     </div>
                 <div className="sidenav-group"></div>
-                {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel changeBaseLayer = {setMainMenuActiveBaseLayer}/> : null }
+                {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel /> : null }
                 {mainMenuPanelActive ? <MainMenuOverlayLayerPanel openOverlayLayergroup = {setMainMenuActiveOverlayLayergroup} layerGroupActive={mainMenuActiveOverlayLayergroup}/> : null }
                 {mainMenuPanelActive ? <LanguageSelector /> : null }
             </div>

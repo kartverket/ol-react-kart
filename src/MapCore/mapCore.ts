@@ -18,7 +18,6 @@ import { IProjectConfig, ITileLayer } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
-// import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
 import { useEventDispatch, useEventSelector } from '../../src/index';
 import { selectVisibleBaseLayer, addWmsLayer, addWmtsLayer, selectBaseLayers } from './Layers/layersSlice';
 import { addProject, selectToken } from './Project/projectSlice';
@@ -30,15 +29,11 @@ const geojsonObject2 = mapConfig.geojsonObject2;
 
 const MapApi = function() {
   const dispatch = useEventDispatch();
-  // const layers = Layers();
   const mapMoveEnd = MapMoveEnd(dispatch);
   const getClickCoordinates = GetClickCoordinates(dispatch);
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = useEventSelector(selectBaseLayers)
-  // const allLayers = useEventSelector(getAllLayers);
   const appProject = Project(dispatch);
-
-  // const test = useEventSelector(selectLayerByName);
   
   const token = useEventSelector(selectToken);
 
@@ -52,7 +47,6 @@ const MapApi = function() {
       
       const newBaseLayer = layers.createTileLayer(visibleBaseLayer, token);
       if (newBaseLayer) {
-          console.log('ADD layer');
           myMap.addLayer(newBaseLayer);
         }
     }
@@ -61,19 +55,8 @@ const MapApi = function() {
   
   return {
     init(projectConfig: IProjectConfig) {
-      
-      // const newMapRes = [];
-      // newMapRes[0] = 21664;
-
-      // const mapScales = [];
-      // mapScales[0] = 81920000;
-      // for (let t = 1; t < 20; t++) {
-      //   newMapRes[t] = newMapRes[t - 1] / 2;
-      //   mapScales[t] = mapScales[t - 1] / 2;
-      // }
 
       if (!myMap) {
-        console.log('ADD LAYERS');
         dispatch(addProject(projectConfig.config.project));
         projectConfig.config.wmts.forEach(w => {
           w.source = 'WMTS';
@@ -83,12 +66,9 @@ const MapApi = function() {
           w.source = 'WMS';
           dispatch(addWmsLayer(w));
         })
-        // dispatch(filterBaseLayers());
         
         const sm = new Projection({
           code: projectConfig.config.project.mapepsg,
-          // extent: projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)
-          // units: mapConfig.extentUnits
         });
         const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
         const newExtent = [0, 0, 0, 0] as [number, number, number, number];
@@ -103,10 +83,6 @@ const MapApi = function() {
           view: new View({
             center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
             projection: sm,
-            // constrainResolution: true,
-            // maxResolution: 21664,
-            // resolutions: newMapRes,
-            // numZoomLevels: 18,
             zoom: 4
           }),
         });
@@ -114,13 +90,6 @@ const MapApi = function() {
         appProject.generateToken();
         getClickCoordinates.activate(myMap);
         mapMoveEnd.activate(myMap);
-        // if (getVisibleBaseLayer) {
-        //   const newBaseLayer = layers.createTileLayer(getVisibleBaseLayer, token);
-        //   if (newBaseLayer) {
-        //     baseLayer = newBaseLayer;
-        //     myMap.addLayer(newBaseLayer);
-        //   }
-        // }
       }
     },
 
