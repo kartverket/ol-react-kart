@@ -22,25 +22,27 @@ const MainMenuPanelProjectLayers = () => {
 
   return (
     <>
-      <div className="list-group list-group-flush">
+      <ul className="list-group list-group-flush">
         {layerGroups.map((layer, index) =>
-          <div key={index}>
-            <div className="list-group-item pt-2 pb-2">
+          <li key={index} className="list-group-item pt-2 pb-2">
+            <span>
               {t(layer.name)}
-            </div>
+            </span>
+            <ul className="list-group list-group-flush">
             {wmsLayers.filter(w => w.groupid && w.groupid === layer.groupid).map((wmsLayer, wmsIndex) => 
-              <div key={wmsIndex} className="list-group-item pt-2 pb-2 ps-4">
-              <span className='ps-2'>{t(wmsLayer.name)}</span>
-            </div>
+              <li key={wmsIndex} className="list-group-item pt-2 pb-2 ps-4">
+                <span className='ps-2'>{t(wmsLayer.name)}</span>
+              </li>
             )}
             {vectorLayers.filter(v => v.groupid && v.groupid === layer.groupid).map((vectorLayer, vectorIndex) =>
-              <div key={vectorIndex} className="list-group-item pt-2 pb-2 ps-4" onClick={() => toggleVectorLayer(vectorLayer)}>
+              <li key={vectorIndex} className="list-group-item pt-2 pb-2 ps-4" onClick={() => toggleVectorLayer(vectorLayer)}>
                 <span className='ps-2'>{t(vectorLayer.name)}</span>
-              </div>
+              </li>
             )}
-          </div>
+            </ul>
+          </li>
         )}
-      </div>
+      </ul>
     </>
   )
 }
