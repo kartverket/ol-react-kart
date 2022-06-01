@@ -11,9 +11,7 @@ import ProjectsList from './projects-list/ProjectsList';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
-    const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
-    const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
-    // const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
+    const [showBaseLayersList, setShowBaseLayersList] = useState(false);
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const showActiveProject = useAppSelector(selectShowActiveProject);
 
@@ -28,8 +26,7 @@ const MainMenuPanel = () => {
     }
 
     const toggleBaseLayerPanel = (): void => {
-        setMainMenuPanelActive(!mainMenuPanelActive);
-        setMainMenuBaseLayerPanelActive(!mainMenuBaseLayerPanelActive);
+        setShowBaseLayersList(!showBaseLayersList);
     }
     
     return (
@@ -56,16 +53,16 @@ const MainMenuPanel = () => {
                 </div> 
                 <hr/>
                 <div className="container">
-                    <div className="row" style={{ marginBottom: "12px" }} onClick={() => toggleBaseLayerPanel()}>
-                        <div className="col-1">
+                    <div className="d-flex" style={{ marginBottom: "12px" }} onClick={() => toggleBaseLayerPanel()}>
+                        <div className='ps-2 pe-2'>
                             <FontAwesomeIcon icon={faMap} />
                         </div>
-                        <div className="col">
+                        <div className='ps-2 pe-2'>
                             <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
                             <span>&nbsp;{visibleBaseLayer?.name}</span>
                         </div>
-                        <div className="col-1">
-                            {mainMenuPanelActive ? 
+                        <div className='ms-auto ps-2 pe-2'>
+                            {!showBaseLayersList ? 
                                 <FontAwesomeIcon icon={faChevronRight}/>
                                 : 
                                 <FontAwesomeIcon icon={faChevronLeft}/>
@@ -74,27 +71,31 @@ const MainMenuPanel = () => {
                     </div>
                 </div>
                 <hr/>
-                {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel /> : null }
-                {!mainMenuBaseLayerPanelActive ?
-                <div className='container'>
-                    <div className='row' style={{ marginBottom: "12px" }}>
-                        <div className='col-1'><FontAwesomeIcon icon={faMap} /></div>
-                        <div className='col'>
-                            <span className="text-uppercase">{t('temakart')}</span>
+                {showBaseLayersList ? <MainMenuBaseLayerPanel /> : null }
+                {!showBaseLayersList ?
+                <div>
+                    <div className='container'>
+                        <div className='d-flex' style={{ marginBottom: "12px" }}>
+                            <div className='ps-2 pe-2'><FontAwesomeIcon icon={faMap} /></div>
+                            <div className='ps-2 pe-2'>
+                                <span className="text-uppercase">{t('temakart')}</span>
+                            </div>
+                            <div className="ms-auto ps-2 pe-2">
+                                {!showActiveProject ?
+                                    <FontAwesomeIcon icon={faChevronUp} />
+                                    :
+                                    <FontAwesomeIcon icon={faChevronDown} />
+                                }
+                            </div>
                         </div>
-                        <div className="col-1">
-                            {!showActiveProject ?
-                                <FontAwesomeIcon icon={faChevronUp} />
-                                :
-                                <FontAwesomeIcon icon={faChevronDown} />
-                            }
+                        <div>
+                            <ProjectsList />
                         </div>
                     </div>
-                    <div className='mb-2'>
-                        <ProjectsList />
-                    </div>
+                    <div className='m-2 p-2'>
+                        <LanguageSelector />
+                    </div> 
                 </div> : null}
-                {mainMenuPanelActive ? <LanguageSelector /> : null }
             </div>
         </div>
     )
