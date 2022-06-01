@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EventStoreState } from '../Events/Event/eventStore';
-import { IMapLayer, ITileLayer } from '../Models/config-model';
+import { IMapLayer, ITileLayer, IVector } from '../Models/config-model';
 
 export interface ILayers {
   wmtsLayers: ITileLayer[],
   wmsLayers: ITileLayer[],
+  vectorLayers: IVector[],
   groups: IMapLayer[],
   filterBaseLayers?: ITileLayer[]  
 }
@@ -12,6 +13,7 @@ export interface ILayers {
 const initialState: ILayers = {
   wmtsLayers: [],
   wmsLayers: [],
+  vectorLayers: [],
   groups: []
 };
 
@@ -37,6 +39,12 @@ export const layersSlice = createSlice({
       state.wmsLayers = action.payload;
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
     },
+    addVectorLayer: (state, action: PayloadAction<IVector>) => {
+      state.vectorLayers.push(action.payload);
+    },
+    addVectorLayers: (state, action: PayloadAction<IVector[]>) => {
+      state.vectorLayers = action.payload;
+    },
     addGroups: (state, action: PayloadAction<IMapLayer[]>) => {
       state.groups = action.payload;
     },
@@ -47,7 +55,7 @@ export const layersSlice = createSlice({
   }
 });
 
-export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers } = layersSlice.actions;
+export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers } = layersSlice.actions;
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {
@@ -60,6 +68,10 @@ export const selectBaseLayers = (state: EventStoreState) => {
 
 export const selectLayersGroups = (state: EventStoreState) => {
   return state.layers.groups;
+}
+
+export const selectVectorLayers = (state: EventStoreState) => {
+  return state.layers.vectorLayers;
 }
 
 // export const getAllLayers = (state: EventStoreState) => {

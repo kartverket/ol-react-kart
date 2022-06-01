@@ -19,7 +19,7 @@ import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 import { useEventDispatch, useEventSelector } from '../../src/index';
-import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups } from './Layers/layersSlice';
+import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers } from './Layers/layersSlice';
 import { addProject, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
 
@@ -70,6 +70,7 @@ const MapApi = function() {
         dispatch(addGroups(projectConfig.config.maplayer));
         dispatch(addWmtsLayers(projectConfig.config.wmts));
         dispatch(addWmsLayers(projectConfig.config.wms));
+        dispatch(addVectorLayers(projectConfig.config.vector));
         
         const sm = new Projection({
           code: projectConfig.config.project.mapepsg,

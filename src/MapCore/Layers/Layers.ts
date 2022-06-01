@@ -98,6 +98,7 @@ export const Layers = function (myMap: Map) {
             tileGrid: tileGrid,
             style: 'default',
             format: layer.params.format,
+            wrapX: true,
           })
         });
         newTileLayer.set('guid', layer.guid);
