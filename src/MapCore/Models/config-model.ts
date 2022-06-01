@@ -144,6 +144,7 @@ export interface ITileLayer {
   ticket?: string;
   wmtsextent?: string;
   source?: 'WMS' | 'WMTS';
+  groupid?: number;
 }
 
 export interface ICodeLists {
