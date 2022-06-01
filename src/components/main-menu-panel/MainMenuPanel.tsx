@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { faMap, faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import { faMap, faChevronRight, faChevronLeft, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
-import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
 import { useTranslation } from 'react-i18next';
 import { useEventSelector, useAppSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
 import { selectShowActiveProject } from './projects-list/projectsListSlice';
+import ProjectsList from './projects-list/ProjectsList';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
     const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
     const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
-    const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
+    // const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const showActiveProject = useAppSelector(selectShowActiveProject);
 
@@ -53,32 +53,47 @@ const MainMenuPanel = () => {
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-                <div className="sidenav-group"></div>
-                    <div className="container">
+                </div> 
+                <hr/>
+                <div className="container">
                     <div className="row" style={{ marginBottom: "12px" }} onClick={() => toggleBaseLayerPanel()}>
-                            <div className="col-1">
-                                <FontAwesomeIcon icon={faMap} />
-                            </div>
-                            <div className="col">
-                                <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
-                                <span>&nbsp;{visibleBaseLayer?.name}</span>
-                            </div>
-                            <div className="col-1">
-                                {mainMenuPanelActive ? 
-                                    <FontAwesomeIcon icon={faChevronRight}/>
-                                    : 
-                                    <FontAwesomeIcon icon={faChevronLeft}/>
-                                }
-                            </div>
+                        <div className="col-1">
+                            <FontAwesomeIcon icon={faMap} />
+                        </div>
+                        <div className="col">
+                            <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
+                            <span>&nbsp;{visibleBaseLayer?.name}</span>
+                        </div>
+                        <div className="col-1">
+                            {mainMenuPanelActive ? 
+                                <FontAwesomeIcon icon={faChevronRight}/>
+                                : 
+                                <FontAwesomeIcon icon={faChevronLeft}/>
+                            }
                         </div>
                     </div>
-                <div className="sidenav-group"></div>
+                </div>
+                <hr/>
                 {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel /> : null }
-                {!showActiveProject ? <div>{ mainMenuPanelActive?<MainMenuOverlayLayerPanel openOverlayLayergroup = { setMainMenuActiveOverlayLayergroup } layerGroupActive = { mainMenuActiveOverlayLayergroup }/> : null}</div> : null}
-                
-                
+                {!mainMenuBaseLayerPanelActive ?
+                <div className='container'>
+                    <div className='row' style={{ marginBottom: "12px" }}>
+                        <div className='col-1'><FontAwesomeIcon icon={faMap} /></div>
+                        <div className='col'>
+                            <span className="text-uppercase">{t('temakart')}</span>
+                        </div>
+                        <div className="col-1">
+                            {!showActiveProject ?
+                                <FontAwesomeIcon icon={faChevronUp} />
+                                :
+                                <FontAwesomeIcon icon={faChevronDown} />
+                            }
+                        </div>
+                    </div>
+                    <div className='mb-2'>
+                        <ProjectsList />
+                    </div>
+                </div> : null}
                 {mainMenuPanelActive ? <LanguageSelector /> : null }
             </div>
         </div>
