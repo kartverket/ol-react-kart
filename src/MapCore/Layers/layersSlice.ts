@@ -7,7 +7,8 @@ export interface ILayers {
   wmsLayers: ITileLayer[],
   vectorLayers: IVector[],
   groups: IMapLayer[],
-  filterBaseLayers?: ITileLayer[]  
+  filterBaseLayers?: ITileLayer[],
+  vectorLayer?: IVector
 }
 
 const initialState: ILayers = {
@@ -51,11 +52,14 @@ export const layersSlice = createSlice({
     setVisibleBaseLayer: (state, action: PayloadAction<string>) => {
       state.wmsLayers.map(w => w.options.visibility = ((w.options.isbaselayer && w.name === action.payload) ? 'true' : 'false'));
       state.wmtsLayers.map(w => w.options.visibility = ((w.options.isbaselayer && w.name === action.payload) ? 'true' : 'false'));
+    },
+    showVectorLayer: (state, action: PayloadAction<IVector>) => {
+      state.vectorLayer = action.payload
     }
   }
 });
 
-export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers } = layersSlice.actions;
+export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers, showVectorLayer } = layersSlice.actions;
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {
@@ -70,8 +74,20 @@ export const selectLayersGroups = (state: EventStoreState) => {
   return state.layers.groups;
 }
 
+export const selectWmtsLayers = (state: EventStoreState) => {
+  return state.layers.wmtsLayers;
+}
+
+export const selectWmsLayers = (state: EventStoreState) => {
+  return state.layers.wmsLayers;
+}
+
 export const selectVectorLayers = (state: EventStoreState) => {
   return state.layers.vectorLayers;
+}
+
+export const selectVectorLayer = (state: EventStoreState) => {
+  return state.layers.vectorLayer;
 }
 
 // export const getAllLayers = (state: EventStoreState) => {

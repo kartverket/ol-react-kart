@@ -1,5 +1,5 @@
-import { ITileLayer } from '../Models/config-model';
-import { WMTS, TileWMS } from 'ol/source';
+import { ITileLayer, IVector } from '../Models/config-model';
+import { WMTS, TileWMS, Vector } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
 import { Extent, getTopLeft, getWidth } from 'ol/extent';
@@ -8,7 +8,15 @@ import { useEventSelector } from '../../index';
 // import { useEventStoreSelector } from '../Events/Event/eventHooks';
 import { selectBaseLayers } from './layersSlice';
 import { selectToken } from '../Project/projectSlice';
+import { Vector as VectorSource } from 'ol/source';
 import Map from 'ol/Map';
+import { Geometry } from 'ol/geom';
+import GeoJSON from 'ol/format/GeoJSON';
+import { fromLonLat, get } from 'ol/proj';
+import OLVectorLayer from 'ol/layer/Vector';
+import axios from 'axios';
+import { Stroke, Style } from 'ol/style';
+
 let map: Map;
 const sProjection = 'EPSG:25833';
 const extent = {
@@ -117,6 +125,26 @@ export const Layers = function (myMap: Map) {
         });
         return newTileLayer;
       }
+    },
+
+    createVectorLayer(layer: IVector) {
+      axios.get(`${layer.url}`).then(function (response) {
+        const source = new VectorSource({
+          features: new GeoJSON().readFeatures(response.data, {
+            featureProjection: get('EPSG:3857') || undefined,
+          })
+        });
+        const vectorLayer = new OLVectorLayer({
+          source
+        });
+        // if (layer.style) {
+        //   const fill = layer.style.regularshape.fill;
+          
+        //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
+        // }
+        
+        map.addLayer(vectorLayer);
+      });
     },
 
     hideLayer(layerGuid: string): void{

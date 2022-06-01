@@ -19,7 +19,7 @@ import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 import { useEventDispatch, useEventSelector } from '../../src/index';
-import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers } from './Layers/layersSlice';
+import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectVectorLayer } from './Layers/layersSlice';
 import { addProject, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
 
@@ -34,6 +34,7 @@ const MapApi = function() {
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = useEventSelector(selectBaseLayers)
   const appProject = Project(dispatch);
+  const showVector = useEventSelector(selectVectorLayer);
   
   const token = useEventSelector(selectToken);
 
@@ -61,6 +62,12 @@ const MapApi = function() {
     }
   }, [token, visibleBaseLayer, baseLayers])
 
+  useEffect(() => {
+    if (showVector) {
+      const layers = Layers(myMap);
+      layers.createVectorLayer(showVector);
+    }
+  }, [showVector])
   
   return {
     init(projectConfig: IProjectConfig) {

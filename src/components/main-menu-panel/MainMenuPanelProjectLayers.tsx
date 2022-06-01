@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { faMap, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAppSelector, useAppDispatch, useEventSelector } from '../../index';
+import { useAppSelector, useAppDispatch, useEventSelector, useEventDispatch } from '../../index';
 import { selectProjectsList, showActiveProjectFromList } from './projects-list/projectsListSlice';
-import { selectLayersGroups, selectWmtsLayers, selectWmsLayers, selectVectorLayers } from '../../MapCore/Layers/layersSlice';
+import { selectLayersGroups, selectWmtsLayers, selectWmsLayers, selectVectorLayers, showVectorLayer } from '../../MapCore/Layers/layersSlice';
 import { useTranslation } from 'react-i18next';
+import { IVector } from '../../MapCore/Models/config-model';
 
 
 const MainMenuPanelProjectLayers = () => {
@@ -12,6 +13,12 @@ const MainMenuPanelProjectLayers = () => {
   const layerGroups = useEventSelector(selectLayersGroups);
   const wmsLayers = useEventSelector(selectWmsLayers);
   const vectorLayers = useEventSelector(selectVectorLayers);
+  const eventDispatch = useEventDispatch();
+
+  const toggleVectorLayer = (vector: IVector): void => {
+    eventDispatch(showVectorLayer(vector));
+  }
+
 
   return (
     <>
@@ -27,7 +34,7 @@ const MainMenuPanelProjectLayers = () => {
             </div>
             )}
             {vectorLayers.filter(v => v.groupid && v.groupid === layer.groupid).map((vectorLayer, vectorIndex) =>
-              <div key={vectorIndex} className="list-group-item pt-2 pb-2 ps-4">
+              <div key={vectorIndex} className="list-group-item pt-2 pb-2 ps-4" onClick={() => toggleVectorLayer(vectorLayer)}>
                 <span className='ps-2'>{t(vectorLayer.name)}</span>
               </div>
             )}
