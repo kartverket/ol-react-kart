@@ -4,9 +4,9 @@ import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppSelector, useAppDispatch, useEventSelector, useEventDispatch } from '../../index';
 import { selectProjectsList, showActiveProjectFromList } from './projects-list/projectsListSlice';
-import { selectLayersGroups, selectWmtsLayers, selectWmsLayers, selectVectorLayers, toggleVectorLayer, toggleGroup } from '../../MapCore/Layers/layersSlice';
+import { selectLayersGroups, selectWmtsLayers, selectWmsLayers, selectVectorLayers, toggleVectorLayer, toggleGroup, toggleWmsLayer } from '../../MapCore/Layers/layersSlice';
 import { useTranslation } from 'react-i18next';
-import { IMapLayer, IVector } from '../../MapCore/Models/config-model';
+import { IMapLayer, ITileLayer, IVector } from '../../MapCore/Models/config-model';
 
 
 const MainMenuPanelProjectLayers = () => {
@@ -20,6 +20,11 @@ const MainMenuPanelProjectLayers = () => {
     eventDispatch(toggleVectorLayer(vector));    
   }
 
+  const toggleWms = (wms: ITileLayer): void => {
+    console.log('WMS: ', wms);
+    eventDispatch(toggleWmsLayer(wms));
+  }
+
   const toggleLayerGroup = (group: IMapLayer): void => {
     eventDispatch(toggleGroup(group));
   }
@@ -30,7 +35,7 @@ const MainMenuPanelProjectLayers = () => {
       <ul className="list-group list-group-flush">
         {layerGroups.map((group, index) =>
           <li key={index} className="list-group-item pt-2 pb-2">
-            <div className='d-flex' onClick={() => toggleLayerGroup(group)}>
+            <div className='d-flex pt-2 pb-2' onClick={() => toggleLayerGroup(group)}>
               <div>
                 <span>
                   {t(group.name)}
@@ -49,22 +54,33 @@ const MainMenuPanelProjectLayers = () => {
               <div>
                 <ul className="list-group list-group-flush">
                   {wmsLayers.filter(w => w.groupid && w.groupid === group.groupid).map((wmsLayer, wmsIndex) => 
-                  <li key={wmsIndex} className="list-group-item pt-2 pb-2 ps-4">
-                    <span className='ps-2'>{t(wmsLayer.name)}</span>
+                    <li key={wmsIndex} className="list-group-item pt-2 pb-2" onClick={() => toggleWms(wmsLayer)}>
+                    <div className='d-flex'>
+                      <div className="pe-2">
+                        {wmsLayer.options.visibility === 'true' ?
+                          <FontAwesomeIcon icon={faCheckSquare} />
+                          :
+                          <FontAwesomeIcon icon={faSquare} />
+                        }
+                      </div>
+                      <div className='ps-2'>
+                        <span>{t(wmsLayer.name)}</span>
+                      </div>
+                    </div>
                   </li>
                 )}
                   {vectorLayers.filter(v => v.groupid && v.groupid === group.groupid).map((vectorLayer, vectorIndex) =>
-                    <li key={vectorIndex} className="list-group-item pt-2 pb-2 ps-4" onClick={() => toggleVector(vectorLayer)}>
+                    <li key={vectorIndex} className="list-group-item pt-2 pb-2" onClick={() => toggleVector(vectorLayer)}>
                     <div className='d-flex'>
-                      <div className="ps-2 pe-2">
+                      <div className="pe-2">
                         {vectorLayer.options.visibility === 'true' ?
                             <FontAwesomeIcon icon={faCheckSquare} />
                           :
                             <FontAwesomeIcon icon={faSquare} />
                         }
                       </div>
-                      <div>
-                        <span className='ps-2'>{t(vectorLayer.name)}</span>
+                      <div className='ps-2'>
+                        <span>{t(vectorLayer.name)}</span>
                       </div>
                     </div>
                   </li>

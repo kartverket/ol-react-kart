@@ -8,7 +8,8 @@ export interface ILayers {
   vectorLayers: IVector[],
   groups: IMapLayer[],
   filterBaseLayers?: ITileLayer[],
-  toggleVectorLayer?: IVector
+  toggleVectorLayer?: IVector,
+  toggleWmsLayer? : ITileLayer;
 }
 
 const initialState: ILayers = {
@@ -57,9 +58,18 @@ export const layersSlice = createSlice({
     toggleVectorLayer: (state, action: PayloadAction<IVector | undefined>) => {
       state.toggleVectorLayer = action && action.payload ? action.payload : undefined;
       if (action && action.payload) {
-        const vector = state.vectorLayers.find(v => v.guid === action.payload?.guid);
+        const vector = state.vectorLayers.find(v => v.guid === action.payload?.guid && v.name === action.payload?.name);
         if (vector) {
           vector.options.visibility = vector.options.visibility === 'true' ? 'false' : 'true';
+        }
+      }
+    },
+    toggleWmsLayer: (state, action: PayloadAction<ITileLayer | undefined>) => {
+      state.toggleWmsLayer = action && action.payload ? action.payload : undefined;
+      if (action && action.payload) {
+        const wms = state.wmsLayers.find(w => w.guid === action.payload?.guid && w.name === action.payload?.name);
+        if (wms) {
+          wms.options.visibility = wms.options.visibility === 'true' ? 'false' : 'true';
         }
       }
     },
@@ -72,7 +82,7 @@ export const layersSlice = createSlice({
   }
 });
 
-export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers, toggleVectorLayer, toggleGroup } = layersSlice.actions;
+export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers, toggleVectorLayer, toggleWmsLayer, toggleGroup } = layersSlice.actions;
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {
@@ -101,6 +111,10 @@ export const selectVectorLayers = (state: EventStoreState) => {
 
 export const selectToggleVectorLayer = (state: EventStoreState) => {
   return state.layers.toggleVectorLayer;
+}
+
+export const selectToggleWmsLayer = (state: EventStoreState) => {
+  return state.layers.toggleWmsLayer;
 }
 
 // export const getAllLayers = (state: EventStoreState) => {

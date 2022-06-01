@@ -19,7 +19,7 @@ import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 import { useEventDispatch, useEventSelector } from '../../src/index';
-import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectToggleVectorLayer, toggleVectorLayer } from './Layers/layersSlice';
+import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectToggleVectorLayer, toggleVectorLayer, toggleWmsLayer, selectToggleWmsLayer } from './Layers/layersSlice';
 import { addProject, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
 
@@ -35,6 +35,7 @@ const MapApi = function() {
   const baseLayers = useEventSelector(selectBaseLayers)
   const appProject = Project(dispatch);
   const toggleVector = useEventSelector(selectToggleVectorLayer);
+  const toggleWms = useEventSelector(selectToggleWmsLayer);
   
   const token = useEventSelector(selectToken);
 
@@ -76,6 +77,19 @@ const MapApi = function() {
       
     }
   }, [toggleVector, dispatch])
+
+  useEffect(() => {
+    if (toggleWms && token) {
+      const layers = Layers(myMap);
+      if (toggleWms.options.visibility === 'false') {
+        layers.createTileLayer(toggleWms, token);
+        dispatch(toggleWmsLayer());
+      } else {
+        layers.hideLayer(toggleWms.guid);
+        dispatch(toggleWmsLayer());
+      }
+    }
+  }, [toggleWms, token, dispatch]) 
   
   return {
     init(projectConfig: IProjectConfig) {
