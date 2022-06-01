@@ -12,6 +12,7 @@ import ProjectsList from './projects-list/ProjectsList';
 const MainMenuPanel = () => {
     const { t } = useTranslation();
     const [showBaseLayersList, setShowBaseLayersList] = useState(false);
+    const [collapseThematicMap, setCollapseThematicMap] = useState(false);
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const showActiveProject = useAppSelector(selectShowActiveProject);
 
@@ -27,6 +28,10 @@ const MainMenuPanel = () => {
 
     const toggleBaseLayerPanel = (): void => {
         setShowBaseLayersList(!showBaseLayersList);
+    }
+
+    const toggleThematicMap = (): void => {
+        setCollapseThematicMap(!collapseThematicMap);
     }
     
     return (
@@ -75,22 +80,23 @@ const MainMenuPanel = () => {
                 {!showBaseLayersList ?
                 <div>
                     <div className='container'>
-                        <div className='d-flex' style={{ marginBottom: "12px" }}>
+                            <div className='d-flex' style={{ marginBottom: "12px" }} onClick={() => toggleThematicMap()}>
                             <div className='ps-2 pe-2'><FontAwesomeIcon icon={faMap} /></div>
                             <div className='ps-2 pe-2'>
                                 <span className="text-uppercase">{t('temakart')}</span>
                             </div>
                             <div className="ms-auto ps-2 pe-2">
-                                {!showActiveProject ?
+                                {!collapseThematicMap ?
                                     <FontAwesomeIcon icon={faChevronUp} />
                                     :
                                     <FontAwesomeIcon icon={faChevronDown} />
                                 }
                             </div>
                         </div>
+                        {!collapseThematicMap ? 
                         <div>
                             <ProjectsList />
-                        </div>
+                        </div> : null}
                     </div>
                     <div className='m-2 p-2'>
                         <LanguageSelector />
