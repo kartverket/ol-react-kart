@@ -38,18 +38,18 @@ const MainMenuPanel = () => {
         <div id="mySidenav" className="sidenav" style={{width: "0"}} >
             <div id="sideMenuPosition" className="side-menu-position" style={{width: "0"}}>
                 <div className="norgeskart-logo ps-2 pt-0 pe-0 pb-0 m-0">
-                    <div className="container p-0">
+                    <div className="container p-0 mt-3">
                         <div className="d-flex flex-row align-items-center">
                             <div className="p-2">
                                 <h1>
-                                    <a href=".">
+                                    <a href="." className='text-decoration-none'>
                                         <span className="norgeskart-logo-image me-3"></span>
-                                        Norgeskart
+                                        <span>Norgeskart</span>
                                     </a>
                                 </h1>
                             </div>
                             <div className="ms-auto p-2">
-                                <button type="button" className='btn btn-light' onClick={() => closeNav()}>
+                                <button type="button" className='btn btn-light bg-transparent border-0' onClick={() => closeNav()}>
                                     <span className='fs-4'>&times;</span>
                                 </button>
                             </div>
