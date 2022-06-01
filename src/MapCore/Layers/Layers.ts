@@ -74,11 +74,11 @@ export const Layers = function (myMap: Map) {
       if (layer.source === 'WMTS') {
         let tokenUrl = '';
         if (layer.gatekeeper === 'true') {
-          tokenUrl = layer.url + '&gkt=' + token;
+          tokenUrl = layer.url.split('|')[0] + '&gkt=' + token;
         }
         const newTileLayer = new TileLayer({
           source: new WMTS({
-            url: tokenUrl ? tokenUrl : layer.url,
+            url: tokenUrl ? tokenUrl : layer.url.split('|')[0],
             layer: layer.params.layers ? layer.params.layers : '',
             matrixSet: layer.matrixset ? layer.matrixset : sProjection,
             projection: projection,
@@ -93,7 +93,8 @@ export const Layers = function (myMap: Map) {
       if (layer.source === 'WMS') {
         const newTileLayer = new TileLayer({
           source: new TileWMS({
-            url: layer.url,
+            urls: layer.url.split('|'),
+            url: layer.url.split('|')[0],
             params: layer.params,
             projection: projection,
           })
