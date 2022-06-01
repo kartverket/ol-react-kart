@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { faMap, faChevronRight, faChevronLeft, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faMap, faChevronRight, faChevronLeft, faChevronUp, faChevronDown, faTree } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import { useTranslation } from 'react-i18next';
-import { useEventSelector, useAppSelector } from '../../../src/index';
+import { useEventSelector, useAppSelector, useAppDispatch } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
-import { selectShowActiveProject } from './projects-list/projectsListSlice';
+import { selectShowActiveProject, showActiveProjectFromList } from './projects-list/projectsListSlice';
 import ProjectsList from './projects-list/ProjectsList';
+import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
+    const appDispatch = useAppDispatch();
     const [showBaseLayersList, setShowBaseLayersList] = useState(false);
     const [collapseThematicMap, setCollapseThematicMap] = useState(false);
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
@@ -32,6 +34,10 @@ const MainMenuPanel = () => {
 
     const toggleThematicMap = (): void => {
         setCollapseThematicMap(!collapseThematicMap);
+    }
+
+    const toggleShowActiveProject = (): void => {
+        appDispatch(showActiveProjectFromList());
     }
     
     return (
@@ -57,6 +63,7 @@ const MainMenuPanel = () => {
                     </div>
                 </div> 
                 <hr/>
+                {!showActiveProject ?
                 <div className="container">
                     <div className="d-flex" style={{ marginBottom: "12px" }} onClick={() => toggleBaseLayerPanel()}>
                         <div className='ps-2 pe-2'>
@@ -64,7 +71,7 @@ const MainMenuPanel = () => {
                         </div>
                         <div className='ps-2 pe-2'>
                             <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
-                            <span>&nbsp;{visibleBaseLayer?.name}</span>
+                            <span>&nbsp;{t(visibleBaseLayer?.name || '')}</span>
                         </div>
                         <div className='ms-auto ps-2 pe-2'>
                             {!showBaseLayersList ? 
@@ -75,9 +82,25 @@ const MainMenuPanel = () => {
                         </div>
                     </div>
                 </div>
+                :
+                <div className="container">
+                        <div className="d-flex" style={{ marginBottom: "12px" }} onClick={() => toggleShowActiveProject()}>
+                        <div className='ps-2 pe-2'>
+                            <FontAwesomeIcon icon={faTree} />
+                        </div>
+                        <div className='ps-2 pe-2'>
+                            <span className="text-uppercase"><span>{t('Project')}</span>:</span>
+                        </div>
+                        <div className='ms-auto ps-2 pe-2'>                            
+                            <FontAwesomeIcon icon={faChevronLeft}/>
+                        </div>
+                    </div>
+                </div>
+                }
                 <hr/>
                 {showBaseLayersList ? <MainMenuBaseLayerPanel /> : null }
-                {!showBaseLayersList ?
+                {showActiveProject ? <MainMenuPanelProjectLayers /> : null}
+                {!showBaseLayersList && !showActiveProject ?
                 <div>
                     <div className='container'>
                             <div className='d-flex' style={{ marginBottom: "12px" }} onClick={() => toggleThematicMap()}>
