@@ -16,7 +16,6 @@ const MainMenuPanel = () => {
     const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const showActiveProject = useAppSelector(selectShowActiveProject);
-    console.log('SHOW ACTIVE: ', showActiveProject);
 
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");

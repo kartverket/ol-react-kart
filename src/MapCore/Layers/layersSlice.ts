@@ -58,6 +58,10 @@ export const selectBaseLayers = (state: EventStoreState) => {
   return state.layers.filterBaseLayers;
 }
 
+export const selectLayersGroups = (state: EventStoreState) => {
+  return state.layers.groups;
+}
+
 // export const getAllLayers = (state: EventStoreState) => {
 //   return state.layers;
 // }

@@ -8,6 +8,7 @@ const MainMenuBaseLayerPanel = () => {
     const changeBaseLayer = (name: string): void => {
         dispatch(setVisibleBaseLayer(name))
     }
+
     return (
         <>
             {baseLayers ?  <ul className="list-group list-group-flush">

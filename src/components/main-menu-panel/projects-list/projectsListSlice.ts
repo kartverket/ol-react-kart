@@ -33,7 +33,6 @@ export const projectsListSlice = createSlice({
       state.status = 'done';
     },
     showActiveProjectFromList: (state) => {
-      console.log('SHOW');
       state.showActiveProject = !state.showActiveProject;
     }
   }
