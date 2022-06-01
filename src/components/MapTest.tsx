@@ -33,11 +33,11 @@ const MapTest = () => {
       {/* <div>
         <input type="checkbox" checked={showLayer1} onChange={handleShowLayer1}/> Ringve botaniske
       </div> */}
-      <div className='p-2'>
+      {/* <div className='p-2'>
         <div><h4>Only for test: </h4></div>
         <div>Clicked coordinates: {clickCoordinates.coordinate[0]}, {clickCoordinates.coordinate[1]}</div>
         <div>Map move end center coordinates: {mapMoveEndCoordinates.coordinates}</div>
-      </div>
+      </div> */}
       <div id="map" className='ol-map'></div>
      </>
   );
