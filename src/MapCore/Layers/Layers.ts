@@ -2,7 +2,7 @@ import { ITileLayer } from '../Models/config-model';
 import { WMTS, TileWMS } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
-import { getTopLeft, getWidth } from 'ol/extent';
+import { Extent, getTopLeft, getWidth } from 'ol/extent';
 import Projection from 'ol/proj/Projection';
 import { useEventSelector } from '../../index';
 // import { useEventStoreSelector } from '../Events/Event/eventHooks';
@@ -20,24 +20,7 @@ const projection = new Projection({
   extent: extent[sProjection],
 });
 
-const projectionExtent = projection.getExtent();
-const size = getWidth(projectionExtent) / 256;
 
-const resolutions = [];
-const matrixIds = [];
-
-for (let z = 0; z < 21; ++z) {
-  //Max 18?
-  resolutions[z] = size / Math.pow(2, z);
-  matrixIds[z] = String(z);
-}
-
-
-const tileGrid = wmtsTileGrid({
-  origin: getTopLeft(projection.getExtent()),
-  resolutions: resolutions,
-  matrixIds: matrixIds,
-});
 
 const _getLayersWithGuid = function() {
   return map.getLayers().getArray().filter(function (elem) {
@@ -72,6 +55,36 @@ export const Layers = function (myMap: Map) {
   return {
     createTileLayer(layer: ITileLayer, token: string): TileLayer | undefined {
       if (layer.source === 'WMTS') {
+        let extent = projection.getExtent();
+        if (layer.wmtsextent) {
+          const wmtsExtent = layer.wmtsextent.split(',').map((c:string)=> Number(c));
+          if (wmtsExtent.length === 4) {
+            extent = [wmtsExtent[0],wmtsExtent[1],wmtsExtent[2],wmtsExtent[3]];
+          }
+        }
+        const size = getWidth(extent) / 256;
+        
+        const resolutions = [];
+        const matrixIds = [];
+        
+        let matrixSet = layer.matrixset;
+        if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
+          matrixSet = layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1)
+        }
+
+        for (let z = 0; z < 21; ++z) {
+          //Max 18?
+          resolutions[z] = size / Math.pow(2, z);
+          matrixIds[z] = layer.matrixprefix === 'true' ? matrixSet + ':' + String(z) : String(z);
+        }
+                
+        const tileGrid = wmtsTileGrid({
+          extent: extent,
+          origin: getTopLeft(extent),
+          resolutions: resolutions,
+          matrixIds: matrixIds,
+        });
+
         let tokenUrl = '';
         if (layer.gatekeeper === 'true') {
           tokenUrl = layer.url.split('|')[0] + '&gkt=' + token;
@@ -80,7 +93,7 @@ export const Layers = function (myMap: Map) {
           source: new WMTS({
             url: tokenUrl ? tokenUrl : layer.url.split('|')[0],
             layer: layer.params.layers ? layer.params.layers : '',
-            matrixSet: layer.matrixset ? layer.matrixset : sProjection,
+            matrixSet: matrixSet,            
             projection: projection,
             tileGrid: tileGrid,
             style: 'default',
@@ -88,6 +101,8 @@ export const Layers = function (myMap: Map) {
           })
         });
         newTileLayer.set('guid', layer.guid);
+        if (layer.wmtsextent) newTileLayer.set('wmtsextent', extent);
+
         return newTileLayer;
       }
       if (layer.source === 'WMS') {

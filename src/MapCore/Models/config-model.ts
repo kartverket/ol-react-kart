@@ -141,7 +141,8 @@ export interface ITileLayer {
   options: ITileLayerOptions;
   thumbnail?: string;  
   Layers?: ILayers,
-  ticket?: string;    
+  ticket?: string;
+  wmtsextent?: string;
   source?: 'WMS' | 'WMTS';
 }
 

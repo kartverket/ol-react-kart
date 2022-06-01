@@ -6,7 +6,7 @@ import View from 'ol/View';
 import { WMTS } from 'ol/source';
 import Projection from 'ol/proj/Projection';
 import { wmtsTileGrid } from './TileGrid/wmts';
-import { getTopLeft, getWidth } from 'ol/extent';
+import { Extent, getCenter, getWidth } from 'ol/extent';
 import OLVectorLayer from 'ol/layer/Vector';
 import FeatureStyles from './Features/Styles';
 import mapConfig from '../config.json';
@@ -48,6 +48,15 @@ const MapApi = function() {
       const newBaseLayer = layers.createTileLayer(visibleBaseLayer, token);
       if (newBaseLayer) {
           myMap.addLayer(newBaseLayer);
+          if (newBaseLayer.get('wmtsextent')) {
+            const wmtsExtent:Extent = newBaseLayer.get('wmtsextent');
+            const projection = new Projection({
+              code: 'EPSG:25832',
+              extent: wmtsExtent,
+            });
+            const newCenter = getCenter(projection.getExtent());
+            myMap.getView().setCenter(newCenter);
+          }
         }
     }
   }, [token, visibleBaseLayer, baseLayers])
