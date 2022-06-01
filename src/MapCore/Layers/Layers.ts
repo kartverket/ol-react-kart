@@ -111,7 +111,7 @@ export const Layers = function (myMap: Map) {
         });
         newTileLayer.set('guid', layer.guid);
         if (layer.wmtsextent) newTileLayer.set('wmtsextent', extent);
-
+        map.addLayer(newTileLayer);
         return newTileLayer;
       }
       if (layer.source === 'WMS') {
@@ -124,6 +124,7 @@ export const Layers = function (myMap: Map) {
           })
         });
         newTileLayer.set('guid', layer.guid);
+        map.addLayer(newTileLayer);
         return newTileLayer;
       }
     },

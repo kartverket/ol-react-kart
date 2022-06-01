@@ -46,19 +46,20 @@ const MapApi = function() {
         layers.hideLayer(b.guid);
       })
       
-      const newBaseLayer = layers.createTileLayer(visibleBaseLayer, token);
-      if (newBaseLayer) {
-          myMap.addLayer(newBaseLayer);
-          if (newBaseLayer.get('wmtsextent')) {
-            const wmtsExtent:Extent = newBaseLayer.get('wmtsextent');
-            const projection = new Projection({
-              code: 'EPSG:25832',
-              extent: wmtsExtent,
-            });
-            const newCenter = getCenter(projection.getExtent());
-            myMap.getView().setCenter(newCenter);
-          }
-        }
+      layers.createTileLayer(visibleBaseLayer, token);
+      // TODO: temporary commented
+      // if (newBaseLayer) {
+      //     myMap.addLayer(newBaseLayer);
+      //     if (newBaseLayer.get('wmtsextent')) {
+      //       const wmtsExtent:Extent = newBaseLayer.get('wmtsextent');
+      //       const projection = new Projection({
+      //         code: 'EPSG:25832',
+      //         extent: wmtsExtent,
+      //       });
+      //       const newCenter = getCenter(projection.getExtent());
+      //       myMap.getView().setCenter(newCenter);
+      //     }
+      //   }
     }
   }, [token, visibleBaseLayer, baseLayers])
 
@@ -110,34 +111,7 @@ const MapApi = function() {
         getClickCoordinates.activate(myMap);
         mapMoveEnd.activate(myMap);
       }
-    },
-
-    setCenter() {
-      myMap.getView().setCenter([1187255.1082210522, 9258443.652733022]);
-      myMap.getView().setZoom(8);
-    },
-
-    getCenter() {
-      console.log('get center: ', myMap.getView().getCenter());
-      console.log('get epsg: ', myMap.getView().getProjection().getCode());
-    },
-
-    showLayer() {
-      const source = vector({
-        features: new GeoJSON().readFeatures(geojsonObject2, {
-          featureProjection: get('EPSG:3857') || undefined,        
-        })
-      });
-      const style = FeatureStyles.MultiPolygon;
-      // source.set('id', 'juraj');
-      const vectorLayer = new OLVectorLayer({
-        source,
-        style,
-      });
-      vectorLayer.set('id', 'juraj');
-      myMap.addLayer(vectorLayer);
-      // console.log('ADDED layer: ', myMap.getAllLayers());
-    },
+    }
   }
 }
 
