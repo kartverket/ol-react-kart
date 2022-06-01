@@ -27,14 +27,9 @@ const MainMenuPanel = () => {
         }
     }
 
-    const showMainMenuPanel = () : void => {
-        setMainMenuPanelActive(true);
-        setMainMenuBaseLayerPanelActive(false);
-    }
-
-    const showMainMenuBaseLayerPanel = () : void => {
-        setMainMenuPanelActive(false);
-        setMainMenuBaseLayerPanelActive(true);
+    const toggleBaseLayerPanel = (): void => {
+        setMainMenuPanelActive(!mainMenuPanelActive);
+        setMainMenuBaseLayerPanelActive(!mainMenuBaseLayerPanelActive);
     }
     
     return (
@@ -62,7 +57,7 @@ const MainMenuPanel = () => {
                 </div>
                 <div className="sidenav-group"></div>
                     <div className="container">
-                        <div className="row" style={{marginBottom: "12px"}}>
+                    <div className="row" style={{ marginBottom: "12px" }} onClick={() => toggleBaseLayerPanel()}>
                             <div className="col-1">
                                 <FontAwesomeIcon icon={faMap} />
                             </div>
@@ -72,9 +67,9 @@ const MainMenuPanel = () => {
                             </div>
                             <div className="col-1">
                                 {mainMenuPanelActive ? 
-                                    <FontAwesomeIcon icon={faChevronRight} onClick={() => showMainMenuBaseLayerPanel()}/>
+                                    <FontAwesomeIcon icon={faChevronRight}/>
                                     : 
-                                    <FontAwesomeIcon icon={faChevronLeft} onClick={() => showMainMenuPanel()}/>
+                                    <FontAwesomeIcon icon={faChevronLeft}/>
                                 }
                             </div>
                         </div>
