@@ -7,6 +7,7 @@ export interface IMapLayer {
   groupid: number;
   index: number;
   name: string;
+  isOpen?: boolean;
 }
 
 export interface ICodeList {

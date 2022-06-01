@@ -123,6 +123,7 @@ export const Layers = function (myMap: Map) {
             projection: projection,
           })
         });
+        newTileLayer.set('guid', layer.guid);
         return newTileLayer;
       }
     },
@@ -142,7 +143,7 @@ export const Layers = function (myMap: Map) {
           
         //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
         // }
-        
+        vectorLayer.set('guid', layer.guid);
         map.addLayer(vectorLayer);
       });
     },
