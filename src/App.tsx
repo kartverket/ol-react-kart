@@ -6,7 +6,7 @@ import MapTest from './components/MapTest';
 import Logo from './components/Logo';
 import Search from './components/search/Search';
 import listProjects from './config/listprojects.json';
-import { IProject, addProject, setStatusDone } from './components/main-menu-panel/projects-list/projectsListSlice';
+import { IProject, addProjectList, setStatusDone } from './components/main-menu-panel/projects-list/projectsListSlice';
 // import { useAppDispatch } from './app/hooks';
 // import SearchInput from './components/search/SearchInput';
 import { useAppDispatch } from '../src/index';
@@ -15,7 +15,7 @@ function App() {
   const dispatch = useAppDispatch();
   const projectsList = listProjects as IProject[];  
   projectsList.forEach(p => {
-    dispatch(addProject(p));
+    dispatch(addProjectList(p));
   })
   dispatch(setStatusDone())
     

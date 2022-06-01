@@ -8,34 +8,44 @@ export interface IProject {
   HeaderTitle: string;
 }
 
-export interface IProjects {
+export interface IProjectsList {
   projects: IProject[];
   status: 'loading' | 'done';
+  showActiveProject: boolean;
 }
 
-const initialState: IProjects = {
+const initialState: IProjectsList = {
   projects: [],
-  status: 'loading'
+  status: 'loading',
+  showActiveProject: false
 };
 
 export const projectsListSlice = createSlice({
   name: 'projectsList',
   initialState,
   reducers: {
-    addProject: (state, action: PayloadAction<IProject>) => {
+    addProjectList: (state, action: PayloadAction<IProject>) => {
       if (state.status === 'loading') {
         state.projects.push(action.payload);
       }
     },
     setStatusDone: (state) => {
       state.status = 'done';
+    },
+    showActiveProjectFromList: (state) => {
+      console.log('SHOW');
+      state.showActiveProject = !state.showActiveProject;
     }
   }
 });
 
-export const { addProject, setStatusDone } = projectsListSlice.actions;
+export const { addProjectList, setStatusDone, showActiveProjectFromList } = projectsListSlice.actions;
 
 //selectors
 export const selectProjectsList = (state: RootState) => {
-  return state.projectsList;
+  return state.projectsList.projects;
+}
+
+export const selectShowActiveProject = (state: RootState) => {
+  return state.projectsList.showActiveProject;
 }

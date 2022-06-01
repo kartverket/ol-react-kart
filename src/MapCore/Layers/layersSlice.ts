@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EventStoreState } from '../Events/Event/eventStore';
-import { ITileLayer } from '../Models/config-model';
+import { IMapLayer, ITileLayer } from '../Models/config-model';
 
 export interface ILayers {
   wmtsLayers: ITileLayer[],
   wmsLayers: ITileLayer[],
-  filterBaseLayers?: ITileLayer[]
+  groups: IMapLayer[],
+  filterBaseLayers?: ITileLayer[]  
 }
 
 const initialState: ILayers = {
   wmtsLayers: [],
-  wmsLayers: []
+  wmsLayers: [],
+  groups: []
 };
 
 export const layersSlice = createSlice({
@@ -21,9 +23,22 @@ export const layersSlice = createSlice({
       state.wmtsLayers.push(action.payload);
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');      
     },
+    addWmtsLayers: (state, action: PayloadAction<ITileLayer[]>) => {
+      action.payload.forEach(l => l.source = 'WMTS');
+      state.wmtsLayers = action.payload;
+      state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
+    },
     addWmsLayer: (state, action: PayloadAction<ITileLayer>) => {
       state.wmsLayers.push(action.payload);
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
+    },
+    addWmsLayers: (state, action: PayloadAction<ITileLayer[]>) => {
+      action.payload.forEach(l => l.source = 'WMS');
+      state.wmsLayers = action.payload;
+      state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
+    },
+    addGroups: (state, action: PayloadAction<IMapLayer[]>) => {
+      state.groups = action.payload;
     },
     setVisibleBaseLayer: (state, action: PayloadAction<string>) => {
       state.wmsLayers.map(w => w.options.visibility = ((w.options.isbaselayer && w.name === action.payload) ? 'true' : 'false'));
@@ -32,7 +47,7 @@ export const layersSlice = createSlice({
   }
 });
 
-export const { addWmtsLayer, addWmsLayer, setVisibleBaseLayer } = layersSlice.actions;
+export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers } = layersSlice.actions;
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {

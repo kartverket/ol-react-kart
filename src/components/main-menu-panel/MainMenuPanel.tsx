@@ -5,8 +5,9 @@ import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
 import { useTranslation } from 'react-i18next';
-import { useEventSelector } from '../../../src/index';
+import { useEventSelector, useAppSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import { selectShowActiveProject } from './projects-list/projectsListSlice';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
@@ -14,6 +15,8 @@ const MainMenuPanel = () => {
     const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
     const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+    const showActiveProject = useAppSelector(selectShowActiveProject);
+    console.log('SHOW ACTIVE: ', showActiveProject);
 
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
@@ -79,7 +82,9 @@ const MainMenuPanel = () => {
                     </div>
                 <div className="sidenav-group"></div>
                 {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel /> : null }
-                {mainMenuPanelActive ? <MainMenuOverlayLayerPanel openOverlayLayergroup = {setMainMenuActiveOverlayLayergroup} layerGroupActive={mainMenuActiveOverlayLayergroup}/> : null }
+                {!showActiveProject ? <div>{ mainMenuPanelActive?<MainMenuOverlayLayerPanel openOverlayLayergroup = { setMainMenuActiveOverlayLayergroup } layerGroupActive = { mainMenuActiveOverlayLayergroup }/> : null}</div> : null}
+                
+                
                 {mainMenuPanelActive ? <LanguageSelector /> : null }
             </div>
         </div>
