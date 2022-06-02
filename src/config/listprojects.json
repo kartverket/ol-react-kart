@@ -1,11 +1,11 @@
 [{
   "SiteTitle": "tilgjengelighet",
-  "ProjectName": "tilgjengelighet",
+  "ProjectName": "Tilgjengelighet_title",
   "HeaderIcon": "",
   "HeaderTitle": "tilgjengelighet"
 }, {
   "SiteTitle": "fastmerker",
-  "ProjectName": "fastmerker",
+  "ProjectName": "Fastmerker_title",
   "HeaderIcon": "",
   "HeaderTitle": "fastmerker"
 }, {
@@ -25,7 +25,7 @@
   "HeaderTitle": "ssr"
 }, {
   "SiteTitle": "dekning",
-  "ProjectName": "dekning",
+  "ProjectName": "Dekning_title",
   "HeaderIcon": "",
   "HeaderTitle": "dekning"
 }]
