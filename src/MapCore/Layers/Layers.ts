@@ -1,23 +1,17 @@
-import { IFeatureInfoElement, IFill, IStroke, IStyle, ITileLayer, IVector } from '../Models/config-model';
-import { WMTS, TileWMS, Vector } from 'ol/source';
+import { ITileLayer, IVector } from '../Models/config-model';
+import { WMTS, TileWMS } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
-import { Extent, getTopLeft, getWidth } from 'ol/extent';
+import { getTopLeft, getWidth } from 'ol/extent';
 import Projection from 'ol/proj/Projection';
-import { useEventSelector } from '../../index';
 // import { useEventStoreSelector } from '../Events/Event/eventHooks';
-import { selectBaseLayers } from './layersSlice';
-import { selectToken } from '../Project/projectSlice';
 import { Vector as VectorSource } from 'ol/source';
 import Map from 'ol/Map';
-import { Geometry } from 'ol/geom';
 import GeoJSON from 'ol/format/GeoJSON';
-import { fromLonLat, get } from 'ol/proj';
+import { get } from 'ol/proj';
 import OLVectorLayer from 'ol/layer/Vector';
 import axios from 'axios';
-import { Fill, RegularShape, Stroke, Style, Text } from 'ol/style';
-import ImageStyle from 'ol/style/Image';
-import { StyleLike } from 'ol/style/Style';
+import { createStyle } from './Style';
 
 let map: Map;
 const sProjection = 'EPSG:25833';
@@ -181,34 +175,4 @@ export const Layers = function (myMap: Map) {
 
   }
 }
-function createFillStyle(style: IFill): Fill {
-  return new Fill({
-    color: style.color
-  })
-}
-function createStrokeStyle(style: IStroke): Stroke {
-  return new Stroke({
-    color: style.color,
-    width: style.width
-  })
-}
 
-function createStyle(style: IStyle): StyleLike {
-  const olStyle = new Style({
-    fill: style.fill ? createFillStyle(style.fill) : undefined,
-    image: style.regularshape ? new RegularShape({
-      fill: createFillStyle(style.regularshape.fill),
-      points: style.regularshape.points,
-      radius: style.regularshape.radius
-    }) : undefined,
-    stroke: style.stroke ? createStrokeStyle(style.stroke) : undefined,
-    text: style.text ? new Text({
-      text: style.text.text,
-      scale: style.text.scale,
-      fill: createFillStyle(style.text.fill),
-      stroke: createStrokeStyle(style.text.stroke),
-    }) : undefined
-  });
-
-  return olStyle;
-}
