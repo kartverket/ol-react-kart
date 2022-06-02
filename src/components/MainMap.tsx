@@ -1,10 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import  MapApi  from '../MapCore/mapCore';
 import projectConfig from '../config/norgeskart.json';
 // import { useEventStoreSelector } from '../MapCore/Events/Event/eventHooks';
-import { useEventSelector } from '../../src/index';
-import { selectClickCoordinates } from '../MapCore/Events/getClickCoordinatesSlice';
-import { selectMapMoveEndCoordinates } from '../MapCore/Events/mapMoveSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 

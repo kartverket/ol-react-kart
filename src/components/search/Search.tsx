@@ -26,20 +26,6 @@ interface StedsNavn {
   kommuner: Kommune;
 }
 
-interface Metadata {
-  treffPerSide: number;
-  side: number;
-  totaltAntallTreff: number;
-  viserFra: number;
-  viserTil: number;
-  sokeStreng: string;
-}
-
-type GeoNorge = {
-  metadata: Metadata;
-  navn: StedsNavn[];
-};
-
 class Search extends Component {
   state = {
     query: '',

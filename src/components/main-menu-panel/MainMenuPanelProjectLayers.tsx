@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { faMap, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAppSelector, useAppDispatch, useEventSelector, useEventDispatch } from '../../index';
-import { selectProjectsList, showActiveProjectFromList } from './projects-list/projectsListSlice';
-import { selectLayersGroups, selectWmtsLayers, selectWmsLayers, selectVectorLayers, toggleVectorLayer, toggleGroup, toggleWmsLayer } from '../../MapCore/Layers/layersSlice';
+import { useEventSelector, useEventDispatch } from '../../index';
+import { selectLayersGroups, selectWmsLayers, selectVectorLayers, toggleVectorLayer, toggleGroup, toggleWmsLayer } from '../../MapCore/Layers/layersSlice';
 import { useTranslation } from 'react-i18next';
 import { IMapLayer, ITileLayer, IVector } from '../../MapCore/Models/config-model';
 import Legend from './legend/legend';

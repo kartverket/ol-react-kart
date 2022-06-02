@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { faMap, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../../index';
 import { selectProjectsList, showActiveProjectFromList } from './projectsListSlice';
 import { useTranslation } from 'react-i18next';

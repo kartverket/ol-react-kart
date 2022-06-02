@@ -1,20 +1,9 @@
 import 'ol/ol.css';
 import Map from 'ol/Map';
-import OSM from 'ol/source/OSM';
-import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
-import { WMTS } from 'ol/source';
 import Projection from 'ol/proj/Projection';
-import { wmtsTileGrid } from './TileGrid/wmts';
-import { Extent, getCenter, getWidth } from 'ol/extent';
-import OLVectorLayer from 'ol/layer/Vector';
-import FeatureStyles from './Features/Styles';
-import mapConfig from '../config.json';
-import { fromLonLat, get } from 'ol/proj';
-import GeoJSON from 'ol/format/GeoJSON';
-import { vector } from './Source/vector';
-import { useCallback, useEffect, useState } from 'react';
-import { IProjectConfig, ITileLayer } from './Models/config-model';
+import { useEffect } from 'react';
+import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
@@ -24,8 +13,6 @@ import { addProject, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
 
 let myMap: Map;
-const geojsonObject2 = mapConfig.geojsonObject2;
-// let baseLayer: TileLayer;
 
 const MapApi = function() {
   const dispatch = useEventDispatch();
