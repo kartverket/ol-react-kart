@@ -7,6 +7,7 @@ import { selectProjectsList, showActiveProjectFromList } from './projects-list/p
 import { selectLayersGroups, selectWmtsLayers, selectWmsLayers, selectVectorLayers, toggleVectorLayer, toggleGroup, toggleWmsLayer } from '../../MapCore/Layers/layersSlice';
 import { useTranslation } from 'react-i18next';
 import { IMapLayer, ITileLayer, IVector } from '../../MapCore/Models/config-model';
+import Legend from './legend/legend';
 
 
 const MainMenuPanelProjectLayers = () => {
@@ -92,6 +93,12 @@ const MainMenuPanelProjectLayers = () => {
           </li>
         )}
       </ul>
+      <hr/>
+      <div className="container">
+        <div className='mb-2'>
+            <Legend />
+        </div>
+      </div>
     </>
   )
 }

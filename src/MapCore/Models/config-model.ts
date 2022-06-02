@@ -159,6 +159,7 @@ export interface ITileLayer {
   wmtsextent?: string;
   source?: 'WMS' | 'WMTS';
   groupid?: number;
+  legendurl?: string;
 }
 
 export interface ICodeLists {
