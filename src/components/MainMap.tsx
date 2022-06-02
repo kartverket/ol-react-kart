@@ -6,7 +6,7 @@ import { useEventSelector } from '../../src/index';
 import { selectClickCoordinates } from '../MapCore/Events/getClickCoordinatesSlice';
 import { selectMapMoveEndCoordinates } from '../MapCore/Events/mapMoveSlice';
 
-const MapTest = () => {
+const MainMap = () => {
   const [mapInit, setMapInit] = useState(false);
 
   const mapApi = MapApi();
@@ -24,4 +24,4 @@ const MapTest = () => {
   );
 }
 
-export default MapTest;
+export default MainMap;

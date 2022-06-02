@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ChangeBaseLayer from './components/change-base-layer/ChangeBaseLayer';
 import MainMenuPanel from './components/main-menu-panel/MainMenuPanel';
-import MapTest from './components/MapTest';
+import MainMap from './components/MainMap';
 import Logo from './components/Logo';
 import Search from './components/search/Search';
 import listProjects from './config/listprojects.json';
@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       {/*<MainMap />*/}
       
-      <MapTest/>
+      <MainMap/>
       <div className='position-absolute mt-3 ms-4'>
         <Search />
       </div>
