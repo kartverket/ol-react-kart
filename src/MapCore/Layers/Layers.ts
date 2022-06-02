@@ -1,4 +1,4 @@
-import { ITileLayer, IVector } from '../Models/config-model';
+import { IStyle, ITileLayer, IVector } from '../Models/config-model';
 import { WMTS, TileWMS, Vector } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
@@ -15,7 +15,9 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { fromLonLat, get } from 'ol/proj';
 import OLVectorLayer from 'ol/layer/Vector';
 import axios from 'axios';
-import { Stroke, Style } from 'ol/style';
+import { Fill, RegularShape, Stroke, Style } from 'ol/style';
+import ImageStyle from 'ol/style/Image';
+import { StyleLike } from 'ol/style/Style';
 
 let map: Map;
 const sProjection = 'EPSG:25833';
@@ -139,15 +141,17 @@ export const Layers = function (myMap: Map) {
         const vectorLayer = new OLVectorLayer({
           source
         });
-        // if (layer.style) {
+        if (layer.style) {
+          vectorLayer.setStyle(createStyle(layer.style))
         //   const fill = layer.style.regularshape.fill;
           
         //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
-        // }
+        }
         vectorLayer.set('guid', layer.guid);
         map.addLayer(vectorLayer);
       });
     },
+
 
     hideLayer(layerGuid: string): void{
       if (_isLayerVisible(layerGuid)) {
@@ -176,4 +180,18 @@ export const Layers = function (myMap: Map) {
     }
     
   }
+}
+
+function createStyle(style: IStyle): StyleLike {
+  let olStyle = new Style();
+  if (style.regularshape) {
+    olStyle = new Style({
+      image: new RegularShape({
+        fill: new Fill({color: style.regularshape.fill.color}),
+        points: style.regularshape.points,
+        radius: style.regularshape.radius
+      })
+    })
+  }    
+  return olStyle;
 }
