@@ -1,4 +1,4 @@
-import { IStyle, ITileLayer, IVector } from '../Models/config-model';
+import { IFeatureInfoElement, IFill, IStroke, IStyle, ITileLayer, IVector } from '../Models/config-model';
 import { WMTS, TileWMS, Vector } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { wmtsTileGrid } from '../TileGrid/wmts';
@@ -15,7 +15,7 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { fromLonLat, get } from 'ol/proj';
 import OLVectorLayer from 'ol/layer/Vector';
 import axios from 'axios';
-import { Fill, RegularShape, Stroke, Style } from 'ol/style';
+import { Fill, RegularShape, Stroke, Style, Text } from 'ol/style';
 import ImageStyle from 'ol/style/Image';
 import { StyleLike } from 'ol/style/Style';
 
@@ -181,17 +181,34 @@ export const Layers = function (myMap: Map) {
     
   }
 }
+function createFillStyle(style: IFill): Fill {
+  return new Fill({
+    color: style.color
+  })
+}
+function createStrokeStyle(style: IStroke): Stroke {
+  return new Stroke({
+    color: style.color,
+    width: style.width
+  })
+}
 
 function createStyle(style: IStyle): StyleLike {
-  let olStyle = new Style();
-  if (style.regularshape) {
-    olStyle = new Style({
-      image: new RegularShape({
-        fill: new Fill({color: style.regularshape.fill.color}),
-        points: style.regularshape.points,
-        radius: style.regularshape.radius
-      })
-    })
-  }    
+  const olStyle = new Style({
+    fill: style.fill ? createFillStyle(style.fill) : undefined,
+    image: style.regularshape ? new RegularShape({
+      fill: createFillStyle(style.regularshape.fill),
+      points: style.regularshape.points,
+      radius: style.regularshape.radius
+    }) : undefined,
+    stroke: style.stroke ? createStrokeStyle(style.stroke) : undefined,
+    text: style.text ? new Text({
+      text: style.text.text,
+      scale: style.text.scale,
+      fill: createFillStyle(style.text.fill),
+      stroke: createStrokeStyle(style.text.stroke),
+    }) : undefined
+  });
+
   return olStyle;
 }
