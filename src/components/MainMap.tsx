@@ -5,6 +5,8 @@ import projectConfig from '../config/norgeskart.json';
 import { useEventSelector } from '../../src/index';
 import { selectClickCoordinates } from '../MapCore/Events/getClickCoordinatesSlice';
 import { selectMapMoveEndCoordinates } from '../MapCore/Events/mapMoveSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
 const MainMap = () => {
   const [mapInit, setMapInit] = useState(false);
@@ -20,6 +22,11 @@ const MainMap = () => {
   return (
     <>
       <div id="map" className='ol-map'></div>
+      <div className="ol-geolocation ol-unselectable ol-control">
+        <button onClick={() => console.log('GEOLOCATION NOT IMPLEMENTED')} type="button">
+        <FontAwesomeIcon icon={faCrosshairs} />
+        </button>
+      </div>
      </>
   );
 }
