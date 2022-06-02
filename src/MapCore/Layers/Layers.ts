@@ -63,7 +63,7 @@ const _isLayerVisible = function(layerGuid: string) {
 export const Layers = function (myMap: Map) {
   map = myMap;
   return {
-    createTileLayer(layer: ITileLayer, token: string): TileLayer | undefined {
+    createTileLayer(layer: ITileLayer, token: string): TileLayer<WMTS|TileWMS> | undefined {
       if (layer.source === 'WMTS') {
         let extent = projection.getExtent();
         if (layer.wmtsextent) {
@@ -73,10 +73,10 @@ export const Layers = function (myMap: Map) {
           }
         }
         const size = getWidth(extent) / 256;
-        
+
         const resolutions = [];
         const matrixIds = [];
-        
+
         let matrixSet = layer.matrixset;
         if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
           matrixSet = layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1)
@@ -87,7 +87,7 @@ export const Layers = function (myMap: Map) {
           resolutions[z] = size / Math.pow(2, z);
           matrixIds[z] = layer.matrixprefix === 'true' ? matrixSet + ':' + String(z) : String(z);
         }
-                
+
         const tileGrid = wmtsTileGrid({
           extent: extent,
           origin: getTopLeft(extent),
@@ -103,7 +103,7 @@ export const Layers = function (myMap: Map) {
           source: new WMTS({
             url: tokenUrl ? tokenUrl : layer.url.split('|')[0],
             layer: layer.params.layers ? layer.params.layers : '',
-            matrixSet: matrixSet,            
+            matrixSet: matrixSet,
             projection: projection,
             tileGrid: tileGrid,
             style: 'default',
@@ -144,7 +144,7 @@ export const Layers = function (myMap: Map) {
         if (layer.style) {
           vectorLayer.setStyle(createStyle(layer.style))
         //   const fill = layer.style.regularshape.fill;
-          
+
         //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
         }
         vectorLayer.set('guid', layer.guid);
@@ -162,7 +162,7 @@ export const Layers = function (myMap: Map) {
       }
     },
 
-    updateLayerParams(layer: TileLayer, token: string) {
+    updateLayerParams(layer: TileLayer<WMTS|TileWMS>, token: string) {
       const source = layer.getSource() as WMTS;
       const urls = source.getUrls();
       const newUrls: string[] = [];
@@ -174,11 +174,11 @@ export const Layers = function (myMap: Map) {
       if (newUrls.length > 0) {
         source.setUrls(newUrls);
       }
-      
+
       // sourceUrl = sourceUrl + '&GKT=' + token;
-      
+
     }
-    
+
   }
 }
 function createFillStyle(style: IFill): Fill {
