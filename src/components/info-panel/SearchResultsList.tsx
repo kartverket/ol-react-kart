@@ -1,27 +1,19 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../index';
+import { useAppSelector } from '../../index';
 import { selectSearch } from '../search/searchSlice';
-import { useTranslation } from 'react-i18next';
 
 
 const SearchResultsList = () => {
-  const { t } = useTranslation();
 
   const searchResult = useAppSelector(selectSearch);
-  // const dispatch = useAppDispatch();
-
-  // const toggleShowActiveProjectFromList = (): void => {
-  //   dispatch(showActiveProjectFromList());
-  // }
 
   return (
     <>
     {searchResult.geoNorge ?
       <ul className="list-group list-group-flush">
         {searchResult?.geoNorge?.navn?.map((result, index) => 
-          <li key={index} className="list-group-item pt-2 pb-2 text-capitalize">
-            <span>{result.skrivemåte}
-            {/* , {result.kommuner[0]?.kommunenavn} */}
+          <li key={index} className="list-group-item pt-2 pb-2">
+            <span>{result.skrivemåte}, {result.navneobjekttype} {result.kommuner ? 'i ' + result.kommuner[0].kommunenavn : null}
             </span>
           </li>
           )} 
