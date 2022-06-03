@@ -5,13 +5,13 @@ import { EventStoreState } from './Event/eventStore';
 export interface IMapClickInfo {
   epsg?: string;
   zoom?: number;
-  coordinate: Coordinate;
+  coordinate?: Coordinate;
   type?: string;
   dragging?: boolean;
 }
 
 const initialState: IMapClickInfo = {
-  coordinate: [0,0],
+  
 };
 
 export const getClickCoordinatesSlice = createSlice({

@@ -17,7 +17,7 @@ let myMap: Map;
 const MapApi = function() {
   const dispatch = useEventDispatch();
   const mapMoveEnd = MapMoveEnd(dispatch);
-  const getClickCoordinates = GetClickCoordinates(dispatch);
+  const getClickCoordinates = GetClickCoordinates();
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = useEventSelector(selectBaseLayers)
   const appProject = Project(dispatch);

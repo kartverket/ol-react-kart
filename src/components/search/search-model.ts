@@ -17,7 +17,7 @@ export interface StedsNavn {
   stedstatus: string;
   representasjonspunkt: RepresentasjonsPunkt;
   fylker: Fylke;
-  kommuner: Kommune;
+  kommuner: Kommune[];
 }
 
 export interface Metadata {

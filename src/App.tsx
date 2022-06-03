@@ -6,9 +6,9 @@ import Logo from './components/Logo';
 import Search from './components/search/Search';
 import listProjects from './config/listprojects.json';
 import { IProject, addProjectList, setStatusDone } from './components/main-menu-panel/projects-list/projectsListSlice';
-// import { useAppDispatch } from './app/hooks';
-// import SearchInput from './components/search/SearchInput';
+import InfoPanel from './components/info-panel/InfoPanel';
 import { useAppDispatch } from '../src/index';
+
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,15 +19,12 @@ function App() {
   dispatch(setStatusDone())
     
   
-  
-
   return (
     <div className="App">
-      {/*<MainMap />*/}
-      
       <MainMap/>
       <div className='position-absolute mt-3 ms-4'>
         <Search />
+        <InfoPanel />
       </div>
       <MainMenuPanel/>
       <ChangeBaseLayer />

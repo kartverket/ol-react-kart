@@ -23,6 +23,6 @@ export const searchSlice = createSlice({
 export const { setResult } = searchSlice.actions;
 
 //selectors
-export const selectGeoNorge = (state: RootState) => {
-  return state.search.geoNorge;
+export const selectSearch = (state: RootState) => {
+  return state.search;
 };

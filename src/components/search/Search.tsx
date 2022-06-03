@@ -6,13 +6,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IGeoNorge } from './search-model';
-import { useAppDispatch } from '../../index';
+import { useAppDispatch, useEventDispatch } from '../../index';
 import { setResult } from '../search/searchSlice';
+import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 
 function Search() {
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const appDispatch = useAppDispatch();
+  const eventDispatch = useEventDispatch();
 
   useEffect(() => {
     if (query) {
@@ -25,7 +27,14 @@ function Search() {
     },[query, appDispatch]);
 
   const handleInputChange = () => {
-    if (search) setQuery(search?.value);
+    console.log('SEARCH: ', search?.value);
+    if (search?.value) {
+      setQuery(search?.value)
+      eventDispatch(setClickCoordinates({}));
+    } else {
+      appDispatch(setResult({}));
+      eventDispatch(setClickCoordinates({}));
+    }
   };
   let search:HTMLInputElement|null;
 
