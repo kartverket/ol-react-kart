@@ -5,56 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IGeoNorge } from './search-model';
+import { useAppDispatch } from '../../index';
+import { setResult } from '../search/searchSlice';
 
-type RepresentasjonsPunkt = {
-  koordsys: number;
-  nord: number;
-  øst: number;
-};
-
-type Fylke = { fylkesnavn: string; fylkesnummer: string };
-type Kommune = { kommunenummer: string; kommunenavn: string };
-interface StedsNavn {
-  skrivemåte: string;
-  skrivemåtestatus: string;
-  navnestatus: string;
-  språk: string;
-  navneobjekttype: string;
-  stedsnummer: number;
-  stedstatus: string;
-  representasjonspunkt: RepresentasjonsPunkt;
-  fylker: Fylke;
-  kommuner: Kommune;
-}
-
-interface Metadata {
-  treffPerSide: number;
-  side: number;
-  totaltAntallTreff: number;
-  viserFra: number;
-  viserTil: number;
-  sokeStreng: string;
-}
-
-interface IGeoNorge {
-  metadata?: Metadata;
-  navn?: StedsNavn[];
-};
 function Search() {
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
-  const [, setResults] = useState({});
+  const appDispatch = useAppDispatch();
 
   useEffect(() => {
     if (query) {
       axios.get(`${API_URL}${query}*&treffPerSide=15&side=1`).then((response) => {
         const r:IGeoNorge = response.data; 
-        setResults(r);  
+        appDispatch(setResult(r));
         console.table(r.navn);
-
       });
     }
-    },[query]);
+    },[query, appDispatch]);
 
   const handleInputChange = () => {
     if (search) setQuery(search?.value);
