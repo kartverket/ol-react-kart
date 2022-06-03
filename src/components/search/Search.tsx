@@ -26,6 +26,19 @@ interface StedsNavn {
   kommuner: Kommune;
 }
 
+interface Metadata {
+  treffPerSide: number;
+  side: number;
+  totaltAntallTreff: number;
+  viserFra: number;
+  viserTil: number;
+  sokeStreng: string;
+}
+
+interface IGeoNorge {
+  metadata?: Metadata;
+  navn?: StedsNavn[];
+};
 class Search extends Component {
   state = {
     query: '',
@@ -33,9 +46,10 @@ class Search extends Component {
   };
 
   getInfo = () => {
-    axios.get(`${API_URL}${this.state.query}*&treffPerSide=15&side=1`).then(({ data }) => {
+    axios.get(`${API_URL}${this.state.query}*&treffPerSide=15&side=1`).then((response) => {
+      const r:IGeoNorge = response.data; 
       this.setState({
-        results: data.navn,
+        results: r,
       });
     });
   };
@@ -48,11 +62,10 @@ class Search extends Component {
       () => {
         if (this.state.query && this.state.query.length > 1) {
           this.getInfo();
-          const data: any = this.state.results;
+          const data: IGeoNorge = this.state.results;
 
-          console.table(data);
-          const geoNorgeResult: StedsNavn[] = data;
-          console.log('her kommer stedsnavn: ', geoNorgeResult);
+          console.table(data.navn);
+          console.log('her kommer stedsnavn: ', data.navn);
         }
       },
     );
