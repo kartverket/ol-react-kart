@@ -1,9 +1,10 @@
-const { API_KEY } = process.env;
+// const { API_KEY } = process.env;
 const API_URL = 'https://ws.geonorge.no/stedsnavn/v1/navn?sok=';
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type RepresentasjonsPunkt = {
   koordsys: number;
@@ -39,40 +40,27 @@ interface IGeoNorge {
   metadata?: Metadata;
   navn?: StedsNavn[];
 };
-class Search extends Component {
-  state = {
-    query: '',
-    results: {},
-  };
+function Search() {
+  const { t } = useTranslation();
+  const [query, setQuery] = useState('');
+  const [, setResults] = useState({});
 
-  getInfo = () => {
-    axios.get(`${API_URL}${this.state.query}*&treffPerSide=15&side=1`).then((response) => {
-      const r:IGeoNorge = response.data; 
-      this.setState({
-        results: r,
+  useEffect(() => {
+    if (query) {
+      axios.get(`${API_URL}${query}*&treffPerSide=15&side=1`).then((response) => {
+        const r:IGeoNorge = response.data; 
+        setResults(r);  
+        console.table(r.navn);
+
       });
-    });
+    }
+    },[query]);
+
+  const handleInputChange = () => {
+    if (search) setQuery(search?.value);
   };
+  let search:HTMLInputElement|null;
 
-  handleInputChange = () => {
-    this.setState(
-      {
-        query: this.search.value,
-      },
-      () => {
-        if (this.state.query && this.state.query.length > 1) {
-          this.getInfo();
-          const data: IGeoNorge = this.state.results;
-
-          console.table(data.navn);
-          console.log('her kommer stedsnavn: ', data.navn);
-        }
-      },
-    );
-  };
-  search: any;
-
-  render() {
     return (
       <>
         <div className="input-group mb-3 shadow bg-body rounded" style={{height: '50px'}}>
@@ -92,9 +80,9 @@ class Search extends Component {
             <FontAwesomeIcon icon={faBars} />
           </button>
           <input style={{ width: '350px' }} className="border border-start-0 border-end-0"
-            placeholder="Søk på stedsnavn..."
-            ref={input => (this.search = input)}
-            onChange={this.handleInputChange}
+            placeholder={t('search_text')}
+            ref={input => (search = input)}
+            onChange={handleInputChange}
           />
           {/* <Suggestions results={this.state.results} /> */}
           <span className='input-group-text border-start-0 bg-transparent border'
@@ -112,7 +100,6 @@ class Search extends Component {
         </div>
       </>
     );
-  }
 }
 
 export default Search;
