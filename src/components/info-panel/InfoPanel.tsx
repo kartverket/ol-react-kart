@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch, useEventSelector } from '../../index';
+import { useAppSelector, useEventSelector } from '../../index';
 import { selectSearch } from '../search/searchSlice';
 import { useTranslation } from 'react-i18next';
 import SearchResultsList from './SearchResultsList';
@@ -12,12 +12,6 @@ const InfoPanel = () => {
 
   const searchResult = useAppSelector(selectSearch);
   const clickCoordinates = useEventSelector(selectClickCoordinates);
-  console.log('clickCoordinates', clickCoordinates);
-  // const dispatch = useAppDispatch();
-
-  // const toggleShowActiveProjectFromList = (): void => {
-  //   dispatch(showActiveProjectFromList());
-  // }
 
   return (
     <>

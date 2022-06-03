@@ -8,7 +8,6 @@ const SearchResultsList = () => {
   const { t } = useTranslation();
 
   const searchResult = useAppSelector(selectSearch);
-  console.log('Search result: ', searchResult);
   // const dispatch = useAppDispatch();
 
   // const toggleShowActiveProjectFromList = (): void => {
