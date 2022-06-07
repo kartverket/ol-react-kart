@@ -14,7 +14,7 @@ const SearchResultsList = () => {
       <ul className="list-group list-group-flush">
         {searchResult?.geoNorge?.navn?.map((result, index) =>
           <li key={index} className="list-group-item pt-2 pb-2" 
-          onClick={() => dispatch(setCenter([result.representasjonspunkt.øst,result.representasjonspunkt.nord]))}>
+          onClick={() => dispatch(setCenter(result.representasjonspunkt))}>
             <span>{result.skrivemåte}, {result.navneobjekttype} {result.kommuner ? 'i ' + result.kommuner[0].kommunenavn : null}
             </span>
           </li>

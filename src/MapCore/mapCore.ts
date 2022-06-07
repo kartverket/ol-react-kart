@@ -12,6 +12,7 @@ import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, 
 import { addProject, selectCenter, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
 import axios from 'axios';
+import { generateKoordTransUrl } from '../utils/n3api';
 
 let myMap: Map;
 
@@ -31,9 +32,14 @@ const MapApi = function() {
   useEffect(() => {
   if (center) {
     console.log(center);
-    axios.get(`https://ws.geonorge.no/transformering/v1/transformer?x=${center[0]}&y=${center[1]}&fra=4326&til=25833`).then(function (response) {
+    const projectProjection = myMap.getView().getProjection().getCode().replace(/.*:/,'');
+    const transUrl = generateKoordTransUrl(center.øst.toString(), center.nord.toString(), projectProjection, center.koordsys.toString());
+    axios.get(transUrl).then(function (response) {
       const transformedCoordinate = (response.data);
       myMap.getView().setCenter([transformedCoordinate.x, transformedCoordinate.y]);
+      if (Number(myMap.getView().getZoom()) < 10) {
+        myMap.getView().setZoom(12);
+      }
     });
   }
   },[center])
