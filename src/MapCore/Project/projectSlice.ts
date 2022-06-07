@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Coordinate } from 'ol/coordinate';
+import { RepresentasjonsPunkt } from '../../components/search/search-model';
 import { EventStoreState } from '../Events/Event/eventStore';
 import { IProject } from '../Models/config-model';
 
@@ -7,7 +7,7 @@ import { IProject } from '../Models/config-model';
 export interface IAppProject {
   project?: IProject,
   token: string,
-  center?: Coordinate
+  center?: RepresentasjonsPunkt
 }
 
 const initialState: IAppProject = {
@@ -24,7 +24,7 @@ export const projectSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    setCenter: (state, action: PayloadAction<Coordinate>) => {
+    setCenter: (state, action: PayloadAction<RepresentasjonsPunkt>) => {
       state.center = action.payload;
     }
   }
