@@ -12,12 +12,19 @@ export interface IProjectsList {
   projects: IProject[];
   status: 'loading' | 'done';
   showActiveProject: boolean;
+  activeProject: IProject;
 }
 
 const initialState: IProjectsList = {
   projects: [],
   status: 'loading',
-  showActiveProject: false
+  showActiveProject: false,
+  activeProject: {
+    SiteTitle: "norgeskart",
+    ProjectName: "norgeskart",
+    HeaderIcon: "",
+    HeaderTitle: "norgeskart"
+  }
 };
 
 export const projectsListSlice = createSlice({
@@ -34,11 +41,14 @@ export const projectsListSlice = createSlice({
     },
     showActiveProjectFromList: (state) => {
       state.showActiveProject = !state.showActiveProject;
+    },
+    setActiveProject: (state, action: PayloadAction<IProject>) => {
+      state.activeProject = action.payload;
     }
   }
 });
 
-export const { addProjectList, setStatusDone, showActiveProjectFromList } = projectsListSlice.actions;
+export const { addProjectList, setStatusDone, showActiveProjectFromList, setActiveProject } = projectsListSlice.actions;
 
 //selectors
 export const selectProjectsList = (state: RootState) => {
@@ -47,4 +57,8 @@ export const selectProjectsList = (state: RootState) => {
 
 export const selectShowActiveProject = (state: RootState) => {
   return state.projectsList.showActiveProject;
+}
+
+export const selectActiveProject = (state: RootState) => {
+  return state.projectsList.activeProject;
 }
