@@ -7,6 +7,7 @@ export interface IMapLayer {
   groupid: number;
   index: number;
   name: string;
+  isOpen?: boolean;
 }
 
 export interface ICodeList {
@@ -72,15 +73,28 @@ export interface IVectorOptions {
 export interface IFill {
   color: string;
 }
+export interface IStroke {
+  color: string;
+  width: number;
+}
+export interface IText {
+  text: string;
+  scale: number;
+  fill: IFill;
+  stroke: IStroke;
+}
 
 export interface IRegularshape {
-  fill: IFill
+  fill: IFill;
   points: number;
   radius: number;
 }
 
 export interface IStyle {
-  regularshape: IRegularshape;
+  regularshape?: IRegularshape;
+  fill?: IFill;
+  stroke?: IStroke;
+  text?: IText;
 }
 
 export interface IParamsVector {
@@ -141,8 +155,11 @@ export interface ITileLayer {
   options: ITileLayerOptions;
   thumbnail?: string;  
   Layers?: ILayers,
-  ticket?: string;    
+  ticket?: string;
+  wmtsextent?: string;
   source?: 'WMS' | 'WMTS';
+  groupid?: number;
+  legendurl?: string;
 }
 
 export interface ICodeLists {

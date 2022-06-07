@@ -1,52 +1,47 @@
-import React, { Component } from 'react';
-class ChangeBaseLayer extends Component {
+import React from 'react';
+import { useEventDispatch, useEventSelector } from '../../index';
+import { setVisibleBaseLayer, selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice'
 
-    baseLayers = [
+
+const ChangeBaseLayer = () =>  {
+    const dispatch = useEventDispatch();
+    const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+    const baseLayers = [
         {
-            id: "land",
-            title: "Land",
-            symbol: "baseMap baseMap-land",
-            isSelected: false
+            name: "landkart",
+            symbol: "baseMap baseMap-land"
         },
         {
-            id: "raster",
-            title: "Raster",
-            symbol: "baseMap baseMap-raster",
-            isSelected: false
+            name: "rasterkart",
+            symbol: "baseMap baseMap-raster"
         },
         {
-            id: "aerial",
-            title: "Flybilder",
-            symbol: "baseMap baseMap-aerial",
-            isSelected: false
+            name: "flybilder",
+            symbol: "baseMap baseMap-aerial"
         },
         {
-            id: "grey",
-            title: "Graatone",
-            symbol: "baseMap baseMap-grey",
-            isSelected: false
+            name: "gratone",
+            symbol: "baseMap baseMap-grey"
         }
     ];
 
-    toggleBaseLayer(index: number) {
-        console.log("toggle base layer. index: " + index);
+    const toggleBaseLayer = (index: number): void  =>  {
+        dispatch(setVisibleBaseLayer(baseLayers[index].name));
     }
 
-    render() {
-
-        return (
-            <>
-                <div className="changeBaseLayer baseMapPanel baseLayerPanel">
-                    {this.baseLayers.map((baseLayer, index) => 
-                        <button key={index} className="btn btn-default btn-toggle" onClick={() => this.toggleBaseLayer(index)}>
-                            <div className={baseLayer.symbol} title={baseLayer.title}></div>
-                        </button>
-                    )}
-                </div>
-            </>
-            
-        );
-    }
+    return (
+        <>
+            <div className="changeBaseLayer baseMapPanel baseLayerPanel">
+                {baseLayers.map((baseLayer, index) => 
+                    <button key={index} className={`btn btn-default ${baseLayer.name === visibleBaseLayer?.name ? "activeBtn" : "btn-toggle"}`} onClick={() => toggleBaseLayer(index)}>
+                        <div className={baseLayer.symbol} title={baseLayer.name}></div>
+                    </button>
+                )}
+            </div>
+        </>
+        
+    );
+    
 }
 
 export default ChangeBaseLayer;

@@ -1,74 +1,107 @@
 import 'ol/ol.css';
 import Map from 'ol/Map';
-import OSM from 'ol/source/OSM';
-import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
-import { WMTS } from 'ol/source';
 import Projection from 'ol/proj/Projection';
-import { wmtsTileGrid } from './TileGrid/wmts';
-import { getTopLeft, getWidth } from 'ol/extent';
-import OLVectorLayer from 'ol/layer/Vector';
-import FeatureStyles from './Features/Styles';
-import mapConfig from '../config.json';
-import { fromLonLat, get } from 'ol/proj';
-import GeoJSON from 'ol/format/GeoJSON';
-import { vector } from './Source/vector';
-import { useState } from 'react';
-import { IProjectConfig, ITileLayer } from './Models/config-model';
+import { useEffect } from 'react';
+import { IProjectConfig } from './Models/config-model';
 import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
-// import { useEventStoreDispatch, useEventStoreSelector } from './Events/Event/eventHooks';
 import { useEventDispatch, useEventSelector } from '../../src/index';
-import { selectVisibleBaseLayer, addWmsLayer, addWmtsLayer } from './Layers/layersSlice';
-import { addProject, selectToken } from './Project/projectSlice';
+import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectToggleVectorLayer, toggleVectorLayer, toggleWmsLayer, selectToggleWmsLayer } from './Layers/layersSlice';
+import { addProject, selectCenter, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
+import axios from 'axios';
 
 let myMap: Map;
-const geojsonObject2 = mapConfig.geojsonObject2;
-let baseLayer: TileLayer;
 
 const MapApi = function() {
   const dispatch = useEventDispatch();
-  const layers = Layers();
   const mapMoveEnd = MapMoveEnd(dispatch);
-  const getClickCoordinates = GetClickCoordinates(dispatch);
-  const getVisibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+  const getClickCoordinates = GetClickCoordinates();
+  const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+  const baseLayers = useEventSelector(selectBaseLayers)
   const appProject = Project(dispatch);
+  const toggleVector = useEventSelector(selectToggleVectorLayer);
+  const toggleWms = useEventSelector(selectToggleWmsLayer);
   
   const token = useEventSelector(selectToken);
-  if (token) {
-    console.log('TOKEN updated: ', token);
-    layers.updateLayerParams(baseLayer, token);
+  const center = useEventSelector(selectCenter);
+
+  useEffect(() => {
+  if (center) {
+    console.log(center);
+    axios.get(`https://ws.geonorge.no/transformering/v1/transformer?x=${center[0]}&y=${center[1]}&fra=4326&til=25833`).then(function (response) {
+      const transformedCoordinate = (response.data);
+      myMap.getView().setCenter([transformedCoordinate.x, transformedCoordinate.y]);
+    });
   }
+  },[center])
+
+  useEffect(() => {
+    if (token && visibleBaseLayer && baseLayers) {
+      console.log('TOKEN updated, baseLayer: ', token, visibleBaseLayer);
+      const layers = Layers(myMap);
+      baseLayers.forEach(b => {
+        layers.hideLayer(b.guid);
+      })
+      
+      layers.createTileLayer(visibleBaseLayer, token);
+      // TODO: temporary commented
+      // if (newBaseLayer) {
+      //     myMap.addLayer(newBaseLayer);
+      //     if (newBaseLayer.get('wmtsextent')) {
+      //       const wmtsExtent:Extent = newBaseLayer.get('wmtsextent');
+      //       const projection = new Projection({
+      //         code: 'EPSG:25832',
+      //         extent: wmtsExtent,
+      //       });
+      //       const newCenter = getCenter(projection.getExtent());
+      //       myMap.getView().setCenter(newCenter);
+      //     }
+      //   }
+    }
+  }, [token, visibleBaseLayer, baseLayers])
+
+  useEffect(() => {
+    if (toggleVector) {
+      const layers = Layers(myMap);
+      if (toggleVector.options.visibility === 'false') {
+        layers.createVectorLayer(toggleVector);
+        dispatch(toggleVectorLayer());
+      } else {
+        layers.hideLayer(toggleVector.guid);
+        dispatch(toggleVectorLayer());
+      }
+      
+    }
+  }, [toggleVector, dispatch])
+
+  useEffect(() => {
+    if (toggleWms && token) {
+      const layers = Layers(myMap);
+      if (toggleWms.options.visibility === 'false') {
+        layers.createTileLayer(toggleWms, token);
+        dispatch(toggleWmsLayer());
+      } else {
+        layers.hideLayer(toggleWms.guid);
+        dispatch(toggleWmsLayer());
+      }
+    }
+  }, [toggleWms, token, dispatch]) 
+  
   return {
     init(projectConfig: IProjectConfig) {
-      
-      // const newMapRes = [];
-      // newMapRes[0] = 21664;
-
-      // const mapScales = [];
-      // mapScales[0] = 81920000;
-      // for (let t = 1; t < 20; t++) {
-      //   newMapRes[t] = newMapRes[t - 1] / 2;
-      //   mapScales[t] = mapScales[t - 1] / 2;
-      // }
 
       if (!myMap) {
         dispatch(addProject(projectConfig.config.project));
-        projectConfig.config.wmts.forEach(w => {
-          w.source = 'WMTS';
-          dispatch(addWmtsLayer(w));
-        })
-        projectConfig.config.wms.forEach(w => {
-          w.source = 'WMS';
-          dispatch(addWmsLayer(w));
-        })
-
+        dispatch(addGroups(projectConfig.config.maplayer));
+        dispatch(addWmtsLayers(projectConfig.config.wmts));
+        dispatch(addWmsLayers(projectConfig.config.wms));
+        dispatch(addVectorLayers(projectConfig.config.vector));
+        
         const sm = new Projection({
           code: projectConfig.config.project.mapepsg,
-          // extent: projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)
-          // units: mapConfig.extentUnits
         });
         const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
         const newExtent = [0, 0, 0, 0] as [number, number, number, number];
@@ -83,10 +116,6 @@ const MapApi = function() {
           view: new View({
             center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
             projection: sm,
-            // constrainResolution: true,
-            // maxResolution: 21664,
-            // resolutions: newMapRes,
-            // numZoomLevels: 18,
             zoom: 4
           }),
         });
@@ -94,42 +123,8 @@ const MapApi = function() {
         appProject.generateToken();
         getClickCoordinates.activate(myMap);
         mapMoveEnd.activate(myMap);
-        if (getVisibleBaseLayer) {
-          const newBaseLayer = layers.createTileLayer(getVisibleBaseLayer, token);
-          if (newBaseLayer) {
-            baseLayer = newBaseLayer;
-            myMap.addLayer(newBaseLayer);
-          }
-        }
       }
-    },
-
-    setCenter() {
-      myMap.getView().setCenter([1187255.1082210522, 9258443.652733022]);
-      myMap.getView().setZoom(8);
-    },
-
-    getCenter() {
-      console.log('get center: ', myMap.getView().getCenter());
-      console.log('get epsg: ', myMap.getView().getProjection().getCode());
-    },
-
-    showLayer() {
-      const source = vector({
-        features: new GeoJSON().readFeatures(geojsonObject2, {
-          featureProjection: get('EPSG:3857') || undefined,        
-        })
-      });
-      const style = FeatureStyles.MultiPolygon;
-      // source.set('id', 'juraj');
-      const vectorLayer = new OLVectorLayer({
-        source,
-        style,
-      });
-      vectorLayer.set('id', 'juraj');
-      myMap.addLayer(vectorLayer);
-      // console.log('ADDED layer: ', myMap.getAllLayers());
-    },
+    }
   }
 }
 

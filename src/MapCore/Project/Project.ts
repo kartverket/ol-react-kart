@@ -8,11 +8,8 @@ export const Project = function (dispatch: EventStoreDispatch) {
   
   return {
     generateToken() {
-      console.log('GENERATE TOKEN');
       if (project) {
         axios.get(`${project?.isygatekeeper}`).then(function (response) {
-          // handle success
-          // console.log(response);
           dispatch(setToken(response.data));
         });
       }

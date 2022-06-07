@@ -1,79 +1,43 @@
-const { API_KEY } = process.env;
+// const { API_KEY } = process.env;
 const API_URL = 'https://ws.geonorge.no/stedsnavn/v1/navn?sok=';
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IGeoNorge } from './search-model';
+import { useAppDispatch, useEventDispatch } from '../../index';
+import { setResult } from '../search/searchSlice';
+import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 
-type RepresentasjonsPunkt = {
-  koordsys: number;
-  nord: number;
-  øst: number;
-};
+function Search() {
+  const { t } = useTranslation();
+  const [query, setQuery] = useState('');
+  const appDispatch = useAppDispatch();
+  const eventDispatch = useEventDispatch();
 
-type Fylke = { fylkesnavn: string; fylkesnummer: string };
-type Kommune = { kommunenummer: string; kommunenavn: string };
-interface StedsNavn {
-  skrivemåte: string;
-  skrivemåtestatus: string;
-  navnestatus: string;
-  språk: string;
-  navneobjekttype: string;
-  stedsnummer: number;
-  stedstatus: string;
-  representasjonspunkt: RepresentasjonsPunkt;
-  fylker: Fylke;
-  kommuner: Kommune;
-}
-
-interface Metadata {
-  treffPerSide: number;
-  side: number;
-  totaltAntallTreff: number;
-  viserFra: number;
-  viserTil: number;
-  sokeStreng: string;
-}
-
-type GeoNorge = {
-  metadata: Metadata;
-  navn: StedsNavn[];
-};
-
-class Search extends Component {
-  state = {
-    query: '',
-    results: {},
-  };
-
-  getInfo = () => {
-    axios.get(`${API_URL}${this.state.query}*&treffPerSide=15&side=1`).then(({ data }) => {
-      this.setState({
-        results: data.navn,
+  useEffect(() => {
+    if (query) {
+      axios.get(`${API_URL}${query}*&treffPerSide=15&side=1`).then((response) => {
+        const r:IGeoNorge = response.data; 
+        appDispatch(setResult(r));
+        console.table(r.navn);
       });
-    });
+    }
+    },[query, appDispatch]);
+
+  const handleInputChange = () => {
+    console.log('SEARCH: ', search?.value);
+    if (search?.value) {
+      setQuery(search?.value)
+      eventDispatch(setClickCoordinates({}));
+    } else {
+      // appDispatch(setResult({}));
+      eventDispatch(setClickCoordinates({}));
+    }
   };
+  let search:HTMLInputElement|null;
 
-  handleInputChange = () => {
-    this.setState(
-      {
-        query: this.search.value,
-      },
-      () => {
-        if (this.state.query && this.state.query.length > 1) {
-          this.getInfo();
-          const data: any = this.state.results;
-
-          console.table(data);
-          const geoNorgeResult: StedsNavn[] = data;
-          console.log('her kommer stedsnavn: ', geoNorgeResult);
-        }
-      },
-    );
-  };
-  search: any;
-
-  render() {
     return (
       <>
         <div className="input-group mb-3 shadow bg-body rounded" style={{height: '50px'}}>
@@ -93,9 +57,13 @@ class Search extends Component {
             <FontAwesomeIcon icon={faBars} />
           </button>
           <input style={{ width: '350px' }} className="border border-start-0 border-end-0"
-            placeholder="Søk på stedsnavn..."
-            ref={input => (this.search = input)}
-            onChange={this.handleInputChange}
+            placeholder={t('search_text')}
+            ref={input => (search = input)}
+            onClick={() => {
+              if (search?.value) setQuery('\t'+query)
+              eventDispatch(setClickCoordinates({}));
+            }}
+            onChange={handleInputChange}
           />
           {/* <Suggestions results={this.state.results} /> */}
           <span className='input-group-text border-start-0 bg-transparent border'
@@ -113,7 +81,6 @@ class Search extends Component {
         </div>
       </>
     );
-  }
 }
 
 export default Search;

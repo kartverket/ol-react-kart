@@ -6,9 +6,9 @@ interface Lng {
 }
 
 const lngs: { [index: string]: Lng } = {
-  en: { nativeName: 'English' },
-  no: { nativeName: 'Norsk' },
+  no: { nativeName: 'Bokmål' },
   nn: { nativeName: 'Nynorsk' },
+  en: { nativeName: 'English' },
 };
 
 const LanguageSelector = () => {
@@ -24,7 +24,7 @@ const LanguageSelector = () => {
             >
               {lngs[lng].nativeName}
             </a>
-            <span> {index < 2 ? ' | ' : ''}</span>
+            <span className='m-2'> {index < 2 ? '|' : ''}</span>
           </span>
         ))}
       </div>

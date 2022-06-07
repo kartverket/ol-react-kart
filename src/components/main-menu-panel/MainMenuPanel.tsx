@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
-import { faMap, faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import { faMap, faChevronRight, faChevronLeft, faChevronUp, faChevronDown, faTree } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
-import MainMenuOverlayLayerPanel from './MainMenuOverlayLayerPanel';
 import { useTranslation } from 'react-i18next';
-// import listProjects from '../../config/listprojects.json';
-// import { IProject, addProject } from './projects-list/projectsListSlice';
-// import { useAppDispatch } from '../../app/hooks';
+import { useEventSelector, useAppSelector, useAppDispatch } from '../../../src/index';
+import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import { selectShowActiveProject, showActiveProjectFromList } from './projects-list/projectsListSlice';
+import ProjectsList from './projects-list/ProjectsList';
+import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
 
 const MainMenuPanel = () => {
     const { t } = useTranslation();
-    const [mainMenuPanelActive, setMainMenuPanelActive] = useState(true);
-    const [mainMenuBaseLayerPanelActive, setMainMenuBaseLayerPanelActive] = useState(false);
-    const [mainMenuActiveBaseLayer, setMainMenuActiveBaseLayerState] = useState('Gråtone');
-    const [mainMenuActiveOverlayLayergroup, setMainMenuActiveOverlayLayergroup] = useState("")
-    // const dispatch = useAppDispatch();
-    // const projectsList = listProjects as IProject[];
-    // projectsList.forEach(p => {
-    //     console.log('Project: ', p);
-    //     dispatch(addProject(p));
-    // })
+    const appDispatch = useAppDispatch();
+    const [showBaseLayersList, setShowBaseLayersList] = useState(false);
+    const [collapseThematicMap, setCollapseThematicMap] = useState(false);
+    const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+    const showActiveProject = useAppSelector(selectShowActiveProject);
+
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
         const sideMenuPosition = document.getElementById("sideMenuPosition");
@@ -31,68 +28,103 @@ const MainMenuPanel = () => {
         }
     }
 
-    const showMainMenuPanel = () : void => {
-        setMainMenuPanelActive(true);
-        setMainMenuBaseLayerPanelActive(false);
+    const toggleBaseLayerPanel = (): void => {
+        setShowBaseLayersList(!showBaseLayersList);
     }
 
-    const showMainMenuBaseLayerPanel = () : void => {
-        setMainMenuPanelActive(false);
-        setMainMenuBaseLayerPanelActive(true);
+    const toggleThematicMap = (): void => {
+        setCollapseThematicMap(!collapseThematicMap);
     }
-    const setMainMenuActiveBaseLayer = (value: string) : void => {
-        setMainMenuActiveBaseLayerState(value);
-        
-        // TODO: Actually set the new base layer..
-        console.log('CHANGE BASE LAYER TO:', value);
+
+    const toggleShowActiveProject = (): void => {
+        appDispatch(showActiveProjectFromList());
     }
     
     return (
         <div id="mySidenav" className="sidenav" style={{width: "0"}} >
             <div id="sideMenuPosition" className="side-menu-position" style={{width: "0"}}>
                 <div className="norgeskart-logo ps-2 pt-0 pe-0 pb-0 m-0">
-                    <div className="container p-0">
+                    <div className="container p-0 mt-3">
                         <div className="d-flex flex-row align-items-center">
                             <div className="p-2">
                                 <h1>
-                                    <a href=".">
+                                    <a href="." className='text-decoration-none'>
                                         <span className="norgeskart-logo-image me-3"></span>
-                                        Norgeskart
+                                        <span>Norgeskart</span>
                                     </a>
                                 </h1>
                             </div>
                             <div className="ms-auto p-2">
-                                <button type="button" className='btn btn-light' onClick={() => closeNav()}>
+                                <button type="button" className='btn btn-light bg-transparent border-0' onClick={() => closeNav()}>
                                     <span className='fs-4'>&times;</span>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    
+                </div> 
+                <hr/>
+                {!showActiveProject ?
+                <div className="container">
+                    <div className="d-flex" style={{ marginBottom: "12px" }} onClick={() => toggleBaseLayerPanel()}>
+                        <div className='ps-2 pe-2'>
+                            <FontAwesomeIcon icon={faMap} />
+                        </div>
+                        <div className='ps-2 pe-2'>
+                            <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
+                            <span>&nbsp;{t(visibleBaseLayer?.name || '')}</span>
+                        </div>
+                        <div className='ms-auto ps-2 pe-2'>
+                            {!showBaseLayersList ? 
+                                <FontAwesomeIcon icon={faChevronRight}/>
+                                : 
+                                <FontAwesomeIcon icon={faChevronLeft}/>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div className="sidenav-group"></div>
-                    <div className="container">
-                        <div className="row" style={{marginBottom: "12px"}}>
-                            <div className="col-1">
-                                <FontAwesomeIcon icon={faMap} />
+                :
+                <div className="container">
+                        <div className="d-flex" style={{ marginBottom: "12px" }} onClick={() => toggleShowActiveProject()}>
+                        <div className='ps-2 pe-2'>
+                            <FontAwesomeIcon icon={faTree} />
+                        </div>
+                        <div className='ps-2 pe-2'>
+                            <span className="text-uppercase"><span>{t('Project')}</span>:</span>
+                        </div>
+                        <div className='ms-auto ps-2 pe-2'>                            
+                            <FontAwesomeIcon icon={faChevronLeft}/>
+                        </div>
+                    </div>
+                </div>
+                }
+                <hr/>
+                {showBaseLayersList ? <MainMenuBaseLayerPanel /> : null }
+                {showActiveProject ? <MainMenuPanelProjectLayers /> : null}
+                {!showBaseLayersList && !showActiveProject ?
+                <div>
+                    <div className='container'>
+                            <div className='d-flex' style={{ marginBottom: "12px" }} onClick={() => toggleThematicMap()}>
+                            <div className='ps-2 pe-2'><FontAwesomeIcon icon={faMap} /></div>
+                            <div className='ps-2 pe-2'>
+                                <span className="text-uppercase">{t('temakart')}</span>
                             </div>
-                            <div className="col">
-                                <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
-                                <span>&nbsp;{mainMenuActiveBaseLayer}</span>
-                            </div>
-                            <div className="col-1">
-                                {mainMenuPanelActive ? 
-                                    <FontAwesomeIcon icon={faChevronRight} onClick={() => showMainMenuBaseLayerPanel()}/>
-                                    : 
-                                    <FontAwesomeIcon icon={faChevronLeft} onClick={() => showMainMenuPanel()}/>
+                            <div className="ms-auto ps-2 pe-2">
+                                {!collapseThematicMap ?
+                                    <FontAwesomeIcon icon={faChevronUp} />
+                                    :
+                                    <FontAwesomeIcon icon={faChevronDown} />
                                 }
                             </div>
                         </div>
+                        {!collapseThematicMap ? 
+                        <div>
+                            <ProjectsList />
+                        </div> : null}
                     </div>
-                <div className="sidenav-group"></div>
-                {mainMenuBaseLayerPanelActive ? <MainMenuBaseLayerPanel changeBaseLayer = {setMainMenuActiveBaseLayer}/> : null }
-                {mainMenuPanelActive ? <MainMenuOverlayLayerPanel openOverlayLayergroup = {setMainMenuActiveOverlayLayergroup} layerGroupActive={mainMenuActiveOverlayLayergroup}/> : null }
-                {mainMenuPanelActive ? <LanguageSelector /> : null }
+                    <div className='m-2 p-2'>
+                        <LanguageSelector />
+                    </div> 
+                </div> : null}
             </div>
         </div>
     )
