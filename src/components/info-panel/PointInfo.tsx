@@ -35,7 +35,7 @@ const PointInfo = () => {
   },[clickCoordinates]);
   return (
     <>
-      {elevation && elevation.punkter && elevation.punkter.length > 0 ?
+      {elevation && elevation.punkter && elevation.punkter.length > 0 && elevation.punkter[0].z?
         <> 
           <span>{t('HeightEstimatedByInterpolation_text')}{elevation.punkter[0].z} {t('MetersAboveSeaLevel')}</span>
           <span className='text-lowercase'> ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g,'$1 $2')})</span>
