@@ -28,8 +28,9 @@ export const layersSlice = createSlice({
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');      
     },
     addWmtsLayers: (state, action: PayloadAction<ITileLayer[]>) => {
-      action.payload.forEach(l => l.source = 'WMTS');
-      state.wmtsLayers = action.payload;
+      const tileLayers = JSON.parse(JSON.stringify(action.payload));
+      tileLayers.forEach((l: ITileLayer) => l.source = 'WMTS');
+      state.wmtsLayers = tileLayers;
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
     },
     addWmsLayer: (state, action: PayloadAction<ITileLayer>) => {
@@ -37,8 +38,9 @@ export const layersSlice = createSlice({
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
     },
     addWmsLayers: (state, action: PayloadAction<ITileLayer[]>) => {
-      action.payload.forEach(l => l.source = 'WMS');
-      state.wmsLayers = action.payload;
+      const tileLayers = JSON.parse(JSON.stringify(action.payload));
+      tileLayers.forEach((l: ITileLayer) => l.source = 'WMS');
+      state.wmsLayers = tileLayers;
       state.filterBaseLayers = state.wmtsLayers.concat(state.wmsLayers).filter(l => l.options.isbaselayer === 'true');
     },
     addVectorLayer: (state, action: PayloadAction<IVector>) => {
@@ -48,12 +50,25 @@ export const layersSlice = createSlice({
       state.vectorLayers = action.payload;
     },
     addGroups: (state, action: PayloadAction<IMapLayer[]>) => {
-      action.payload.forEach(g => g.isOpen = false);
-      state.groups = action.payload;
+      const groups = JSON.parse(JSON.stringify(action.payload));
+      groups.forEach((g: IMapLayer) => g.isOpen = false);
+      state.groups = groups;
+    },
+    removeAll: (state) => {
+      state.wmtsLayers = [];
+      state.wmsLayers = [];
+      state.vectorLayers = [];
+      state.groups = [];
+      state.filterBaseLayers = [];
+      state.toggleVectorLayer = undefined;
+      state.toggleWmsLayer = undefined;
     },
     setVisibleBaseLayer: (state, action: PayloadAction<string>) => {
-      state.wmsLayers.map(w => w.options.visibility = ((w.options.isbaselayer && w.name === action.payload) ? 'true' : 'false'));
-      state.wmtsLayers.map(w => w.options.visibility = ((w.options.isbaselayer && w.name === action.payload) ? 'true' : 'false'));
+      state.wmtsLayers.map(w => {
+        if (w.options.isbaselayer === 'true') {
+          w.options.visibility = w.name === action.payload ? 'true' : 'false';
+        }
+      });
     },
     toggleVectorLayer: (state, action: PayloadAction<IVector | undefined>) => {
       state.toggleVectorLayer = action && action.payload ? action.payload : undefined;
@@ -82,7 +97,7 @@ export const layersSlice = createSlice({
   }
 });
 
-export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers, toggleVectorLayer, toggleWmsLayer, toggleGroup } = layersSlice.actions;
+export const { addWmtsLayer, addWmsLayer, addGroups, setVisibleBaseLayer, addWmtsLayers, addWmsLayers, addVectorLayer, addVectorLayers, toggleVectorLayer, toggleWmsLayer, toggleGroup, removeAll } = layersSlice.actions;
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {

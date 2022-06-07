@@ -107,6 +107,9 @@ export const Layers = function (myMap: Map) {
         });
         newTileLayer.set('guid', layer.guid);
         if (layer.wmtsextent) newTileLayer.set('wmtsextent', extent);
+        if (layer.options.isbaselayer) {
+          newTileLayer.set('zIndex', -1);
+        }
         map.addLayer(newTileLayer);
         return newTileLayer;
       }
@@ -154,6 +157,11 @@ export const Layers = function (myMap: Map) {
           map.removeLayer(layer);
         }
       }
+    },
+
+    removeAllLayers(): void {
+       const layers = _getLayersWithGuid();
+       layers.forEach(l => map.removeLayer(l));
     },
 
     updateLayerParams(layer: TileLayer<WMTS|TileWMS>, token: string) {

@@ -8,13 +8,14 @@ import { Layers } from './Layers/Layers';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 import { useEventDispatch, useEventSelector } from '../../src/index';
-import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectToggleVectorLayer, toggleVectorLayer, toggleWmsLayer, selectToggleWmsLayer } from './Layers/layersSlice';
+import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectToggleVectorLayer, toggleVectorLayer, toggleWmsLayer, selectToggleWmsLayer, removeAll } from './Layers/layersSlice';
 import { addProject, selectCenter, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
 import axios from 'axios';
 import { generateKoordTransUrl } from '../utils/n3api';
 
 let myMap: Map;
+let activateMap = false;
 
 const MapApi = function() {
   const dispatch = useEventDispatch();
@@ -40,19 +41,23 @@ const MapApi = function() {
       if (Number(myMap.getView().getZoom()) < 10) {
         myMap.getView().setZoom(12);
       }
+      
     });
   }
   },[center])
 
   useEffect(() => {
     if (token && visibleBaseLayer && baseLayers) {
-      console.log('TOKEN updated, baseLayer: ', token, visibleBaseLayer);
+      // console.log('TOKEN updated, baseLayer: ', token, visibleBaseLayer);
       const layers = Layers(myMap);
       baseLayers.forEach(b => {
         layers.hideLayer(b.guid);
       })
-      
       layers.createTileLayer(visibleBaseLayer, token);
+      
+      
+      
+      
       // TODO: temporary commented
       // if (newBaseLayer) {
       //     myMap.addLayer(newBaseLayer);
@@ -99,37 +104,49 @@ const MapApi = function() {
   return {
     init(projectConfig: IProjectConfig) {
 
-      if (!myMap) {
+      if (!activateMap) {
         dispatch(addProject(projectConfig.config.project));
         dispatch(addGroups(projectConfig.config.maplayer));
         dispatch(addWmtsLayers(projectConfig.config.wmts));
         dispatch(addWmsLayers(projectConfig.config.wms));
-        dispatch(addVectorLayers(projectConfig.config.vector));
-        
-        const sm = new Projection({
-          code: projectConfig.config.project.mapepsg,
-        });
-        const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
-        const newExtent = [0, 0, 0, 0] as [number, number, number, number];
-        if (projectExtent) {
-          projectExtent.split(',').map(e => Number(e)).forEach((v, index) => newExtent[index] = v);
+        if (projectConfig.config.vector) {
+          dispatch(addVectorLayers(projectConfig.config.vector));
         }
-        sm.setExtent(newExtent);
+        
+        if (!myMap) {
+          const sm = new Projection({
+            code: projectConfig.config.project.mapepsg,
+          });
+          const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === projectConfig.config.project.mapepsg)?.extent;
+          const newExtent = [0, 0, 0, 0] as [number, number, number, number];
+          if (projectExtent) {
+            projectExtent.split(',').map(e => Number(e)).forEach((v, index) => newExtent[index] = v);
+          }
+          sm.setExtent(newExtent);
 
-        myMap = new Map({
-          layers: [],
-          target: 'map',
-          view: new View({
-            center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
-            projection: sm,
-            zoom: 4
-          }),
-        });
+          myMap = new Map({
+            layers: [],
+            target: 'map',
+            view: new View({
+              center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
+              projection: sm,
+              zoom: 4
+            }),
+          });
+        }
+        activateMap = true;
       } else {
         appProject.generateToken();
         getClickCoordinates.activate(myMap);
         mapMoveEnd.activate(myMap);
       }
+    },
+    destroyProject() {
+      // myMap.dispose();
+      const layers = Layers(myMap);
+      layers.removeAllLayers();
+      dispatch(removeAll());
+      activateMap = false;
     }
   }
 }

@@ -551,11 +551,11 @@
       "Layers": {
         "Layer": {
           "name": "Stasjoner",
-          "queryable": false,
+          "queryable": "false",
           "title": "Norske stasjoner"
         }
       },
-      "gatekeeper": true,
+      "gatekeeper": "true",
       "name": "Norske stasjoner",
       "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
       "groupid": 6,
@@ -565,9 +565,9 @@
       },
       "guid": "6.Stasjoner",
       "options": {
-        "isbaselayer": false,
-        "singletile": true,
-        "visibility": false
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
       },
       "includedfields": {
         "field": [{
@@ -588,11 +588,11 @@
       "Layers": {
         "Layer": {
           "name": "Svenske_finske_stasjoner",
-          "queryable": false,
+          "queryable": "false",
           "title": "Svenske og finske stasjoner"
         }
       },
-      "gatekeeper": true,
+      "gatekeeper": "true",
       "name": "Svenske og finske stasjoner",
       "url": "https://wms.geonorge.no/skwms1/wms.fastmerker2",
       "groupid": 6,
@@ -602,9 +602,9 @@
       },
       "guid": "6.Svenske_finske_stasjoner",
       "options": {
-        "isbaselayer": false,
-        "singletile": true,
-        "visibility": false
+        "isbaselayer": "false",
+        "singletile": "true",
+        "visibility": "false"
       },
       "includedfields":  {
         "field": [{
