@@ -16,7 +16,7 @@ const InfoPanel = () => {
   return (
     <>
       {clickCoordinates && clickCoordinates?.coordinate || searchResult && searchResult.geoNorge?.navn ? 
-        <div style={{ width: '428px' }} className='border border-1 shadow rounded'>
+        <div style={{ width: '428px' }} className='border border-1 bg-white shadow rounded'>
           <div className='m-2'>
             {searchResult && searchResult.geoNorge?.navn ? 
               <SearchResultsList /> : null
