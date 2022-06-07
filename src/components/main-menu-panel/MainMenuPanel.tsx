@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { faMap, faChevronRight, faChevronLeft, faChevronUp, faChevronDown, faTree } from '@fortawesome/free-solid-svg-icons';
+import { faMap, faChevronRight, faChevronLeft, faChevronUp, faChevronDown, faTree, faTable } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import { useTranslation } from 'react-i18next';
 import { useEventSelector, useAppSelector, useAppDispatch } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
-import { selectShowActiveProject, showActiveProjectFromList } from './projects-list/projectsListSlice';
+import { selectShowActiveProject, showActiveProjectFromList, selectActiveProject } from './projects-list/projectsListSlice';
 import ProjectsList from './projects-list/ProjectsList';
 import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
 
@@ -17,6 +17,7 @@ const MainMenuPanel = () => {
     const [collapseThematicMap, setCollapseThematicMap] = useState(false);
     const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
     const showActiveProject = useAppSelector(selectShowActiveProject);
+    const activeProject = useAppSelector(selectActiveProject);
 
     const closeNav = () : void => {
         const mySidenav = document.getElementById("mySidenav");
@@ -40,6 +41,8 @@ const MainMenuPanel = () => {
         appDispatch(showActiveProjectFromList());
     }
     
+    console.log('ICON: ', faTree);
+
     return (
         <div id="mySidenav" className="sidenav" style={{width: "0"}} >
             <div id="sideMenuPosition" className="side-menu-position" style={{width: "0"}}>
@@ -89,7 +92,7 @@ const MainMenuPanel = () => {
                             <FontAwesomeIcon icon={faTree} />
                         </div>
                         <div className='ps-2 pe-2'>
-                            <span className="text-uppercase"><span>{t('Project')}</span>:</span>
+                                <span className='text-capitalize'>{t(activeProject.ProjectName)}</span>
                         </div>
                         <div className='ms-auto ps-2 pe-2'>                            
                             <FontAwesomeIcon icon={faChevronLeft}/>
