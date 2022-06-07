@@ -18,10 +18,10 @@ const PointInfo = () => {
 
   return (
     <>
-      <h4>PointInfo</h4>
       {clickCoordinates && clickCoordinates.coordinate ? 
         <div>Coordinates: {clickCoordinates?.coordinate[0]}, {clickCoordinates?.coordinate[1]} </div>
        : null}
+      <span className='fs-5 text-uppercase'>{t('hva_vil_du_gjore')}</span>
     </>
   )
 }
