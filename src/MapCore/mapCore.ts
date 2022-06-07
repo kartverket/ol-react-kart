@@ -9,8 +9,9 @@ import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
 import { useEventDispatch, useEventSelector } from '../../src/index';
 import { selectVisibleBaseLayer, addWmsLayers, addWmtsLayers, selectBaseLayers, addGroups, addVectorLayers, selectToggleVectorLayer, toggleVectorLayer, toggleWmsLayer, selectToggleWmsLayer } from './Layers/layersSlice';
-import { addProject, selectToken } from './Project/projectSlice';
+import { addProject, selectCenter, selectToken } from './Project/projectSlice';
 import { Project } from './Project/Project';
+import axios from 'axios';
 
 let myMap: Map;
 
@@ -25,6 +26,17 @@ const MapApi = function() {
   const toggleWms = useEventSelector(selectToggleWmsLayer);
   
   const token = useEventSelector(selectToken);
+  const center = useEventSelector(selectCenter);
+
+  useEffect(() => {
+  if (center) {
+    console.log(center);
+    axios.get(`https://ws.geonorge.no/transformering/v1/transformer?x=${center[0]}&y=${center[1]}&fra=4326&til=25833`).then(function (response) {
+      const transformedCoordinate = (response.data);
+      myMap.getView().setCenter([transformedCoordinate.x, transformedCoordinate.y]);
+    });
+  }
+  },[center])
 
   useEffect(() => {
     if (token && visibleBaseLayer && baseLayers) {
