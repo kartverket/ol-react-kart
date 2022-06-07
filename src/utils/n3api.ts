@@ -103,6 +103,11 @@ export const generateSearchAdresseUrl = (query: string | number | boolean) => {
 export const generateElevationPointUrl = (lat: string, lon: string, epsgNumber: string) => {
   return `${url}ws/elev.py?lat=${lat}&lon=${lon}&epsg=${epsgNumber}`;
 };
+
+export const generateHoydedataPointUrl = (ost: string, nord: string, koordsys: string) => {
+  return `${urlGeonorge}hoydedata/v1/punkt?ost=${ost}&nord=${nord}&koordsys=${koordsys}&geojson=false`;
+};
+
 export const generateAdresseSokUrl = (query: string | number | boolean) => {
   query = typeof query === 'string' ? query : '';
   query = query.indexOf(',') !== -1 ? query.replace(',', '*') : query + '*';
