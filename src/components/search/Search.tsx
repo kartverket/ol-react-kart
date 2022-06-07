@@ -32,7 +32,7 @@ function Search() {
       setQuery(search?.value)
       eventDispatch(setClickCoordinates({}));
     } else {
-      appDispatch(setResult({}));
+      // appDispatch(setResult({}));
       eventDispatch(setClickCoordinates({}));
     }
   };
@@ -59,6 +59,10 @@ function Search() {
           <input style={{ width: '350px' }} className="border border-start-0 border-end-0"
             placeholder={t('search_text')}
             ref={input => (search = input)}
+            onClick={() => {
+              if (search?.value) setQuery('\t'+query)
+              eventDispatch(setClickCoordinates({}));
+            }}
             onChange={handleInputChange}
           />
           {/* <Suggestions results={this.state.results} /> */}
