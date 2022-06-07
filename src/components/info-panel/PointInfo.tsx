@@ -37,11 +37,11 @@ const PointInfo = () => {
     <>
       {elevation && elevation.punkter && elevation.punkter.length > 0 ?
         <> 
-          <div>{t('HeightEstimatedByInterpolation_text')}{elevation.punkter[0].z} {t('MetersAboveSeaLevel')}</div>
-          <div>({elevation.punkter[0]?.terreng?.replace(/(.+)([A-Z])/,'$1 $2')})</div>
+          <span>{t('HeightEstimatedByInterpolation_text')}{elevation.punkter[0].z} {t('MetersAboveSeaLevel')}</span>
+          <span className='text-lowercase'> ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g,'$1 $2')})</span>
         </>
        : null}
-      <span className='fs-5 text-uppercase'>{t('hva_vil_du_gjore')}</span>
+      <p className='fs-5 text-uppercase'>{t('hva_vil_du_gjore')}</p>
     </>
   )
 }
