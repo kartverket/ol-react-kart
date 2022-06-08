@@ -12,8 +12,18 @@ import { get } from 'ol/proj';
 import OLVectorLayer from 'ol/layer/Vector';
 import axios from 'axios';
 import { createStyle } from './Style';
+import { addProjection } from 'ol/proj';
+import { register } from 'ol/proj/proj4';
+import proj4 from 'proj4';
 
 let map: Map;
+
+proj4.defs(
+  'EPSG:25833',
+  '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+);
+register(proj4);
+
 const sProjection = 'EPSG:25833';
 const extent = {
   'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
@@ -23,8 +33,7 @@ const projection = new Projection({
   code: sProjection,
   extent: extent[sProjection],
 });
-
-
+addProjection(projection);
 
 const _getLayersWithGuid = function() {
   return map.getLayers().getArray().filter(function (elem) {
@@ -129,24 +138,25 @@ export const Layers = function (myMap: Map) {
     },
 
     createVectorLayer(layer: IVector) {
-      axios.get(`${layer.url}`).then(function (response) {
-        const source = new VectorSource({
-          features: new GeoJSON().readFeatures(response.data, {
-            featureProjection: get('EPSG:3857') || undefined,
-          })
-        });
-        const vectorLayer = new OLVectorLayer({
-          source
-        });
-        if (layer.style) {
-          vectorLayer.setStyle(createStyle(layer.style))
-        //   const fill = layer.style.regularshape.fill;
+        axios.get(`${layer.url}`).then(function (response) {
+          const source = new VectorSource({
+            features: new GeoJSON().readFeatures(response.data, {
+              featureProjection: get('EPSG:25833') || undefined,
+              dataProjection: get(layer.epsg) || undefined,
+            })
+          });
+          const vectorLayer = new OLVectorLayer({
+            source
+          });
+          if (layer.style) {
+            vectorLayer.setStyle(createStyle(layer.style))
+            //   const fill = layer.style.regularshape.fill;
 
-        //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
-        }
-        vectorLayer.set('guid', layer.guid);
-        map.addLayer(vectorLayer);
-      });
+            //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
+          }
+          vectorLayer.set('guid', layer.guid);
+          map.addLayer(vectorLayer);
+        });
     },
 
 
