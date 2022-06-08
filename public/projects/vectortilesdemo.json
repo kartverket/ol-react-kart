@@ -831,15 +831,16 @@
       "groupid": 7
     }],
     "vector": [{
-      "type": "map",
+      "type": "overlay",
       "name": "landtopo",
+      "groupid": 3,
+      "guid": "3.landtopo",
       "epsg": "EPSG:25833",
-      "url": "https://cache.kartverket.no/test/vectortiles/tilejson/landtopo.json",
-      "style": "https://cache.kartverket.no/test/styles/landtopo.json",
+      "distributionProtocol":"MVT",
+      "url_json": "https://cache.kartverket.no/test/vectortiles/tilejson/landtopo.json",
+      "url":"https://cache.kartverket.no/test/vectortiles/landtopo/{z}/{x}/{y}.mvt",      "styleUrl": "https://cache.kartverket.no/test/styles/landtopo.json",
       "options": {
-        "isbaselayer": "true",
-        "singletile": "false",
-        "visibility": "true"
+        "visibility": "false"
       }
     }, {
       "type": "overlay",

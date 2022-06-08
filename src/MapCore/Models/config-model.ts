@@ -111,6 +111,7 @@ export interface IVector {
   guid: string;
   options: IVectorOptions;
   style: IStyle;
+  distributionProtocol?: string;
 }
 
 export interface IWmsLayer {
@@ -153,7 +154,7 @@ export interface ITileLayer {
   matrixset?: string;
   guid: string;
   options: ITileLayerOptions;
-  thumbnail?: string;  
+  thumbnail?: string;
   Layers?: ILayers,
   ticket?: string;
   wmtsextent?: string;

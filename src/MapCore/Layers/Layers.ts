@@ -6,14 +6,32 @@ import { getTopLeft, getWidth } from 'ol/extent';
 import Projection from 'ol/proj/Projection';
 // import { useEventStoreSelector } from '../Events/Event/eventHooks';
 import { Vector as VectorSource } from 'ol/source';
+import VectorTileLayer from 'ol/layer/VectorTile';
+import VectorTileSource from 'ol/source/VectorTile';
 import Map from 'ol/Map';
 import GeoJSON from 'ol/format/GeoJSON';
 import { get } from 'ol/proj';
 import OLVectorLayer from 'ol/layer/Vector';
 import axios from 'axios';
 import { createStyle } from './Style';
+import MVT from "ol/format/MVT";
+import { addProjection, getTransform } from 'ol/proj';
+import proj4 from 'proj4';
+import { register } from 'ol/proj/proj4';
+import { get as getProjection } from 'ol/proj';
+
+import stylefunction from 'ol-mapbox-style/dist/stylefunction';
+
+import { _getFonts } from 'ol-mapbox-style';
 
 let map: Map;
+
+proj4.defs(
+  'EPSG:25833',
+  '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+);
+register(proj4);
+
 const sProjection = 'EPSG:25833';
 const extent = {
   'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
@@ -23,8 +41,7 @@ const projection = new Projection({
   code: sProjection,
   extent: extent[sProjection],
 });
-
-
+addProjection(projection);
 
 const _getLayersWithGuid = function() {
   return map.getLayers().getArray().filter(function (elem) {
@@ -129,24 +146,64 @@ export const Layers = function (myMap: Map) {
     },
 
     createVectorLayer(layer: IVector) {
-      axios.get(`${layer.url}`).then(function (response) {
-        const source = new VectorSource({
-          features: new GeoJSON().readFeatures(response.data, {
-            featureProjection: get('EPSG:3857') || undefined,
-          })
-        });
-        const vectorLayer = new OLVectorLayer({
+      if (layer.distributionProtocol === 'MVT') {
+
+        const source = new VectorTileSource({
+          format: new MVT(),
+          url: layer.url,
+          projection:  'EPSG:25833', // not sure if this is needed here
+          minZoom: 0,
+          maxZoom: 10,
+          maxResolution: 10832,
+          wrapX: false,
+          tileSize: 256,
+        })
+        const vectorLayer = new VectorTileLayer({
+          declutter: true,
           source
         });
-        if (layer.style) {
-          vectorLayer.setStyle(createStyle(layer.style))
-        //   const fill = layer.style.regularshape.fill;
-
-        //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
-        }
         vectorLayer.set('guid', layer.guid);
-        map.addLayer(vectorLayer);
-      });
+
+        fetch('https://cache.kartverket.no/test/styles/landtopo.json')
+          .then(r => r.json())
+          .then((glStyle) => {
+            const layers = glStyle.layers;
+            layers.forEach((el: { id: any; source: any; }) => {
+              if (el.id && el.source) {
+                console.log(el.id); // print the layers from the style
+                //stylefunction(kartdata, glStyle, el.id);
+              }
+            });
+            //applyBackground(map, glStyle);
+            //stylefunction(kartdata, glStyle, 'bygningsflate');
+            stylefunction(vectorLayer, glStyle, 'topo4_cache');
+            if (map.getLayers().getArray().indexOf(vectorLayer) === -1) {
+              map.addLayer(vectorLayer);
+            }
+          });
+
+        //map.addLayer(vectorLayer);
+
+      } else {
+        axios.get(`${layer.url}`).then(function (response) {
+          const source = new VectorSource({
+            features: new GeoJSON().readFeatures(response.data, {
+              featureProjection: get('EPSG:3857') || undefined,
+            })
+          });
+          const vectorLayer = new OLVectorLayer({
+            source
+          });
+          if (layer.style) {
+            vectorLayer.setStyle(createStyle(layer.style))
+            //   const fill = layer.style.regularshape.fill;
+
+            //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
+          }
+          vectorLayer.set('guid', layer.guid);
+          map.addLayer(vectorLayer);
+        });
+      }
     },
 
 
