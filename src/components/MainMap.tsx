@@ -14,7 +14,8 @@ const MainMap = () => {
   const mapApi = MapApi();
   useEffect(() => {
     if (!mapInit) {
-      const projectUrl = '../../projects/' + activeProject.SiteTitle + '.json';
+      const localUrl = document.location.href;
+      const projectUrl = localUrl + 'projects/' + activeProject.SiteTitle + '.json';
       axios.get(`${projectUrl}`).then(function (response) {
         mapApi.init(response.data);
         setMapInit(true);
