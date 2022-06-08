@@ -37,11 +37,19 @@ const PointInfo = () => {
     <>
       {elevation && elevation.punkter && elevation.punkter.length > 0 && elevation.punkter[0].z?
         <> 
-          <span>{t('HeightEstimatedByInterpolation_text')}{elevation.punkter[0].z} {t('MetersAboveSeaLevel')}</span>
-          <span className='text-lowercase'> ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g,'$1 $2')})</span>
+          <span className='small'>{t('HeightEstimatedByInterpolation_text')}{elevation.punkter[0].z} {t('MetersAboveSeaLevel')}</span>
+          <span className='text-lowercase small'> ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g,'$1 $2')})</span>
         </>
        : null}
-      <p className='fs-5 text-uppercase'>{t('hva_vil_du_gjore')}</p>
+      <p className='fs-5 text-uppercase mt-3 ms-2'>{t('hva_vil_du_gjore')}</p>
+      <div className='d-flex flex-column'>
+        <div className='p-2 bg-light w-100 mb-2'><span>{t('seEiendom')}</span></div>
+        <div className='p-2 bg-light w-100 mb-2'><span>{t('ssrFakta')}</span></div>
+        <div className='p-2 bg-light w-100 mb-2'><span>{t('koordTrans')}</span></div>
+        <div className='p-2 bg-light w-100 mb-2'><span>{t('lagTurkart')}</span></div>
+        <div className='p-2 bg-light w-100 mb-2'><span>{t('lagFargeleggingskart')}</span></div>
+        <div className='p-2 bg-light w-100 mb-2'><span>{t('lagNodplakat')}</span></div>
+      </div>
     </>
   )
 }

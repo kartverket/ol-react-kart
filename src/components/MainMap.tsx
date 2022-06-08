@@ -9,7 +9,6 @@ import axios from 'axios';
 
 const MainMap = () => {
   const [mapInit, setMapInit] = useState(false);
-  const [newActiveProject, setNewActiveProject] = useState('');
   const activeProject = useAppSelector(selectActiveProject);
 
   const mapApi = MapApi();
@@ -20,27 +19,19 @@ const MainMap = () => {
         mapApi.init(response.data);
         setMapInit(true);
       });
-    } else {
-      console.log('Active projectXXX: ', activeProject.SiteTitle);
     }
   },[mapInit, mapApi, activeProject.SiteTitle])
 
   useEffect(() => {
-    if (newActiveProject !== activeProject.SiteTitle) {
+    if (activeProject.SiteTitle) {
       if (mapInit) {
-        // console.log('Acitve project effect: ', activeProject);
         mapApi.destroyProject();
         setMapInit(false);
       }
     }
-  }, [newActiveProject, activeProject])
+  }, [activeProject])
 
-  useEffect(() => {
-    if (newActiveProject !== activeProject.SiteTitle) {
-      setNewActiveProject(activeProject.SiteTitle);
-      console.log('TEST XXX')
-    }
-  }, [activeProject.SiteTitle, newActiveProject])
+  
 
   
 
