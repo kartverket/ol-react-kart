@@ -201,7 +201,7 @@ export interface IConfig {
   mapbounds: IMapBounds;
   maplayer: IMapLayer[];
   project: IProject;
-  vector: IVector[];
+  vector?: IVector[];
   wms: ITileLayer[];
   wmts: ITileLayer[];
 }

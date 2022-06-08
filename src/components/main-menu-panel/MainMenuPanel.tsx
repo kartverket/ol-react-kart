@@ -40,8 +40,6 @@ const MainMenuPanel = () => {
     const toggleShowActiveProject = (): void => {
         appDispatch(showActiveProjectFromList());
     }
-    
-    console.log('ICON: ', faTree);
 
     return (
         <div id="mySidenav" className="sidenav" style={{width: "0"}} >
