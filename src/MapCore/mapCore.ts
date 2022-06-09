@@ -1,4 +1,3 @@
-import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import Projection from 'ol/proj/Projection';
@@ -26,7 +25,7 @@ const MapApi = function() {
   const appProject = Project(dispatch);
   const toggleVector = useEventSelector(selectToggleVectorLayer);
   const toggleWms = useEventSelector(selectToggleWmsLayer);
-  
+
   const token = useEventSelector(selectToken);
   const center = useEventSelector(selectCenter);
 
@@ -41,7 +40,7 @@ const MapApi = function() {
       if (Number(myMap.getView().getZoom()) < 10) {
         myMap.getView().setZoom(12);
       }
-      
+
     });
   }
   },[center])
@@ -54,10 +53,10 @@ const MapApi = function() {
         layers.hideLayer(b.guid);
       })
       layers.createTileLayer(visibleBaseLayer, token);
-      
-      
-      
-      
+
+
+
+
       // TODO: temporary commented
       // if (newBaseLayer) {
       //     myMap.addLayer(newBaseLayer);
@@ -84,7 +83,7 @@ const MapApi = function() {
         layers.hideLayer(toggleVector.guid);
         dispatch(toggleVectorLayer());
       }
-      
+
     }
   }, [toggleVector, dispatch])
 
@@ -99,8 +98,8 @@ const MapApi = function() {
         dispatch(toggleWmsLayer());
       }
     }
-  }, [toggleWms, token, dispatch]) 
-  
+  }, [toggleWms, token, dispatch])
+
   return {
     init(projectConfig: IProjectConfig) {
 
@@ -112,7 +111,7 @@ const MapApi = function() {
         if (projectConfig.config.vector) {
           dispatch(addVectorLayers(projectConfig.config.vector));
         }
-        
+
         if (!myMap) {
           const sm = new Projection({
             code: projectConfig.config.project.mapepsg,

@@ -4,7 +4,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook, ReactReduxContextValue } from 'react-redux';
 import './styles/index.scss';
-import 'ol/ol.css';
 import './i18n';
 import { eventStore } from './MapCore/Events/Event/eventStore';
 import { appStore } from './app/store';
