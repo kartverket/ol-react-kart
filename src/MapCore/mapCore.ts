@@ -1,5 +1,6 @@
 import Map from 'ol/Map';
 import View from 'ol/View';
+import { defaults, ScaleLine } from 'ol/control';
 import Projection from 'ol/proj/Projection';
 import { useEffect } from 'react';
 import { IProjectConfig } from './Models/config-model';
@@ -131,6 +132,9 @@ const MapApi = function() {
               projection: sm,
               zoom: 4
             }),
+            controls: defaults({ zoom: true, attribution: false, rotate: false }).extend([
+              new ScaleLine(),
+            ]),
           });
         }
         activateMap = true;
