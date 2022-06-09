@@ -1,5 +1,4 @@
 // const { API_KEY } = process.env;
-const API_URL = 'https://ws.geonorge.no/stedsnavn/v1/navn?sok=';
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -9,6 +8,7 @@ import { IGeoNorge } from './search-model';
 import { useAppDispatch, useEventDispatch } from '../../index';
 import { setResult } from '../search/searchSlice';
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { generateSearchStedsnavnUrl } from '../../utils/n3api';
 
 function Search() {
   const { t } = useTranslation();
@@ -18,8 +18,11 @@ function Search() {
 
   useEffect(() => {
     if (query) {
-      axios.get(`${API_URL}${query}*&treffPerSide=15&side=1`).then((response) => {
-        const r:IGeoNorge = response.data; 
+      const side = 1;
+      const antall = 15;
+      const searchUrl = generateSearchStedsnavnUrl(query,side,antall);
+      axios.get(searchUrl).then((response) => {
+        const r:IGeoNorge = response.data;
         appDispatch(setResult(r));
         console.table(r.navn);
       });
@@ -49,7 +52,7 @@ function Search() {
               if (mySidenav !== null && sideMenuPosition != null) {
                   mySidenav.style.width = "395px";
                   sideMenuPosition.style.width = "395px";
-        
+
                   mySidenav.style.overflowY = "auto";
               }
             }}
@@ -77,7 +80,7 @@ function Search() {
                 console.log('menu click');
               }}
             />
-          </span>  
+          </span>
         </div>
       </>
     );
