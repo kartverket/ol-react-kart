@@ -3,7 +3,7 @@ import Map from 'ol/Map';
 import { EventsKey } from 'ol/events';
 import { setClickCoordinates } from './getClickCoordinatesSlice';
 import { useEventDispatch, useAppDispatch } from '../../index';
-import { setResult } from '../../components/search/searchSlice';
+import { setSsrResult } from '../../components/search/searchSlice';
 
 
 
@@ -19,7 +19,7 @@ export const GetClickCoordinates = function () {
         if (map) {
           infoKey = map.on('singleclick', function (evt) {
             if (evt && evt.originalEvent && map.getView()) {
-              appDispatch(setResult({}));
+              appDispatch(setSsrResult({}));
               eventDispatch(setClickCoordinates({
                 type: evt.type,
                 dragging: evt.dragging,
@@ -27,7 +27,7 @@ export const GetClickCoordinates = function () {
                 epsg: evt.map.getView().getProjection().getCode(),
                 coordinate: evt.coordinate
               }));
-              
+
             }
           });
         }

@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useEventDispatch } from '../../index';
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
-import { generateSearchStedsnavnUrl } from '../../utils/n3api';
-import { setResult } from '../search/searchSlice';
-import { IGeoNorge } from './search-model';
+import { generateAdresseSokUrl, generateSearchStedsnavnUrl } from '../../utils/n3api';
+import { setAdresseResult, setSsrResult } from '../search/searchSlice';
+import { IAdresser, ISsr } from './search-model';
 
 function Search() {
   const { t } = useTranslation();
@@ -20,11 +20,15 @@ function Search() {
     if (query) {
       const side = 1;
       const antall = 15;
-      const searchUrl = generateSearchStedsnavnUrl(query, side, antall);
-      axios.get(searchUrl).then(response => {
-        const r: IGeoNorge = response.data;
-        appDispatch(setResult(r));
-        console.table(r.navn);
+      const searchStedsnavnUrl = generateSearchStedsnavnUrl(query, side, antall);
+      const searchAdresseUrl = generateAdresseSokUrl(query);
+
+      Promise.all([axios.get(searchStedsnavnUrl), axios.get(searchAdresseUrl)]).then(responses => {
+        const [url1rest, url2resp] = responses;
+        const s: ISsr = url1rest.data;
+        const a: IAdresser = url2resp.data;
+        appDispatch(setSsrResult(s));
+        appDispatch(setAdresseResult(a));
       });
     }
   }, [query, appDispatch]);

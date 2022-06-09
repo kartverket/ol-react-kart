@@ -111,7 +111,7 @@ export const generateHoydedataPointUrl = (ost: string, nord: string, koordsys: s
 export const generateAdresseSokUrl = (query: string | number | boolean) => {
   query = typeof query === 'string' ? query : '';
   query = query.indexOf(',') !== -1 ? query.replace(',', '*') : query + '*';
-  return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=100`;
+  return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=10&side=0`;
 };
 
 export const generateAdressePunktsokUrl = (radius: string, lat: string, lon: string) => {
