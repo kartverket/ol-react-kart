@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { ISsr, IAdresser } from './search-model';
+import { IAdresser, ISsr } from './search-model';
 
 export interface ISearch {
-  ssr: ISsr,
-  adresser: IAdresser
+  ssr: ISsr;
+  adresser: IAdresser;
 }
 
 const initialState: ISearch = {
   ssr: {},
-  adresser: {}
-}
+  adresser: {},
+};
 
 export const searchSlice = createSlice({
   name: 'search',
@@ -21,9 +21,8 @@ export const searchSlice = createSlice({
     },
     setAdresseResult: (state, action: PayloadAction<IAdresser>) => {
       state.adresser = action.payload;
-    }
-
-  }
+    },
+  },
 });
 
 export const { setSsrResult, setAdresseResult } = searchSlice.actions;

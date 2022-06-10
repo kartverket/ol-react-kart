@@ -106,7 +106,7 @@ export interface IVector {
   name: string;
   url: string;
   epsg: string;
-  groupid: number,
+  groupid: number;
   params: IParamsVector;
   guid: string;
   options: IVectorOptions;
@@ -153,8 +153,8 @@ export interface ITileLayer {
   matrixset?: string;
   guid: string;
   options: ITileLayerOptions;
-  thumbnail?: string;  
-  Layers?: ILayers,
+  thumbnail?: string;
+  Layers?: ILayers;
   ticket?: string;
   wmtsextent?: string;
   source?: 'WMS' | 'WMTS';

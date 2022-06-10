@@ -20,11 +20,11 @@ const initialState: IProjectsList = {
   status: 'loading',
   showActiveProject: false,
   activeProject: {
-    SiteTitle: "norgeskart",
-    ProjectName: "norgeskart",
-    HeaderIcon: "",
-    HeaderTitle: "norgeskart"
-  }
+    SiteTitle: 'norgeskart',
+    ProjectName: 'norgeskart',
+    HeaderIcon: '',
+    HeaderTitle: 'norgeskart',
+  },
 };
 
 export const projectsListSlice = createSlice({
@@ -36,16 +36,16 @@ export const projectsListSlice = createSlice({
         state.projects.push(action.payload);
       }
     },
-    setStatusDone: (state) => {
+    setStatusDone: state => {
       state.status = 'done';
     },
-    showActiveProjectFromList: (state) => {
+    showActiveProjectFromList: state => {
       state.showActiveProject = !state.showActiveProject;
     },
     setActiveProject: (state, action: PayloadAction<IProject>) => {
       state.activeProject = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { addProjectList, setStatusDone, showActiveProjectFromList, setActiveProject } = projectsListSlice.actions;
@@ -53,12 +53,12 @@ export const { addProjectList, setStatusDone, showActiveProjectFromList, setActi
 //selectors
 export const selectProjectsList = (state: RootState) => {
   return state.projectsList.projects;
-}
+};
 
 export const selectShowActiveProject = (state: RootState) => {
   return state.projectsList.showActiveProject;
-}
+};
 
 export const selectActiveProject = (state: RootState) => {
   return state.projectsList.activeProject;
-}
+};

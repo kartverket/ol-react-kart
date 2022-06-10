@@ -3,16 +3,15 @@ import { RepresentasjonsPunkt } from '../../components/search/search-model';
 import { EventStoreState } from '../Events/Event/eventStore';
 import { IProject } from '../Models/config-model';
 
-
 export interface IAppProject {
-  project?: IProject,
-  token: string,
-  center?: RepresentasjonsPunkt
+  project?: IProject;
+  token: string;
+  center?: RepresentasjonsPunkt;
 }
 
 const initialState: IAppProject = {
-  token: ''
-}
+  token: '',
+};
 
 export const projectSlice = createSlice({
   name: 'project',
@@ -26,8 +25,8 @@ export const projectSlice = createSlice({
     },
     setCenter: (state, action: PayloadAction<RepresentasjonsPunkt>) => {
       state.center = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { addProject, setToken, setCenter } = projectSlice.actions;
@@ -39,8 +38,7 @@ export const selectToken = (state: EventStoreState) => {
 
 export const selectProject = (state: EventStoreState) => {
   return state.project.project;
-}
+};
 export const selectCenter = (state: EventStoreState) => {
   return state.project.center;
-}
-
+};

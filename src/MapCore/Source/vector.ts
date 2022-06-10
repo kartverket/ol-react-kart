@@ -6,8 +6,6 @@ interface IFeatures {
   features: Feature<Geometry>[];
 }
 
-export const vector = function ( features: IFeatures ) {
-  return new VectorSource (
-    features
-  );
-} 
+export const vector = function (features: IFeatures) {
+  return new VectorSource(features);
+};

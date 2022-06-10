@@ -13,6 +13,6 @@ interface IWmts {
   tileSizes?: Size[] | undefined;
 }
 
-export const wmtsTileGrid = function ( wmts: IWmts) {
+export const wmtsTileGrid = function (wmts: IWmts) {
   return new WMTSTileGrid(wmts);
-}
+};
