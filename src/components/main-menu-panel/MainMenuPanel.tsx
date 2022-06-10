@@ -62,7 +62,7 @@ const MainMenuPanel = () => {
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <hr/>
                 {!showActiveProject ?
                 <div className="container">
@@ -71,13 +71,13 @@ const MainMenuPanel = () => {
                             <FontAwesomeIcon icon={faMap} />
                         </div>
                         <div className='ps-2 pe-2'>
-                            <span className="text-uppercase"><span>{t('bakgrunnskart')}</span>:</span>
+                            <span className=""><span>{t('bakgrunnskart')}</span>:</span>
                             <span>&nbsp;{t(visibleBaseLayer?.name || '')}</span>
                         </div>
                         <div className='ms-auto ps-2 pe-2'>
-                            {!showBaseLayersList ? 
+                            {!showBaseLayersList ?
                                 <FontAwesomeIcon icon={faChevronRight}/>
-                                : 
+                                :
                                 <FontAwesomeIcon icon={faChevronLeft}/>
                             }
                         </div>
@@ -92,7 +92,7 @@ const MainMenuPanel = () => {
                         <div className='ps-2 pe-2'>
                                 <span className='text-capitalize'>{t(activeProject.ProjectName)}</span>
                         </div>
-                        <div className='ms-auto ps-2 pe-2'>                            
+                        <div className='ms-auto ps-2 pe-2'>
                             <FontAwesomeIcon icon={faChevronLeft}/>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ const MainMenuPanel = () => {
                             <div className='d-flex' style={{ marginBottom: "12px" }} onClick={() => toggleThematicMap()}>
                             <div className='ps-2 pe-2'><FontAwesomeIcon icon={faMap} /></div>
                             <div className='ps-2 pe-2'>
-                                <span className="text-uppercase">{t('temakart')}</span>
+                                <span className="">{t('temakart')}</span>
                             </div>
                             <div className="ms-auto ps-2 pe-2">
                                 {!collapseThematicMap ?
@@ -117,14 +117,14 @@ const MainMenuPanel = () => {
                                 }
                             </div>
                         </div>
-                        {!collapseThematicMap ? 
+                        {!collapseThematicMap ?
                         <div>
                             <ProjectsList />
                         </div> : null}
                     </div>
                     <div className='m-2 p-2'>
                         <LanguageSelector />
-                    </div> 
+                    </div>
                 </div> : null}
             </div>
         </div>

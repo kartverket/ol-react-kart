@@ -25,7 +25,7 @@ const PointInfo = () => {
   useEffect(() => {
     if (clickCoordinates && clickCoordinates.coordinate) {
       const elevationUrl = generateHoydedataPointUrl(
-        clickCoordinates?.coordinate[0].toString(), 
+        clickCoordinates?.coordinate[0].toString(),
         clickCoordinates?.coordinate[1].toString(), '25833')
         axios.get(elevationUrl).then(function (response) {
           console.log(response.data);
@@ -36,12 +36,12 @@ const PointInfo = () => {
   return (
     <>
       {elevation && elevation.punkter && elevation.punkter.length > 0 && elevation.punkter[0].z?
-        <> 
+        <>
           <span className='small'>{t('HeightEstimatedByInterpolation_text')}{elevation.punkter[0].z} {t('MetersAboveSeaLevel')}</span>
           <span className='text-lowercase small'> ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g,'$1 $2')})</span>
         </>
        : null}
-      <p className='fs-5 text-uppercase mt-3 ms-2'>{t('hva_vil_du_gjore')}</p>
+      <p className='fs-5 mt-3 ms-2'>{t('hva_vil_du_gjore')}</p>
       <div className='d-flex flex-column'>
         <div className='p-2 bg-light w-100 mb-2'><span>{t('seEiendom')}</span></div>
         <div className='p-2 bg-light w-100 mb-2'><span>{t('ssrFakta')}</span></div>
