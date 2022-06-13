@@ -171,7 +171,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "cells",
           "queryable": "false"
         }
       },
@@ -192,7 +191,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },
@@ -213,7 +211,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Niv_fastmerker",
           "queryable": "false"
         }
       },
@@ -289,7 +286,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Landsnettpunkt",
           "queryable": "false"
         }
       },
@@ -365,7 +361,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Stamnettpunkt",
           "queryable": "false"
         }
       },
@@ -441,7 +436,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Trekantpunkt",
           "queryable": "false"
         }
       },
@@ -517,7 +511,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "UTMrutenett",
           "queryable": "false"
         }
       },
@@ -540,7 +533,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Stasjoner",
           "queryable": "false"
         }
       },
@@ -576,7 +568,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Svenske_finske_stasjoner",
           "queryable": "false"
         }
       },

@@ -171,7 +171,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "cells",
           "queryable": "false"
         }
       },
@@ -192,7 +191,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },
@@ -213,7 +211,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },
@@ -235,7 +232,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "amt1",
           "queryable": "false"
         }
       },
@@ -257,7 +253,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "norsk",
           "queryable": "false"
         }
       },
@@ -291,7 +286,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "lulesamisk",
           "queryable": "false"
         }
       },
@@ -325,7 +319,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "nordsamisk",
           "queryable": "false"
         }
       },
@@ -359,7 +352,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skoltesamisk",
           "queryable": "false"
         }
       },
@@ -393,7 +385,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "sorsamisk",
           "queryable": "false"
         }
       },
@@ -427,7 +418,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kvensk",
           "queryable": "false"
         }
       },
@@ -461,7 +451,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "andre",
           "queryable": "false"
         }
       },
@@ -495,7 +484,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "offentlig_administrasjon",
           "queryable": "false"
         }
       },
@@ -529,7 +517,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "bebyggelse",
           "queryable": "false"
         }
       },
@@ -563,7 +550,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "infrastruktur",
           "queryable": "false"
         }
       },
@@ -597,7 +583,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "sjo",
           "queryable": "false"
         }
       },
@@ -631,7 +616,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "markslag",
           "queryable": "false"
         }
       },
@@ -665,7 +649,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "ferskvann",
           "queryable": "false"
         }
       },
@@ -699,7 +682,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "terreng",
           "queryable": "false"
         }
       },
@@ -733,7 +715,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kultur",
           "queryable": "false"
         }
       },
@@ -767,7 +748,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_24",
           "queryable": "false"
         }
       },
@@ -801,7 +781,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_12",
           "queryable": "false"
         }
       },
@@ -835,7 +814,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_6",
           "queryable": "false"
         }
       },
@@ -869,7 +847,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_3",
           "queryable": "false"
         }
       },
@@ -903,7 +880,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_1",
           "queryable": "false"
         }
       },
@@ -937,7 +913,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak24",
           "queryable": "false"
         }
       },
@@ -971,7 +946,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak12",
           "queryable": "false"
         }
       },
@@ -1005,7 +979,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak6",
           "queryable": "false"
         }
       },
@@ -1039,7 +1012,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak3",
           "queryable": "false"
         }
       },
@@ -1073,7 +1045,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak1",
           "queryable": "false"
         }
       },
@@ -1107,7 +1078,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtatt",
           "queryable": "false"
         }
       },
@@ -1142,7 +1112,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtatt_navneledd",
           "queryable": "false"
         }
       },
@@ -1177,7 +1146,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "godkjent",
           "queryable": "false"
         }
       },
@@ -1212,7 +1180,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "internasjonalt",
           "queryable": "false"
         }
       },
@@ -1247,7 +1214,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "privat",
           "queryable": "false"
         }
       },
@@ -1282,7 +1248,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "historisk",
           "queryable": "false"
         }
       },
@@ -1317,7 +1282,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "foreslatt",
           "queryable": "false"
         }
       },
@@ -1352,7 +1316,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "uvurdert",
           "queryable": "false"
         }
       },
@@ -1387,7 +1350,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "avslatt_navneledd",
           "queryable": "false"
         }
       },
@@ -1422,7 +1384,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "avslatt",
           "queryable": "false"
         }
       },
@@ -1457,7 +1418,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "navnesakstatus_ubehandlet",
           "queryable": "false"
         }
       },
@@ -1491,7 +1451,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skalikkebehandles",
           "queryable": "false"
         }
       },
@@ -1525,7 +1484,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "navnemyndighet",
           "queryable": "false"
         }
       },
@@ -1559,7 +1517,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak",
           "queryable": "false"
         }
       },
@@ -1593,7 +1550,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak_tilbake",
           "queryable": "false"
         }
       },
@@ -1627,7 +1583,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "reist",
           "queryable": "false"
         }
       },
@@ -1661,7 +1616,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "navnesak_vedtak",
           "queryable": "false"
         }
       },
@@ -1695,7 +1649,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtakutsatt",
           "queryable": "false"
         }
       },
@@ -1729,7 +1682,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "klage_ikke_trukket",
           "queryable": "false"
         }
       },
@@ -1763,7 +1715,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "klage_trukket",
           "queryable": "false"
         }
       },
@@ -1797,7 +1748,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "klagevedtakutsatt",
           "queryable": "false"
         }
       },
@@ -1831,7 +1781,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "forenkletvedtak",
           "queryable": "false"
         }
       },

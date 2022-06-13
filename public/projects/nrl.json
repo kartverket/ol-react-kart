@@ -171,7 +171,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "cells",
           "queryable": "false"
         }
       },
@@ -192,7 +191,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },
@@ -213,7 +211,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "andre_linjer_60m_og_over",
           "queryable": "false"
         }
       },
@@ -268,7 +265,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "andre_linjer_mellom_40m_60m",
           "queryable": "false"
         }
       },
@@ -323,7 +319,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "andre_linjer_under_40m",
           "queryable": "false"
         }
       },
@@ -378,7 +373,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "andre_linjer_uten_hoyde",
           "queryable": "false"
         }
       },
@@ -433,7 +427,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "linjepunkt_60m_og_over",
           "queryable": "false"
         }
       },
@@ -488,7 +481,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "linjepunkt_mellom_40m_60m",
           "queryable": "false"
         }
       },
@@ -543,7 +535,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "linjepunkt_under_40m",
           "queryable": "false"
         }
       },
@@ -598,7 +589,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "linjepunkt_uten_hoyde",
           "queryable": "false"
         }
       },
@@ -653,7 +643,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftledning_60m_og_over",
           "queryable": "false"
         }
       },
@@ -708,7 +697,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftledning_mellom_40m_60m",
           "queryable": "false"
         }
       },
@@ -763,7 +751,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftledning_under_40m",
           "queryable": "false"
         }
       },
@@ -818,7 +805,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftledning_uten_hoyde",
           "queryable": "false"
         }
       },
@@ -873,7 +859,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftstolpe_60m_og_over",
           "queryable": "false"
         }
       },
@@ -928,7 +913,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftstolpe_mellom_40m_60m",
           "queryable": "false"
         }
       },
@@ -983,7 +967,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftstolpe_under_40m",
           "queryable": "false"
         }
       },
@@ -1038,7 +1021,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kraftstolpe_uten_hoyde",
           "queryable": "false"
         }
       },
@@ -1093,7 +1075,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "Punkthindre_60m_og_over",
           "queryable": "false"
         }
       },
@@ -1148,7 +1129,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "punkthindre_mellom_40m_60m",
           "queryable": "false"
         }
       },
@@ -1203,7 +1183,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "punkthindre_under_40m",
           "queryable": "false"
         }
       },
@@ -1258,7 +1237,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "punkthindre_uten_hoyde",
           "queryable": "false"
         }
       },

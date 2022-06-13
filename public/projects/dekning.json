@@ -171,7 +171,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "cells",
           "queryable": "false"
         }
       },
@@ -192,7 +191,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },

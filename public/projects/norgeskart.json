@@ -181,7 +181,6 @@
       "type": "overlay",
       "Layers": {
         "Layer": {
-          "name": "cells",
           "queryable": "false"
         }
       },
@@ -203,7 +202,6 @@
       "type": "overlay",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },

@@ -171,7 +171,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "cells",
           "queryable": "false"
         }
       },
@@ -192,7 +191,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
           "queryable": "false"
         }
       },
@@ -213,7 +211,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_parkeringsomrade_r",
           "queryable": "True"
         }
       },
@@ -290,7 +287,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_vei_r",
           "queryable": "True"
         }
       },
@@ -408,7 +404,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_HC_parkering_r",
           "queryable": "True"
         }
       },
@@ -517,7 +512,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_inngangbygg_r_01",
           "queryable": "True"
         }
       },
@@ -661,7 +655,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_parkeringsomrade_el",
           "queryable": "True"
         }
       },
@@ -738,7 +731,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_vei_el",
           "queryable": "True"
         }
       },
@@ -856,7 +848,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_HC_parkering_el",
           "queryable": "True"
         }
       },
@@ -965,7 +956,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_inngangbygg_r_02",
           "queryable": "True"
         }
       },
@@ -1109,7 +1099,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_parkeringsomrade",
           "queryable": "True"
         }
       },
@@ -1186,7 +1175,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_vei",
           "queryable": "True"
         }
       },
@@ -1289,7 +1277,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_HC_parkering",
           "queryable": "True"
         }
       },
@@ -1398,7 +1385,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "t_inngangbygg",
           "queryable": "True"
         }
       },
@@ -1542,7 +1528,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "statlig_sikra_polygon_01",
           "queryable": "True"
         }
       },
@@ -1594,7 +1579,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "friluftsomrade_01",
           "queryable": "True"
         }
       },
@@ -1684,7 +1668,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "parkeringsomrader_friluft_01",
           "queryable": "True"
         }
       },
@@ -1762,7 +1745,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "turvei_01",
           "queryable": "True"
         }
       },
@@ -1877,7 +1859,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "turisthytte_01",
           "queryable": "True"
         }
       },
@@ -1930,7 +1911,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "gapahukhytte_01",
           "queryable": "True"
         }
       },
@@ -2051,7 +2031,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "fiskeplass_01",
           "queryable": "True"
         }
       },
@@ -2176,7 +2155,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "grillbalplass_01",
           "queryable": "True"
         }
       },
@@ -2255,7 +2233,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "baderampe_01",
           "queryable": "True"
         }
       },
@@ -2354,7 +2331,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "hc_parkering_friluft_01",
           "queryable": "True"
         }
       },
@@ -2445,7 +2421,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skiloype_01",
           "queryable": "True"
         }
       },
@@ -2548,7 +2523,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "statlig_sikra_polygon_02",
           "queryable": "True"
         }
       },
@@ -2600,7 +2574,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "friluftsomrade_02",
           "queryable": "True"
         }
       },
@@ -2690,7 +2663,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "parkeringsomrader_friluft_02",
           "queryable": "True"
         }
       },
@@ -2768,7 +2740,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "turvei_02",
           "queryable": "True"
         }
       },
@@ -2883,7 +2854,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "turisthytte_02",
           "queryable": "True"
         }
       },
@@ -2936,7 +2906,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "gapahukhytte_02",
           "queryable": "True"
         }
       },
@@ -3057,7 +3026,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "fiskeplass_02",
           "queryable": "True"
         }
       },
@@ -3182,7 +3150,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "grillbalplass_02",
           "queryable": "True"
         }
       },
@@ -3261,7 +3228,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "hc_parkering_friluft_02",
           "queryable": "True"
         }
       },
@@ -3352,7 +3318,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skiloype_02",
           "queryable": "True"
         }
       },
@@ -3455,7 +3420,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "statlig_sikra_polygon_03",
           "queryable": "True"
         }
       },
@@ -3507,7 +3471,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "friluftsomrade_03",
           "queryable": "True"
         }
       },
@@ -3597,7 +3560,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "parkeringsomrader_friluft_03",
           "queryable": "True"
         }
       },
@@ -3675,7 +3637,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "turvei_03",
           "queryable": "True"
         }
       },
@@ -3790,7 +3751,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "turisthytte_03",
           "queryable": "True"
         }
       },
@@ -3843,7 +3803,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "gapahukhytte_03",
           "queryable": "True"
         }
       },
@@ -3964,7 +3923,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "fiskeplass_03",
           "queryable": "True"
         }
       },
@@ -4093,7 +4051,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "grillbalplass_03",
           "queryable": "True"
         }
       },
@@ -4172,7 +4129,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "baderampe_02",
           "queryable": "True"
         }
       },
@@ -4267,7 +4223,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "hc_parkering_friluft_03",
           "queryable": "True"
         }
       },
@@ -4358,7 +4313,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skiloype_03",
           "queryable": "True"
         }
       },
@@ -4461,7 +4415,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "sittegruppe",
           "queryable": "True"
         }
       },
@@ -4561,7 +4514,6 @@
       "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "toalett",
           "queryable": "True"
         }
       },
