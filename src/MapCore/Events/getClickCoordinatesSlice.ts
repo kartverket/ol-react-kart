@@ -10,9 +10,7 @@ export interface IMapClickInfo {
   dragging?: boolean;
 }
 
-const initialState: IMapClickInfo = {
-  
-};
+const initialState: IMapClickInfo = {};
 
 export const getClickCoordinatesSlice = createSlice({
   name: 'getClickCoordinates',
@@ -20,8 +18,8 @@ export const getClickCoordinatesSlice = createSlice({
   reducers: {
     setClickCoordinates: (state, action: PayloadAction<IMapClickInfo>) => {
       state.coordinate = action.payload.coordinate;
-    }
-  }
+    },
+  },
 });
 
 export const { setClickCoordinates } = getClickCoordinatesSlice.actions;

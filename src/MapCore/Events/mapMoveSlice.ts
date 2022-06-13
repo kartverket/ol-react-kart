@@ -15,12 +15,11 @@ export const mapMoveSlice = createSlice({
   reducers: {
     mapMoveEnd: (state, action: PayloadAction<IMapMove>) => {
       state.coordinates = action.payload.coordinates;
-    }
-  }
+    },
+  },
 });
 
 export const { mapMoveEnd } = mapMoveSlice.actions;
 
 // selectors
 export const selectMapMoveEndCoordinates = (state: EventStoreState) => state.mapMoveEndCoordinates;
-

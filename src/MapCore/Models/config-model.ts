@@ -106,7 +106,7 @@ export interface IVector {
   name: string;
   url: string;
   epsg: string;
-  groupid: number,
+  groupid: number;
   params: IParamsVector;
   guid: string;
   options: IVectorOptions;
@@ -155,10 +155,10 @@ export interface ITileLayer {
   guid: string;
   options: ITileLayerOptions;
   thumbnail?: string;
-  Layers?: ILayers,
+  Layers?: ILayers;
   ticket?: string;
   wmtsextent?: string;
-  source?: 'WMS' | 'WMTS';
+  distributionProtocol?: 'WMS' | 'WMTS';
   groupid?: number;
   legendurl?: string;
 }
@@ -186,9 +186,7 @@ export interface IProject {
   mapepsg: string;
   zoom: number;
   mapbackgroundcolor: string;
-  displaycenterepsgcode: string;
   displayCenter: string;
-  displayprojectionepsgcode: string;
   isygatekeeper: string;
   tickethost: string;
   name: string;
@@ -203,8 +201,7 @@ export interface IConfig {
   maplayer: IMapLayer[];
   project: IProject;
   vector?: IVector[];
-  wms: ITileLayer[];
-  wmts: ITileLayer[];
+  layer: ITileLayer[];
 }
 
 export interface IProjectConfig {

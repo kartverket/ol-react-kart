@@ -6,14 +6,13 @@
       "mapepsg": "EPSG:25833",
       "zoom": 4,
       "mapbackgroundcolor": "#FFFFFF",
-      "displaycenterepsgcode": "EPSG:25833",
       "displayCenter": "396722,7197864",
-      "displayprojectionepsgcode": "EPSG:25833",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
       "name": "norgeskart"
     },
-    "wmts": [{
+    "layer": [{
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "landkart",
@@ -32,6 +31,7 @@
       },
       "thumbnail": "land"
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "flybilder",
@@ -49,6 +49,7 @@
       },
       "thumbnail": "aerial"
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "rasterkart",
@@ -67,6 +68,7 @@
       },
       "thumbnail": "raster"
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "gratone",
@@ -85,6 +87,7 @@
       },
       "thumbnail": "grey"
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "enkel",
@@ -102,6 +105,7 @@
         "visibility": "false"
       }
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "terreng",
@@ -119,6 +123,7 @@
         "visibility": "false"
       }
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
       "name": "sjokart",
@@ -136,6 +141,7 @@
         "visibility": "false"
       }
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "name": "jan_mayen",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
@@ -153,6 +159,7 @@
         "visibility": "false"
       }
     }, {
+      "distributionProtocol": "WMTS",
       "type": "map",
       "name": "svalbard",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
@@ -169,8 +176,8 @@
         "singletile": "false",
         "visibility": "false"
       }
-    }],
-    "wms": [{
+    },{
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "Layers": {
         "Layer": {
@@ -193,6 +200,7 @@
         "visibility": "false"
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "Layers": {
         "Layer": {
@@ -215,6 +223,7 @@
         "visibility": "false"
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "fotruter",
@@ -253,6 +262,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "Ruteinfopunkt",
@@ -287,6 +297,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "skiloyper",
@@ -325,6 +336,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "sykkelruter",
@@ -363,6 +375,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "annenruter",
@@ -401,6 +414,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "historisk_ferdselsrute",
@@ -439,6 +453,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "kyststi",
@@ -477,6 +492,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "kultursti",
@@ -515,6 +531,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "natursti",
@@ -553,6 +570,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "trimloype",
@@ -591,6 +609,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "fotrute_type_ikke_angitt",
@@ -629,6 +648,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "Maskinpreparert",
@@ -675,6 +695,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "Snøskuter",
@@ -721,6 +742,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "Upreparert",
@@ -767,6 +789,7 @@
         }]
       }
     }, {
+      "distributionProtocol": "WMS",
       "type": "overlay",
       "gatekeeper": "true",
       "name": "Preparering ikke angitt",
@@ -812,25 +835,8 @@
           "alias": "preparering"
         }]
       }
-    }],
-    "maplayer": [{
-      "index": 3,
-      "name": "fakta",
-      "groupid": 3
-    }, {
-      "index": 5,
-      "name": "tur_og_friluftsruter",
-      "groupid": 5
-    }, {
-      "index": 6,
-      "name": "fotrutetype",
-      "groupid": 6
-    }, {
-      "index": 7,
-      "name": "Skiløypepreparering",
-      "groupid": 7
-    }],
-    "vector": [{
+    },{
+      "distributionProtocol": "GEOJSON",
       "type": "overlay",
       "name": "kommunenes_fjelltopper",
       "url": "https://www.norgeskart.no/json/tema/kommunefjell/Kommunefjell2018.geojson",
@@ -852,6 +858,23 @@
           "radius": 9
         }
       }
+    }],
+    "maplayer": [{
+      "index": 3,
+      "name": "fakta",
+      "groupid": 3
+    }, {
+      "index": 5,
+      "name": "tur_og_friluftsruter",
+      "groupid": 5
+    }, {
+      "index": 6,
+      "name": "fotrutetype",
+      "groupid": 6
+    }, {
+      "index": 7,
+      "name": "Skiløypepreparering",
+      "groupid": 7
     }],
     "mapbounds": {
       "mapbound": [{

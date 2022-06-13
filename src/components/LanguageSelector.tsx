@@ -24,7 +24,7 @@ const LanguageSelector = () => {
             >
               {lngs[lng].nativeName}
             </a>
-            <span className='m-2'> {index < 2 ? '|' : ''}</span>
+            <span className="m-2"> {index < 2 ? '|' : ''}</span>
           </span>
         ))}
       </div>

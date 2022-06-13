@@ -1,36 +1,44 @@
-[{
-  "SiteTitle": "tilgjengelighet",
-  "ProjectName": "Tilgjengelighet_title",
-  "HeaderIcon": "",
-  "HeaderTitle": "tilgjengelighet"
-}, {
-  "SiteTitle": "fastmerker",
-  "ProjectName": "Fastmerker_title",
-  "HeaderIcon": "",
-  "HeaderTitle": "fastmerker"
-}, {
-  "SiteTitle": "nrl",
-  "ProjectName": "nrl",
-  "HeaderIcon": "",
-  "HeaderTitle": "nrl"
-}, {
-  "SiteTitle": "norgeskart",
-  "ProjectName": "norgeskart",
-  "HeaderIcon": "",
-  "HeaderTitle": "norgeskart"
-}, {
-  "SiteTitle": "ssr",
-  "ProjectName": "ssr",
-  "HeaderIcon": "",
-  "HeaderTitle": "ssr"
-}, {
-  "SiteTitle": "dekning",
-  "ProjectName": "Dekning_title",
-  "HeaderIcon": "",
-  "HeaderTitle": "dekning"
-}, {
-  "SiteTitle": "vectortilesdemo",
-  "ProjectName": "vectortilesdemo",
-  "HeaderIcon": "",
-  "HeaderTitle": "vectortilesdemo"
-}]
+[
+  {
+    "SiteTitle": "tilgjengelighet",
+    "ProjectName": "Tilgjengelighet_title",
+    "HeaderIcon": "",
+    "HeaderTitle": "tilgjengelighet"
+  },
+  {
+    "SiteTitle": "fastmerker",
+    "ProjectName": "Fastmerker_title",
+    "HeaderIcon": "",
+    "HeaderTitle": "fastmerker"
+  },
+  {
+    "SiteTitle": "nrl",
+    "ProjectName": "nrl",
+    "HeaderIcon": "",
+    "HeaderTitle": "nrl"
+  },
+  {
+    "SiteTitle": "norgeskart",
+    "ProjectName": "norgeskart",
+    "HeaderIcon": "",
+    "HeaderTitle": "norgeskart"
+  },
+  {
+    "SiteTitle": "ssr",
+    "ProjectName": "ssr",
+    "HeaderIcon": "",
+    "HeaderTitle": "ssr"
+  },
+  {
+    "SiteTitle": "dekning",
+    "ProjectName": "Dekning_title",
+    "HeaderIcon": "",
+    "HeaderTitle": "dekning"
+  },
+  {
+    "SiteTitle": "vectortilesdemo",
+    "ProjectName": "vectortilesdemo",
+    "HeaderIcon": "",
+    "HeaderTitle": "vectortilesdemo"
+  }
+]

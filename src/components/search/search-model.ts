@@ -19,7 +19,28 @@ export interface StedsNavn {
   fylker: Fylke;
   kommuner: Kommune[];
 }
-
+export interface Adresser {
+  adressekode: number;
+  adressenavn: string;
+  adressetekst: string;
+  adressetekstutenadressetilleggsnavn: string;
+  adressetilleggsnavn: string;
+  bokstav: string;
+  bruksenhetsnummer: [];
+  bruksnummer: number;
+  festenummer: number;
+  gardsnummer: number;
+  kommunenavn: string;
+  kommunenummer: string;
+  nummer: number;
+  objtype: string;
+  oppdateringsdato: string;
+  postnummer: string;
+  poststed: string;
+  representasjonspunkt: RepresentasjonsPunkt;
+  stedfestingverifisert: boolean;
+  undernummer: string;
+}
 export interface Metadata {
   treffPerSide: number;
   side: number;
@@ -29,7 +50,12 @@ export interface Metadata {
   sokeStreng: string;
 }
 
-export interface IGeoNorge {
+export interface ISsr {
   metadata?: Metadata;
   navn?: StedsNavn[];
-};
+}
+
+export interface IAdresser {
+  metadata?: Metadata;
+  adresser?: Adresser[];
+}

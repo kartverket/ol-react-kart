@@ -85,7 +85,7 @@ export const generateSearchMatrikkelAdresseUrl = (query: string | number | boole
   return `${urlGeonorge}norgeskart/v1/matrikkel/adr/${encodeURIComponent(query)}`;
 };
 
-export const generateSearchStedsnavnUrl = (query: string, side: any, antall: any) => {
+export const generateSearchStedsnavnUrl = (query: string, side: number, antall: number) => {
   if (query) {
     const testquery = query.split(',');
     if (testquery.length >= 2) {
@@ -111,14 +111,14 @@ export const generateHoydedataPointUrl = (ost: string, nord: string, koordsys: s
 export const generateAdresseSokUrl = (query: string | number | boolean) => {
   query = typeof query === 'string' ? query : '';
   query = query.indexOf(',') !== -1 ? query.replace(',', '*') : query + '*';
-  return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=100`;
+  return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=10&side=0`;
 };
 
 export const generateAdressePunktsokUrl = (radius: string, lat: string, lon: string) => {
   return `${urlAdressePunktsok}?radius=${radius}&lat=${lat}&lon=${lon}&treffPerSide=10`;
 };
 
-export const generateMatrikkelInfoUrl = (minx: any, miny: any, maxx: any, maxy: any) => {
+export const generateMatrikkelInfoUrl = (minx: number, miny: number, maxx: number, maxy: number) => {
   return `${url}ws/wfs.teig.py?bbox=${minx},${miny},${maxx},${maxy}`;
 };
 

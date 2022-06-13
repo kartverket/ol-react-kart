@@ -1,11 +1,11 @@
 import axios from 'axios';
-import type { EventStoreDispatch } from '../Events/Event/eventStore';
-import { setToken, selectProject } from './projectSlice';
 import { useEventSelector } from '../../index';
+import type { EventStoreDispatch } from '../Events/Event/eventStore';
+import { selectProject, setToken } from './projectSlice';
 
 export const Project = function (dispatch: EventStoreDispatch) {
   const project = useEventSelector(selectProject);
-  
+
   return {
     generateToken() {
       if (project) {
@@ -13,7 +13,6 @@ export const Project = function (dispatch: EventStoreDispatch) {
           dispatch(setToken(response.data));
         });
       }
-    }
-
-  }
-}
+    },
+  };
+};

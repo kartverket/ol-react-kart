@@ -6,15 +6,13 @@
       "mapepsg": "EPSG:25833",
       "zoom": 4,
       "mapbackgroundcolor": "#FFFFFF",
-      "displaycenterepsgcode": "EPSG:25833",
       "displayCenter": "396722,7197864",
-      "displayprojectionepsgcode": "EPSG:25833",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
       "name": "tilgjengelighet"
     },
-    "wmts": [{
-      "type": "map",
+    "layer": [{
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "landkart",
       "url": "https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/|https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/",
@@ -32,7 +30,7 @@
       },
       "thumbnail": "land"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "flybilder",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
@@ -49,7 +47,7 @@
       },
       "thumbnail": "aerial"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "rasterkart",
       "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
@@ -67,7 +65,7 @@
       },
       "thumbnail": "raster"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "gratone",
       "url": "https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/",
@@ -85,7 +83,7 @@
       },
       "thumbnail": "grey"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "enkel",
       "url": "https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/",
@@ -102,7 +100,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "terreng",
       "url": "https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/|https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/",
@@ -119,7 +117,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "sjokart",
       "url": "https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/|https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/",
@@ -136,7 +134,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "jan_mayen",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -153,7 +151,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "svalbard",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -169,9 +167,8 @@
         "singletile": "false",
         "visibility": "false"
       }
-    }],
-    "wms": [{
-      "type": "overlay",
+    },{
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "cells",
@@ -193,7 +190,7 @@
         "visibility": "false"
       }
     },{
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
@@ -215,7 +212,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_parkeringsomrade_r",
@@ -293,7 +290,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_vei_r",
@@ -412,7 +409,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_HC_parkering_r",
@@ -522,7 +519,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_inngangbygg_r_01",
@@ -667,7 +664,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_parkeringsomrade_el",
@@ -745,7 +742,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_vei_el",
@@ -864,7 +861,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_HC_parkering_el",
@@ -974,7 +971,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_inngangbygg_r_02",
@@ -1119,7 +1116,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_parkeringsomrade",
@@ -1197,7 +1194,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_vei",
@@ -1301,7 +1298,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_HC_parkering",
@@ -1411,7 +1408,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "t_inngangbygg",
@@ -1556,7 +1553,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "statlig_sikra_polygon_01",
@@ -1609,7 +1606,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "friluftsomrade_01",
@@ -1700,7 +1697,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "parkeringsomrader_friluft_01",
@@ -1779,7 +1776,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "turvei_01",
@@ -1895,7 +1892,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "turisthytte_01",
@@ -1949,7 +1946,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "gapahukhytte_01",
@@ -2071,7 +2068,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "fiskeplass_01",
@@ -2197,7 +2194,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "grillbalplass_01",
@@ -2277,7 +2274,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "baderampe_01",
@@ -2377,7 +2374,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "hc_parkering_friluft_01",
@@ -2469,7 +2466,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "skiloype_01",
@@ -2573,7 +2570,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "statlig_sikra_polygon_02",
@@ -2626,7 +2623,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "friluftsomrade_02",
@@ -2717,7 +2714,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "parkeringsomrader_friluft_02",
@@ -2796,7 +2793,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "turvei_02",
@@ -2912,7 +2909,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "turisthytte_02",
@@ -2966,7 +2963,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "gapahukhytte_02",
@@ -3088,7 +3085,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "fiskeplass_02",
@@ -3214,7 +3211,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "grillbalplass_02",
@@ -3294,7 +3291,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "hc_parkering_friluft_02",
@@ -3386,7 +3383,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "skiloype_02",
@@ -3490,7 +3487,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "statlig_sikra_polygon_03",
@@ -3543,7 +3540,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "friluftsomrade_03",
@@ -3634,7 +3631,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "parkeringsomrader_friluft_03",
@@ -3713,7 +3710,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "turvei_03",
@@ -3829,7 +3826,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "turisthytte_03",
@@ -3883,7 +3880,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "gapahukhytte_03",
@@ -4005,7 +4002,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "fiskeplass_03",
@@ -4135,7 +4132,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "grillbalplass_03",
@@ -4215,7 +4212,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "baderampe_02",
@@ -4311,7 +4308,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "hc_parkering_friluft_03",
@@ -4403,7 +4400,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "skiloype_03",
@@ -4507,7 +4504,7 @@
         }]
       }
     },{
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "sittegruppe",
@@ -4608,7 +4605,7 @@
         }]
       }
     },{
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "toalett",

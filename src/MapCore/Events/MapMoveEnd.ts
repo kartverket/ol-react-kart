@@ -1,12 +1,10 @@
-import { unByKey } from 'ol/Observable';
-import Map from 'ol/Map';
 import { EventsKey } from 'ol/events';
-import type { EventStoreDispatch } from './Event/eventStore';
+import Map from 'ol/Map';
+import { unByKey } from 'ol/Observable';
 import { mapMoveEnd } from '../Events/mapMoveSlice';
-
+import type { EventStoreDispatch } from './Event/eventStore';
 
 export const MapMoveEnd = function (dispatch: EventStoreDispatch) {
-
   let infoKey: EventsKey;
   let isActive = false;
 
@@ -16,9 +14,11 @@ export const MapMoveEnd = function (dispatch: EventStoreDispatch) {
         if (map) {
           infoKey = map.on('moveend', function (evt) {
             if (evt && map.getView()) {
-              dispatch(mapMoveEnd({
-                coordinates: String(map.getView().getCenter()?.join(','))
-              }))
+              dispatch(
+                mapMoveEnd({
+                  coordinates: String(map.getView().getCenter()?.join(',')),
+                }),
+              );
             }
           });
         }
@@ -34,9 +34,6 @@ export const MapMoveEnd = function (dispatch: EventStoreDispatch) {
         }
         isActive = false;
       }
-    }
-  }
-
-
-
-}
+    },
+  };
+};

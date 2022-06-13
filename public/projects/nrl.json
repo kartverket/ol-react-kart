@@ -6,15 +6,13 @@
       "mapepsg": "EPSG:25833",
       "zoom": 4,
       "mapbackgroundcolor": "#FFFFFF",
-      "displaycenterepsgcode": "EPSG:25833",
       "displayCenter": "396722,7197864",
-      "displayprojectionepsgcode": "EPSG:25833",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
       "name": "nrl"
     },
-    "wmts": [{
-      "type": "map",
+    "layer": [{
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "landkart",
       "url": "https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/|https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/",
@@ -32,7 +30,7 @@
       },
       "thumbnail": "land"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "flybilder",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
@@ -49,7 +47,7 @@
       },
       "thumbnail": "aerial"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "rasterkart",
       "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
@@ -67,7 +65,7 @@
       },
       "thumbnail": "raster"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "gratone",
       "url": "https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/",
@@ -85,7 +83,7 @@
       },
       "thumbnail": "grey"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "enkel",
       "url": "https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/",
@@ -102,7 +100,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "terreng",
       "url": "https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/|https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/",
@@ -119,7 +117,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "sjokart",
       "url": "https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/|https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/",
@@ -136,7 +134,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "jan_mayen",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -153,7 +151,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "svalbard",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -169,9 +167,8 @@
         "singletile": "false",
         "visibility": "false"
       }
-    }],
-    "wms": [{
-      "type": "overlay",
+    },{
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "cells",
@@ -193,7 +190,7 @@
         "visibility": "false"
       }
     },{
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
@@ -215,7 +212,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "andre_linjer_60m_og_over",
@@ -271,7 +268,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "andre_linjer_mellom_40m_60m",
@@ -327,7 +324,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "andre_linjer_under_40m",
@@ -383,7 +380,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "andre_linjer_uten_hoyde",
@@ -439,7 +436,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "linjepunkt_60m_og_over",
@@ -495,7 +492,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "linjepunkt_mellom_40m_60m",
@@ -551,7 +548,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "linjepunkt_under_40m",
@@ -607,7 +604,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "linjepunkt_uten_hoyde",
@@ -663,7 +660,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftledning_60m_og_over",
@@ -719,7 +716,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftledning_mellom_40m_60m",
@@ -775,7 +772,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftledning_under_40m",
@@ -831,7 +828,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftledning_uten_hoyde",
@@ -887,7 +884,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_60m_og_over",
@@ -943,7 +940,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_mellom_40m_60m",
@@ -999,7 +996,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_under_40m",
@@ -1055,7 +1052,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_uten_hoyde",
@@ -1111,7 +1108,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "Punkthindre_60m_og_over",
@@ -1167,7 +1164,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "punkthindre_mellom_40m_60m",
@@ -1223,7 +1220,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "punkthindre_under_40m",
@@ -1279,7 +1276,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
           "name": "punkthindre_uten_hoyde",

@@ -1,26 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { IGeoNorge } from './search-model';
+import { IAdresser, ISsr } from './search-model';
 
 export interface ISearch {
-  geoNorge: IGeoNorge
+  ssr: ISsr;
+  adresser: IAdresser;
 }
 
 const initialState: ISearch = {
-  geoNorge: {}
-}
+  ssr: {},
+  adresser: {},
+};
 
 export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setResult: (state, action: PayloadAction<IGeoNorge>) => {
-      state.geoNorge = action.payload;
-    }
-  }
+    setSsrResult: (state, action: PayloadAction<ISsr>) => {
+      state.ssr = action.payload;
+    },
+    setAdresseResult: (state, action: PayloadAction<IAdresser>) => {
+      state.adresser = action.payload;
+    },
+  },
 });
 
-export const { setResult } = searchSlice.actions;
+export const { setSsrResult, setAdresseResult } = searchSlice.actions;
 
 //selectors
 export const selectSearch = (state: RootState) => {

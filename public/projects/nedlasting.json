@@ -6,14 +6,12 @@
       "mapepsg": "EPSG:25833",
       "zoom": 3,
       "mapbackgroundcolor": "#FFFFFF",
-      "displaycenterepsgcode": "EPSG:25833",
       "displayCenter": "306722,7197864",
-      "displayprojectionepsgcode": "EPSG:25833",
       "isygatekeeper": "https://www.norgeskart.no/ws/gkt.py",
       "name": "geoportal"
     },
-    "wmts": [{
-      "type": "map",
+    "layer": [{
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "Landkart",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
@@ -30,7 +28,7 @@
       },
       "thumbnail": "land"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "Flybilder",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
@@ -47,7 +45,7 @@
       },
       "thumbnail": "aerial"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "Gråtone",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
@@ -64,7 +62,7 @@
       },
       "thumbnail": "grey"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "Enkel",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
@@ -80,7 +78,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "Sjøkart",
       "url": "https://cache.kartverket.no/wmts/1.0.0/sjokartraster?|https://cache.kartverket.no/wmts/1.0.0/sjokartraster?",
@@ -98,7 +96,7 @@
       }
     }],
     "vector": [{
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster N250",
       "url": "https://www.norgeskart.no/json/dekning/raster/n250_ny.geojson",
       "epsg": "EPSG:4326",
@@ -137,7 +135,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster N50",
       "url": "https://www.norgeskart.no/json/dekning/raster/n50.geojson",
       "epsg": "EPSG:4326",
@@ -176,7 +174,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster N500",
       "url": "https://www.norgeskart.no/json/dekning/raster/n500_ny.geojson",
       "epsg": "EPSG:4326",
@@ -215,7 +213,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster N1000",
       "url": "https://www.norgeskart.no/json/dekning/raster/n1000_ny.geojson",
       "epsg": "EPSG:4326",
@@ -254,7 +252,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster UTM35",
       "url": "https://www.norgeskart.no/json/dekning/raster/35.geojson",
       "epsg": "EPSG:25833",
@@ -293,7 +291,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster UTM33",
       "url": "https://www.norgeskart.no/json/dekning/raster/33.geojson",
       "epsg": "EPSG:25833",
@@ -332,7 +330,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Raster UTM32",
       "url": "https://www.norgeskart.no/json/dekning/raster/32.geojson",
       "epsg": "EPSG:4326",
@@ -371,7 +369,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Kommuner",
       "url": "https://www.norgeskart.no/json/norge/kommuner2018.geojson",
       "epsg": "EPSG:25833",
@@ -413,7 +411,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Kommuner UTM35",
       "url": "https://www.norgeskart.no/json/norge/kommuner-utm35.json",
       "epsg": "EPSG:25833",
@@ -455,7 +453,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Kommuner UTM33",
       "url": "https://www.norgeskart.no/json/norge/kommuner-utm33.json",
       "epsg": "EPSG:25833",
@@ -497,7 +495,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Kommuner UTM32",
       "url": "https://www.norgeskart.no/json/norge/kommuner-utm32-2018.geojson",
       "epsg": "EPSG:25833",
@@ -539,7 +537,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM50 Dekning sjø",
       "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50.geojson",
       "epsg": "EPSG:25833",
@@ -581,7 +579,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM50 Dekning sjø 50m",
       "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50_50.geojson",
       "epsg": "EPSG:25833",
@@ -623,7 +621,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM50 Dekning sjø 25m",
       "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50_25.geojson",
       "epsg": "EPSG:25833",
@@ -665,7 +663,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM50 Dekning sjø 5m",
       "url": "https://www.norgeskart.no/json/dekning/sjo/celler/dtm50_5.geojson",
       "epsg": "EPSG:25833",
@@ -707,7 +705,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Fylker UTM32",
       "url": "https://www.norgeskart.no/json/norge/fylker-utm32.geojson",
       "epsg": "EPSG:25833",
@@ -749,7 +747,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Fylker UTM33",
       "url": "https://www.norgeskart.no/json/norge/fylker-utm33.json",
       "epsg": "EPSG:25833",
@@ -791,7 +789,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Fylker UTM35",
       "url": "https://www.norgeskart.no/json/norge/fylker-utm35.json",
       "epsg": "EPSG:25833",
@@ -833,7 +831,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "Fylker",
       "url": "https://www.norgeskart.no/json/norge/fylker2018.geojson",
       "epsg": "EPSG:25833",
@@ -875,7 +873,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM Dekning UTM35",
       "url": "https://www.norgeskart.no/json/dekning/dtm/utm35.geojson",
       "epsg": "EPSG:25833",
@@ -917,7 +915,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM Dekning UTM33",
       "url": "https://www.norgeskart.no/json/dekning/dtm/utm33.geojson",
       "epsg": "EPSG:25833",
@@ -959,7 +957,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM Dekning UTM33 100km grid",
       "url": "https://www.norgeskart.no/json/dekning/dtm/utm33-100km.geojson",
       "epsg": "EPSG:25833",
@@ -1001,7 +999,7 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "name": "DTM Dekning UTM32",
       "url": "https://www.norgeskart.no/json/dekning/dtm/utm32.geojson",
       "epsg": "EPSG:25833",
