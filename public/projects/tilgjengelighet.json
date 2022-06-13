@@ -172,8 +172,7 @@
       "Layers": {
         "Layer": {
           "name": "cells",
-          "queryable": "false",
-          "title": "Elektron. Sjøkart"
+          "queryable": "false"
         }
       },
       "ticket": "true",
@@ -194,8 +193,7 @@
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -216,8 +214,7 @@
       "Layers": {
         "Layer": {
           "name": "t_parkeringsomrade_r",
-          "queryable": "True",
-          "title": "Parkerings område"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -294,8 +291,7 @@
       "Layers": {
         "Layer": {
           "name": "t_vei_r",
-          "queryable": "True",
-          "title": "Vei"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -413,8 +409,7 @@
       "Layers": {
         "Layer": {
           "name": "t_HC_parkering_r",
-          "queryable": "True",
-          "title": "HC-parkering"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -523,8 +518,7 @@
       "Layers": {
         "Layer": {
           "name": "t_inngangbygg_r_01",
-          "queryable": "True",
-          "title": "Inngang bygg"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -668,8 +662,7 @@
       "Layers": {
         "Layer": {
           "name": "t_parkeringsomrade_el",
-          "queryable": "True",
-          "title": "Parkerings område"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -746,8 +739,7 @@
       "Layers": {
         "Layer": {
           "name": "t_vei_el",
-          "queryable": "True",
-          "title": "Vei"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -865,8 +857,7 @@
       "Layers": {
         "Layer": {
           "name": "t_HC_parkering_el",
-          "queryable": "True",
-          "title": "HC-parkering"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -975,8 +966,7 @@
       "Layers": {
         "Layer": {
           "name": "t_inngangbygg_r_02",
-          "queryable": "True",
-          "title": "Inngang bygg"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1120,8 +1110,7 @@
       "Layers": {
         "Layer": {
           "name": "t_parkeringsomrade",
-          "queryable": "True",
-          "title": "Parkerings område"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1198,8 +1187,7 @@
       "Layers": {
         "Layer": {
           "name": "t_vei",
-          "queryable": "True",
-          "title": "Vei"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1302,8 +1290,7 @@
       "Layers": {
         "Layer": {
           "name": "t_HC_parkering",
-          "queryable": "True",
-          "title": "HC-parkering"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1412,8 +1399,7 @@
       "Layers": {
         "Layer": {
           "name": "t_inngangbygg",
-          "queryable": "True",
-          "title": "Inngang bygg"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1557,8 +1543,7 @@
       "Layers": {
         "Layer": {
           "name": "statlig_sikra_polygon_01",
-          "queryable": "True",
-          "title": "Statlig sikra"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1610,8 +1595,7 @@
       "Layers": {
         "Layer": {
           "name": "friluftsomrade_01",
-          "queryable": "True",
-          "title": "Friluftsområde"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1701,8 +1685,7 @@
       "Layers": {
         "Layer": {
           "name": "parkeringsomrader_friluft_01",
-          "queryable": "True",
-          "title": "Parkeringsområder"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1780,8 +1763,7 @@
       "Layers": {
         "Layer": {
           "name": "turvei_01",
-          "queryable": "True",
-          "title": "Turvei"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1896,8 +1878,7 @@
       "Layers": {
         "Layer": {
           "name": "turisthytte_01",
-          "queryable": "True",
-          "title": "Turisthytte"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -1950,8 +1931,7 @@
       "Layers": {
         "Layer": {
           "name": "gapahukhytte_01",
-          "queryable": "True",
-          "title": "Gapahukhytte"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2072,8 +2052,7 @@
       "Layers": {
         "Layer": {
           "name": "fiskeplass_01",
-          "queryable": "True",
-          "title": "Fiskeplass"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2198,8 +2177,7 @@
       "Layers": {
         "Layer": {
           "name": "grillbalplass_01",
-          "queryable": "True",
-          "title": "Grillbålplass"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2278,8 +2256,7 @@
       "Layers": {
         "Layer": {
           "name": "baderampe_01",
-          "queryable": "True",
-          "title": "Baderampe"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2378,8 +2355,7 @@
       "Layers": {
         "Layer": {
           "name": "hc_parkering_friluft_01",
-          "queryable": "True",
-          "title": "HC-parkering"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2470,8 +2446,7 @@
       "Layers": {
         "Layer": {
           "name": "skiloype_01",
-          "queryable": "True",
-          "title": "Skiløype"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2574,8 +2549,7 @@
       "Layers": {
         "Layer": {
           "name": "statlig_sikra_polygon_02",
-          "queryable": "True",
-          "title": "Statlig sikra"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2627,8 +2601,7 @@
       "Layers": {
         "Layer": {
           "name": "friluftsomrade_02",
-          "queryable": "True",
-          "title": "Friluftsområde"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2718,8 +2691,7 @@
       "Layers": {
         "Layer": {
           "name": "parkeringsomrader_friluft_02",
-          "queryable": "True",
-          "title": "Parkeringsområder"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2797,8 +2769,7 @@
       "Layers": {
         "Layer": {
           "name": "turvei_02",
-          "queryable": "True",
-          "title": "Turvei"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2913,8 +2884,7 @@
       "Layers": {
         "Layer": {
           "name": "turisthytte_02",
-          "queryable": "True",
-          "title": "turisthytte"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -2967,8 +2937,7 @@
       "Layers": {
         "Layer": {
           "name": "gapahukhytte_02",
-          "queryable": "True",
-          "title": "Gapahukhytte"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3089,8 +3058,7 @@
       "Layers": {
         "Layer": {
           "name": "fiskeplass_02",
-          "queryable": "True",
-          "title": "Fiskeplass"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3215,8 +3183,7 @@
       "Layers": {
         "Layer": {
           "name": "grillbalplass_02",
-          "queryable": "True",
-          "title": "Grillbålplass"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3295,8 +3262,7 @@
       "Layers": {
         "Layer": {
           "name": "hc_parkering_friluft_02",
-          "queryable": "True",
-          "title": "HC-parkering"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3387,8 +3353,7 @@
       "Layers": {
         "Layer": {
           "name": "skiloype_02",
-          "queryable": "True",
-          "title": "Skiløype"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3491,8 +3456,7 @@
       "Layers": {
         "Layer": {
           "name": "statlig_sikra_polygon_03",
-          "queryable": "True",
-          "title": "Statlig sikra"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3544,8 +3508,7 @@
       "Layers": {
         "Layer": {
           "name": "friluftsomrade_03",
-          "queryable": "True",
-          "title": "Friluftsområde"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3635,8 +3598,7 @@
       "Layers": {
         "Layer": {
           "name": "parkeringsomrader_friluft_03",
-          "queryable": "True",
-          "title": "Parkeringsområder"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3714,8 +3676,7 @@
       "Layers": {
         "Layer": {
           "name": "turvei_03",
-          "queryable": "True",
-          "title": "Turvei"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3830,8 +3791,7 @@
       "Layers": {
         "Layer": {
           "name": "turisthytte_03",
-          "queryable": "True",
-          "title": "Turisthytte"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -3884,8 +3844,7 @@
       "Layers": {
         "Layer": {
           "name": "gapahukhytte_03",
-          "queryable": "True",
-          "title": "Gapahukhytte"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4006,8 +3965,7 @@
       "Layers": {
         "Layer": {
           "name": "fiskeplass_03",
-          "queryable": "True",
-          "title": "Fiskeplass"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4136,8 +4094,7 @@
       "Layers": {
         "Layer": {
           "name": "grillbalplass_03",
-          "queryable": "True",
-          "title": "Grillbålplass"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4216,8 +4173,7 @@
       "Layers": {
         "Layer": {
           "name": "baderampe_02",
-          "queryable": "True",
-          "title": "Baderampe"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4312,8 +4268,7 @@
       "Layers": {
         "Layer": {
           "name": "hc_parkering_friluft_03",
-          "queryable": "True",
-          "title": "HC-parkering"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4404,8 +4359,7 @@
       "Layers": {
         "Layer": {
           "name": "skiloype_03",
-          "queryable": "True",
-          "title": "Skiløype"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4508,8 +4462,7 @@
       "Layers": {
         "Layer": {
           "name": "sittegruppe",
-          "queryable": "True",
-          "title": "Sittegruppe"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",
@@ -4609,8 +4562,7 @@
       "Layers": {
         "Layer": {
           "name": "toalett",
-          "queryable": "True",
-          "title": "Toalett"
+          "queryable": "True"
         }
       },
       "gatekeeper": "true",

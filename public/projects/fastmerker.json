@@ -172,8 +172,7 @@
       "Layers": {
         "Layer": {
           "name": "cells",
-          "queryable": "false",
-          "title": "Elektron. Sjøkart"
+          "queryable": "false"
         }
       },
       "ticket": "true",
@@ -194,8 +193,7 @@
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -216,8 +214,7 @@
       "Layers": {
         "Layer": {
           "name": "Niv_fastmerker",
-          "queryable": "false",
-          "title": "Niv. fastmerker"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -293,8 +290,7 @@
       "Layers": {
         "Layer": {
           "name": "Landsnettpunkt",
-          "queryable": "false",
-          "title": "Landsnettpunkter"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -370,8 +366,7 @@
       "Layers": {
         "Layer": {
           "name": "Stamnettpunkt",
-          "queryable": "false",
-          "title": "Stamnettpunkter"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -447,8 +442,7 @@
       "Layers": {
         "Layer": {
           "name": "Trekantpunkt",
-          "queryable": "false",
-          "title": "Trekantpunkter"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -524,8 +518,7 @@
       "Layers": {
         "Layer": {
           "name": "UTMrutenett",
-          "queryable": "false",
-          "title": "UTM-rutenett"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -548,8 +541,7 @@
       "Layers": {
         "Layer": {
           "name": "Stasjoner",
-          "queryable": "false",
-          "title": "Norske stasjoner"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -585,8 +577,7 @@
       "Layers": {
         "Layer": {
           "name": "Svenske_finske_stasjoner",
-          "queryable": "false",
-          "title": "Svenske og finske stasjoner"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",

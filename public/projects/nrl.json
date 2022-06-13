@@ -172,8 +172,7 @@
       "Layers": {
         "Layer": {
           "name": "cells",
-          "queryable": "false",
-          "title": "Elektron. Sjøkart"
+          "queryable": "false"
         }
       },
       "ticket": "true",
@@ -194,8 +193,7 @@
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -216,8 +214,7 @@
       "Layers": {
         "Layer": {
           "name": "andre_linjer_60m_og_over",
-          "queryable": "false",
-          "title": "Andre linjer 60m og over"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -272,8 +269,7 @@
       "Layers": {
         "Layer": {
           "name": "andre_linjer_mellom_40m_60m",
-          "queryable": "false",
-          "title": "Andre linjer 40m-60m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -328,8 +324,7 @@
       "Layers": {
         "Layer": {
           "name": "andre_linjer_under_40m",
-          "queryable": "false",
-          "title": "Andre linjer under 40 m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -384,8 +379,7 @@
       "Layers": {
         "Layer": {
           "name": "andre_linjer_uten_hoyde",
-          "queryable": "false",
-          "title": "Andre linjer uten hoyde"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -440,8 +434,7 @@
       "Layers": {
         "Layer": {
           "name": "linjepunkt_60m_og_over",
-          "queryable": "false",
-          "title": "Linjepunkt 60m og over"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -496,8 +489,7 @@
       "Layers": {
         "Layer": {
           "name": "linjepunkt_mellom_40m_60m",
-          "queryable": "false",
-          "title": "Linjepunkt 40m-60m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -552,8 +544,7 @@
       "Layers": {
         "Layer": {
           "name": "linjepunkt_under_40m",
-          "queryable": "false",
-          "title": "Linjepunkt under 40 m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -608,8 +599,7 @@
       "Layers": {
         "Layer": {
           "name": "linjepunkt_uten_hoyde",
-          "queryable": "false",
-          "title": "Linjepunkt uten hoyde"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -664,8 +654,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftledning_60m_og_over",
-          "queryable": "false",
-          "title": "Kraftledning 60m og over"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -720,8 +709,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftledning_mellom_40m_60m",
-          "queryable": "false",
-          "title": "Kraftledning 40m-60m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -776,8 +764,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftledning_under_40m",
-          "queryable": "false",
-          "title": "Kraftledning under 40 m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -832,8 +819,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftledning_uten_hoyde",
-          "queryable": "false",
-          "title": "Kraftledning uten hoyde"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -888,8 +874,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_60m_og_over",
-          "queryable": "false",
-          "title": "Kraftstolpe 60m og over"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -944,8 +929,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_mellom_40m_60m",
-          "queryable": "false",
-          "title": "Kraftstolpe 40m-60m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1000,8 +984,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_under_40m",
-          "queryable": "false",
-          "title": "Kraftstolpe under 40 m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1056,8 +1039,7 @@
       "Layers": {
         "Layer": {
           "name": "kraftstolpe_uten_hoyde",
-          "queryable": "false",
-          "title": "Kraftstolpe uten hoyde"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1112,8 +1094,7 @@
       "Layers": {
         "Layer": {
           "name": "Punkthindre_60m_og_over",
-          "queryable": "false",
-          "title": "Punkthindre 60m og over"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1168,8 +1149,7 @@
       "Layers": {
         "Layer": {
           "name": "punkthindre_mellom_40m_60m",
-          "queryable": "false",
-          "title": "Punkthindre 40m-60m"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1224,8 +1204,7 @@
       "Layers": {
         "Layer": {
           "name": "punkthindre_under_40m",
-          "queryable": "false",
-          "title": "Punkthindre under 40"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1280,8 +1259,7 @@
       "Layers": {
         "Layer": {
           "name": "punkthindre_uten_hoyde",
-          "queryable": "false",
-          "title": "Punkthindre uten hoyde"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",

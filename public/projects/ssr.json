@@ -172,8 +172,7 @@
       "Layers": {
         "Layer": {
           "name": "cells",
-          "queryable": "false",
-          "title": "Elektron. Sjøkart"
+          "queryable": "false"
         }
       },
       "ticket": "true",
@@ -194,8 +193,7 @@
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -216,8 +214,7 @@
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -239,8 +236,7 @@
       "Layers": {
         "Layer": {
           "name": "amt1",
-          "queryable": "false",
-          "title": "Amts­kart"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -262,8 +258,7 @@
       "Layers": {
         "Layer": {
           "name": "norsk",
-          "queryable": "false",
-          "title": "Norsk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -297,8 +292,7 @@
       "Layers": {
         "Layer": {
           "name": "lulesamisk",
-          "queryable": "false",
-          "title": "Lulesamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -332,8 +326,7 @@
       "Layers": {
         "Layer": {
           "name": "nordsamisk",
-          "queryable": "false",
-          "title": "Nordsamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -367,8 +360,7 @@
       "Layers": {
         "Layer": {
           "name": "skoltesamisk",
-          "queryable": "false",
-          "title": "Skoltesamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -402,8 +394,7 @@
       "Layers": {
         "Layer": {
           "name": "sorsamisk",
-          "queryable": "false",
-          "title": "Sørsamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -437,8 +428,7 @@
       "Layers": {
         "Layer": {
           "name": "kvensk",
-          "queryable": "false",
-          "title": "Kvensk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -472,8 +462,7 @@
       "Layers": {
         "Layer": {
           "name": "andre",
-          "queryable": "false",
-          "title": "Andre"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -507,8 +496,7 @@
       "Layers": {
         "Layer": {
           "name": "offentlig_administrasjon",
-          "queryable": "false",
-          "title": "Administrative område"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -542,8 +530,7 @@
       "Layers": {
         "Layer": {
           "name": "bebyggelse",
-          "queryable": "false",
-          "title": "Busetnad/ eigedom"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -577,8 +564,7 @@
       "Layers": {
         "Layer": {
           "name": "infrastruktur",
-          "queryable": "false",
-          "title": "Samferdsle"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -612,8 +598,7 @@
       "Layers": {
         "Layer": {
           "name": "sjo",
-          "queryable": "false",
-          "title": "Sjø"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -647,8 +632,7 @@
       "Layers": {
         "Layer": {
           "name": "markslag",
-          "queryable": "false",
-          "title": "Markslag"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -682,8 +666,7 @@
       "Layers": {
         "Layer": {
           "name": "ferskvann",
-          "queryable": "false",
-          "title": "Ferskvann"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -717,8 +700,7 @@
       "Layers": {
         "Layer": {
           "name": "terreng",
-          "queryable": "false",
-          "title": "Terrengformer"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -752,8 +734,7 @@
       "Layers": {
         "Layer": {
           "name": "kultur",
-          "queryable": "false",
-          "title": "Kultur"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -787,8 +768,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtak_24",
-          "queryable": "false",
-          "title": "Vedteke siste 24md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -822,8 +802,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtak_12",
-          "queryable": "false",
-          "title": "Vedteke siste 12md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -857,8 +836,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtak_6",
-          "queryable": "false",
-          "title": "Vedteke siste 6md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -892,8 +870,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtak_3",
-          "queryable": "false",
-          "title": "Vedteke siste 3md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -927,8 +904,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtak_1",
-          "queryable": "false",
-          "title": "Vedteke siste md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -962,8 +938,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak24",
-          "queryable": "false",
-          "title": "Samlevedtak siste 24md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -997,8 +972,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak12",
-          "queryable": "false",
-          "title": "Samlevedtak siste 12md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1032,8 +1006,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak6",
-          "queryable": "false",
-          "title": "Samlevedtak siste 6md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1067,8 +1040,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak3",
-          "queryable": "false",
-          "title": "Samlevedtak siste 3md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1102,8 +1074,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak1",
-          "queryable": "false",
-          "title": "Samlevedtak siste md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1137,8 +1108,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtatt",
-          "queryable": "false",
-          "title": "Vedteke"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1173,8 +1143,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtatt_navneledd",
-          "queryable": "false",
-          "title": "Vedteke namneledd"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1209,8 +1178,7 @@
       "Layers": {
         "Layer": {
           "name": "godkjent",
-          "queryable": "false",
-          "title": "Godkjent"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1245,8 +1213,7 @@
       "Layers": {
         "Layer": {
           "name": "internasjonalt",
-          "queryable": "false",
-          "title": "Internasjonalt"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1281,8 +1248,7 @@
       "Layers": {
         "Layer": {
           "name": "privat",
-          "queryable": "false",
-          "title": "Privat"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1317,8 +1283,7 @@
       "Layers": {
         "Layer": {
           "name": "historisk",
-          "queryable": "false",
-          "title": "Historisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1353,8 +1318,7 @@
       "Layers": {
         "Layer": {
           "name": "foreslatt",
-          "queryable": "false",
-          "title": "Føreslege"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1389,8 +1353,7 @@
       "Layers": {
         "Layer": {
           "name": "uvurdert",
-          "queryable": "false",
-          "title": "Uvurdert"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1425,8 +1388,7 @@
       "Layers": {
         "Layer": {
           "name": "avslatt_navneledd",
-          "queryable": "false",
-          "title": "Avslege namneledd"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1461,8 +1423,7 @@
       "Layers": {
         "Layer": {
           "name": "avslatt",
-          "queryable": "false",
-          "title": "Avslått"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1497,8 +1458,7 @@
       "Layers": {
         "Layer": {
           "name": "navnesakstatus_ubehandlet",
-          "queryable": "false",
-          "title": "Namnesaksstatus uhandsama"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1532,8 +1492,7 @@
       "Layers": {
         "Layer": {
           "name": "skalikkebehandles",
-          "queryable": "false",
-          "title": "Skal ikkje handsamast etter lova"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1567,8 +1526,7 @@
       "Layers": {
         "Layer": {
           "name": "navnemyndighet",
-          "queryable": "false",
-          "title": "Namneval vedteke/gjort av namnemyndet"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1602,8 +1560,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak",
-          "queryable": "false",
-          "title": "Samlevedtak"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1637,8 +1594,7 @@
       "Layers": {
         "Layer": {
           "name": "samlevedtak_tilbake",
-          "queryable": "false",
-          "title": "Samlevedtak trekt tilbake"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1672,8 +1628,7 @@
       "Layers": {
         "Layer": {
           "name": "reist",
-          "queryable": "false",
-          "title": "Namnesak reist"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1707,8 +1662,7 @@
       "Layers": {
         "Layer": {
           "name": "navnesak_vedtak",
-          "queryable": "false",
-          "title": "Namnesak vedteke"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1742,8 +1696,7 @@
       "Layers": {
         "Layer": {
           "name": "vedtakutsatt",
-          "queryable": "false",
-          "title": "Vedtak utsett"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1777,8 +1730,7 @@
       "Layers": {
         "Layer": {
           "name": "klage_ikke_trukket",
-          "queryable": "false",
-          "title": "Klage, vedtak ikkje trekt tilbake"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1812,8 +1764,7 @@
       "Layers": {
         "Layer": {
           "name": "klage_trukket",
-          "queryable": "false",
-          "title": "Klage, vedtak trekt tilbake"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1847,8 +1798,7 @@
       "Layers": {
         "Layer": {
           "name": "klagevedtakutsatt",
-          "queryable": "false",
-          "title": "Klage, vedtak utsett"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1882,8 +1832,7 @@
       "Layers": {
         "Layer": {
           "name": "forenkletvedtak",
-          "queryable": "false",
-          "title": "Forenkla vedtak"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",

@@ -172,8 +172,7 @@
       "Layers": {
         "Layer": {
           "name": "cells",
-          "queryable": "false",
-          "title": "Elektron. Sjøkart"
+          "queryable": "false"
         }
       },
       "ticket": "true",
@@ -194,8 +193,7 @@
       "Layers": {
         "Layer": {
           "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -828,7 +826,6 @@
       "groupid": 7
     }],
     "vector": [{
-      "distributionProtocol": "WMS",
       "name": "landtopo",
       "groupid": 3,
       "guid": "3.landtopo",
