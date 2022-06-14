@@ -103,7 +103,18 @@ export const generateSearchAdresseUrl = (query: string | number | boolean) => {
 export const generateElevationPointUrl = (lat: string, lon: string, epsgNumber: string) => {
   return `${url}ws/elev.py?lat=${lat}&lon=${lon}&epsg=${epsgNumber}`;
 };
-
+export const generatStedsnavnPunktsok = (lat: string, lon: string, epsgNumber: string, side?: number) => {
+  if (!side) {
+    side = 1;
+  }
+  return `${urlGeonorge}stedsnavn/v1/punkt?nord=${lat}&ost=${lon}&treffPerSide=35&koordsys=25833&radius=150&side=${side}`;
+};
+export const generatStedsnavnPunktsokNodplakat = (lat: string, lon: string, epsgNumber: string, side?: number) => {
+  if (!side) {
+    side = 1;
+  }
+  return `${urlGeonorge}stedsnavn/v1/punkt?nord=${lat}&ost=${lon}&treffPerSide=35&koordsys=25833&radius=1000&side=${side}`;
+};
 export const generateHoydedataPointUrl = (ost: string, nord: string, koordsys: string) => {
   return `${urlGeonorge}hoydedata/v1/punkt?ost=${ost}&nord=${nord}&koordsys=${koordsys}&geojson=false`;
 };
@@ -114,12 +125,12 @@ export const generateAdresseSokUrl = (query: string | number | boolean) => {
   return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=10&side=0`;
 };
 
-export const generateAdressePunktsokUrl = (radius: string, lat: string, lon: string) => {
+export const generateAdressePunktsokUrl = (radius: number, lat: number, lon: number) => {
   return `${urlAdressePunktsok}?radius=${radius}&lat=${lat}&lon=${lon}&treffPerSide=10`;
 };
 
 export const generateMatrikkelInfoUrl = (minx: number, miny: number, maxx: number, maxy: number) => {
-  return `${url}ws/wfs.teig.py?bbox=${minx},${miny},${maxx},${maxy}`;
+  return `${urlGeonorge}norgeskart/v1/teiger/bbox/${minx},${miny},${maxx},${maxy}`;
 };
 
 export const generateSeEiendomUrl = (knr: string, gnr: string, bnr: string, fnr: string, snr: string) => {
@@ -197,7 +208,6 @@ export const _constructMarkingFilter = (property: any) => {
 export const generateMatrikkelWfsFilterUrl = (property: any) => {
   return `${urlGeonorge}norgeskart/v1/teiger/${_constructMarkingFilter(property)}/`;
 };
-
 export const generateEiendomAddress = (
   kommunenr: string,
   gardsnr: string,

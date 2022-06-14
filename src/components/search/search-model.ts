@@ -7,6 +7,22 @@ export type RepresentasjonsPunkt = {
 type Fylke = { fylkesnavn: string; fylkesnummer: string };
 type Kommune = { kommunenummer: string; kommunenavn: string };
 
+export interface StedsNavnSubset {
+  navnestatus: string;
+  skrivemåte: string;
+  skrivemåtestatus: string;
+  språk: string;
+  stedsnavnnummer: number;
+}
+export interface StedsNavnPunkt {
+  meterFraPunkt?: number;
+  navneobjekttype?: string;
+  representasjonspunkt?: RepresentasjonsPunkt;
+  stedsnavn?: StedsNavnSubset[];
+  stedsnummer?: number;
+  stedstatus?: string;
+}
+
 export interface StedsNavn {
   skrivemåte: string;
   skrivemåtestatus: string;
@@ -48,6 +64,10 @@ export interface Metadata {
   viserFra: number;
   viserTil: number;
   sokeStreng: string;
+}
+export interface ISsrPunkt {
+  metadata?: Metadata;
+  navn?: StedsNavnPunkt[];
 }
 
 export interface ISsr {
