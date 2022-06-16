@@ -6,14 +6,12 @@
       "mapepsg": "EPSG:25833",
       "zoom": 3,
       "mapbackgroundcolor": "#FFFFFF",
-      "displaycenterepsgcode": "EPSG:25833",
       "displayCenter": "306722,7197864",
-      "displayprojectionepsgcode": "EPSG:25833",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "name": "geoportal"
     },
-    "wmts": [{
-      "type": "map",
+    "layer": [{
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "landkart",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
@@ -30,7 +28,7 @@
       },
       "thumbnail": "land"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "flybilder",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
@@ -47,7 +45,7 @@
       },
       "thumbnail": "aerial"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "gratone",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
@@ -64,7 +62,7 @@
       },
       "thumbnail": "grey"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "enkel",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
@@ -80,7 +78,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "sjokart",
       "url": "https://cache.kartverket.no/wmts/1.0.0/sjokartraster?|https://cache.kartverket.no/wmts/1.0.0/sjokartraster?",
@@ -97,7 +95,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "jan_mayen",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -114,7 +112,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "svalbard",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
       "params": {

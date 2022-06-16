@@ -6,15 +6,13 @@
       "mapepsg": "EPSG:25833",
       "zoom": 4,
       "mapbackgroundcolor": "#FFFFFF",
-      "displaycenterepsgcode": "EPSG:25833",
       "displayCenter": "396722,7197864",
-      "displayprojectionepsgcode": "EPSG:25833",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
       "name": "ssr"
     },
-    "wmts": [{
-      "type": "map",
+    "layer": [{
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "landkart",
       "url": "https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/|https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/",
@@ -32,7 +30,7 @@
       },
       "thumbnail": "land"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "flybilder",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
@@ -49,7 +47,7 @@
       },
       "thumbnail": "aerial"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "rasterkart",
       "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
@@ -67,7 +65,7 @@
       },
       "thumbnail": "raster"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "gratone",
       "url": "https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/",
@@ -85,7 +83,7 @@
       },
       "thumbnail": "grey"
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "enkel",
       "url": "https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/",
@@ -102,7 +100,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "terreng",
       "url": "https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/|https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/",
@@ -119,7 +117,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "gatekeeper": "true",
       "name": "Hovudkart sjø",
       "url": "https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/|https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/",
@@ -136,7 +134,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "jan_mayen",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -153,7 +151,7 @@
         "visibility": "false"
       }
     }, {
-      "type": "map",
+      "distributionProtocol": "WMTS",
       "name": "svalbard",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
       "params": {
@@ -169,14 +167,11 @@
         "singletile": "false",
         "visibility": "false"
       }
-    }],
-    "wms": [{
-      "type": "overlay",
+    },{
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "cells",
-          "queryable": "false",
-          "title": "Elektron. Sjøkart"
+          "queryable": "false"
         }
       },
       "ticket": "true",
@@ -193,12 +188,10 @@
         "visibility": "false"
       }
     },{
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -215,12 +208,10 @@
         "visibility": "false"
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "n5raster_foerstegang_metadata,n5raster_foerstegang",
-          "queryable": "false",
-          "title": "Øk–1⋅utgåve"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -238,12 +229,10 @@
         "visibility": "false"
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "amt1",
-          "queryable": "false",
-          "title": "Amts­kart"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -261,12 +250,10 @@
         "visibility": "false"
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "norsk",
-          "queryable": "false",
-          "title": "Norsk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -296,12 +283,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "lulesamisk",
-          "queryable": "false",
-          "title": "Lulesamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -331,12 +316,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "nordsamisk",
-          "queryable": "false",
-          "title": "Nordsamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -366,12 +349,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skoltesamisk",
-          "queryable": "false",
-          "title": "Skoltesamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -401,12 +382,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "sorsamisk",
-          "queryable": "false",
-          "title": "Sørsamisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -436,12 +415,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kvensk",
-          "queryable": "false",
-          "title": "Kvensk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -471,12 +448,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "andre",
-          "queryable": "false",
-          "title": "Andre"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -506,12 +481,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "offentlig_administrasjon",
-          "queryable": "false",
-          "title": "Administrative område"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -541,12 +514,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "bebyggelse",
-          "queryable": "false",
-          "title": "Busetnad/ eigedom"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -576,12 +547,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "infrastruktur",
-          "queryable": "false",
-          "title": "Samferdsle"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -611,12 +580,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "sjo",
-          "queryable": "false",
-          "title": "Sjø"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -646,12 +613,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "markslag",
-          "queryable": "false",
-          "title": "Markslag"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -681,12 +646,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "ferskvann",
-          "queryable": "false",
-          "title": "Ferskvann"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -716,12 +679,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "terreng",
-          "queryable": "false",
-          "title": "Terrengformer"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -751,12 +712,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "kultur",
-          "queryable": "false",
-          "title": "Kultur"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -786,12 +745,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_24",
-          "queryable": "false",
-          "title": "Vedteke siste 24md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -821,12 +778,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_12",
-          "queryable": "false",
-          "title": "Vedteke siste 12md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -856,12 +811,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_6",
-          "queryable": "false",
-          "title": "Vedteke siste 6md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -891,12 +844,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_3",
-          "queryable": "false",
-          "title": "Vedteke siste 3md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -926,12 +877,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtak_1",
-          "queryable": "false",
-          "title": "Vedteke siste md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -961,12 +910,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak24",
-          "queryable": "false",
-          "title": "Samlevedtak siste 24md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -996,12 +943,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak12",
-          "queryable": "false",
-          "title": "Samlevedtak siste 12md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1031,12 +976,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak6",
-          "queryable": "false",
-          "title": "Samlevedtak siste 6md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1066,12 +1009,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak3",
-          "queryable": "false",
-          "title": "Samlevedtak siste 3md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1101,12 +1042,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak1",
-          "queryable": "false",
-          "title": "Samlevedtak siste md"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1136,12 +1075,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtatt",
-          "queryable": "false",
-          "title": "Vedteke"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1172,12 +1109,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtatt_navneledd",
-          "queryable": "false",
-          "title": "Vedteke namneledd"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1208,12 +1143,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "godkjent",
-          "queryable": "false",
-          "title": "Godkjent"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1244,12 +1177,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "internasjonalt",
-          "queryable": "false",
-          "title": "Internasjonalt"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1280,12 +1211,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "privat",
-          "queryable": "false",
-          "title": "Privat"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1316,12 +1245,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "historisk",
-          "queryable": "false",
-          "title": "Historisk"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1352,12 +1279,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "foreslatt",
-          "queryable": "false",
-          "title": "Føreslege"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1388,12 +1313,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "uvurdert",
-          "queryable": "false",
-          "title": "Uvurdert"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1424,12 +1347,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "avslatt_navneledd",
-          "queryable": "false",
-          "title": "Avslege namneledd"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1460,12 +1381,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "avslatt",
-          "queryable": "false",
-          "title": "Avslått"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1496,12 +1415,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "navnesakstatus_ubehandlet",
-          "queryable": "false",
-          "title": "Namnesaksstatus uhandsama"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1531,12 +1448,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "skalikkebehandles",
-          "queryable": "false",
-          "title": "Skal ikkje handsamast etter lova"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1566,12 +1481,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "navnemyndighet",
-          "queryable": "false",
-          "title": "Namneval vedteke/gjort av namnemyndet"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1601,12 +1514,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak",
-          "queryable": "false",
-          "title": "Samlevedtak"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1636,12 +1547,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "samlevedtak_tilbake",
-          "queryable": "false",
-          "title": "Samlevedtak trekt tilbake"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1671,12 +1580,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "reist",
-          "queryable": "false",
-          "title": "Namnesak reist"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1706,12 +1613,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "navnesak_vedtak",
-          "queryable": "false",
-          "title": "Namnesak vedteke"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1741,12 +1646,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "vedtakutsatt",
-          "queryable": "false",
-          "title": "Vedtak utsett"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1776,12 +1679,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "klage_ikke_trukket",
-          "queryable": "false",
-          "title": "Klage, vedtak ikkje trekt tilbake"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1811,12 +1712,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "klage_trukket",
-          "queryable": "false",
-          "title": "Klage, vedtak trekt tilbake"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1846,12 +1745,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "klagevedtakutsatt",
-          "queryable": "false",
-          "title": "Klage, vedtak utsett"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
@@ -1881,12 +1778,10 @@
         }]
       }
     }, {
-      "type": "overlay",
+      "distributionProtocol": "WMS",
       "Layers": {
         "Layer": {
-          "name": "forenkletvedtak",
-          "queryable": "false",
-          "title": "Forenkla vedtak"
+          "queryable": "false"
         }
       },
       "gatekeeper": "true",
