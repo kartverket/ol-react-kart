@@ -460,6 +460,8 @@ i18n
           Small: 'S',
           Stedsnavn: 'Stedsnavn',
           Stedsnavn_title: 'Stedsnavn',
+          Stedsnummer: 'Stedsnummer',
+          Navnobjekttype: 'Navnobjekttype',
           Tilgjengelighet_title: 'Tilgjengelighet',
           TransformCoor_title: 'Transformere koordinater',
           Turkart_info: 'Flytt kartet slik at det gule feltet dekker området du ønsker å skrive ut.',

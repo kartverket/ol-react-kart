@@ -5,12 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { IAdresser, ISsrPunkt } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   generateAdressePunktsokUrl,
   generateHoydedataPointUrl,
   generateMatrikkelInfoUrl,
   generatStedsnavnPunktsok,
 } from '../../utils/n3api';
+import style from './SearchBar.module.scss';
 export interface IPunktInfo {
   datakilde: string;
   terreng: string;
@@ -82,6 +85,14 @@ const PointInfo = () => {
   }, [clickCoordinates]);
   return (
     <>
+      {stedsnavn && stedsnavn.navn && stedsnavn.navn.length > 0 ? (
+        <>
+          <div className="small">
+            {t('Stedsnavn_text')}
+            {stedsnavn.navn[0].stedsnavn ? stedsnavn.navn[0].stedsnavn[0].skrivemåte : null}
+          </div>
+        </>
+      ) : null}
       {elevation && elevation.punkter && elevation.punkter.length > 0 && elevation.punkter[0].z ? (
         <>
           <span className="small">
@@ -115,18 +126,6 @@ const PointInfo = () => {
           </span>
         </>
       ) : null}
-      {stedsnavn && stedsnavn.navn && stedsnavn.navn.length > 0 ? (
-        <>
-          <span className="small">
-            {t('Stedsnavn_text')}
-            {stedsnavn.navn[0].stedsnavn ? stedsnavn.navn[0].stedsnavn[0].skrivemåte : null}
-          </span>
-          <span className="text-lowercase small">
-            {' '}
-            <a href={'https://stadnamn.kartverket.no/fakta/' + stedsnavn.navn[0].stedsnummer} target="_blank" rel="noreferrer" >  {stedsnavn.navn[0].stedsnummer}</a>
-          </span>
-        </>
-      ) : null}
       {/* {eiendom && eiendom.punkter && eiendom.punkter.length > 0 ? (
         <>
           <span className="small">
@@ -145,7 +144,37 @@ const PointInfo = () => {
           <span>{t('seEiendom')}</span>
         </div>
         <div className="p-2 bg-light w-100 mb-2">
-          <span>{t('ssrFakta')}</span>
+          <div onClick={() => setShowStedsnavn(!showStedsnavn)} className={style.expandBtn}>
+            <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
+            <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+          </div>
+          <div className={showStedsnavn ? `${style.selected} ${style.open}` : style.selected}>
+            {stedsnavn.navn ? (
+              <ul className="list-group list-group-flush">
+                {stedsnavn?.navn?.map((result, index) => (
+                  <li key={index} className="list-group-item pt-2 pb-2">
+                    <div className="">
+                      <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
+                      <div className="text-muted">
+                        {t('Stedsnummer')}:{' '}
+                        <a
+                          href={'https://stadnamn.kartverket.no/fakta/' + result.stedsnummer}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {' '}
+                          {result.stedsnummer}
+                        </a>
+                      </div>
+                      <small className="text-muted">
+                        {t('Navnobjekttype')}:{' '}{result.navneobjekttype}
+                      </small>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
         </div>
         <div className="p-2 bg-light w-100 mb-2">
           <span>{t('koordTrans')}</span>

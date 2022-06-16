@@ -17,7 +17,7 @@ export interface StedsNavnSubset {
 export interface StedsNavnPunkt {
   meterFraPunkt?: number;
   navneobjekttype?: string;
-  representasjonspunkt?: RepresentasjonsPunkt;
+  representasjonspunkt: RepresentasjonsPunkt;
   stedsnavn?: StedsNavnSubset[];
   stedsnummer?: number;
   stedstatus?: string;
