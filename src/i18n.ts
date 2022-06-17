@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+//import { i18nextPlugin } from 'translation-check'
 
 i18n
   // detect user language
@@ -8,6 +9,9 @@ i18n
   .use(LanguageDetector)
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
+  // The translation-check package shows an overview of translations.
+  // open your app or website and add ?showtranslations in your url, i.e. http://localhost:3000?showtranslations
+  //.use(i18nextPlugin)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
