@@ -1,14 +1,16 @@
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import * as fxparser from 'fast-xml-parser';
 import { transform } from 'ol/proj';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IAdresser, ISsrPunkt } from '../../components/search/search-model';
+import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 import {
   generateAdressePunktsokUrl,
+  generateEiendomAddressUrl,
   generateHoydedataPointUrl,
   generateMatrikkelInfoUrl,
   generatStedsnavnPunktsok,
@@ -31,7 +33,7 @@ const PointInfo = () => {
   const clickCoordinates = useEventSelector(selectClickCoordinates);
   const [elevation, setElevation] = useState<IHoydeResult>({});
   const [address, setAddress] = useState<IAdresser>({});
-  const [matrikkel, setMatrikkel] = useState<IHoydeResult>({});
+  const [matrikkel, setMatrikkel] = useState<ITeigInfo>();
   const [eiendom, setEiendom] = useState<IHoydeResult>({});
   const [stedsnavn, setStedsnavn] = useState<ISsrPunkt>({});
   const [loading, setLoading] = useState(false);
@@ -64,7 +66,11 @@ const PointInfo = () => {
       );
       const matrikkelInfoUrl = generateMatrikkelInfoUrl(coordinates[1], coordinates[0], coordinates[1], coordinates[0]);
       const adressePunktsokUrl = generateAdressePunktsokUrl(50, coordinates[1], coordinates[0]);
-      //const eiendomAddress = generateEiendomAddress(clickCoordinates?.coordinate[0].toString(), clickCoordinates?.coordinate[1].toString(), '25833')
+      const eiendomAddress = generateEiendomAddressUrl(
+        clickCoordinates?.coordinate[0].toString(),
+        clickCoordinates?.coordinate[1].toString(),
+        '25833',
+      );
 
       Promise.all([
         axios.get(elevationUrl),
@@ -78,9 +84,23 @@ const PointInfo = () => {
           responses;
         setElevation(elevationUrlResponse.data as IHoydeResult);
         setAddress(adressePunktsokUrlResponse.data as IAdresser);
-        setMatrikkel(matrikkelInfoUrlResponse.data as IHoydeResult);
+        const parser = new fxparser.XMLParser({
+          ignoreAttributes: true,
+          ignorePiTags: true,
+          removeNSPrefix: true,
+        });
+        const matrikkelInfo = parser.parse(matrikkelInfoUrlResponse.data);
+        if (matrikkelInfo && matrikkelInfo.FeatureCollection && matrikkelInfo.FeatureCollection.featureMembers) {
+          setMatrikkel(matrikkelInfo.FeatureCollection.featureMembers.TEIGWFS as ITeigInfo);
+        } else {
+          setMatrikkel(undefined);
+        }
         //setEiendom(responses[2].data as IHoydeResult);
-        setStedsnavn(ssrPointUrlResponse.data as ISsrPunkt);
+        if (ssrPointUrlResponse.data && ssrPointUrlResponse.data.navn && ssrPointUrlResponse.data.navn.length > 0) {
+          setStedsnavn(ssrPointUrlResponse.data as ISsrPunkt);
+        } else {
+          setStedsnavn({});
+        }
       });
     }
   }, [clickCoordinates]);
@@ -108,34 +128,20 @@ const PointInfo = () => {
             <span className="text-lowercase small"> ({address.adresser[0].kommunenavn})</span>
           </>
         ) : null}
-        {matrikkel && matrikkel.punkter && matrikkel.punkter.length > 0 ? (
-          <>
-            <span className="small">
-              {t('Matrikkel_text')}
-              {matrikkel.punkter[0].datakilde}
-            </span>
-            <span className="text-lowercase small">
-              {' '}
-              ({matrikkel.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
-            </span>
-          </>
-        ) : null}
-        {/* {eiendom && eiendom.punkter && eiendom.punkter.length > 0 ? (
-        <>
-          <span className="small">
-            {t('Eiendom_text')}
-            {eiendom.punkter[0].datakilde}
-          </span>
-          <span className="text-lowercase small">
-            {' '}
-            ({eiendom.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
-          </span>
-        </>
-      ) : null} */}
+
         <p className="fs-5 mt-3 ms-2">{t('hva_vil_du_gjore')}</p>
         <div className="d-flex flex-column">
           <div className="p-2 bg-light w-100 mb-2">
-            <span>{t('seEiendom')}</span>
+            <div
+              onClick={() => {
+                setShowMatrikkel(!showMatrikkel);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
+              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+            </div>
           </div>
           <div className="p-2 bg-light w-100 mb-2">
             <div
@@ -163,19 +169,60 @@ const PointInfo = () => {
           </div>
         </div>
       </div>
-      <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
-      <div className="p-2 bg-light w-100 mb-2">
-            <div
-              onClick={() => {
-                setShowStedsnavn(!showStedsnavn);
-                setShow(!show);
-              }}
-              className={style.expandBtn}
-            >
-              <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
-              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
-            </div>
+
+      <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowMatrikkel(!showMatrikkel);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
+            <FontAwesomeIcon icon={showMatrikkel ? faAngleUp : faAngleDown} />
           </div>
+        </div>
+        {matrikkel && matrikkel.GARDSNR ? (
+          <div>
+            <dl className="margin-bottom">
+              <dt>Kommunenr:</dt>
+              <dd>{matrikkel.KOMMUNENR}</dd>
+              <dt>Gårdsnr:</dt>
+              <dd>{matrikkel.GARDSNR}</dd>
+              <dt>Bruksnr:</dt>
+              <dd>{matrikkel.BRUKSNR}</dd>
+              <dt>Festenr:</dt>
+              <dd>{matrikkel.FESTENR}</dd>
+              <dt>Type:</dt>
+              <dd>{matrikkel.EIENDOMSTYPE}</dd>
+            </dl>
+            <a
+              href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t('seeiedom')} link
+            </a>
+          </div>
+        ) : (
+          <div>{t('noMatrikkel')}</div>
+        )}
+      </div>
+
+      <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowStedsnavn(!showStedsnavn);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
+            <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+          </div>
+        </div>
         {stedsnavn.navn ? (
           <ul className="list-group list-group-flush">
             {stedsnavn?.navn?.map((result, index) => (
@@ -200,7 +247,9 @@ const PointInfo = () => {
               </li>
             ))}
           </ul>
-        ) : null}
+        ) : (
+          <div> {t('noStedsnavn')}</div>
+        )}
       </div>
     </>
   );

@@ -79,3 +79,25 @@ export interface IAdresser {
   metadata?: Metadata;
   adresser?: Adresser[];
 }
+export interface ITeigInfo {
+  AREAL: number;
+  AREALMERKNADSKODER: number;
+  AVKLARTEIERE: boolean;
+  BRUKSNR: number;
+  EIENDOMSTYPE: string;
+  FESTENR: number;
+  FLATE: any;
+  GARDSNR: number;
+  HOVEDTEIG: boolean;
+  KOMMUNENR: number;
+  MATRIKKELNR: string;
+  REPRESENTASJONSPUNKT: RepresentasjonsPunkt;
+  SEKSJONSNR: number;
+  TEIGID: number;
+  TEIGMEDFLEREMATRIKKELENHETER: boolean;
+  TVIST: boolean;
+  UNDERSAMMENSLAINGBESTAR: boolean;
+  UNDERSAMMENSLAINGUTGAR: boolean;
+  UREGISTRERTJORDSAMEIE: boolean;
+  boundedBy: any;
+}
