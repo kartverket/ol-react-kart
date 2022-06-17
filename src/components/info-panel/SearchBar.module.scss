@@ -1,7 +1,7 @@
 :local(.selected) {
   max-height: 0;
   overflow: hidden;
-  transition: 0.1s all ease-in-out;
+  // transition: 0.1s all ease-in-out;
 
   div {
     padding: 2px 0;
@@ -21,7 +21,6 @@
   position: relative;
   top: 4px;
   margin-right: 4px;
-  font-weight: 600;
   white-space: nowrap;
 }
 :local(.expandBtn) {

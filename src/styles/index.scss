@@ -230,3 +230,8 @@ fieldset[disabled] .btn-toggle:hover {
 }
 
 @import 'sidenav';
+
+.pointInfo {
+  max-height: 30rem;
+  overflow-y: auto;
+}

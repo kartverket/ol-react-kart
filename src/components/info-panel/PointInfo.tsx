@@ -1,3 +1,5 @@
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { transform } from 'ol/proj';
 import React, { useEffect, useState } from 'react';
@@ -5,8 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { IAdresser, ISsrPunkt } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   generateAdressePunktsokUrl,
   generateHoydedataPointUrl,
@@ -25,6 +25,7 @@ export interface IHoydeResult {
   koordsys?: number;
   punkter?: IPunktInfo[];
 }
+
 const PointInfo = () => {
   const { t } = useTranslation();
   const clickCoordinates = useEventSelector(selectClickCoordinates);
@@ -35,7 +36,7 @@ const PointInfo = () => {
   const [stedsnavn, setStedsnavn] = useState<ISsrPunkt>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [showAddress, setShowAddress] = useState(false);
   const [showMatrikkel, setShowMatrikkel] = useState(false);
   const [showEiendom, setShowEiendom] = useState(false);
@@ -85,48 +86,41 @@ const PointInfo = () => {
   }, [clickCoordinates]);
   return (
     <>
-      {stedsnavn && stedsnavn.navn && stedsnavn.navn.length > 0 ? (
-        <>
-          <div className="small">
-            {t('Stedsnavn_text')}
-            {stedsnavn.navn[0].stedsnavn ? stedsnavn.navn[0].stedsnavn[0].skrivemåte : null}
-          </div>
-        </>
-      ) : null}
-      {elevation && elevation.punkter && elevation.punkter.length > 0 && elevation.punkter[0].z ? (
-        <>
-          <span className="small">
-            {t('HeightEstimatedByInterpolation_text')}
-            {elevation.punkter[0].z} {t('MetersAboveSeaLevel')}
-          </span>
-          <span className="text-lowercase small">
-            {' '}
-            ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
-          </span>
-        </>
-      ) : null}
-      {address && address.adresser && address.adresser?.length > 0 ? (
-        <>
-          <span className="small">
-            {t('Address_text')}
-            {address.adresser[0].adressetekst}
-          </span>
-          <span className="text-lowercase small"> ({address.adresser[0].kommunenavn})</span>
-        </>
-      ) : null}
-      {matrikkel && matrikkel.punkter && matrikkel.punkter.length > 0 ? (
-        <>
-          <span className="small">
-            {t('Matrikkel_text')}
-            {matrikkel.punkter[0].datakilde}
-          </span>
-          <span className="text-lowercase small">
-            {' '}
-            ({matrikkel.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
-          </span>
-        </>
-      ) : null}
-      {/* {eiendom && eiendom.punkter && eiendom.punkter.length > 0 ? (
+      <div className={show ? `${style.selected} ${style.open}` : style.selected}>
+        {elevation && elevation.punkter && elevation.punkter.length > 0 && elevation.punkter[0].z ? (
+          <>
+            <span className="small">
+              {t('HeightEstimatedByInterpolation_text')}
+              {elevation.punkter[0].z} {t('MetersAboveSeaLevel')}
+            </span>
+            <span className="text-lowercase small">
+              {' '}
+              ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
+            </span>
+          </>
+        ) : null}
+        {address && address.adresser && address.adresser?.length > 0 ? (
+          <>
+            <span className="small">
+              {t('Address_text')}
+              {address.adresser[0].adressetekst}
+            </span>
+            <span className="text-lowercase small"> ({address.adresser[0].kommunenavn})</span>
+          </>
+        ) : null}
+        {matrikkel && matrikkel.punkter && matrikkel.punkter.length > 0 ? (
+          <>
+            <span className="small">
+              {t('Matrikkel_text')}
+              {matrikkel.punkter[0].datakilde}
+            </span>
+            <span className="text-lowercase small">
+              {' '}
+              ({matrikkel.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
+            </span>
+          </>
+        ) : null}
+        {/* {eiendom && eiendom.punkter && eiendom.punkter.length > 0 ? (
         <>
           <span className="small">
             {t('Eiendom_text')}
@@ -138,56 +132,75 @@ const PointInfo = () => {
           </span>
         </>
       ) : null} */}
-      <p className="fs-5 mt-3 ms-2">{t('hva_vil_du_gjore')}</p>
-      <div className="d-flex flex-column">
-        <div className="p-2 bg-light w-100 mb-2">
-          <span>{t('seEiendom')}</span>
-        </div>
-        <div className="p-2 bg-light w-100 mb-2">
-          <div onClick={() => setShowStedsnavn(!showStedsnavn)} className={style.expandBtn}>
-            <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
-            <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+        <p className="fs-5 mt-3 ms-2">{t('hva_vil_du_gjore')}</p>
+        <div className="d-flex flex-column">
+          <div className="p-2 bg-light w-100 mb-2">
+            <span>{t('seEiendom')}</span>
           </div>
-          <div className={showStedsnavn ? `${style.selected} ${style.open}` : style.selected}>
-            {stedsnavn.navn ? (
-              <ul className="list-group list-group-flush">
-                {stedsnavn?.navn?.map((result, index) => (
-                  <li key={index} className="list-group-item pt-2 pb-2">
-                    <div className="">
-                      <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
-                      <div className="text-muted">
-                        {t('Stedsnummer')}:{' '}
-                        <a
-                          href={'https://stadnamn.kartverket.no/fakta/' + result.stedsnummer}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {' '}
-                          {result.stedsnummer}
-                        </a>
-                      </div>
-                      <small className="text-muted">
-                        {t('Navnobjekttype')}:{' '}{result.navneobjekttype}
-                      </small>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+          <div className="p-2 bg-light w-100 mb-2">
+            <div
+              onClick={() => {
+                setShowStedsnavn(!showStedsnavn);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
+              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+            </div>
+          </div>
+          <div className="p-2 bg-light w-100 mb-2">
+            <span>{t('koordTrans')}</span>
+          </div>
+          <div className="p-2 bg-light w-100 mb-2">
+            <span>{t('lagTurkart')}</span>
+          </div>
+          <div className="p-2 bg-light w-100 mb-2">
+            <span>{t('lagFargeleggingskart')}</span>
+          </div>
+          <div className="p-2 bg-light w-100 mb-2">
+            <span>{t('lagNodplakat')}</span>
           </div>
         </div>
-        <div className="p-2 bg-light w-100 mb-2">
-          <span>{t('koordTrans')}</span>
-        </div>
-        <div className="p-2 bg-light w-100 mb-2">
-          <span>{t('lagTurkart')}</span>
-        </div>
-        <div className="p-2 bg-light w-100 mb-2">
-          <span>{t('lagFargeleggingskart')}</span>
-        </div>
-        <div className="p-2 bg-light w-100 mb-2">
-          <span>{t('lagNodplakat')}</span>
-        </div>
+      </div>
+      <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
+      <div className="p-2 bg-light w-100 mb-2">
+            <div
+              onClick={() => {
+                setShowStedsnavn(!showStedsnavn);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
+              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+            </div>
+          </div>
+        {stedsnavn.navn ? (
+          <ul className="list-group list-group-flush">
+            {stedsnavn?.navn?.map((result, index) => (
+              <li key={index} className="list-group-item pt-2 pb-2">
+                <div className="">
+                  <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
+                  <div className="text-muted">
+                    {t('Stedsnummer')}:{' '}
+                    <a
+                      href={'https://stadnamn.kartverket.no/fakta/' + result.stedsnummer}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {' '}
+                      {result.stedsnummer}
+                    </a>
+                  </div>
+                  <small className="text-muted">
+                    {t('Navnobjekttype')}: {result.navneobjekttype}
+                  </small>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </>
   );
