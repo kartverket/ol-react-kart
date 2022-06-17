@@ -13,10 +13,6 @@ const urlHavnivaa = 'http://api.sehavniva.no/';
 const urlAdresseSok = 'https://ws.geonorge.no/adresser/v1/sok';
 const urlAdressePunktsok = 'https://ws.geonorge.no/adresser/v1/punktsok';
 
-export const generateWhat3WordsServiceUrl = () => {
-  return `${url}ws/w3w.py`;
-};
-
 export const uploadGpxFileService = () => {
   return `${url}ws/upload-gpx.py`;
 };
@@ -101,7 +97,7 @@ export const generateSearchAdresseUrl = (query: string | number | boolean) => {
 };
 
 export const generateElevationPointUrl = (lat: string, lon: string, epsgNumber: string) => {
-  return `${url}ws/elev.py?lat=${lat}&lon=${lon}&epsg=${epsgNumber}`;
+  return `${urlGeonorge}hoydedata/v1/punkt?nord=${lat}&ost=${lon}&koordsys=${epsgNumber}&geojson=false`;
 };
 export const generatStedsnavnPunktsok = (lat: string, lon: string, epsgNumber: string, side?: number) => {
   if (!side) {
@@ -159,15 +155,15 @@ export const generateSeHavnivaaUrl = (lat: string, lon: string) => {
 };
 
 export const generateLagTurkartUrl = () => {
-  return `${urlGeonorge}freeprint/getprint_sverige.py`;
+  return `${urlGeonorge}norgeskart/nkprint/turkart2`;
 };
 
 export const generateLagFargeleggingskartUrl = () => {
-  return `${urlGeonorge}freeprint/getprint_f.py`;
+  return `${urlGeonorge}norgeskart/nkprint/fargelegg`;
 };
 
 export const generateEmergencyPosterPointUrl = (lat: string, lon: string) => {
-  return `${url}ws/emergencyPoster.py?&lon=${lon},lat=${lat}`;
+  return `${urlGeonorge}norgeskart/emergencyPoster/${lon}/${lat}`;
 };
 
 export const generateEmergencyPosterPreviewImageUrl = (minx: string, miny: string, maxx: string, maxy: string) => {
@@ -208,14 +204,14 @@ export const _constructMarkingFilter = (property: any) => {
 export const generateMatrikkelWfsFilterUrl = (property: any) => {
   return `${urlGeonorge}norgeskart/v1/teiger/${_constructMarkingFilter(property)}/`;
 };
-export const generateEiendomAddress = (
+export const generateEiendomAddressUrl = (
   kommunenr: string,
   gardsnr: string,
   bruksnr: string,
-  festnr: string,
-  sectionsnr: string,
+  festnr?: string,
+  sectionsnr?: string,
 ) => {
-  let baseUrl = `${url}ws/eiendom.py?`;
+  let baseUrl = `${urlGeonorge}norgeskart/matrikkel/eiendom/`;
   if (festnr !== '0') {
     if (sectionsnr === '0') {
       baseUrl += kommunenr + '-' + gardsnr + '/' + bruksnr + '/' + festnr;
