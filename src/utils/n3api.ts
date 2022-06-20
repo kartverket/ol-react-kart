@@ -146,10 +146,12 @@ export const generateKoordTransUrl = (ost, nord, resSosiKoordSys, sosiKoordSys) 
 }
 */
 // Nytt transform API https://ws.geonorge.no/transformering/v1/
-export const generateKoordTransUrl = (x: string, y: string, tilEPSG: string, fraESPG: string) => {
+export const generateKoordTransUrl = (x: number, y: number, tilEPSG: string, fraESPG: string) => {
   return `${urlGeonorge}transformering/v1/transformer?x=${x}&y=${y}&fra=${fraESPG}&til=${tilEPSG}`;
 };
-
+export const generateProjeksjonerUrl = () => {
+  return `${urlGeonorge}transformering/v1/projeksjoner`;
+};
 export const generateSeHavnivaaUrl = (lat: string, lon: string) => {
   return `${urlHavnivaa}tideapi.php?lat=${lat}&lon=${lon}&lang=nb&year=${new Date().getFullYear()}&place=&tide_request=tidetable`;
 };

@@ -2,6 +2,7 @@ import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
+import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +13,9 @@ import {
   generateAdressePunktsokUrl,
   generateEiendomAddressUrl,
   generateHoydedataPointUrl,
+  generateKoordTransUrl,
   generateMatrikkelInfoUrl,
+  generateProjeksjonerUrl,
   generatStedsnavnPunktsok,
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
@@ -27,6 +30,11 @@ export interface IHoydeResult {
   koordsys?: number;
   punkter?: IPunktInfo[];
 }
+export interface IProsjektion {
+  epsg: number;
+  info: string;
+  name: string;
+}
 
 const PointInfo = () => {
   const { t } = useTranslation();
@@ -37,18 +45,33 @@ const PointInfo = () => {
   const [eiendom, setEiendom] = useState<IHoydeResult>({});
   const [stedsnavn, setStedsnavn] = useState<ISsrPunkt>({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const [show, setShow] = useState(true);
-  const [showAddress, setShowAddress] = useState(false);
+  const [showTurkart, setShowTurkart] = useState(false);
   const [showMatrikkel, setShowMatrikkel] = useState(false);
-  const [showEiendom, setShowEiendom] = useState(false);
+  const [showFargeleggingskart, setShowFargeleggingskart] = useState(false);
   const [showStedsnavn, setShowStedsnavn] = useState(false);
-  const [showElevation, setShowElevation] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
+  const [showNodplakat, setShowNodplakat] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showCoordinates, setShowCoordinates] = useState(false);
+  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(false);
+  const [projeksjoner, setProjeksjoner] = useState<IProsjektion[]>([]);
+  const [coordinates, setCoordinates] = useState<Coordinate>();
+  const [projection, setProjection] = useState<string>('25833');
 
   useEffect(() => {
+    axios
+      .get(generateProjeksjonerUrl())
+      .then(response => {
+        setProjeksjoner(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+  useEffect(() => {
     if (clickCoordinates && clickCoordinates.coordinate) {
+      setCoordinates(clickCoordinates.coordinate);
+      setProjection('25833');
       const elevationUrl = generateHoydedataPointUrl(
         clickCoordinates?.coordinate[0].toString(),
         clickCoordinates?.coordinate[1].toString(),
@@ -104,6 +127,16 @@ const PointInfo = () => {
       });
     }
   }, [clickCoordinates]);
+
+  const handleTransform = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (coordinates) {
+      axios.get(generateKoordTransUrl(coordinates[0], coordinates[1], value, projection)).then(response => {
+        setCoordinates([response.data.x, response.data.y]);
+        setProjection(value);
+      });
+    }
+  };
   return (
     <>
       <div className={show ? `${style.selected} ${style.open}` : style.selected}>
@@ -156,20 +189,149 @@ const PointInfo = () => {
             </div>
           </div>
           <div className="p-2 bg-light w-100 mb-2">
-            <span>{t('koordTrans')}</span>
+            <div
+              onClick={() => {
+                setShowCoordinates(!showCoordinates);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+              <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
+            </div>
           </div>
           <div className="p-2 bg-light w-100 mb-2">
-            <span>{t('lagTurkart')}</span>
+            <div
+              onClick={() => {
+                setShowTurkart(!showTurkart);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
+              <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
+            </div>
           </div>
           <div className="p-2 bg-light w-100 mb-2">
-            <span>{t('lagFargeleggingskart')}</span>
+            <div
+              onClick={() => {
+                setShowFargeleggingskart(!showFargeleggingskart);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
+              <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
+            </div>
           </div>
           <div className="p-2 bg-light w-100 mb-2">
-            <span>{t('lagNodplakat')}</span>
+            <div
+              onClick={() => {
+                setShowNodplakat(!showNodplakat);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('lagNodplakat')}</span>
+              <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+            </div>
           </div>
         </div>
       </div>
-
+      {/* Koordinater */}
+      <div className={showCoordinates ? `${style.selected} ${style.open}` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowCoordinates(!showCoordinates);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
+          </div>
+          {projeksjoner && coordinates ? (
+            <div>
+              <span className="small"> {t('koord_info')}</span>
+              <select className="form-select" onChange={e => handleTransform(e)} value={projection}>
+                {projeksjoner.map((result, index) => (
+                  <option value={result.epsg} key={index}>
+                    {result.name}
+                  </option>
+                ))}
+              </select>
+              <dl className="">
+                <dt>{t('koord_nord')}</dt>
+                <dd>{coordinates[1]}</dd>
+                <dt>{t('koord_ost')}:</dt>
+                <dd>{coordinates[0]}</dd>
+              </dl>
+            </div>
+          ) : null}
+        </div>
+      </div>
+      {/* Turkart */}
+      <div className={showTurkart ? `${style.selected} ${style.open}` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowTurkart(!showTurkart);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
+          </div>
+        </div>
+      </div>
+      {/* Fargeleggingskart */}
+      <div className={showFargeleggingskart ? `${style.selected} ${style.open}` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowFargeleggingskart(!showFargeleggingskart);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
+          </div>
+        </div>
+      </div>
+      {/* Nodplakat */}
+      <div className={showNodplakat ? `${style.selected} ${style.open}` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowNodplakat(!showNodplakat);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+          </div>
+        </div>
+      </div>
+      {/* GetFeatureInfo */}
+      <div className={showGetFeatureInfo ? `${style.selected} ${style.open}` : style.selected}>
+        <div className="p-2 bg-light w-100 mb-2">
+          <div
+            onClick={() => {
+              setShowGetFeatureInfo(!showGetFeatureInfo);
+              setShow(!show);
+            }}
+            className={style.expandBtn}
+          >
+            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <FontAwesomeIcon icon={showGetFeatureInfo ? faAngleUp : faAngleDown} />
+          </div>
+        </div>
+      </div>
+      {/* Eiendomsinformasjon */}
       <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>
         <div className="p-2 bg-light w-100 mb-2">
           <div
@@ -202,14 +364,14 @@ const PointInfo = () => {
               target="_blank"
               rel="noreferrer"
             >
-              {t('seeiedom')} link
+              {t('showMoreInformation')}
             </a>
           </div>
         ) : (
           <div>{t('noMatrikkel')}</div>
         )}
       </div>
-
+      {/* Stedsnavn */}
       <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
         <div className="p-2 bg-light w-100 mb-2">
           <div
