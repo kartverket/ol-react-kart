@@ -55,7 +55,7 @@
     "test": "react-scripts test",
     "lint": "eslint src",
     "prettier:check": "prettier src --check",
-    "prettier:fix": "prettier src --write",
+    "prettier:fix": "prettier src --write"
   },
   "eslintConfig": {
     "extends": [

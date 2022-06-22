@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
@@ -48,10 +48,8 @@ const PointInfo = () => {
   const [elevation, setElevation] = useState<IHoydeResult>({});
   const [address, setAddress] = useState<IAdresser>({});
   const [matrikkel, setMatrikkel] = useState<ITeigInfo>();
-  const [eiendom, setEiendom] = useState<IHoydeResult>({});
   const [stedsnavn, setStedsnavn] = useState<ISsrPunkt>({});
   const [emergencyPointInfo, setEmergencyPointInfo] = useState<any>({});
-  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [showTurkart, setShowTurkart] = useState(false);
   const [showMatrikkel, setShowMatrikkel] = useState(false);
@@ -62,12 +60,15 @@ const PointInfo = () => {
   const [showNodplakat2, setShowNodplakat2] = useState(false);
   const [nodplakatName, setNodplakatName] = useState('');
   const [nodplakatStedsnavn, setNodplakatStedsnavn] = useState('');
-  const [showError, setShowError] = useState(false);
+  const [nodplakatVeg, setNodplakatVeg] = useState('');
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(false);
   const [projeksjoner, setProjeksjoner] = useState<IProsjektion[]>([]);
   const [coordinates, setCoordinates] = useState<Coordinate>();
   const [projection, setProjection] = useState<string>('25833');
+  const nodplakatNameRef = useRef<HTMLInputElement>(null);
+  const nodplakatStedsnavnRef = useRef<HTMLSelectElement>(null);
+  const nodplakatVegRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
     axios
@@ -76,7 +77,7 @@ const PointInfo = () => {
         setProjeksjoner(response.data);
       })
       .catch(error => {
-        console.log(error);
+        console.warn(error);
       });
   }, []);
   useEffect(() => {
@@ -112,30 +113,35 @@ const PointInfo = () => {
         axios.get(matrikkelInfoUrl),
         axios.get(adressePunktsokUrl),
         //axios.get(eiendomAddress),
-      ]).then(responses => {
-        console.log(responses);
-        const [elevationUrlResponse, ssrPointUrlResponse, matrikkelInfoUrlResponse, adressePunktsokUrlResponse] =
-          responses;
-        setElevation(elevationUrlResponse.data as IHoydeResult);
-        setAddress(adressePunktsokUrlResponse.data as IAdresser);
-        const parser = new fxparser.XMLParser({
-          ignoreAttributes: true,
-          ignorePiTags: true,
-          removeNSPrefix: true,
+      ])
+        .then(responses => {
+          const [elevationUrlResponse, ssrPointUrlResponse, matrikkelInfoUrlResponse, adressePunktsokUrlResponse] =
+            responses;
+          setElevation(elevationUrlResponse.data as IHoydeResult);
+          setAddress(adressePunktsokUrlResponse.data as IAdresser);
+          const parser = new fxparser.XMLParser({
+            ignoreAttributes: true,
+            ignorePiTags: true,
+            removeNSPrefix: true,
+          });
+          const matrikkelInfo = parser.parse(matrikkelInfoUrlResponse.data);
+          if (matrikkelInfo && matrikkelInfo.FeatureCollection && matrikkelInfo.FeatureCollection.featureMembers) {
+            setMatrikkel(matrikkelInfo.FeatureCollection.featureMembers.TEIGWFS as ITeigInfo);
+          } else {
+            setMatrikkel(undefined);
+          }
+          if (ssrPointUrlResponse.data && ssrPointUrlResponse.data.navn && ssrPointUrlResponse.data.navn.length > 0) {
+            setStedsnavn(ssrPointUrlResponse.data as ISsrPunkt);
+          } else {
+            setStedsnavn({});
+          }
+        })
+        .catch(error => {
+          console.warn(error);
         });
-        const matrikkelInfo = parser.parse(matrikkelInfoUrlResponse.data);
-        if (matrikkelInfo && matrikkelInfo.FeatureCollection && matrikkelInfo.FeatureCollection.featureMembers) {
-          setMatrikkel(matrikkelInfo.FeatureCollection.featureMembers.TEIGWFS as ITeigInfo);
-        } else {
-          setMatrikkel(undefined);
-        }
-        //setEiendom(responses[2].data as IHoydeResult);
-        if (ssrPointUrlResponse.data && ssrPointUrlResponse.data.navn && ssrPointUrlResponse.data.navn.length > 0) {
-          setStedsnavn(ssrPointUrlResponse.data as ISsrPunkt);
-        } else {
-          setStedsnavn({});
-        }
-      });
+      if (showNodplakat) {
+        handleGetEmergencyPointInfo();
+      }
     }
   }, [clickCoordinates]);
 
@@ -150,7 +156,6 @@ const PointInfo = () => {
   };
   const handleGetEmergencyPointInfo = () => {
     if (clickCoordinates && clickCoordinates.coordinate) {
-      setLoading(true);
       const coordinates = transform(
         [clickCoordinates?.coordinate[0], clickCoordinates?.coordinate[1]],
         'EPSG:25833',
@@ -159,13 +164,10 @@ const PointInfo = () => {
       axios
         .get(generateEmergencyPosterPointUrl(coordinates[1], coordinates[0]))
         .then(response => {
-          setLoading(false);
           setEmergencyPointInfo(response.data);
         })
         .catch(error => {
-          setLoading(false);
-          setShowError(true);
-          console.log(error);
+          console.warn(error);
         });
     }
   };
@@ -180,7 +182,7 @@ const PointInfo = () => {
       ' sekunder'
     );
   };
-  const _getUTMZoneFromGeographicPoint = (lon: number, lat: number) => {
+  const getUTMZoneFromGeographicPoint = (lon: number, lat: number) => {
     let sone = '32V',
       localProj = 'EPSG:32632';
     if (lat > 72) {
@@ -225,10 +227,12 @@ const PointInfo = () => {
       localProj: localProj,
     };
   };
-  const downloadEmergencyPoster = () => {
+  const downloadEmergencyPoster = (e: React.FormEvent) => {
+    e.preventDefault();
     if (clickCoordinates && clickCoordinates.coordinate && clickCoordinates.center && clickCoordinates.extent) {
-      const UTM = _getUTMZoneFromGeographicPoint(clickCoordinates.coordinate[0], clickCoordinates.coordinate[1]);
-      const localUTMPoint = transform(clickCoordinates.coordinate, 'EPSG:4326', UTM.localProj);
+      const UTM = getUTMZoneFromGeographicPoint(clickCoordinates.coordinate[0], clickCoordinates.coordinate[1]);
+      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.localProj);
+      const googleCoordinates = transform(clickCoordinates.coordinate, clickCoordinates.epsg, 'EPSG:4326');
       const pixels = {
         width: 1145,
         height: 660,
@@ -254,18 +258,23 @@ const PointInfo = () => {
         BBOX: minx + ',' + miny + ',' + maxx + ',' + maxy,
       };
       const emergencyPosterConfig = {
-        locationName: nodplakatName,
-        position1: geographicalText(clickCoordinates.coordinate[1]) + ' nord',
-        position2: geographicalText(clickCoordinates.coordinate[0]) + ' øst',
-        street: '',
-        place: nodplakatStedsnavn,
-        matrikkel: '',
+        locationName:
+          nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
+            ? nodplakatNameRef.current.value
+            : nodplakatStedsnavnRef.current
+            ? nodplakatStedsnavnRef.current.value
+            : '',
+        position1: geographicalText(googleCoordinates[1]) + ' nord',
+        position2: geographicalText(googleCoordinates[0]) + ' øst',
+        street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
+        place: nodplakatStedsnavnRef.current ? nodplakatStedsnavnRef.current.value : '',
+        matrikkel: emergencyPointInfo.matrikkelnr,
         utm: 'Sone ' + UTM.sone + ' Ø ' + localUTMPoint[0] + ' N ' + localUTMPoint[1],
-        posDez: 'N' + clickCoordinates.coordinate[1] + '° - Ø' + clickCoordinates.coordinate[0] + '°',
+        posDez: 'N' + googleCoordinates[1] + '° - Ø' + googleCoordinates[0] + '°',
         map: generateMapLinkServiceUrl(emergencyMapConfig),
       };
       const url = generateEmergencyPosterServiceUrl(emergencyPosterConfig);
-      console.log(url);
+      console.log(emergencyPosterConfig);
       window.open(url, '_blank');
     }
   };
@@ -362,6 +371,7 @@ const PointInfo = () => {
               onClick={() => {
                 setShowNodplakat(!showNodplakat);
                 setShow(!show);
+                handleGetEmergencyPointInfo();
               }}
               className={style.expandBtn}
             >
@@ -441,7 +451,6 @@ const PointInfo = () => {
             onClick={() => {
               setShowNodplakat(!showNodplakat);
               setShow(!show);
-              handleGetEmergencyPointInfo();
             }}
             className={style.expandBtn}
           >
@@ -464,61 +473,62 @@ const PointInfo = () => {
             </button>
           </div>
           <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
-            <div className="small"> {t('GiPunktetNavn')}</div>
-            <input
-              type="text"
-              className="form-control"
-              value={nodplakatName}
-              onChange={e => setNodplakatName(e.target.value)}
-            />
-            <div className="small"> {t('PlaceIs')}</div>
-            <div>
-              {stedsnavn.navn ? (
-                <select
-                  className="form-select"
-                  onChange={e => setNodplakatStedsnavn(e.target.value)}
-                  value={nodplakatStedsnavn}
-                >
-                  {stedsnavn?.navn?.map((result, index) => (
-                    <option value={result.stedsnavn && result.stedsnavn[0].skrivemåte} key={index}>
-                      {result.stedsnavn && result.stedsnavn[0].skrivemåte}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div>{t('NoPlace')}</div>
-              )}
-            </div>
-            <div className="small"> {t('FoundRoadIs')}</div>
-            <div>
-              {emergencyPointInfo ? (
-                <select
-                  className="form-select"
-                  onChange={e => setNodplakatStedsnavn(e.target.value)}
-                  value={nodplakatStedsnavn}
-                >
-                  {emergencyPointInfo?.vegliste?.map((veg: string, index: number) => (
-                    <option value={veg} key={index}>
-                      {veg}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div>{t('NoPlace')}</div>
-              )}
-            </div>
+            <form id="form" onSubmit={downloadEmergencyPoster}>
+              <label className="small">
+                {' '}
+                {t('GiPunktetNavn')}
+                <input
+                  type="text"
+                  ref={nodplakatNameRef}
+                  className="form-control"
+                  value={nodplakatName}
+                  onChange={e => setNodplakatName(e.target.value)}
+                />
+              </label>
+              <label className="small">
+                {' '}
+                {t('PlaceIs')}
+                {stedsnavn.navn ? (
+                  <select
+                    ref={nodplakatStedsnavnRef}
+                    className="form-select"
+                    onChange={e => setNodplakatStedsnavn(e.target.value)}
+                    value={nodplakatStedsnavn}
+                  >
+                    {stedsnavn?.navn?.map((result, index) => (
+                      <option value={result.stedsnavn && result.stedsnavn[0].skrivemåte} key={index}>
+                        {result.stedsnavn && result.stedsnavn[0].skrivemåte}
+                      </option>
+                    ))}
+                  </select>
+                ) : null}
+              </label>
+              <label className="small">
+                {' '}
+                {t('FoundRoadIs')}
+                {emergencyPointInfo ? (
+                  <select
+                    ref={nodplakatVegRef}
+                    className="form-select"
+                    onChange={e => setNodplakatVeg(e.target.value)}
+                    value={nodplakatVeg}
+                  >
+                    {emergencyPointInfo?.vegliste?.map((veg: string, index: number) => (
+                      <option value={veg} key={index}>
+                        {veg}
+                      </option>
+                    ))}
+                  </select>
+                ) : null}
+              </label>
 
-            <div className="small">
-              {t('In')} {emergencyPointInfo.kommune} {t('Municipality')}
-            </div>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                downloadEmergencyPoster();
-              }}
-            >
-              {t('downloadEmergencyPoster')}
-            </button>
+              <div className="small">
+                {t('In')} {emergencyPointInfo.kommune} {t('Municipality')}
+              </div>
+              <button className="btn btn-primary" type="submit">
+                {t('downloadEmergencyPoster')}
+              </button>
+            </form>
           </div>
         </div>
       </div>
