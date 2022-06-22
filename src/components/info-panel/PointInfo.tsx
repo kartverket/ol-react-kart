@@ -12,13 +12,19 @@ import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinates
 import {
   generateAdressePunktsokUrl,
   generateEiendomAddressUrl,
+  generateEmergencyPosterPointUrl,
+  generateEmergencyPosterServiceUrl,
+  generateFaktaarkUrl,
   generateHoydedataPointUrl,
   generateKoordTransUrl,
+  generateMapLinkServiceUrl,
   generateMatrikkelInfoUrl,
   generateProjeksjonerUrl,
   generatStedsnavnPunktsok,
+  toDms,
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
+
 export interface IPunktInfo {
   datakilde: string;
   terreng: string;
@@ -44,6 +50,7 @@ const PointInfo = () => {
   const [matrikkel, setMatrikkel] = useState<ITeigInfo>();
   const [eiendom, setEiendom] = useState<IHoydeResult>({});
   const [stedsnavn, setStedsnavn] = useState<ISsrPunkt>({});
+  const [emergencyPointInfo, setEmergencyPointInfo] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [showTurkart, setShowTurkart] = useState(false);
@@ -51,6 +58,10 @@ const PointInfo = () => {
   const [showFargeleggingskart, setShowFargeleggingskart] = useState(false);
   const [showStedsnavn, setShowStedsnavn] = useState(false);
   const [showNodplakat, setShowNodplakat] = useState(false);
+  const [showNodplakat1, setShowNodplakat1] = useState(true);
+  const [showNodplakat2, setShowNodplakat2] = useState(false);
+  const [nodplakatName, setNodplakatName] = useState('');
+  const [nodplakatStedsnavn, setNodplakatStedsnavn] = useState('');
   const [showError, setShowError] = useState(false);
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(false);
@@ -137,6 +148,128 @@ const PointInfo = () => {
       });
     }
   };
+  const handleGetEmergencyPointInfo = () => {
+    if (clickCoordinates && clickCoordinates.coordinate) {
+      setLoading(true);
+      const coordinates = transform(
+        [clickCoordinates?.coordinate[0], clickCoordinates?.coordinate[1]],
+        'EPSG:25833',
+        'EPSG:4326',
+      );
+      axios
+        .get(generateEmergencyPosterPointUrl(coordinates[1], coordinates[0]))
+        .then(response => {
+          setLoading(false);
+          setEmergencyPointInfo(response.data);
+        })
+        .catch(error => {
+          setLoading(false);
+          setShowError(true);
+          console.log(error);
+        });
+    }
+  };
+  const geographicalText = (geographicOrdinal: number) => {
+    const geographicDegreesSecondsMinutes = toDms(geographicOrdinal.toString());
+    return (
+      geographicDegreesSecondsMinutes.degrees +
+      ' grader ' +
+      geographicDegreesSecondsMinutes.minutes +
+      ' minutter ' +
+      geographicDegreesSecondsMinutes.seconds +
+      ' sekunder'
+    );
+  };
+  const _getUTMZoneFromGeographicPoint = (lon: number, lat: number) => {
+    let sone = '32V',
+      localProj = 'EPSG:32632';
+    if (lat > 72) {
+      if (lon < 21) {
+        sone = '33X';
+        localProj = 'EPSG:32633';
+      } else {
+        sone = '35X';
+        localProj = 'EPSG:32635';
+      }
+    } else if (lat > 64) {
+      if (lon < 6) {
+        sone = '31W';
+        localProj = 'EPSG:32631';
+      } else if (lon < 12) {
+        sone = '32W';
+        localProj = 'EPSG:32632';
+      } else if (lon < 18) {
+        sone = '33W';
+        localProj = 'EPSG:32633';
+      } else if (lon < 24) {
+        sone = '34W';
+        localProj = 'EPSG:32634';
+      } else if (lon < 30) {
+        sone = '35W';
+        localProj = 'EPSG:32635';
+      } else {
+        sone = '36W';
+        localProj = 'EPSG:32636';
+      }
+    } else {
+      if (lon < 3) {
+        sone = '31V';
+        localProj = 'EPSG:32631';
+      } else if (lon >= 12) {
+        sone = '33V';
+        localProj = 'EPSG:32633';
+      }
+    }
+    return {
+      sone: sone,
+      localProj: localProj,
+    };
+  };
+  const downloadEmergencyPoster = () => {
+    if (clickCoordinates && clickCoordinates.coordinate && clickCoordinates.center && clickCoordinates.extent) {
+      const UTM = _getUTMZoneFromGeographicPoint(clickCoordinates.coordinate[0], clickCoordinates.coordinate[1]);
+      const localUTMPoint = transform(clickCoordinates.coordinate, 'EPSG:4326', UTM.localProj);
+      const pixels = {
+        width: 1145,
+        height: 660,
+      };
+      const meterWidth = clickCoordinates.extent[2] - clickCoordinates.extent[0];
+      const pixelWidthPerHeight = pixels.width / pixels.height;
+      const meterHeight = meterWidth / pixelWidthPerHeight;
+      const minx = clickCoordinates.center[0] - meterWidth / 2;
+      const miny = clickCoordinates.center[1] - meterHeight / 2;
+      const maxx = clickCoordinates.center[0] + meterWidth / 2;
+      const maxy = clickCoordinates.center[1] + meterHeight / 2;
+      const emergencyMapConfig = {
+        service: 'WMS',
+        request: 'GetMap',
+        CRS: 'EPSG:25833',
+        FORMAT: 'image/jpeg',
+        BGCOLOR: '0xFFFFFF',
+        TRANSPARENT: 'false',
+        LAYERS: 'topo4_WMS',
+        VERSION: '1.3.0',
+        WIDTH: pixels.width,
+        HEIGHT: pixels.height,
+        BBOX: minx + ',' + miny + ',' + maxx + ',' + maxy,
+      };
+      const emergencyPosterConfig = {
+        locationName: nodplakatName,
+        position1: geographicalText(clickCoordinates.coordinate[1]) + ' nord',
+        position2: geographicalText(clickCoordinates.coordinate[0]) + ' øst',
+        street: '',
+        place: nodplakatStedsnavn,
+        matrikkel: '',
+        utm: 'Sone ' + UTM.sone + ' Ø ' + localUTMPoint[0] + ' N ' + localUTMPoint[1],
+        posDez: 'N' + clickCoordinates.coordinate[1] + '° - Ø' + clickCoordinates.coordinate[0] + '°',
+        map: generateMapLinkServiceUrl(emergencyMapConfig),
+      };
+      const url = generateEmergencyPosterServiceUrl(emergencyPosterConfig);
+      console.log(url);
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <>
       <div className={show ? `${style.selected} ${style.open}` : style.selected}>
@@ -308,11 +441,84 @@ const PointInfo = () => {
             onClick={() => {
               setShowNodplakat(!showNodplakat);
               setShow(!show);
+              handleGetEmergencyPointInfo();
             }}
             className={style.expandBtn}
           >
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <span className={style.ellipsisToggle}>{t('Nodplakat')}</span>
             <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+          </div>
+          <div className={showNodplakat1 ? `${style.selected} ${style.open}` : style.selected}>
+            <h4 className=""> {t('Ansvar')}</h4>
+            <div className="small"> {t('NodplakatText1')}</div>
+            <div className="small"> {t('NodplakatText2')}</div>
+            <div className="small"> {t('NodplakatText3')}</div>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setShowNodplakat1(false);
+                setShowNodplakat2(true);
+              }}
+            >
+              {t('AcceptAndContinue')}
+            </button>
+          </div>
+          <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
+            <div className="small"> {t('GiPunktetNavn')}</div>
+            <input
+              type="text"
+              className="form-control"
+              value={nodplakatName}
+              onChange={e => setNodplakatName(e.target.value)}
+            />
+            <div className="small"> {t('PlaceIs')}</div>
+            <div>
+              {stedsnavn.navn ? (
+                <select
+                  className="form-select"
+                  onChange={e => setNodplakatStedsnavn(e.target.value)}
+                  value={nodplakatStedsnavn}
+                >
+                  {stedsnavn?.navn?.map((result, index) => (
+                    <option value={result.stedsnavn && result.stedsnavn[0].skrivemåte} key={index}>
+                      {result.stedsnavn && result.stedsnavn[0].skrivemåte}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div>{t('NoPlace')}</div>
+              )}
+            </div>
+            <div className="small"> {t('FoundRoadIs')}</div>
+            <div>
+              {emergencyPointInfo ? (
+                <select
+                  className="form-select"
+                  onChange={e => setNodplakatStedsnavn(e.target.value)}
+                  value={nodplakatStedsnavn}
+                >
+                  {emergencyPointInfo?.vegliste?.map((veg: string, index: number) => (
+                    <option value={veg} key={index}>
+                      {veg}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div>{t('NoPlace')}</div>
+              )}
+            </div>
+
+            <div className="small">
+              {t('In')} {emergencyPointInfo.kommune} {t('Municipality')}
+            </div>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                downloadEmergencyPoster();
+              }}
+            >
+              {t('downloadEmergencyPoster')}
+            </button>
           </div>
         </div>
       </div>
@@ -393,11 +599,7 @@ const PointInfo = () => {
                   <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
                   <div className="text-muted">
                     {t('Stedsnummer')}:{' '}
-                    <a
-                      href={'https://stadnamn.kartverket.no/fakta/' + result.stedsnummer}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
                       {' '}
                       {result.stedsnummer}
                     </a>

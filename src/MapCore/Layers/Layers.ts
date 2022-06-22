@@ -1,6 +1,5 @@
 import { getTopLeft, getWidth } from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
-import Projection from 'ol/proj/Projection';
 import { TileWMS, WMTS } from 'ol/source';
 import { ITileLayer, IVector } from '../Models/config-model';
 import { wmtsTileGrid } from '../TileGrid/wmts';
@@ -9,27 +8,25 @@ import axios from 'axios';
 import GeoJSON from 'ol/format/GeoJSON';
 import OLVectorLayer from 'ol/layer/Vector';
 import Map from 'ol/Map';
-import { addProjection, get } from 'ol/proj';
-import { register } from 'ol/proj/proj4';
+import { get } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source';
-import proj4 from 'proj4';
+import { addCustomProj, loadCustomCrs } from '../../utils/projectionUtil';
 import { createStyle } from './Style';
-
 let map: Map;
 
-proj4.defs('EPSG:25833', '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
-register(proj4);
-
 const sProjection = 'EPSG:25833';
-const extent = {
-  'EPSG:3857': [-20037508.34, -20037508.34, 20037508.34, 20037508.34] as [number, number, number, number],
-  'EPSG:25833': [-2500000, 3500000, 3045984, 9045984] as [number, number, number, number],
-};
-const projection = new Projection({
-  code: sProjection,
-  extent: extent[sProjection],
-});
-addProjection(projection);
+loadCustomCrs();
+addCustomProj('EPSG:25832');
+const projection = addCustomProj('EPSG:25833', [-2500000, 3500000, 3045984, 9045984]);
+addCustomProj('EPSG:25834');
+addCustomProj('EPSG:25835');
+addCustomProj('EPSG:25836');
+addCustomProj('EPSG:32632');
+addCustomProj('EPSG:32633');
+addCustomProj('EPSG:32634');
+addCustomProj('EPSG:32635');
+addCustomProj('EPSG:32636');
+addCustomProj('EPSG:4258');
 
 const _getLayersWithGuid = function () {
   return map
