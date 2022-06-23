@@ -293,7 +293,6 @@ const PointInfo = () => {
         map: generateMapLinkServiceUrl(emergencyMapConfig),
       };
       const url = replaceNorwegianChars(generateEmergencyPosterServiceUrl(emergencyPosterConfig));
-      console.log(emergencyPosterConfig);
       window.open(url, '_blank');
     }
   };
