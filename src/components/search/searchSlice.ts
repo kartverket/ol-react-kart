@@ -5,11 +5,13 @@ import { IAdresser, ISsr } from './search-model';
 export interface ISearch {
   ssr: ISsr;
   adresser: IAdresser;
+  matrikkel: IAdresser;
 }
 
 const initialState: ISearch = {
   ssr: {},
   adresser: {},
+  matrikkel: {},
 };
 
 export const searchSlice = createSlice({
@@ -22,10 +24,13 @@ export const searchSlice = createSlice({
     setAdresseResult: (state, action: PayloadAction<IAdresser>) => {
       state.adresser = action.payload;
     },
+    setMatrikkelResult: (state, action: PayloadAction<IAdresser>) => {
+      state.matrikkel = action.payload;
+    }
   },
 });
 
-export const { setSsrResult, setAdresseResult } = searchSlice.actions;
+export const { setSsrResult, setAdresseResult, setMatrikkelResult } = searchSlice.actions;
 
 //selectors
 export const selectSearch = (state: RootState) => {

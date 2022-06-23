@@ -78,7 +78,9 @@ export const generateSearchMatrikkelVegUrl = (query: string | number | boolean) 
 };
 
 export const generateSearchMatrikkelAdresseUrl = (query: string | number | boolean) => {
-  return `${urlGeonorge}norgeskart/v1/matrikkel/adr/${encodeURIComponent(query)}`;
+  query = typeof query === 'string' ? query : '';
+  query = query.indexOf(',') !== -1 ? query.replace(',', '*') : query + '';
+  return `${urlAdresseSok}?sok=${encodeURIComponent(query)}&treffPerSide=10`;
 };
 
 export const generateSearchStedsnavnUrl = (query: string, side: number, antall: number) => {
@@ -147,6 +149,9 @@ export const generateKoordTransUrl = (ost, nord, resSosiKoordSys, sosiKoordSys) 
 */
 // Nytt transform API https://ws.geonorge.no/transformering/v1/
 export const generateKoordTransUrl = (x: number, y: number, tilEPSG: string, fraESPG: string) => {
+  if (typeof fraESPG === 'string') {
+    fraESPG = fraESPG.indexOf(':') !== -1 ? fraESPG.split(':')[1] : fraESPG;
+  }
   return `${urlGeonorge}transformering/v1/transformer?x=${x}&y=${y}&fra=${fraESPG}&til=${tilEPSG}`;
 };
 export const generateProjeksjonerUrl = () => {
