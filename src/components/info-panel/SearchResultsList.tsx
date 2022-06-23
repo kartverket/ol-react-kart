@@ -11,6 +11,7 @@ const SearchResultsList = () => {
   const dispatch = useEventDispatch();
   const [expandedAdress, setStateAdress] = useState(false);
   const [expandedSsr, setStateSsr] = useState(false);
+  const [expandedMatrikkel, setStateMatrikkel] = useState(false);
 
   return (
     <>
@@ -26,7 +27,7 @@ const SearchResultsList = () => {
                 <li
                   key={index}
                   className="list-group-item pt-2 pb-2"
-                  onClick={() => dispatch(setCenter(result.representasjonspunkt))}
+                  onClick={() => dispatch(setCenter({ lon: result.representasjonspunkt.øst, lat: result.representasjonspunkt.nord, epsg: result.representasjonspunkt.koordsys }))}
                 >
                   <span>
                     {result.skrivemåte}, {result.navneobjekttype}{' '}
@@ -47,6 +48,31 @@ const SearchResultsList = () => {
           {searchResult.adresser ? (
             <ul className="list-group list-group-flush scrollarea">
               {searchResult?.adresser?.adresser?.map((result, index) => (
+                <li
+                  key={index}
+                  className="list-group-item pt-2 pb-2"
+                  onClick={() => dispatch(setCenter(result.representasjonspunkt))}
+                >
+                  <span>
+                    Adresse {result.adressetekst}, {result.objtype}{' '}
+                    {result.kommunenavn ? 'i ' + result.kommunenavn : null}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      </div>
+
+      <div>
+        <div onClick={() => setStateMatrikkel(!expandedMatrikkel)} className={style.expandBtn}>
+          <span className={style.ellipsisToggle}>Eiendom</span>
+          <FontAwesomeIcon icon={expandedMatrikkel ? faAngleUp : faAngleDown} />
+        </div>
+        <div className={expandedMatrikkel ? `${style.selected} ${style.open}` : style.selected}>
+          {searchResult.matrikkel ? (
+            <ul className="list-group list-group-flush scrollarea">
+              {searchResult?.matrikkel?.adresser?.map((result, index) => (
                 <li
                   key={index}
                   className="list-group-item pt-2 pb-2"

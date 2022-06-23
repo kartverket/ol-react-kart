@@ -6,8 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useEventDispatch } from '../../index';
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
-import { generateAdresseSokUrl, generateSearchStedsnavnUrl } from '../../utils/n3api';
-import { setAdresseResult, setSsrResult } from '../search/searchSlice';
+import { generateAdresseSokUrl, generateSearchStedsnavnUrl, generateSearchMatrikkelAdresseUrl } from '../../utils/n3api';
+import { setAdresseResult, setSsrResult, setMatrikkelResult } from '../search/searchSlice';
 import { IAdresser, ISsr } from './search-model';
 
 function Search() {
@@ -22,13 +22,16 @@ function Search() {
       const antall = 15;
       const searchStedsnavnUrl = generateSearchStedsnavnUrl(query, side, antall);
       const searchAdresseUrl = generateAdresseSokUrl(query);
+      const searchMatrikkelAdresseUrl = generateSearchMatrikkelAdresseUrl(query);
 
-      Promise.all([axios.get(searchStedsnavnUrl), axios.get(searchAdresseUrl)]).then(responses => {
-        const [url1rest, url2resp] = responses;
+      Promise.all([axios.get(searchStedsnavnUrl), axios.get(searchAdresseUrl), axios.get(searchMatrikkelAdresseUrl)]).then(responses => {
+        const [url1rest, url2resp, url3resp] = responses;
         const s: ISsr = url1rest.data;
         const a: IAdresser = url2resp.data;
+        const m: IAdresser = url3resp.data;
         appDispatch(setSsrResult(s));
         appDispatch(setAdresseResult(a));
+        appDispatch(setMatrikkelResult(m));
       });
     }
   }, [query, appDispatch]);

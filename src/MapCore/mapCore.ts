@@ -44,7 +44,7 @@ const MapApi = function () {
   useEffect(() => {
     if (center) {
       const projectProjection = myMap.getView().getProjection().getCode().replace(/.*:/, '');
-      const transUrl = generateKoordTransUrl(center.øst, center.nord, projectProjection, center.koordsys.toString());
+      const transUrl = generateKoordTransUrl(center.lon, center.lat, projectProjection, center.epsg);
       axios.get(transUrl).then(function (response) {
         const transformedCoordinate = response.data;
         myMap.getView().setCenter([transformedCoordinate.x, transformedCoordinate.y]);

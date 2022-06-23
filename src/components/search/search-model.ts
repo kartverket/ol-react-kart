@@ -1,7 +1,12 @@
 export type RepresentasjonsPunkt = {
-  koordsys: number;
-  nord: number;
+  epsg: string;
+  lon: number;
+  lat: number;
+};
+export type RepresentasjonsPunktNorsk = {
+  koordsys: string;
   øst: number;
+  nord: number;
 };
 
 type Fylke = { fylkesnavn: string; fylkesnummer: string };
@@ -17,7 +22,7 @@ export interface StedsNavnSubset {
 export interface StedsNavnPunkt {
   meterFraPunkt?: number;
   navneobjekttype?: string;
-  representasjonspunkt: RepresentasjonsPunkt;
+  representasjonspunkt: RepresentasjonsPunktNorsk;
   stedsnavn?: StedsNavnSubset[];
   stedsnummer?: number;
   stedstatus?: string;
@@ -31,7 +36,7 @@ export interface StedsNavn {
   navneobjekttype: string;
   stedsnummer: number;
   stedstatus: string;
-  representasjonspunkt: RepresentasjonsPunkt;
+  representasjonspunkt: RepresentasjonsPunktNorsk;
   fylker: Fylke;
   kommuner: Kommune[];
 }
