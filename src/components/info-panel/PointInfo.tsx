@@ -227,12 +227,31 @@ const PointInfo = () => {
       localProj: localProj,
     };
   };
+  const replaceNorwegianChars = (emergencyPosterServiceUrl: string) => {
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C2%B0/g, '%B0'); // °
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%A6/g, '%E6'); // æ
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%B8/g, '%F8'); // ø
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%A5/g, '%E5'); // å
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%86/g, '%C6'); // Æ
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%98/g, '%D8'); // Ø
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%85/g, '%C5'); // Å
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%A9/g, '%E9'); // é
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%89/g, '%C9'); // É
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%84/g, '%C4'); // Ä
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%A4/g, '%E4'); // ä
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%96/g, '%D6'); // Ö
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%B6/g, '%F6'); // ö
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%9C/g, '%DC'); // Ü
+    emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%BC/g, '%FC'); // ü
+    return emergencyPosterServiceUrl;
+  };
+
   const downloadEmergencyPoster = (e: React.FormEvent) => {
     e.preventDefault();
     if (clickCoordinates && clickCoordinates.coordinate && clickCoordinates.center && clickCoordinates.extent) {
-      const UTM = getUTMZoneFromGeographicPoint(clickCoordinates.coordinate[0], clickCoordinates.coordinate[1]);
-      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.localProj);
       const googleCoordinates = transform(clickCoordinates.coordinate, clickCoordinates.epsg, 'EPSG:4326');
+      const UTM = getUTMZoneFromGeographicPoint(googleCoordinates[0], googleCoordinates[1]);
+      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.localProj);
       const pixels = {
         width: 1145,
         height: 660,
@@ -268,12 +287,12 @@ const PointInfo = () => {
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
         place: nodplakatStedsnavnRef.current ? nodplakatStedsnavnRef.current.value : '',
-        matrikkel: emergencyPointInfo.matrikkelnr,
-        utm: 'Sone ' + UTM.sone + ' Ø ' + localUTMPoint[0] + ' N ' + localUTMPoint[1],
-        posDez: 'N' + googleCoordinates[1] + '° - Ø' + googleCoordinates[0] + '°',
+        matrikkel: emergencyPointInfo.matrikkelnr + ' i ' + emergencyPointInfo.kommune,
+        utm: 'Sone ' + UTM.sone + ' Ø ' + Math.round(localUTMPoint[0]) + ' N ' + Math.round(localUTMPoint[1]),
+        posDez: 'N' + googleCoordinates[1].toPrecision(6) + '° - Ø' + googleCoordinates[0].toPrecision(6) + '°',
         map: generateMapLinkServiceUrl(emergencyMapConfig),
       };
-      const url = generateEmergencyPosterServiceUrl(emergencyPosterConfig);
+      const url = replaceNorwegianChars(generateEmergencyPosterServiceUrl(emergencyPosterConfig));
       console.log(emergencyPosterConfig);
       window.open(url, '_blank');
     }
@@ -474,24 +493,24 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
             <form id="form" onSubmit={downloadEmergencyPoster}>
-              <label className="small">
-                {' '}
-                {t('GiPunktetNavn')}
+              <div className="mb-2">
+                <label className="small" htmlFor="nodplakatName"> {t('GiPunktetNavn')}</label>
                 <input
+                  id="nodplakatName"
                   type="text"
                   ref={nodplakatNameRef}
-                  className="form-control"
+                  className="form-control form-control-sm"
                   value={nodplakatName}
                   onChange={e => setNodplakatName(e.target.value)}
                 />
-              </label>
-              <label className="small">
-                {' '}
-                {t('PlaceIs')}
+              </div>
+              <div className="mb-2">
+                <label className="small" htmlFor="nodplakatStedsnavn"> {t('PlaceIs')}</label>
                 {stedsnavn.navn ? (
                   <select
+                    id="nodplakatStedsnavn"
                     ref={nodplakatStedsnavnRef}
-                    className="form-select"
+                    className="form-select form-control-sm"
                     onChange={e => setNodplakatStedsnavn(e.target.value)}
                     value={nodplakatStedsnavn}
                   >
@@ -502,14 +521,14 @@ const PointInfo = () => {
                     ))}
                   </select>
                 ) : null}
-              </label>
-              <label className="small">
-                {' '}
-                {t('FoundRoadIs')}
+              </div>
+              <div className="mb-2">
+                <label className="small" htmlFor="nodplakatVeg"> {t('FoundRoadIs')}</label>
                 {emergencyPointInfo ? (
                   <select
+                    id="nodplakatVeg"
                     ref={nodplakatVegRef}
-                    className="form-select"
+                    className="form-select form-control-sm"
                     onChange={e => setNodplakatVeg(e.target.value)}
                     value={nodplakatVeg}
                   >
@@ -520,9 +539,8 @@ const PointInfo = () => {
                     ))}
                   </select>
                 ) : null}
-              </label>
-
-              <div className="small">
+              </div>
+              <div className="mb-4">
                 {t('In')} {emergencyPointInfo.kommune} {t('Municipality')}
               </div>
               <button className="btn btn-primary" type="submit">
