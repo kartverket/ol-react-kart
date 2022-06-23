@@ -307,7 +307,6 @@ const PointInfo = () => {
               {elevation.punkter[0].z} {t('MetersAboveSeaLevel')}
             </span>
             <span className="text-lowercase small">
-              {' '}
               ({elevation.punkter[0]?.terreng?.replace(/(.+?)([A-Z])/g, '$1 $2')})
             </span>
           </>
@@ -424,12 +423,12 @@ const PointInfo = () => {
               </select>
               <div className="container mt-3">
                 <div className="row">
-                  <div className='col-4'>{t('koord_nord')}</div>
-                  <div className='col-8'>{coordinates[1]}</div>
+                  <div className="col-4">{t('koord_nord')}</div>
+                  <div className="col-8">{coordinates[1]}</div>
                 </div>
                 <div className="row">
-                  <div className='col-4'>{t('koord_ost')}:</div>
-                  <div className='col-8'>{coordinates[0]}</div>
+                  <div className="col-4">{t('koord_ost')}:</div>
+                  <div className="col-8">{coordinates[0]}</div>
                 </div>
               </div>
             </div>
@@ -497,7 +496,9 @@ const PointInfo = () => {
           <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
             <form id="form" onSubmit={downloadEmergencyPoster}>
               <div className="mb-2">
-                <label className="small" htmlFor="nodplakatName"> {t('GiPunktetNavn')}</label>
+                <label className="small" htmlFor="nodplakatName">
+                  {t('GiPunktetNavn')}
+                </label>
                 <input
                   id="nodplakatName"
                   type="text"
@@ -508,7 +509,9 @@ const PointInfo = () => {
                 />
               </div>
               <div className="mb-2">
-                <label className="small" htmlFor="nodplakatStedsnavn"> {t('PlaceIs')}</label>
+                <label className="small" htmlFor="nodplakatStedsnavn">
+                  {t('PlaceIs')}
+                </label>
                 {stedsnavn.navn ? (
                   <select
                     id="nodplakatStedsnavn"
@@ -526,7 +529,9 @@ const PointInfo = () => {
                 ) : null}
               </div>
               <div className="mb-2">
-                <label className="small" htmlFor="nodplakatVeg"> {t('FoundRoadIs')}</label>
+                <label className="small" htmlFor="nodplakatVeg">
+                  {t('FoundRoadIs')}
+                </label>
                 {emergencyPointInfo ? (
                   <select
                     id="nodplakatVeg"
@@ -586,34 +591,34 @@ const PointInfo = () => {
           <div>
             <div className="container margin-bottom">
               <div className="row bg-light">
-                <div className='col-4'>Kommunenr:</div>
-                <div className='col-8'>{matrikkel.KOMMUNENR}</div>
+                <div className="col-4">Kommunenr:</div>
+                <div className="col-8">{matrikkel.KOMMUNENR}</div>
               </div>
               <div className="row">
-                <div className='col-4'>Gårdsnr:</div>
-                <div className='col-8'>{matrikkel.GARDSNR}</div>
+                <div className="col-4">Gårdsnr:</div>
+                <div className="col-8">{matrikkel.GARDSNR}</div>
               </div>
               <div className="row bg-light">
-                <div className='col-4'>Bruksnr:</div>
-                <div className='col-8'>{matrikkel.BRUKSNR}</div>
+                <div className="col-4">Bruksnr:</div>
+                <div className="col-8">{matrikkel.BRUKSNR}</div>
               </div>
               <div className="row">
-                <div className='col-4'>Festenr:</div>
-                <div className='col-8'>{matrikkel.FESTENR}</div>
+                <div className="col-4">Festenr:</div>
+                <div className="col-8">{matrikkel.FESTENR}</div>
               </div>
               <div className="row bg-light">
-                <div className='col-4'>Type:</div>
-                <div className='col-8'>{matrikkel.EIENDOMSTYPE}</div>
+                <div className="col-4">Type:</div>
+                <div className="col-8">{matrikkel.EIENDOMSTYPE}</div>
               </div>
               <div className="row mt-3">
                 <a
-                href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t('showMoreInformation')}
-                  </a>
-                </div>
+                  href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('showMoreInformation')}
+                </a>
+              </div>
             </div>
           </div>
         ) : (
@@ -643,7 +648,6 @@ const PointInfo = () => {
                   <div className="text-muted">
                     {t('Stedsnummer')}:{' '}
                     <a href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
-                      {' '}
                       {result.stedsnummer}
                     </a>
                   </div>
