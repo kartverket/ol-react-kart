@@ -133,7 +133,7 @@ export const generateSeEiendomUrl = (knr: string, gnr: string, bnr: string, fnr:
   return `${urlSeEiendom}eiendom/${knr}/${gnr}/${bnr}/${fnr}/${snr}`;
 };
 
-export const generateFaktaarkUrl = (stedsnummer: string) => {
+export const generateFaktaarkUrl = (stedsnummer?: number) => {
   return urlFaktaark + stedsnummer;
 };
 
@@ -164,11 +164,11 @@ export const generateLagFargeleggingskartUrl = () => {
   return `${urlGeonorge}norgeskart/nkprint/fargelegg`;
 };
 
-export const generateEmergencyPosterPointUrl = (lat: string, lon: string) => {
+export const generateEmergencyPosterPointUrl = (lat: number, lon: number) => {
   return `${urlGeonorge}norgeskart/emergencyPoster/${lon}/${lat}`;
 };
 
-export const generateEmergencyPosterPreviewImageUrl = (minx: string, miny: string, maxx: string, maxy: string) => {
+export const generateEmergencyPosterPreviewImageUrl = (minx: number, miny: number, maxx: number, maxy: number) => {
   const topo4 =
     'wms.topo4?service=WMS&request=GetMap&CRS=EPSG:32633&FORMAT=image%2Fjpeg&BGCOLOR=0xFFFFFF&TRANSPARENT=false&LAYERS=topo4_WMS&VERSION=1.3.0&WIDTH=';
   return `${urlOpenWms}${topo4}${window.innerWidth}&HEIGHT=${window.innerHeight}&BBOX=${minx},${miny},${maxx},${maxy}`;
@@ -634,4 +634,18 @@ export const generateStatusPrintDownloadUrl = (statusUrl: string) => {
 };
 export const generateCancelPrintUrl = (refNum: string) => {
   return urlGeonorge + 'print/cancel/' + refNum;
+};
+export const toDms = (value: string) => {
+  const deg = parseInt(value, 10);
+  const min = parseInt(((parseFloat(value) - deg) * 60).toString(), 10);
+  const sec = parseInt(((parseFloat(value) - deg - min / 60) * 3600).toString(), 10);
+  //return `${deg}° ${zerofill(min)}' ${zerofill(parseInt(sec.toFixed(2), 10))}''`;
+  return {
+    degrees: deg,
+    minutes: min,
+    seconds: sec,
+  };
+};
+export const zerofill = (value: number) => {
+  return value < 10 ? `0${value}` : value;
 };

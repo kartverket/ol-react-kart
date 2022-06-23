@@ -24,6 +24,8 @@ export const GetClickCoordinates = function () {
                   zoom: evt.map.getView().getZoom(),
                   epsg: evt.map.getView().getProjection().getCode(),
                   coordinate: evt.coordinate,
+                  center: evt.map.getView().getCenter(),
+                  extent: evt.map.getView().calculateExtent(map.getSize()),
                 }),
               );
             }

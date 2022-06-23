@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Coordinate } from 'ol/coordinate';
+import { Extent } from 'ol/extent';
 import { EventStoreState } from './Event/eventStore';
 
 export interface IMapClickInfo {
@@ -8,6 +9,8 @@ export interface IMapClickInfo {
   coordinate?: Coordinate;
   type?: string;
   dragging?: boolean;
+  center?: Coordinate;
+  extent?: Extent;
 }
 
 const initialState: IMapClickInfo = {};
@@ -18,6 +21,10 @@ export const getClickCoordinatesSlice = createSlice({
   reducers: {
     setClickCoordinates: (state, action: PayloadAction<IMapClickInfo>) => {
       state.coordinate = action.payload.coordinate;
+      state.epsg = action.payload.epsg;
+      state.zoom = action.payload.zoom;
+      state.center = action.payload.center;
+      state.extent = action.payload.extent;
     },
   },
 });
