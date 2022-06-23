@@ -415,19 +415,23 @@ const PointInfo = () => {
           {projeksjoner && coordinates ? (
             <div>
               <span className="small"> {t('koord_info')}</span>
-              <select className="form-select" onChange={e => handleTransform(e)} value={projection}>
+              <select className="form-select form-select-sm" onChange={e => handleTransform(e)} value={projection}>
                 {projeksjoner.map((result, index) => (
                   <option value={result.epsg} key={index}>
                     {result.name}
                   </option>
                 ))}
               </select>
-              <dl className="">
-                <dt>{t('koord_nord')}</dt>
-                <dd>{coordinates[1]}</dd>
-                <dt>{t('koord_ost')}:</dt>
-                <dd>{coordinates[0]}</dd>
-              </dl>
+              <div className="container mt-3">
+                <div className="row">
+                  <div className='col-4'>{t('koord_nord')}</div>
+                  <div className='col-8'>{coordinates[1]}</div>
+                </div>
+                <div className="row">
+                  <div className='col-4'>{t('koord_ost')}:</div>
+                  <div className='col-8'>{coordinates[0]}</div>
+                </div>
+              </div>
             </div>
           ) : null}
         </div>
@@ -509,7 +513,7 @@ const PointInfo = () => {
                   <select
                     id="nodplakatStedsnavn"
                     ref={nodplakatStedsnavnRef}
-                    className="form-select form-control-sm"
+                    className="form-select"
                     onChange={e => setNodplakatStedsnavn(e.target.value)}
                     value={nodplakatStedsnavn}
                   >
@@ -527,7 +531,7 @@ const PointInfo = () => {
                   <select
                     id="nodplakatVeg"
                     ref={nodplakatVegRef}
-                    className="form-select form-control-sm"
+                    className="form-select"
                     onChange={e => setNodplakatVeg(e.target.value)}
                     value={nodplakatVeg}
                   >
@@ -580,25 +584,37 @@ const PointInfo = () => {
         </div>
         {matrikkel && matrikkel.GARDSNR ? (
           <div>
-            <dl className="margin-bottom">
-              <dt>Kommunenr:</dt>
-              <dd>{matrikkel.KOMMUNENR}</dd>
-              <dt>Gårdsnr:</dt>
-              <dd>{matrikkel.GARDSNR}</dd>
-              <dt>Bruksnr:</dt>
-              <dd>{matrikkel.BRUKSNR}</dd>
-              <dt>Festenr:</dt>
-              <dd>{matrikkel.FESTENR}</dd>
-              <dt>Type:</dt>
-              <dd>{matrikkel.EIENDOMSTYPE}</dd>
-            </dl>
-            <a
-              href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t('showMoreInformation')}
-            </a>
+            <div className="container margin-bottom">
+              <div className="row bg-light">
+                <div className='col-4'>Kommunenr:</div>
+                <div className='col-8'>{matrikkel.KOMMUNENR}</div>
+              </div>
+              <div className="row">
+                <div className='col-4'>Gårdsnr:</div>
+                <div className='col-8'>{matrikkel.GARDSNR}</div>
+              </div>
+              <div className="row bg-light">
+                <div className='col-4'>Bruksnr:</div>
+                <div className='col-8'>{matrikkel.BRUKSNR}</div>
+              </div>
+              <div className="row">
+                <div className='col-4'>Festenr:</div>
+                <div className='col-8'>{matrikkel.FESTENR}</div>
+              </div>
+              <div className="row bg-light">
+                <div className='col-4'>Type:</div>
+                <div className='col-8'>{matrikkel.EIENDOMSTYPE}</div>
+              </div>
+              <div className="row mt-3">
+                <a
+                href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t('showMoreInformation')}
+                  </a>
+                </div>
+            </div>
           </div>
         ) : (
           <div>{t('noMatrikkel')}</div>
