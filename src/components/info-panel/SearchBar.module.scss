@@ -13,7 +13,7 @@
   }
 }
 :local(.ellipsisToggle) {
-  width: 90%;
+  width: 85%;
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block;
@@ -23,8 +23,6 @@
   white-space: nowrap;
 }
 :local(.expandBtn) {
-  margin-bottom: 10px;
-
   &:hover {
     cursor: pointer;
   }

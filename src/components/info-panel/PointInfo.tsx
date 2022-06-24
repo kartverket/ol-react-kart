@@ -1,4 +1,4 @@
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faHome, faFlag, faMapMarker, faBlind, faPaintbrush, faAmbulance } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
@@ -323,7 +323,7 @@ const PointInfo = () => {
 
         <p className="fs-5 mt-3 ms-2">{t('hva_vil_du_gjore')}</p>
         <div className="d-flex flex-column">
-          <div className="p-2 bg-light w-100 mb-2">
+          <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
                 setShowMatrikkel(!showMatrikkel);
@@ -331,11 +331,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
+              <FontAwesomeIcon icon={faHome} className="me-2"/>
               <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
               <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
             </div>
           </div>
-          <div className="p-2 bg-light w-100 mb-2">
+          <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
                 setShowStedsnavn(!showStedsnavn);
@@ -343,11 +344,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
+              <FontAwesomeIcon icon={faFlag} className="me-2"/>
               <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
               <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
             </div>
           </div>
-          <div className="p-2 bg-light w-100 mb-2">
+          <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
                 setShowCoordinates(!showCoordinates);
@@ -355,11 +357,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
+              <FontAwesomeIcon icon={faMapMarker} className="me-2"/>
               <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
               <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
             </div>
           </div>
-          <div className="p-2 bg-light w-100 mb-2">
+          <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
                 setShowTurkart(!showTurkart);
@@ -367,11 +370,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
+              <FontAwesomeIcon icon={faBlind} className="me-2"/>
               <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
               <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
             </div>
           </div>
-          <div className="p-2 bg-light w-100 mb-2">
+          <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
                 setShowFargeleggingskart(!showFargeleggingskart);
@@ -379,11 +383,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
+              <FontAwesomeIcon icon={faPaintbrush} className="me-2"/>
               <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
               <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
             </div>
           </div>
-          <div className="p-2 bg-light w-100 mb-2">
+          <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
                 setShowNodplakat(!showNodplakat);
@@ -392,6 +397,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
+              <FontAwesomeIcon icon={faAmbulance} className="me-2"/>
               <span className={style.ellipsisToggle}>{t('lagNodplakat')}</span>
               <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
             </div>
@@ -400,7 +406,7 @@ const PointInfo = () => {
       </div>
       {/* Koordinater */}
       <div className={showCoordinates ? `${style.selected} ${style.open}` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowCoordinates(!showCoordinates);
@@ -408,6 +414,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
+            <FontAwesomeIcon icon={faMapMarker} className="me-2"/>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
             <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
           </div>
@@ -437,7 +444,7 @@ const PointInfo = () => {
       </div>
       {/* Turkart */}
       <div className={showTurkart ? `${style.selected} ${style.open}` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowTurkart(!showTurkart);
@@ -445,6 +452,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
+            <FontAwesomeIcon icon={faBlind} className="me-2"/>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
             <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
           </div>
@@ -452,7 +460,7 @@ const PointInfo = () => {
       </div>
       {/* Fargeleggingskart */}
       <div className={showFargeleggingskart ? `${style.selected} ${style.open}` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowFargeleggingskart(!showFargeleggingskart);
@@ -460,6 +468,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
+            <FontAwesomeIcon icon={faPaintbrush} className="me-2"/>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
             <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
           </div>
@@ -467,7 +476,7 @@ const PointInfo = () => {
       </div>
       {/* Nodplakat */}
       <div className={showNodplakat ? `${style.selected} ${style.open}` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowNodplakat(!showNodplakat);
@@ -475,6 +484,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
+            <FontAwesomeIcon icon={faAmbulance} className="me-2"/>
             <span className={style.ellipsisToggle}>{t('Nodplakat')}</span>
             <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
           </div>
@@ -560,7 +570,7 @@ const PointInfo = () => {
       </div>
       {/* GetFeatureInfo */}
       <div className={showGetFeatureInfo ? `${style.selected} ${style.open}` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowGetFeatureInfo(!showGetFeatureInfo);
@@ -575,7 +585,7 @@ const PointInfo = () => {
       </div>
       {/* Eiendomsinformasjon */}
       <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowMatrikkel(!showMatrikkel);
@@ -583,6 +593,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
+            <FontAwesomeIcon icon={faHome} className="me-2"/>
             <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
             <FontAwesomeIcon icon={showMatrikkel ? faAngleUp : faAngleDown} />
           </div>
@@ -627,7 +638,7 @@ const PointInfo = () => {
       </div>
       {/* Stedsnavn */}
       <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
-        <div className="p-2 bg-light w-100 mb-2">
+        <div className="p-2 bg-light mb-2">
           <div
             onClick={() => {
               setShowStedsnavn(!showStedsnavn);
@@ -635,6 +646,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
+            <FontAwesomeIcon icon={faFlag} className="me-2"/>
             <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
             <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
           </div>
