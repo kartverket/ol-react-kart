@@ -6,12 +6,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useEventDispatch } from '../../index';
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
-import {
-  generateAdresseSokUrl,
-  generateSearchMatrikkelAdresseUrl,
-  generateSearchStedsnavnUrl,
-} from '../../utils/n3api';
-import { setAdresseResult, setMatrikkelResult, setSsrResult } from '../search/searchSlice';
+import { generateAdresseSokUrl, generateSearchStedsnavnUrl, generateSearchMatrikkelAdresseUrl } from '../../utils/n3api';
+import { setAdresseResult, setSsrResult, setMatrikkelResult } from '../search/searchSlice';
 import { IAdresser, ISsr } from './search-model';
 
 function Search() {
@@ -28,11 +24,7 @@ function Search() {
       const searchAdresseUrl = generateAdresseSokUrl(query);
       const searchMatrikkelAdresseUrl = generateSearchMatrikkelAdresseUrl(query);
 
-      Promise.all([
-        axios.get(searchStedsnavnUrl),
-        axios.get(searchAdresseUrl),
-        axios.get(searchMatrikkelAdresseUrl),
-      ]).then(responses => {
+      Promise.all([axios.get(searchStedsnavnUrl), axios.get(searchAdresseUrl), axios.get(searchMatrikkelAdresseUrl)]).then(responses => {
         const [url1rest, url2resp, url3resp] = responses;
         const s: ISsr = url1rest.data;
         const a: IAdresser = url2resp.data;

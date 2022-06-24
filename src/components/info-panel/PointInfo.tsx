@@ -423,12 +423,12 @@ const PointInfo = () => {
               </select>
               <div className="container mt-3">
                 <div className="row">
-                  <div className="col-4">{t('koord_nord')}</div>
-                  <div className="col-8">{coordinates[1]}</div>
+                  <div className='col-4'>{t('koord_nord')}</div>
+                  <div className='col-8'>{coordinates[1]}</div>
                 </div>
                 <div className="row">
-                  <div className="col-4">{t('koord_ost')}:</div>
-                  <div className="col-8">{coordinates[0]}</div>
+                  <div className='col-4'>{t('koord_ost')}:</div>
+                  <div className='col-8'>{coordinates[0]}</div>
                 </div>
               </div>
             </div>
@@ -591,34 +591,34 @@ const PointInfo = () => {
           <div>
             <div className="container margin-bottom">
               <div className="row bg-light">
-                <div className="col-4">Kommunenr:</div>
-                <div className="col-8">{matrikkel.KOMMUNENR}</div>
+                <div className='col-4'>Kommunenr:</div>
+                <div className='col-8'>{matrikkel.KOMMUNENR}</div>
               </div>
               <div className="row">
-                <div className="col-4">Gårdsnr:</div>
-                <div className="col-8">{matrikkel.GARDSNR}</div>
+                <div className='col-4'>Gårdsnr:</div>
+                <div className='col-8'>{matrikkel.GARDSNR}</div>
               </div>
               <div className="row bg-light">
-                <div className="col-4">Bruksnr:</div>
-                <div className="col-8">{matrikkel.BRUKSNR}</div>
+                <div className='col-4'>Bruksnr:</div>
+                <div className='col-8'>{matrikkel.BRUKSNR}</div>
               </div>
               <div className="row">
-                <div className="col-4">Festenr:</div>
-                <div className="col-8">{matrikkel.FESTENR}</div>
+                <div className='col-4'>Festenr:</div>
+                <div className='col-8'>{matrikkel.FESTENR}</div>
               </div>
               <div className="row bg-light">
-                <div className="col-4">Type:</div>
-                <div className="col-8">{matrikkel.EIENDOMSTYPE}</div>
+                <div className='col-4'>Type:</div>
+                <div className='col-8'>{matrikkel.EIENDOMSTYPE}</div>
               </div>
               <div className="row mt-3">
                 <a
-                  href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {t('showMoreInformation')}
-                </a>
-              </div>
+                href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t('showMoreInformation')}
+                  </a>
+                </div>
             </div>
           </div>
         ) : (

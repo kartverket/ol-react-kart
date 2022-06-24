@@ -29,15 +29,7 @@ const SearchResultsList = () => {
                 <li
                   key={index}
                   className="list-group-item pt-2 pb-2"
-                  onClick={() =>
-                    dispatch(
-                      setCenter({
-                        lon: result.representasjonspunkt.øst,
-                        lat: result.representasjonspunkt.nord,
-                        epsg: result.representasjonspunkt.koordsys,
-                      }),
-                    )
-                  }
+                  onClick={() => dispatch(setCenter({ lon: result.representasjonspunkt.øst, lat: result.representasjonspunkt.nord, epsg: result.representasjonspunkt.koordsys }))}
                 >
                   <span>
                     {result.skrivemåte}, {result.navneobjekttype}{' '}
@@ -77,7 +69,7 @@ const SearchResultsList = () => {
 
       <div>
         <div onClick={() => setStateMatrikkel(!expandedMatrikkel)} className={style.expandBtn}>
-          <span className={style.ellipsisToggle}>{t('searchResult_cadastre')}</span>
+          <span className={style.ellipsisToggle}>Eiendom</span>
           <FontAwesomeIcon icon={expandedMatrikkel ? faAngleUp : faAngleDown} />
         </div>
         <div className={expandedMatrikkel ? `${style.selected} ${style.open}` : style.selected}>
