@@ -1,14 +1,12 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas, IconName } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../index';
 import { IProject, selectProjectsList, setActiveProject, showActiveProjectFromList } from './projectsListSlice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { IconName } from '@fortawesome/free-solid-svg-icons'
 
-library.add(fas)
-
+library.add(fas);
 
 const ProjectsList = () => {
   const { t } = useTranslation();

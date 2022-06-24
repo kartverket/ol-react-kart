@@ -1,4 +1,13 @@
-import { faAngleDown, faAngleUp, faHome, faFlag, faMapMarker, faBlind, faPaintbrush, faAmbulance } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAmbulance,
+  faAngleDown,
+  faAngleUp,
+  faBlind,
+  faFlag,
+  faHome,
+  faMapMarker,
+  faPaintbrush,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
@@ -331,7 +340,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faHome} className="me-2"/>
+              <FontAwesomeIcon icon={faHome} className="me-2" />
               <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
               <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
             </div>
@@ -344,7 +353,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faFlag} className="me-2"/>
+              <FontAwesomeIcon icon={faFlag} className="me-2" />
               <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
               <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
             </div>
@@ -357,7 +366,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faMapMarker} className="me-2"/>
+              <FontAwesomeIcon icon={faMapMarker} className="me-2" />
               <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
               <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
             </div>
@@ -370,7 +379,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faBlind} className="me-2"/>
+              <FontAwesomeIcon icon={faBlind} className="me-2" />
               <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
               <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
             </div>
@@ -383,7 +392,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faPaintbrush} className="me-2"/>
+              <FontAwesomeIcon icon={faPaintbrush} className="me-2" />
               <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
               <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
             </div>
@@ -397,7 +406,7 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faAmbulance} className="me-2"/>
+              <FontAwesomeIcon icon={faAmbulance} className="me-2" />
               <span className={style.ellipsisToggle}>{t('lagNodplakat')}</span>
               <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
             </div>
@@ -414,7 +423,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faMapMarker} className="me-2"/>
+            <FontAwesomeIcon icon={faMapMarker} className="me-2" />
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
             <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
           </div>
@@ -430,12 +439,12 @@ const PointInfo = () => {
               </select>
               <div className="container mt-3">
                 <div className="row">
-                  <div className='col-4'>{t('koord_nord')}</div>
-                  <div className='col-8'>{coordinates[1]}</div>
+                  <div className="col-4">{t('koord_nord')}</div>
+                  <div className="col-8">{coordinates[1]}</div>
                 </div>
                 <div className="row">
-                  <div className='col-4'>{t('koord_ost')}:</div>
-                  <div className='col-8'>{coordinates[0]}</div>
+                  <div className="col-4">{t('koord_ost')}:</div>
+                  <div className="col-8">{coordinates[0]}</div>
                 </div>
               </div>
             </div>
@@ -452,7 +461,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faBlind} className="me-2"/>
+            <FontAwesomeIcon icon={faBlind} className="me-2" />
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
             <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
           </div>
@@ -468,7 +477,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faPaintbrush} className="me-2"/>
+            <FontAwesomeIcon icon={faPaintbrush} className="me-2" />
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
             <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
           </div>
@@ -484,7 +493,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faAmbulance} className="me-2"/>
+            <FontAwesomeIcon icon={faAmbulance} className="me-2" />
             <span className={style.ellipsisToggle}>{t('Nodplakat')}</span>
             <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
           </div>
@@ -593,7 +602,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faHome} className="me-2"/>
+            <FontAwesomeIcon icon={faHome} className="me-2" />
             <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
             <FontAwesomeIcon icon={showMatrikkel ? faAngleUp : faAngleDown} />
           </div>
@@ -602,34 +611,34 @@ const PointInfo = () => {
           <div>
             <div className="container margin-bottom">
               <div className="row bg-light">
-                <div className='col-4'>Kommunenr:</div>
-                <div className='col-8'>{matrikkel.KOMMUNENR}</div>
+                <div className="col-4">Kommunenr:</div>
+                <div className="col-8">{matrikkel.KOMMUNENR}</div>
               </div>
               <div className="row">
-                <div className='col-4'>Gårdsnr:</div>
-                <div className='col-8'>{matrikkel.GARDSNR}</div>
+                <div className="col-4">Gårdsnr:</div>
+                <div className="col-8">{matrikkel.GARDSNR}</div>
               </div>
               <div className="row bg-light">
-                <div className='col-4'>Bruksnr:</div>
-                <div className='col-8'>{matrikkel.BRUKSNR}</div>
+                <div className="col-4">Bruksnr:</div>
+                <div className="col-8">{matrikkel.BRUKSNR}</div>
               </div>
               <div className="row">
-                <div className='col-4'>Festenr:</div>
-                <div className='col-8'>{matrikkel.FESTENR}</div>
+                <div className="col-4">Festenr:</div>
+                <div className="col-8">{matrikkel.FESTENR}</div>
               </div>
               <div className="row bg-light">
-                <div className='col-4'>Type:</div>
-                <div className='col-8'>{matrikkel.EIENDOMSTYPE}</div>
+                <div className="col-4">Type:</div>
+                <div className="col-8">{matrikkel.EIENDOMSTYPE}</div>
               </div>
               <div className="row mt-3">
                 <a
-                href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {t('showMoreInformation')}
-                  </a>
-                </div>
+                  href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('showMoreInformation')}
+                </a>
+              </div>
             </div>
           </div>
         ) : (
@@ -646,7 +655,7 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faFlag} className="me-2"/>
+            <FontAwesomeIcon icon={faFlag} className="me-2" />
             <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
             <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
           </div>
