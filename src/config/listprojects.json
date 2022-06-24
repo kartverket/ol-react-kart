@@ -2,43 +2,43 @@
   {
     "SiteTitle": "tilgjengelighet",
     "ProjectName": "Tilgjengelighet_title",
-    "HeaderIcon": "",
+    "HeaderIcon": "wheelchair",
     "HeaderTitle": "tilgjengelighet"
   },
   {
     "SiteTitle": "fastmerker",
     "ProjectName": "Fastmerker_title",
-    "HeaderIcon": "",
+    "HeaderIcon": "map-pin",
     "HeaderTitle": "fastmerker"
   },
   {
     "SiteTitle": "nrl",
     "ProjectName": "nrl",
-    "HeaderIcon": "",
+    "HeaderIcon": "plane",
     "HeaderTitle": "nrl"
   },
   {
     "SiteTitle": "norgeskart",
     "ProjectName": "norgeskart",
-    "HeaderIcon": "",
+    "HeaderIcon": "home",
     "HeaderTitle": "norgeskart"
   },
   {
     "SiteTitle": "ssr",
     "ProjectName": "ssr",
-    "HeaderIcon": "",
+    "HeaderIcon": "map-signs",
     "HeaderTitle": "ssr"
   },
   {
     "SiteTitle": "dekning",
     "ProjectName": "Dekning_title",
-    "HeaderIcon": "",
+    "HeaderIcon": "map",
     "HeaderTitle": "dekning"
   },
   {
     "SiteTitle": "vectortilesdemo",
     "ProjectName": "vectortilesdemo",
-    "HeaderIcon": "",
+    "HeaderIcon": "map",
     "HeaderTitle": "vectortilesdemo"
   }
 ]
