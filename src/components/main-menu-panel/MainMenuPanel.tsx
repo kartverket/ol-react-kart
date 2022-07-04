@@ -11,6 +11,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector, useEventSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import Contact from './../Contact';
+import Policy from '../Policy';
+import Faq from '../Faq';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
@@ -138,7 +141,20 @@ const MainMenuPanel = () => {
                 </div>
               ) : null}
             </div>
-            <div className="m-2 p-2">
+            <hr />
+            <div className="container">
+              <Faq />
+            </div>
+            <hr />
+            <div className="container">
+              <Contact />
+            </div>
+            <hr />
+            <div className="container">
+              <Policy />
+            </div>
+            <hr />
+            <div className="container">
               <LanguageSelector />
             </div>
           </div>
