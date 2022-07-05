@@ -1,5 +1,23 @@
 [
   {
+    "SiteTitle": "eiendom",
+    "ProjectName": "eiendom",
+    "HeaderIcon": "home",
+    "HeaderTitle": "eiendom"
+  },
+  {
+    "SiteTitle": "friluftsliv",
+    "ProjectName": "friluftsliv",
+    "HeaderIcon": "tree",
+    "HeaderTitle": "friluftsliv"
+  },
+  {
+    "SiteTitle": "ssr",
+    "ProjectName": "ssr",
+    "HeaderIcon": "map-signs",
+    "HeaderTitle": "ssr"
+  },
+  {
     "SiteTitle": "tilgjengelighet",
     "ProjectName": "Tilgjengelighet_title",
     "HeaderIcon": "wheelchair",
@@ -18,27 +36,27 @@
     "HeaderTitle": "nrl"
   },
   {
-    "SiteTitle": "norgeskart",
-    "ProjectName": "norgeskart",
-    "HeaderIcon": "home",
-    "HeaderTitle": "norgeskart"
-  },
-  {
-    "SiteTitle": "ssr",
-    "ProjectName": "ssr",
-    "HeaderIcon": "map-signs",
-    "HeaderTitle": "ssr"
-  },
-  {
     "SiteTitle": "dekning",
     "ProjectName": "Dekning_title",
     "HeaderIcon": "map",
     "HeaderTitle": "dekning"
   },
   {
+    "SiteTitle": "arbeidsgiveravgiftsoner",
+    "ProjectName": "arbeidsgiveravgiftsoner",
+    "HeaderIcon": "funnel-dollar",
+    "HeaderTitle": "arbeidsgiveravgiftsoner"
+  },
+  {
     "SiteTitle": "vectortilesdemo",
     "ProjectName": "vectortilesdemo",
     "HeaderIcon": "map",
     "HeaderTitle": "vectortilesdemo"
+  },
+  {
+    "SiteTitle": "nedlasting",
+    "ProjectName": "nedlasting",
+    "HeaderIcon": "map",
+    "HeaderTitle": "nedlasting"
   }
 ]
