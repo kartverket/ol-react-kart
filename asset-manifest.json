@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.deb1865c.css",
-    "main.js": "./static/js/main.4f3cdeef.js",
+    "main.css": "./static/css/main.0fbf07f5.css",
+    "main.js": "./static/js/main.d1c62420.js",
     "static/js/787.a2b71f40.chunk.js": "./static/js/787.a2b71f40.chunk.js",
     "static/media/raster.png": "./static/media/raster.0073bbebd0d91fd7a6a9.png",
     "static/media/aerial.png": "./static/media/aerial.414d4d9f5a775194201e.png",
@@ -10,12 +10,12 @@
     "static/media/KV_logo_staa.svg": "./static/media/KV_logo_staa.81d2c2bf97a0055e14ea.svg",
     "index.html": "./index.html",
     "static/media/location_on-24px.svg": "./static/media/location_on-24px.4e94ed966c8d9b325239.svg",
-    "main.deb1865c.css.map": "./static/css/main.deb1865c.css.map",
-    "main.4f3cdeef.js.map": "./static/js/main.4f3cdeef.js.map",
+    "main.0fbf07f5.css.map": "./static/css/main.0fbf07f5.css.map",
+    "main.d1c62420.js.map": "./static/js/main.d1c62420.js.map",
     "787.a2b71f40.chunk.js.map": "./static/js/787.a2b71f40.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.deb1865c.css",
-    "static/js/main.4f3cdeef.js"
+    "static/css/main.0fbf07f5.css",
+    "static/js/main.d1c62420.js"
   ]
 }
