@@ -17,7 +17,7 @@ const Legend = () => {
   return (
     <>
       <div className="container" onClick={() => toggleCollapseLegend()}>
-        <div className="d-flex ps-2 pe-2">
+        <div className="d-flex p-0">
           <span>{t('legend_txt')}</span>
           <div className="ms-auto ps-2 pe-2">
             {!collapsedLegend ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}

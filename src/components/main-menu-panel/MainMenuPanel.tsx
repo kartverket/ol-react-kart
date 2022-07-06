@@ -56,8 +56,8 @@ const MainMenuPanel = () => {
   };
 
   return (
-    <div id="mySidenav" className="sidenav" style={{ width: '0' }}>
-      <div id="sideMenuPosition" className="side-menu-position" style={{ width: '0' }}>
+    <div id="mySidenav" className="sidenav">
+      <div id="sideMenuPosition" className="side-menu-position">
         <div className="norgeskart-logo ps-2 pt-0 pe-0 pb-0 m-0">
           <div className="container p-0 mt-3">
             <div className="d-flex flex-row align-items-center">
@@ -77,10 +77,9 @@ const MainMenuPanel = () => {
             </div>
           </div>
         </div>
-        <hr />
         {!showActiveProject ? (
-          <div className="container">
-            <div className="d-flex" style={{ marginBottom: '12px' }} onClick={() => toggleBaseLayerPanel()}>
+          <div className="list-group-item list-group-item-action">
+            <div className="d-flex" onClick={() => toggleBaseLayerPanel()}>
               <div className="ps-2 pe-2">
                 <FontAwesomeIcon icon={faMap} />
               </div>
@@ -100,8 +99,8 @@ const MainMenuPanel = () => {
             </div>
           </div>
         ) : (
-          <div className="container">
-            <div className="d-flex" style={{ marginBottom: '12px' }} onClick={() => toggleShowActiveProject()}>
+          <div className="list-group-item list-group-item-action">
+            <div className="d-flex" onClick={() => toggleShowActiveProject()}>
               <div className="ps-2 pe-2">
                 <FontAwesomeIcon icon={faTree} />
               </div>
@@ -114,13 +113,12 @@ const MainMenuPanel = () => {
             </div>
           </div>
         )}
-        <hr />
         {showBaseLayersList ? <MainMenuBaseLayerPanel /> : null}
         {showActiveProject ? <MainMenuPanelProjectLayers /> : null}
         {!showBaseLayersList && !showActiveProject ? (
-          <div>
-            <div className="container">
-              <div className="d-flex" style={{ marginBottom: '12px' }} onClick={() => toggleThematicMap()}>
+          <>
+            <div className="list-group-item list-group-item-action">
+              <div className="d-flex" onClick={() => toggleThematicMap()}>
                 <div className="ps-2 pe-2">
                   <FontAwesomeIcon icon={faMap} />
                 </div>
@@ -141,23 +139,19 @@ const MainMenuPanel = () => {
                 </div>
               ) : null}
             </div>
-            <hr />
-            <div className="container">
+            <div className="list-group-item list-group-item-action">
               <Faq />
             </div>
-            <hr />
-            <div className="container">
+            <div className="list-group-item list-group-item-action">
               <Contact />
             </div>
-            <hr />
-            <div className="container">
+            <div className="list-group-item list-group-item-action">
               <Policy />
             </div>
-            <hr />
-            <div className="container">
+            <div className="list-group-item list-group-item-action">
               <LanguageSelector />
             </div>
-          </div>
+          </>
         ) : null}
       </div>
     </div>

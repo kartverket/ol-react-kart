@@ -25,11 +25,11 @@ const ProjectsList = () => {
         {listProjects.map((project, index) => (
           <li
             key={index}
-            className="list-group-item pt-2 pb-2 text-capitalize"
+            className="list-group-item list-group-item-action pt-2 pb-2 text-capitalize"
             onClick={() => toggleShowActiveProjectFromList(project)}
           >
             <FontAwesomeIcon icon={project.HeaderIcon as IconName} className="me-2" />
-            {t(project.ProjectName)}
+              {t(project.ProjectName)}
           </li>
         ))}
       </ul>

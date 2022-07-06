@@ -56,7 +56,7 @@ const Faq = () => {
           <div className="container">
             <ul className="list-group list-group-flush">
               {faq.map((aq, index) => (
-                <li key={index} className="list-group-item px-0" onClick={() => toggleShowAnswer(index)}>
+                <li key={index} className="list-group-item list-group-item-action px-0 border-0" onClick={() => toggleShowAnswer(index)}>
                   <div className="card-header px-1">
                     {aq.question}
                     <FontAwesomeIcon className="float-end" icon={show ? faAngleUp : faAngleDown} />

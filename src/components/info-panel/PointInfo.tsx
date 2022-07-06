@@ -663,7 +663,7 @@ const PointInfo = () => {
         {stedsnavn.navn ? (
           <ul className="list-group list-group-flush">
             {stedsnavn?.navn?.map((result, index) => (
-              <li key={index} className="list-group-item pt-2 pb-2">
+              <li key={index} className="list-group-item list-group-item-action pt-2 pb-2">
                 <div className="">
                   <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
                   <div className="text-muted">
