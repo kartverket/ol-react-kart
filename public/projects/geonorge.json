@@ -5,7 +5,6 @@
       "lon": 306722,
       "mapepsg": "EPSG:25833",
       "zoom": 3,
-      "mapbackgroundcolor": "#FFFFFF",
       "displayCenter": "306722,7197864",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "name": "geoportal"
