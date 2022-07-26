@@ -20,10 +20,10 @@ const initialState: IProjectsList = {
   status: 'loading',
   showActiveProject: false,
   activeProject: {
-    SiteTitle: 'norgeskart',
-    ProjectName: 'norgeskart',
+    SiteTitle: 'friluftsliv',
+    ProjectName: 'friluftsliv',
     HeaderIcon: '',
-    HeaderTitle: 'norgeskart',
+    HeaderTitle: 'friluftsliv',
   },
 };
 

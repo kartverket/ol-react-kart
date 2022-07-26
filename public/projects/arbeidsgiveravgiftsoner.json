@@ -9,7 +9,7 @@
       "displayCenter": "396722,7197864",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
-      "name": "fastmerker"
+      "name": "arbeidsgiveravgiftsoner"
     },
     "layer": [{
       "distributionProtocol": "WMTS",
@@ -208,7 +208,7 @@
         "visibility": "false"
       }
     }, {
-      "distributionProtocol": "WMTS",
+      "distributionProtocol": "WMS",
       "gatekeeper": "true",
       "name": "Arbeidsgiveravgiftsoner",
       "info": "Arbeidsgiveravgiftsoner",
@@ -235,7 +235,7 @@
         }]
       }
     }, {
-      "distributionProtocol": "WMTS",
+      "distributionProtocol": "WMS",
       "gatekeeper": "true",
       "name": "Kommuner",
       "info": "Arbeidsgiveravgiftsoner",

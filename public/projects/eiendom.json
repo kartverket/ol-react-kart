@@ -9,7 +9,7 @@
       "displayCenter": "396722,7197864",
       "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
       "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
-      "name": "seeiendom"
+      "name": "eiendom"
     },
     "layer": [{
       "distributionProtocol": "WMTS",
@@ -260,11 +260,13 @@
         "visibility": "true"
       }
     }],
-    "maplayer": {
-      "index": 1,
-      "name": "matrikkel_data",
-      "groupid": 1
-    },
+    "maplayer": [
+      {
+        "index": 1,
+        "name": "matrikkel_data",
+        "groupid": 1
+      }
+    ],
     "mapbounds": {
       "mapbound": [{
         "epsg": "EPSG:23031",

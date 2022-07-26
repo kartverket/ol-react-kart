@@ -1040,7 +1040,431 @@
           "alias": "Navn"
         }]
       }
+    },{
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "fylker",
+      "Title": "Fylker",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/fylker2018.geojson",
+      "addLayers": ["fylker2018"]
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "fylker-utm35",
+      "Title": "Fylker UTM35",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/fylker-utm35.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "fylker-utm33",
+      "Title": "Fylker UTM33",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/fylker-utm33.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25832",
+      "ShowPropertyName": "n",
+      "id": "fylker-utm32",
+      "Title": "Fylker UTM32",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/fylker-utm32-2018.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "kommuner",
+      "Title": "Kommuner",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/kommuner2018.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "kommuner-utm35",
+      "Title": "Kommuner UTM35",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/kommuner-utm35.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "kommuner-utm33",
+      "Title": "Kommuner UTM33",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/kommuner-utm33.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25832",
+      "ShowPropertyName": "n",
+      "id": "kommuner-utm32",
+      "Title": "Kommuner UTM32",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/kommuner-utm32-2018.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "dtm-dekning-utm32",
+      "Title": "DTM Dekning UTM32",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/dtm/utm32.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "dtm-dekning-utm33",
+      "Title": "DTM Dekning UTM33",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/dtm/utm33.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "dtm-dekning-utm33-100km",
+      "Title": "DTM Dekning UTM33 100km grid",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/dtm/utm33-100km.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "dtm-dekning-utm35",
+      "Title": "DTM Dekning UTM35",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/dtm/utm35.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "dtm-sjo",
+      "Title": "DTM50 Dekning sj&oslash;",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/celler/dtm50.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "dtm-sjo-5",
+      "Title": "DTM50 Dekning sj&oslash; 5m",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/celler/dtm50_5.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "dtm-sjo-25",
+      "Title": "DTM50 Dekning sj&oslash; 25m",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/celler/dtm50_25.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "dtm-sjo-50",
+      "Title": "DTM50 Dekning sj&oslash; 50m",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/celler/dtm50_50.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "raster-32",
+      "Title": "Raster UTM32",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/32.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "raster-33",
+      "Title": "Raster UTM33",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/33.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "raster-35",
+      "Title": "Raster UTM35",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/35.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "raster-n50",
+      "Title": "Raster N50",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/n50.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "raster-n250",
+      "Title": "Raster N250",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/n250_ny.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "raster-n500",
+      "Title": "Raster N500",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/n500_ny.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "raster-n1000",
+      "Title": "Raster N1000",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/n1000_ny.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "dybdedata_50m",
+      "Title": "Dybdedata 50m",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/norge/dybdedata_50m.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "dtm-svalbard",
+      "Title": "DTM Svalbard",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/svalbard/terrengmodellgr_Svalbard.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "rasterN50-2011",
+      "Title": "rasterN50-2011",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/rasterN50-2011.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "rasterN50-2006",
+      "Title": "rasterN50-2006",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/rasterN50-2006.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "Satellittbilder-100kmruter-utm33",
+      "Title": "Satellittbilder 100km-ruter utm33",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/Satellittbilder_100kmruter_ETRS89utm33.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "n100_raster_ruter",
+      "Title": "N100 raster ruter",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/n100_raster_ruter.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "n100_raster_regionsvis",
+      "Title": "N100 raster regionsvis",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/n100_raster_regionsvis.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "n50_raster_regionsvis",
+      "Title": "N50 raster regionsvis",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/raster/N50RasterRegionsvis_kartbladinndeling.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:25833",
+      "ShowPropertyName": "n",
+      "id": "n50_pod_inndeling2015",
+      "Title": "N50 pod inndeling2015",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/land/n50/pod-inndeling2015-flaterf.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "Ruter_entinelSkyfritt2018Uint16",
+      "Title": "Ruter Sentinel-2 Skyfritt2018",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/tema/Ruter_entinelSkyfritt2018Uint16.geojson",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "hovedserie_ny",
+      "Title": "hovedserie_ny",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/hovedserie_ny.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "havnekart_ny",
+      "Title": "havnekart_ny",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/havnekart_ny.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "kystkart_ny",
+      "Title": "kystkart_ny",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/kystkart_ny.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "overseilingskart_ny",
+      "Title": "overseilingskart_ny",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/overseilingskart_ny.json",
+      "addLayers": []
+    },
+    {
+      "layerGroup": "nedlasting",
+      "styleName": "omrissFylker",
+      "EPSG": "EPSG:4326",
+      "ShowPropertyName": "n",
+      "id": "svalbardkart_ny",
+      "Title": "svalbardkart_ny",
+      "DistributionProtocol": "GEOJSON",
+      "url": "https://norgeskart.no/json/dekning/sjo/svalbardkart_ny.json",
+      "addLayers": []
     }],
+    "maplayer": [
+      {
+        "index": 1,
+        "name": "nedlasting",
+        "groupid": 1
+      }
+    ],
     "mapbounds": {
       "mapbound": [{
         "epsg": "EPSG:25832",
