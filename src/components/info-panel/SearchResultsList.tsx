@@ -29,7 +29,15 @@ const SearchResultsList = () => {
                 <li
                   key={index}
                   className="list-group-item pt-2 pb-2"
-                  onClick={() => dispatch(setCenter({ lon: result.representasjonspunkt.øst, lat: result.representasjonspunkt.nord, epsg: result.representasjonspunkt.koordsys }))}
+                  onClick={() =>
+                    dispatch(
+                      setCenter({
+                        lon: result.representasjonspunkt.øst,
+                        lat: result.representasjonspunkt.nord,
+                        epsg: result.representasjonspunkt.koordsys,
+                      }),
+                    )
+                  }
                 >
                   <span>
                     {result.skrivemåte}, {result.navneobjekttype}{' '}

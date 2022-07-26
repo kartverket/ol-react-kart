@@ -1,7 +1,6 @@
 @use 'reset';
 @use 'utils';
 @use 'typografi';
-@use 'searchbar';
 @use 'kart';
 @use 'logo';
 @use 'changebaselayer';
@@ -235,3 +234,5 @@ fieldset[disabled] .btn-toggle:hover {
   max-height: 30rem;
   overflow-y: auto;
 }
+
+@import 'components';

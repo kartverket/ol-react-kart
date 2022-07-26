@@ -38,7 +38,7 @@ const MainMenuPanelProjectLayers = () => {
     <>
       <ul className="list-group list-group-flush">
         {layerGroups.map((group, index) => (
-          <li key={index} className="list-group-item pt-2 pb-2">
+          <li key={index} className="list-group-item list-group-item-action pt-2 pb-2">
             <div className="d-flex pt-2 pb-2" onClick={() => toggleLayerGroup(group)}>
               <div>
                 <span>{t(group.name)}</span>
@@ -48,13 +48,13 @@ const MainMenuPanelProjectLayers = () => {
               </div>
             </div>
             {group.isOpen ? (
-              <div>
+              <div className="p-0">
                 <ul className="list-group list-group-flush">
                   {tileLayers
                     .filter(w => w.groupid && w.groupid === group.groupid)
                     .map((tileLayer, wmsIndex) => (
-                      <li key={wmsIndex} className="list-group-item pt-2 pb-2" onClick={() => toggleLayer(tileLayer)}>
-                        <div className="d-flex">
+                      <li key={wmsIndex} className="list-group-item list-group-item-action pt-2 pb-2" onClick={() => toggleLayer(tileLayer)}>
+                        <div className="d-flex p-0">
                           <div className="pe-2">
                             {tileLayer.options.visibility === 'true' ? (
                               <FontAwesomeIcon icon={faCheckSquare} />
@@ -73,7 +73,7 @@ const MainMenuPanelProjectLayers = () => {
                     .map((vectorLayer, vectorIndex) => (
                       <li
                         key={vectorIndex}
-                        className="list-group-item pt-2 pb-2"
+                        className="list-group-item list-group-item-action pt-2 pb-2"
                         onClick={() => toggleVector(vectorLayer)}
                       >
                         <div className="d-flex">

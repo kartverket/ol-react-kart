@@ -26,7 +26,7 @@ export const searchSlice = createSlice({
     },
     setMatrikkelResult: (state, action: PayloadAction<IAdresser>) => {
       state.matrikkel = action.payload;
-    }
+    },
   },
 });
 
