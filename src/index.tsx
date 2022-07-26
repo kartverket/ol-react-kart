@@ -6,7 +6,7 @@ import { appStore } from './app/store';
 import './i18n';
 import { eventStore } from './MapCore/Events/Event/eventStore';
 import reportWebVitals from './reportWebVitals';
-import './styles/index.scss';
+import './styles/main.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

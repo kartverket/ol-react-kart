@@ -12,19 +12,16 @@
   transition: 0.4s; /* 0.5 second transition effect to slide in the sidenav */
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
 }
-
 .side-menu-position {
   position: static;
 }
-
 /* The navigation menu links */
 .sidenav div div {
   padding: 0.4rem 0.6rem;
 }
-
 .circle {
   border-radius: 50%;
-  color: $color-important;
+  color: var(--blaa_lys);
   text-align: center;
   background: #ffffff;
   margin-left: 5px;

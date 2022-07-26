@@ -9,26 +9,23 @@
   -moz-border-radius: 2px;
   border-radius: 2px;
   background-color: white;
-  .btn {
-    padding: 3px;
-  }
 }
-
+.changeBaseLayer .btn {
+  padding: 3px;
+}
 .baseMapPanel {
   padding-top: 10px;
   background-color: white;
 }
-
 .baseLayerPanel {
   padding: 5px;
-  button:first-child {
-    margin-left: 0;
-  }
-  button {
-    margin-left: 5px;
-  }
 }
-
+.baseLayerPanel button:first-child {
+  margin-left: 0;
+}
+.baseLayerPanel button {
+  margin-left: 5px;
+}
 .baseMap {
   width: 50px;
   height: 0;
@@ -42,7 +39,6 @@
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
 }
-
 .baseMap-land {
   background-image: url('../assets/land.png');
 }
@@ -55,7 +51,6 @@
 .baseMap-grey {
   background-image: url('../assets/grey.png');
 }
-
 .activeBtn {
   background-color: #e87722;
   color: white;
