@@ -185,7 +185,6 @@ export interface IProject {
   lon: number;
   mapepsg: string;
   zoom: number;
-  mapbackgroundcolor: string;
   displayCenter: string;
   isygatekeeper: string;
   tickethost: string;

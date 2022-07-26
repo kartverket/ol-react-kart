@@ -1,5 +1,3 @@
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useEventDispatch } from '../../index';
@@ -20,7 +18,7 @@ const SearchResultsList = () => {
       <div>
         <div onClick={() => setStateSsr(!expandedSsr)} className={style.expandBtn}>
           <span className={style.ellipsisToggle}>{t('searchResult_placenames')}</span>
-          <FontAwesomeIcon icon={expandedSsr ? faAngleUp : faAngleDown} />
+          <span className="material-icons-outlined">{expandedSsr ? 'expand_less' : 'expand_more'}</span>
         </div>
         <div className={expandedSsr ? `${style.selected} ${style.open}` : style.selected}>
           {searchResult.ssr ? (
@@ -53,7 +51,7 @@ const SearchResultsList = () => {
       <div>
         <div onClick={() => setStateAdress(!expandedAdress)} className={style.expandBtn}>
           <span className={style.ellipsisToggle}>{t('searchResult_addresses')}</span>
-          <FontAwesomeIcon icon={expandedAdress ? faAngleUp : faAngleDown} />
+          <span className="material-icons-outlined">{expandedAdress ? 'expand_less' : 'expand_more'}</span>
         </div>
         <div className={expandedAdress ? `${style.selected} ${style.open}` : style.selected}>
           {searchResult.adresser ? (
@@ -78,7 +76,7 @@ const SearchResultsList = () => {
       <div>
         <div onClick={() => setStateMatrikkel(!expandedMatrikkel)} className={style.expandBtn}>
           <span className={style.ellipsisToggle}>Eiendom</span>
-          <FontAwesomeIcon icon={expandedMatrikkel ? faAngleUp : faAngleDown} />
+          <span className="material-icons-outlined">{expandedMatrikkel ? 'expand_less' : 'expand_more'}</span>
         </div>
         <div className={expandedMatrikkel ? `${style.selected} ${style.open}` : style.selected}>
           {searchResult.matrikkel ? (

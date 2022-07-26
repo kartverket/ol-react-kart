@@ -1,5 +1,3 @@
-import { faAngleLeft, faAngleRight, faUserSecret } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -15,13 +13,13 @@ const Policy = () => {
         }}
       >
         <div className="ps-2 pe-2">
-          <FontAwesomeIcon icon={faUserSecret} />{' '}
+          <span className="material-icons-outlined">policy</span>
         </div>
         <div className="ps-2 pe-2">
           <span className="text-capitalize">{t('privacy_policy')}</span>
         </div>
         <div className="ms-auto ps-2 pe-2">
-          <FontAwesomeIcon icon={show ? faAngleLeft : faAngleRight} />
+        <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
         </div>
       </div>
       {show ? (
