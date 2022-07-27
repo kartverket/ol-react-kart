@@ -50,9 +50,18 @@ const MainMenuPanelProjectLayers = () => {
                   {tileLayers
                     .filter(w => w.groupid && w.groupid === group.groupid)
                     .map((tileLayer, wmsIndex) => (
-                      <li key={wmsIndex} className="list-group-item list-group-item-action pt-2 pb-2" onClick={() => toggleLayer(tileLayer)}>
+                      <li
+                        key={wmsIndex}
+                        className="list-group-item list-group-item-action pt-2 pb-2"
+                        onClick={() => toggleLayer(tileLayer)}
+                      >
                         <div className="d-flex p-0 checkbox">
-                          <input type="checkbox" id={tileLayer.name} checked={tileLayer.options.visibility === 'true' ? true : false} defaultChecked={false}/>
+                          <input
+                            type="checkbox"
+                            id={tileLayer.name}
+                            checked={tileLayer.options.visibility === 'true' ? true : false}
+                            defaultChecked={false}
+                          />
                           <label htmlFor={tileLayer.name}>{t(tileLayer.name)}</label>
                         </div>
                       </li>
@@ -66,7 +75,12 @@ const MainMenuPanelProjectLayers = () => {
                         onClick={() => toggleVector(vectorLayer)}
                       >
                         <div className="d-flex p-0 checkbox">
-                          <input type="checkbox" id={vectorLayer.name} checked={vectorLayer.options.visibility === 'true' ? true : false} defaultChecked={false}/>
+                          <input
+                            type="checkbox"
+                            id={vectorLayer.name}
+                            checked={vectorLayer.options.visibility === 'true' ? true : false}
+                            defaultChecked={false}
+                          />
                           <label htmlFor={vectorLayer.name}>{t(vectorLayer.name)}</label>
                         </div>
                       </li>

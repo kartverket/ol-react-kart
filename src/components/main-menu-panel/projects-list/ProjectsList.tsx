@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../index';
 import { IProject, selectProjectsList, setActiveProject, showActiveProjectFromList } from './projectsListSlice';
 
-
 const ProjectsList = () => {
   const { t } = useTranslation();
 
@@ -25,7 +24,7 @@ const ProjectsList = () => {
             onClick={() => toggleShowActiveProjectFromList(project)}
           >
             <span className="material-icons-outlined me-2">{t(project.HeaderIcon)}</span>
-            <label className='text-capitalize'>{t(project.ProjectName)}</label>
+            <label className="text-capitalize">{t(project.ProjectName)}</label>
           </li>
         ))}
       </ul>

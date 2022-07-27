@@ -19,7 +19,7 @@ const Policy = () => {
           <span className="text-capitalize">{t('privacy_policy')}</span>
         </div>
         <div className="ms-auto ps-2 pe-2">
-        <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
+          <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
         </div>
       </div>
       {show ? (
@@ -29,7 +29,8 @@ const Policy = () => {
               <div className="col-12">
                 <div className="contact-info">
                   <h4>{t('privacy_policy_title')}</h4>
-                  {t('privacy_policy_info')} <a href="https://www.kartverket.no/om-kartverket/personvern">{t('privacy_policy_link')}</a>
+                  {t('privacy_policy_info')}{' '}
+                  <a href="https://www.kartverket.no/om-kartverket/personvern">{t('privacy_policy_link')}</a>
                 </div>
               </div>
             </div>

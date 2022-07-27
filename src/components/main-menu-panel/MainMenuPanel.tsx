@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector, useEventSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
-import Contact from './../Contact';
-import Policy from '../Policy';
 import Faq from '../Faq';
+import Policy from '../Policy';
+import Contact from './../Contact';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
@@ -62,7 +62,7 @@ const MainMenuPanel = () => {
               </div>
               <div className="ms-auto p-2">
                 <button type="button" className="btn btn-light bg-transparent border-0" onClick={() => closeNav()}>
-                <span className="material-icons-outlined">close</span>
+                  <span className="material-icons-outlined">close</span>
                 </button>
               </div>
             </div>
@@ -81,7 +81,9 @@ const MainMenuPanel = () => {
                 <span>&nbsp;{t(visibleBaseLayer?.name || '')}</span>
               </div>
               <div className="ms-auto ps-2 pe-2">
-                <span className="material-icons-outlined">{!showBaseLayersList ? 'chevron_right' : 'chevron_left'}</span>
+                <span className="material-icons-outlined">
+                  {!showBaseLayersList ? 'chevron_right' : 'chevron_left'}
+                </span>
               </div>
             </div>
           </div>
@@ -89,13 +91,13 @@ const MainMenuPanel = () => {
           <div className="list-group-item list-group-item-action">
             <div className="d-flex" onClick={() => toggleShowActiveProject()}>
               <div className="ps-2 pe-2">
-              <span className="material-icons-outlined">park</span>
+                <span className="material-icons-outlined">park</span>
               </div>
               <div className="ps-2 pe-2">
                 <span className="text-capitalize">{t(activeProject.ProjectName)}</span>
               </div>
               <div className="ms-auto ps-2 pe-2">
-                  <span className="material-icons-outlined">chevron_left</span>
+                <span className="material-icons-outlined">chevron_left</span>
               </div>
             </div>
           </div>
@@ -113,7 +115,9 @@ const MainMenuPanel = () => {
                   <span className="">{t('temakart')}</span>
                 </div>
                 <div className="ms-auto ps-2 pe-2">
-                  <span className="material-icons-outlined">{!collapseThematicMap ? 'expand_less' : 'expand_more'}</span>
+                  <span className="material-icons-outlined">
+                    {!collapseThematicMap ? 'expand_less' : 'expand_more'}
+                  </span>
                 </div>
               </div>
               {!collapseThematicMap ? (

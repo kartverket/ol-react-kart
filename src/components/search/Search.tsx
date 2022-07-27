@@ -89,9 +89,14 @@ function Search() {
             console.log('search click');
           }}
         >
-          <span className="material-icons-outlined" onClick={() => {
+          <span
+            className="material-icons-outlined"
+            onClick={() => {
               console.log('menu click');
-            }}>search</span>
+            }}
+          >
+            search
+          </span>
         </span>
       </div>
     </>
