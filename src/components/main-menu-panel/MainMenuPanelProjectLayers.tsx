@@ -36,7 +36,8 @@ const MainMenuPanelProjectLayers = () => {
       <ul className="list-group list-group-flush">
         {layerGroups.map((group, index) => (
           <li key={index} className="list-group-item list-group-item-action pt-2 pb-2">
-            <div className="d-flex pt-2 pb-2" onClick={() => toggleLayerGroup(group)}>
+            <div className="d-flex pt-2 pb-2" style={{ alignItems: 'center' }} onClick={() => toggleLayerGroup(group)}>
+              <span className="material-icons-outlined">layers</span>
               <div>
                 <span>{t(group.name)}</span>
               </div>

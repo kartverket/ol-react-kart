@@ -28,6 +28,28 @@
 /* kan eventuellt fjeneres */
 @import 'utils.css';
 
+.search-result {
+  background-color: var(--blaa_lys); /* to be removed/changed */
+}
+.search-result-list {
+  max-height: 30rem;
+  overflow-y: auto;
+}
+.search-result-list-item {
+  background-color: var(--graa_lys); /* to be removed/changed */
+}
+.search-icon {
+  background-color: var(--groenn_standard);
+  color: var(--hvit);
+}
+.search-icon:hover{
+  background-color: var(--groenn_hover);
+}
+
+.search-icon:active{
+  background-color: var(--groenn_moerk);
+}
+
 /* Align fixes for material-icons */
 .projectlist-item {
   display: flex;
@@ -43,43 +65,27 @@
   outline: 0 !important;
 }
 
-.btn-important {
-  background-color: #2c98bb;
-  color: white;
-  border-color: transparent;
-}
-
-.btn-ordinary {
-  background-color: #eaeaea;
-  color: #333;
-  border-color: transparent;
-}
-
 .btn-toggle {
-  background-color: #f7d3b8;
-  color: #333;
-  border-color: transparent;
+  background-color: var(--groenn_standard);
+  color: var(--hvit);
 }
 
 .btn-default.focus,
 .btn-default:focus {
-  background-color: #5e7c99;
-  border-color: transparent;
-  color: white;
+  background-color: var(--blaa_hover);
+  color: var(--svart);
 }
 
 .btn-default.active,
 .btn-default:active,
 .open > .dropdown-toggle.btn-default {
-  background-color:#7da1c4;
-  border-color: transparent;
-  color: white;
+  background-color: var(--blaa_moerk);
+  color: var(--hvit);
 }
 
 .btn-default:hover {
-  background-color:#2c98bb;
-  border-color: transparent;
-  color: white;
+  background-color: var(--blaa_hover);
+  color: var(--svart);
 }
 
 .btn-default.disabled.focus,
@@ -105,79 +111,29 @@ fieldset[disabled] .btn-default:hover {
 .open > .dropdown-toggle.btn-default.focus,
 .open > .dropdown-toggle.btn-default:focus,
 .open > .dropdown-toggle.btn-default:hover {
-  color: white;
-  border-color: transparent;
-  background-color:#7da1c4;
-}
-
-.btn-ordinary.focus,
-.btn-ordinary:focus {
-  background-color:#d2d2d2;
-  border-color: transparent;
-  color: #333;
-}
-
-.btn-ordinary.active,
-.btn-ordinary:active,
-.open > .dropdown-toggle.btn-ordinary {
-  background-color:#eaeaea;
-  border-color: transparent;
-  color: #333;
-}
-
-.btn-ordinary:hover {
-  background-color:#d2d2d2;
-  border-color: transparent;
-  color: #333;
-}
-
-.btn-ordinary.disabled.focus,
-.btn-ordinary.disabled:focus,
-.btn-ordinary.disabled:hover,
-.btn-ordinary[disabled].focus,
-.btn-ordinary[disabled]:focus,
-.btn-ordinary[disabled]:hover,
-fieldset[disabled] .btn-ordinary.focus,
-fieldset[disabled] .btn-ordinary:focus,
-fieldset[disabled] .btn-ordinary:hover {
-  border-color:#d2d2d2;
-  background-color:#d2d2d2;
-  color: white;
-}
-
-.btn-ordinary.active.focus,
-.btn-ordinary.active:focus,
-.btn-ordinary.active:hover,
-.btn-ordinary:active.focus,
-.btn-ordinary:active:focus,
-.btn-ordinary:active:hover,
-.open > .dropdown-toggle.btn-ordinary.focus,
-.open > .dropdown-toggle.btn-ordinary:focus,
-.open > .dropdown-toggle.btn-ordinary:hover {
-  color: #333;
-  border-color: transparent;
-  background-color:#eaeaea;
+  background-color: var(--blaa_hover);
+  color: var(--svart);
 }
 
 .btn-toggle.focus,
 .btn-toggle:focus {
-  background-color:#e87722;
-  border-color: transparent;
-  color: white;
+  background-color: var(--groenn_hover);
+  color: var(--hvit);
+  outline: none;
 }
 
 .btn-toggle.active,
 .btn-toggle:active,
 .open > .dropdown-toggle.btn-toggle {
-  background-color:#f7d3b8;
-  border-color: transparent;
-  color: #333;
+  background-color: var(--groenn_moerk);
+  color: var(--hvit);
+  outline: none;
 }
 
 .btn-toggle:hover {
-  background-color:#a06439;
-  border-color: transparent;
-  color: white;
+  background-color: var(--groenn_hover);
+  color: var(--hvit);
+  outline: none;
 }
 
 .btn-toggle.disabled.focus,
@@ -189,9 +145,9 @@ fieldset[disabled] .btn-ordinary:hover {
 fieldset[disabled] .btn-toggle.focus,
 fieldset[disabled] .btn-toggle:focus,
 fieldset[disabled] .btn-toggle:hover {
-  border-color:#f7d3b8;
-  background-color:#f7d3b8;
-  color: #333;
+  background-color: var(--groenn_hover);
+  color: var(--hvit);
+  outline: none;
 }
 
 .btn-toggle.active.focus,
@@ -203,14 +159,18 @@ fieldset[disabled] .btn-toggle:hover {
 .open > .dropdown-toggle.btn-toggle.focus,
 .open > .dropdown-toggle.btn-toggle:focus,
 .open > .dropdown-toggle.btn-toggle:hover {
-  color: #333;
-  border-color: transparent;
-  background-color:#f7d3b8;
+  background-color: var(--groenn_hover);
+  color: var(--hvit);
+  outline: none;
 }
 
 .btn-active {
-  background-color:#e87722;
-  color: white;
+  background-color: var(--groenn_moerk);
+  color: var(--hvit);
+  outline: none;
+}
+input:focus-visible {
+  outline: none;
 }
 /* bootstrap end */
 

@@ -73,7 +73,7 @@ function Search() {
         </button>
         <input
           style={{ width: '350px' }}
-          className="border border-start-0 border-end-0"
+          className="border border-start-0 border-end-0 ps-2"
           placeholder={t('search_text')}
           ref={input => (search = input)}
           onClick={() => {
@@ -83,8 +83,8 @@ function Search() {
           onChange={handleInputChange}
         />
         {/* <Suggestions results={this.state.results} /> */}
-        <span
-          className="input-group-text border-start-0 bg-transparent border"
+        <button
+          className="input-group-text search-icon"
           onClick={() => {
             console.log('search click');
           }}
@@ -97,7 +97,7 @@ function Search() {
           >
             search
           </span>
-        </span>
+        </button>
       </div>
     </>
   );
