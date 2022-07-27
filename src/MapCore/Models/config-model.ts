@@ -198,7 +198,7 @@ export interface IMapBounds {
 export interface IConfig {
   mapbounds: IMapBounds;
   maplayer: IMapLayer[];
-  project: IProject;
+  project?: IProject;
   vector?: IVector[];
   layer: ITileLayer[];
 }

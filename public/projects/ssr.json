@@ -1,15 +1,6 @@
 {
   "config": {
-    "project": {
-      "lat": 7197864,
-      "lon": 396722,
-      "mapepsg": "EPSG:25833",
-      "zoom": 4,
-      "displayCenter": "396722,7197864",
-      "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
-      "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
-      "name": "ssr"
-    },
+    "name": "ssr",
     "layer": [{
       "distributionProtocol": "WMTS",
       "gatekeeper": "true",
