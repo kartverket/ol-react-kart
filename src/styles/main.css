@@ -28,6 +28,15 @@
 /* kan eventuellt fjeneres */
 @import 'utils.css';
 
+/* Align fixes for material-icons */
+.projectlist-item {
+  display: flex;
+  align-items: center;
+}
+.menu-icon {
+  display: flex;
+  align-items: center;
+}
 
 /* bootstrap start */
 .btn:focus {

@@ -20,7 +20,7 @@ const ProjectsList = () => {
         {listProjects.map((project, index) => (
           <li
             key={index}
-            className="list-group-item list-group-item-action pt-2 pb-2 text-capitalize"
+            className="list-group-item list-group-item-action pt-2 pb-2 text-capitalize projectlist-item"
             onClick={() => toggleShowActiveProjectFromList(project)}
           >
             <span className="material-icons-outlined me-2">{t(project.HeaderIcon)}</span>

@@ -58,7 +58,7 @@ function Search() {
     <>
       <div className="input-group mb-3 shadow bg-body rounded" style={{ height: '50px' }}>
         <button
-          className="btn btn-outline-secondary border border-end-0"
+          className="btn btn-outline-secondary border border-end-0 menu-icon"
           onClick={() => {
             const mySidenav = document.getElementById('mySidenav');
             const sideMenuPosition = document.getElementById('sideMenuPosition');
