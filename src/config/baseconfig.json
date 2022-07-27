@@ -1,0 +1,26 @@
+{
+  "project": {
+    "lat": 7197864,
+    "lon": 396722,
+    "mapepsg": "EPSG:25833",
+    "zoom": 4,
+    "displayCenter": "396722,7197864",
+    "isygatekeeper": "https://www.norgeskart.no/ws/gatekeeper.py?key=73e029c3632c49bb1586fc57a60fb701kv",
+    "tickethost": "https://www.norgeskart.no/ws/esk.py?wms.ecc_enc",
+    "name": "norgeskart"
+  },
+  "basemap": {
+    "url": "https://cache.kartverket.no/europa_forenklet/v1/wmts/1.0.0/",
+    "gatekeeper": true,
+    "name": "europa_forenklet",
+    "layers": "europa_forenklet",
+    "format": "image/png",
+    "matrixPrefix": false,
+    "matrixSet": "utm33n",
+    "options": {
+      "isbaselayer": "true",
+      "singletile": "false",
+      "visibility": "true"
+    }
+  }
+}

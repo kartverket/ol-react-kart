@@ -1,6 +1,3 @@
-import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEventDispatch, useEventSelector } from '../../index';
@@ -44,7 +41,7 @@ const MainMenuPanelProjectLayers = () => {
                 <span>{t(group.name)}</span>
               </div>
               <div className="ms-auto ps-2 pe-2">
-                {group.isOpen ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}
+                <span className="material-icons-outlined">{group.isOpen ? 'expand_less' : 'expand_more'}</span>
               </div>
             </div>
             {group.isOpen ? (
@@ -53,18 +50,19 @@ const MainMenuPanelProjectLayers = () => {
                   {tileLayers
                     .filter(w => w.groupid && w.groupid === group.groupid)
                     .map((tileLayer, wmsIndex) => (
-                      <li key={wmsIndex} className="list-group-item list-group-item-action pt-2 pb-2" onClick={() => toggleLayer(tileLayer)}>
-                        <div className="d-flex p-0">
-                          <div className="pe-2">
-                            {tileLayer.options.visibility === 'true' ? (
-                              <FontAwesomeIcon icon={faCheckSquare} />
-                            ) : (
-                              <FontAwesomeIcon icon={faSquare} />
-                            )}
-                          </div>
-                          <div className="ps-2">
-                            <span>{t(tileLayer.name)}</span>
-                          </div>
+                      <li
+                        key={wmsIndex}
+                        className="list-group-item list-group-item-action pt-2 pb-2"
+                        onClick={() => toggleLayer(tileLayer)}
+                      >
+                        <div className="d-flex p-0 checkbox">
+                          <input
+                            type="checkbox"
+                            id={tileLayer.name}
+                            checked={tileLayer.options.visibility === 'true' ? true : false}
+                            defaultChecked={false}
+                          />
+                          <label htmlFor={tileLayer.name}>{t(tileLayer.name)}</label>
                         </div>
                       </li>
                     ))}
@@ -76,17 +74,14 @@ const MainMenuPanelProjectLayers = () => {
                         className="list-group-item list-group-item-action pt-2 pb-2"
                         onClick={() => toggleVector(vectorLayer)}
                       >
-                        <div className="d-flex">
-                          <div className="pe-2">
-                            {vectorLayer.options.visibility === 'true' ? (
-                              <FontAwesomeIcon icon={faCheckSquare} />
-                            ) : (
-                              <FontAwesomeIcon icon={faSquare} />
-                            )}
-                          </div>
-                          <div className="ps-2">
-                            <span>{t(vectorLayer.name)}</span>
-                          </div>
+                        <div className="d-flex p-0 checkbox">
+                          <input
+                            type="checkbox"
+                            id={vectorLayer.name}
+                            checked={vectorLayer.options.visibility === 'true' ? true : false}
+                            defaultChecked={false}
+                          />
+                          <label htmlFor={vectorLayer.name}>{t(vectorLayer.name)}</label>
                         </div>
                       </li>
                     ))}

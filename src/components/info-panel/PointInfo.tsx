@@ -1,14 +1,3 @@
-import {
-  faAmbulance,
-  faAngleDown,
-  faAngleUp,
-  faBlind,
-  faFlag,
-  faHome,
-  faMapMarker,
-  faPaintbrush,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
 import { Coordinate } from 'ol/coordinate';
@@ -340,9 +329,9 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faHome} className="me-2" />
+              <span className="material-icons-outlined me-1">home</span>
               <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
-              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
           <div className="p-2 bg-light mb-2">
@@ -353,9 +342,9 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faFlag} className="me-2" />
+              <span className="material-icons-outlined me-1">flag</span>
               <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
-              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
           <div className="p-2 bg-light mb-2">
@@ -366,9 +355,9 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faMapMarker} className="me-2" />
+              <span className="material-icons-outlined me-1">place</span>
               <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-              <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showCoordinates ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
           <div className="p-2 bg-light mb-2">
@@ -379,9 +368,9 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faBlind} className="me-2" />
+              <span className="material-icons-outlined me-1">blind</span>
               <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
-              <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
           <div className="p-2 bg-light mb-2">
@@ -392,9 +381,9 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faPaintbrush} className="me-2" />
+              <span className="material-icons-outlined me-1">brush</span>
               <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
-              <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showFargeleggingskart ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
           <div className="p-2 bg-light mb-2">
@@ -406,9 +395,9 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faAmbulance} className="me-2" />
+              <span className="material-icons-outlined me-1">emergency</span>
               <span className={style.ellipsisToggle}>{t('lagNodplakat')}</span>
-              <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showNodplakat ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
         </div>
@@ -423,9 +412,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faMapMarker} className="me-2" />
+            <span className="material-icons-outlined me-1">place</span>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showCoordinates ? 'expand_less' : 'expand_more'}</span>
           </div>
           {projeksjoner && coordinates ? (
             <div>
@@ -461,9 +450,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faBlind} className="me-2" />
+            <span className="material-icons-outlined me-1">blind</span>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
       </div>
@@ -477,9 +466,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faPaintbrush} className="me-2" />
+            <span className="material-icons-outlined me-1">brush</span>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showFargeleggingskart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
       </div>
@@ -493,9 +482,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faAmbulance} className="me-2" />
+            <span className="material-icons-outlined me-1">emergency</span>
             <span className={style.ellipsisToggle}>{t('Nodplakat')}</span>
-            <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showNodplakat ? 'expand_less' : 'expand_more'}</span>
           </div>
           <div className={showNodplakat1 ? `${style.selected} ${style.open}` : style.selected}>
             <h4 className=""> {t('Ansvar')}</h4>
@@ -588,7 +577,7 @@ const PointInfo = () => {
             className={style.expandBtn}
           >
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showGetFeatureInfo ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showGetFeatureInfo ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
       </div>
@@ -602,9 +591,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faHome} className="me-2" />
+            <span className="material-icons-outlined me-1">home</span>
             <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
-            <FontAwesomeIcon icon={showMatrikkel ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showMatrikkel ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
         {matrikkel && matrikkel.GARDSNR ? (
@@ -655,9 +644,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faFlag} className="me-2" />
+            <span className="material-icons-outlined me-1">flag</span>
             <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
-            <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
         {stedsnavn.navn ? (
