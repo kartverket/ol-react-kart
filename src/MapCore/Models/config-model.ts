@@ -161,6 +161,9 @@ export interface ITileLayer {
   distributionProtocol?: 'WMS' | 'WMTS';
   groupid?: number;
   legendurl?: string;
+  uuid?: string;
+  description?: string;
+  link?: string;
 }
 
 export interface ICodeLists {
