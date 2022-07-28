@@ -35,7 +35,7 @@ const MainMap = () => {
       <div id="map" className="ol-map"></div>
       <div className="ol-geolocation ol-unselectable ol-control">
         <button onClick={() => console.log('GEOLOCATION NOT IMPLEMENTED')} type="button">
-          <span className="material-icons-outlined">my_location</span>
+          <span className="material-icons-outlined">location_searching</span>
         </button>
       </div>
     </>
