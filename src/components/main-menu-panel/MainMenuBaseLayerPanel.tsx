@@ -16,7 +16,11 @@ const MainMenuBaseLayerPanel = () => {
       {baseLayers ? (
         <ul className="list-group list-group-flush">
           {baseLayers.map((baseLayer, index) => (
-            <li key={index} className="list-group-item list-group-item-action ps-5 px-2" onClick={() => changeBaseLayer(baseLayer.name)}>
+            <li
+              key={index}
+              className="list-group-item list-group-item-action ps-5 px-2"
+              onClick={() => changeBaseLayer(baseLayer.name)}
+            >
               {t(baseLayer.name)}
             </li>
           ))}

@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { defaults, ScaleLine } from 'ol/control';
+import { getTopLeft, getWidth } from 'ol/extent';
+import TileLayer from 'ol/layer/Tile';
 import Map from 'ol/Map';
 import Projection from 'ol/proj/Projection';
+import { WMTS } from 'ol/source';
 import View from 'ol/View';
 import { useEffect } from 'react';
 import { useEventDispatch, useEventSelector } from '../../src/index';
+import baseconfig from '../config/baseconfig.json';
 import { generateKoordTransUrl } from '../utils/n3api';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
 import { MapMoveEnd } from './Events/MapMoveEnd';
@@ -24,6 +28,7 @@ import {
 import { IProjectConfig } from './Models/config-model';
 import { Project } from './Project/Project';
 import { addProject, selectCenter, selectToken } from './Project/projectSlice';
+import { wmtsTileGrid } from './TileGrid/wmts';
 
 let myMap: Map;
 let activateMap = false;
@@ -109,7 +114,11 @@ const MapApi = function () {
   return {
     init(projectConfig: IProjectConfig) {
       if (!activateMap) {
-        dispatch(addProject(projectConfig.config.project));
+        if (projectConfig.config.project) {
+          dispatch(addProject(projectConfig.config.project));
+        } else {
+          dispatch(addProject(baseconfig.project));
+        }
         dispatch(addGroups(projectConfig.config.maplayer));
         dispatch(addTileLayers(projectConfig.config.layer));
         if (projectConfig.config.vector) {
@@ -117,12 +126,14 @@ const MapApi = function () {
         }
 
         if (!myMap) {
+          const mapepsg = projectConfig.config.project
+            ? projectConfig.config.project.mapepsg
+            : baseconfig.project.mapepsg;
+
           const sm = new Projection({
-            code: projectConfig.config.project.mapepsg,
+            code: mapepsg,
           });
-          const projectExtent = projectConfig.config.mapbounds.mapbound.find(
-            m => m.epsg === projectConfig.config.project.mapepsg,
-          )?.extent;
+          const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === mapepsg)?.extent;
           const newExtent = [0, 0, 0, 0] as [number, number, number, number];
           if (projectExtent) {
             projectExtent
@@ -132,11 +143,38 @@ const MapApi = function () {
           }
           sm.setExtent(newExtent);
 
+          const size = getWidth(newExtent) / 256;
+          const resolutions = [];
+          const matrixIds = [];
+          for (let z = 0; z < 21; ++z) {
+            resolutions[z] = size / Math.pow(2, z);
+            matrixIds[z] = String(z);
+          }
+          const lon = projectConfig.config.project ? projectConfig.config.project.lon : baseconfig.project.lon;
+          const lat = projectConfig.config.project ? projectConfig.config.project.lat : baseconfig.project.lat;
           myMap = new Map({
-            layers: [],
+            layers: [
+              new TileLayer({
+                source: new WMTS({
+                  url: baseconfig.basemap.url,
+                  layer: baseconfig.basemap.layers,
+                  matrixSet: baseconfig.basemap.matrixSet,
+                  projection: sm,
+                  tileGrid: wmtsTileGrid({
+                    extent: newExtent,
+                    origin: getTopLeft(newExtent),
+                    resolutions: resolutions,
+                    matrixIds: matrixIds,
+                  }),
+                  style: 'default',
+                  format: baseconfig.basemap.format,
+                }),
+                zIndex: -1,
+              }),
+            ],
             target: 'map',
             view: new View({
-              center: [projectConfig.config.project.lon, projectConfig.config.project.lat],
+              center: [lon, lat],
               projection: sm,
               zoom: 4,
             }),

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MapApi from '../MapCore/mapCore';
 // import { useEventStoreSelector } from '../MapCore/Events/Event/eventHooks';
-import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { selectActiveProject } from '../components/main-menu-panel/projects-list/projectsListSlice';
 import { useAppSelector } from '../index';
@@ -37,7 +35,7 @@ const MainMap = () => {
       <div id="map" className="ol-map"></div>
       <div className="ol-geolocation ol-unselectable ol-control">
         <button onClick={() => console.log('GEOLOCATION NOT IMPLEMENTED')} type="button">
-          <FontAwesomeIcon icon={faCrosshairs} />
+          <span className="material-icons-outlined">my_location</span>
         </button>
       </div>
     </>

@@ -185,7 +185,6 @@ export interface IProject {
   lon: number;
   mapepsg: string;
   zoom: number;
-  mapbackgroundcolor: string;
   displayCenter: string;
   isygatekeeper: string;
   tickethost: string;
@@ -199,7 +198,7 @@ export interface IMapBounds {
 export interface IConfig {
   mapbounds: IMapBounds;
   maplayer: IMapLayer[];
-  project: IProject;
+  project?: IProject;
   vector?: IVector[];
   layer: ITileLayer[];
 }

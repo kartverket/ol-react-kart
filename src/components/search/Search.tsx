@@ -1,6 +1,4 @@
 // const { API_KEY } = process.env;
-import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -60,7 +58,7 @@ function Search() {
     <>
       <div className="input-group mb-3 shadow bg-body rounded" style={{ height: '50px' }}>
         <button
-          className="btn btn-outline-secondary border border-end-0"
+          className="btn btn-outline-secondary border border-end-0 menu-icon"
           onClick={() => {
             const mySidenav = document.getElementById('mySidenav');
             const sideMenuPosition = document.getElementById('sideMenuPosition');
@@ -71,7 +69,7 @@ function Search() {
             }
           }}
         >
-          <FontAwesomeIcon icon={faBars} />
+          <span className="material-icons-outlined">menu</span>
         </button>
         <input
           style={{ width: '350px' }}
@@ -91,12 +89,14 @@ function Search() {
             console.log('search click');
           }}
         >
-          <FontAwesomeIcon
-            icon={faMagnifyingGlass}
+          <span
+            className="material-icons-outlined"
             onClick={() => {
               console.log('menu click');
             }}
-          />
+          >
+            search
+          </span>
         </span>
       </div>
     </>

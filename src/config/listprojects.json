@@ -8,31 +8,31 @@
   {
     "SiteTitle": "friluftsliv",
     "ProjectName": "friluftsliv",
-    "HeaderIcon": "tree",
+    "HeaderIcon": "park",
     "HeaderTitle": "friluftsliv"
   },
   {
     "SiteTitle": "ssr",
     "ProjectName": "ssr",
-    "HeaderIcon": "map-signs",
+    "HeaderIcon": "signpost",
     "HeaderTitle": "ssr"
   },
   {
     "SiteTitle": "tilgjengelighet",
     "ProjectName": "Tilgjengelighet_title",
-    "HeaderIcon": "wheelchair",
+    "HeaderIcon": "accessible",
     "HeaderTitle": "tilgjengelighet"
   },
   {
     "SiteTitle": "fastmerker",
     "ProjectName": "Fastmerker_title",
-    "HeaderIcon": "map-pin",
+    "HeaderIcon": "navigation",
     "HeaderTitle": "fastmerker"
   },
   {
     "SiteTitle": "nrl",
     "ProjectName": "nrl",
-    "HeaderIcon": "plane",
+    "HeaderIcon": "flight",
     "HeaderTitle": "nrl"
   },
   {
@@ -44,7 +44,7 @@
   {
     "SiteTitle": "arbeidsgiveravgiftsoner",
     "ProjectName": "arbeidsgiveravgiftsoner",
-    "HeaderIcon": "funnel-dollar",
+    "HeaderIcon": "payments",
     "HeaderTitle": "arbeidsgiveravgiftsoner"
   },
   {

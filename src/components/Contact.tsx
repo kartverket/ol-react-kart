@@ -1,5 +1,3 @@
-import { faAngleLeft, faAngleRight, faComment, faEnvelope, faHome, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -15,13 +13,13 @@ const Contact = () => {
         }}
       >
         <div className="ps-2 pe-2">
-          <FontAwesomeIcon icon={faComment} />{' '}
+          <span className="material-icons-outlined">feedback</span>
         </div>
         <div className="ps-2 pe-2">
           <span className="text-capitalize">{t('kontakt_oss')}</span>
         </div>
         <div className="ms-auto ps-2 pe-2">
-          <FontAwesomeIcon icon={show ? faAngleLeft : faAngleRight} />
+          <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
         </div>
       </div>
       {show ? (
@@ -33,19 +31,15 @@ const Contact = () => {
                   <h4>{t('kontakt_oss_tittel')}</h4>
                   {t('kontakt_oss_info')}
                   <div className="contact-info-item">
-                    <span>
-                      <FontAwesomeIcon icon={faPhone} /> +47 32 11 80 00
-                    </span>
+                    <span className="material-icons-outlined">call</span> +47 32 11 80 00
                   </div>
                   <div className="contact-info-item">
-                    <span>
-                      <FontAwesomeIcon icon={faEnvelope} /> <a href="mailto:post@kartverket.no">post@kartverket.no</a>
-                    </span>
+                    <span className="material-icons-outlined">mail</span>{' '}
+                    <a href="mailto:post@kartverket.no">post@kartverket.no</a>
                   </div>
                   <div className="contact-info-item">
-                    <span>
-                      <FontAwesomeIcon icon={faHome} /> <a href="https://kartverket.no/">kartverket.no</a>
-                    </span>
+                    <span className="material-icons-outlined">home</span>{' '}
+                    <a href="https://kartverket.no/">kartverket.no</a>
                   </div>
                 </div>
               </div>

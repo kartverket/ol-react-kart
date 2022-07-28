@@ -1,11 +1,9 @@
 .logo-overlay {
   z-index: 12;
-  // position: absolute;
   bottom: 0px;
   left: 19px;
   width: 105px;
 }
-
 .logo-kartverket {
   width: 100%;
   padding-bottom: calc(100% * 5 / 7);
@@ -17,27 +15,24 @@
   text-indent: -9999px;
   display: inline-block;
 }
-
 .norgeskart-logo {
   margin-left: 10px;
   margin-right: 10px;
   padding: 12px 45px 15px 5px;
-
-  h1 {
-    font-size: 22px;
-    margin: 0;
-
-    a {
-      color: grey !important;
-      .norgeskart-logo-image {
-        background-image: url('../assets/Ikon_Kart_Norge_org36.png');
-        height: 36px;
-        width: 36px;
-        display: inline-block;
-        vertical-align: middle;
-      }
-    }
-  }
+}
+.norgeskart-logo h1 {
+  font-size: 22px;
+  margin: 0;
+}
+.norgeskart-logo h1 a {
+  color: grey !important;
+}
+.norgeskart-logo-image {
+  background-image: url('../assets/Ikon_Kart_Norge_org36.png');
+  height: 36px;
+  width: 36px;
+  display: inline-block;
+  vertical-align: middle;
 }
 /*
 .logo-polar{

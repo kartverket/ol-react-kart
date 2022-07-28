@@ -1,5 +1,3 @@
-import { faAngleDown, faAngleLeft, faAngleRight, faAngleUp, faQuestion } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -42,13 +40,13 @@ const Faq = () => {
         }}
       >
         <div className="ps-2 pe-2">
-          <FontAwesomeIcon icon={faQuestion} />{' '}
+          <span className="material-icons-outlined">question_mark</span>
         </div>
         <div className="ps-2 pe-2">
           <span className="text-capitalize">{t('tips_og_triks')}</span>
         </div>
         <div className="ms-auto ps-2 pe-2">
-          <FontAwesomeIcon icon={show ? faAngleLeft : faAngleRight} />
+          <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
         </div>
       </div>
       {show && faq ? (
@@ -56,10 +54,14 @@ const Faq = () => {
           <div className="container">
             <ul className="list-group list-group-flush">
               {faq.map((aq, index) => (
-                <li key={index} className="list-group-item list-group-item-action px-0 border-0" onClick={() => toggleShowAnswer(index)}>
+                <li
+                  key={index}
+                  className="list-group-item list-group-item-action px-0 border-0"
+                  onClick={() => toggleShowAnswer(index)}
+                >
                   <div className="card-header px-1">
                     {aq.question}
-                    <FontAwesomeIcon className="float-end" icon={show ? faAngleUp : faAngleDown} />
+                    <span className="material-icons-outlined">{showAnswer ? 'expand_less' : 'expand_more'}</span>
                   </div>
                   {showAnswer === index ? <div className="card-body">{aq.answer}</div> : null}
                 </li>
