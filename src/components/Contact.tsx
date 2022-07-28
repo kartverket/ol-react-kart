@@ -23,26 +23,26 @@ const Contact = () => {
         </div>
       </div>
       {show ? (
-        <div className="expandContent">
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <div className="contact-info">
-                  <h4>{t('kontakt_oss_tittel')}</h4>
+        <div className="expandContent container">
+            <div className="row pt-0">
+              <div className="col-13 pt-0">
+                <div className="contact-info pt-0">
                   {t('kontakt_oss_info')}
                   <div className="contact-info-item">
-                    <span className="material-icons-outlined">call</span> +47 32 11 80 00
+                  Telefon:
+                    <a className="button button__green--tertiary button--xs" href='tel:32118000'>32 11 80 00</a>
                   </div>
                   <div className="contact-info-item">
-                    <span className="material-icons-outlined">mail</span>{' '}
-                    <a href="mailto:post@kartverket.no">post@kartverket.no</a>
+                    E-Post:
+                    <a className="button button__green--tertiary button--xs" href="mailto:post@kartverket.no">post@kartverket.no</a>
                   </div>
                   <div className="contact-info-item">
-                    <span className="material-icons-outlined">home</span>{' '}
-                    <a href="https://kartverket.no/">kartverket.no</a>
+                    <a className="button button__green--tertiary button--xs" href="https://www.kartverket.no/om-kartverket" target="_blank" rel="noreferrer">Adresser og kontaktinformasjon</a>
+                  </div>
+                  <div className="contact-info-item">
+                    <a className="button button__green--tertiary button--xs" href="https://www.kartverket.no/om-kartverket/personvern" target="_blank" rel="noreferrer">Personvern og cookies</a>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>

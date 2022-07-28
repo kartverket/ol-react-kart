@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector, useEventSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
 import Faq from '../Faq';
-import Policy from '../Policy';
 import Contact from './../Contact';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
@@ -131,9 +130,6 @@ const MainMenuPanel = () => {
             </div>
             <div className="list-group-item list-group-item-action">
               <Contact />
-            </div>
-            <div className="list-group-item list-group-item-action">
-              <Policy />
             </div>
             <div className="list-group-item list-group-item-action">
               <LanguageSelector />
