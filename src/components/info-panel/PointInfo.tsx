@@ -492,7 +492,7 @@ const PointInfo = () => {
             <div className="small"> {t('NodplakatText2')}</div>
             <div className="small"> {t('NodplakatText3')}</div>
             <button
-              className="btn btn-primary"
+              className="button button__green--primary button--xs"
               onClick={() => {
                 setShowNodplakat1(false);
                 setShowNodplakat2(true);
@@ -559,7 +559,7 @@ const PointInfo = () => {
               <div className="mb-4">
                 {t('In')} {emergencyPointInfo.kommune} {t('Municipality')}
               </div>
-              <button className="btn btn-primary" type="submit">
+              <button className="button button__green--primary button--xs" type="submit">
                 {t('downloadEmergencyPoster')}
               </button>
             </form>
@@ -621,6 +621,7 @@ const PointInfo = () => {
               </div>
               <div className="row mt-3">
                 <a
+                  className='button button__green--tertiary button--xs'
                   href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
                   target="_blank"
                   rel="noreferrer"
@@ -657,7 +658,7 @@ const PointInfo = () => {
                   <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
                   <div className="text-muted">
                     {t('Stedsnummer')}:{' '}
-                    <a href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
+                    <a className="button button__green--tertiary button--xs" href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
                       {result.stedsnummer}
                     </a>
                   </div>
