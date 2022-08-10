@@ -631,7 +631,7 @@ const PointInfo = () => {
             </div>
           </div>
         ) : (
-          <div>{t('noMatrikkel')}</div>
+          <div>{t('seEiendom_no_results')}</div>
         )}
       </div>
       {/* Stedsnavn */}
@@ -669,7 +669,7 @@ const PointInfo = () => {
             ))}
           </ul>
         ) : (
-          <div> {t('noStedsnavn')}</div>
+          <div> {t('ssrFakta_no_results')}</div>
         )}
       </div>
     </>
