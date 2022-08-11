@@ -27,3 +27,9 @@
     cursor: pointer;
   }
 }
+:local(li) {
+  &:hover {
+    background-color: var(--hvit);;
+    cursor: pointer;
+  }
+}
