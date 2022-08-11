@@ -17,6 +17,17 @@ export const GetClickCoordinates = function () {
       if (!isActive) {
         if (map) {
           infoKey = map.on('singleclick', function (evt) {
+            const myMap = window.olMap;
+
+            const markerOerlay = map.getOverlayById('marker');
+            if (markerOerlay) {
+              markerOerlay.setPosition(evt.coordinate);
+              const markerElement = markerOerlay.getElement();
+              if (markerElement) {
+                markerElement.style.visibility = 'visible';
+              }
+            }
+
             const layers = map.getLayers().getArray();
             layers.forEach(element => {
               // @ts-expect-error
@@ -45,11 +56,9 @@ export const GetClickCoordinates = function () {
                 }
                 */
                 if (url) {
-                  console.log('url', url);
                   fetch(url)
                     .then(response => response.text())
                     .then(data => {
-                      console.log(data);
                       const parsedFeature = parseFeatureInfo(data, 'text/plain');
                       console.log('parsedFeature', parsedFeature);
                     })

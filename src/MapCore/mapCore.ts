@@ -3,6 +3,7 @@ import { defaults, ScaleLine } from 'ol/control';
 import { getTopLeft, getWidth } from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
 import Map from 'ol/Map';
+import Overlay from 'ol/Overlay';
 import Projection from 'ol/proj/Projection';
 import { WMTS } from 'ol/source';
 import View from 'ol/View';
@@ -29,6 +30,13 @@ import { IProjectConfig } from './Models/config-model';
 import { Project } from './Project/Project';
 import { addProject, selectCenter, selectToken } from './Project/projectSlice';
 import { wmtsTileGrid } from './TileGrid/wmts';
+
+declare global {
+  interface Window {
+    olMap: any;
+  }
+}
+window.olMap = window.olMap || {};
 
 let myMap: Map;
 let activateMap = false;
@@ -152,6 +160,14 @@ const MapApi = function () {
           }
           const lon = projectConfig.config.project ? projectConfig.config.project.lon : baseconfig.project.lon;
           const lat = projectConfig.config.project ? projectConfig.config.project.lat : baseconfig.project.lat;
+
+          const overlay = new Overlay({
+            id: 'marker',
+            position: [lon, lat],
+            positioning: 'bottom-center',
+            element: document.getElementById('marker') || document.createElement('marker'),
+          });
+
           myMap = new Map({
             layers: [
               new TileLayer({
@@ -172,6 +188,7 @@ const MapApi = function () {
                 zIndex: -1,
               }),
             ],
+            overlays: [overlay],
             target: 'map',
             view: new View({
               center: [lon, lat],
@@ -180,6 +197,8 @@ const MapApi = function () {
             }),
             controls: defaults({ zoom: true, attribution: false, rotate: false }).extend([new ScaleLine()]),
           });
+
+          window.olMap = myMap;
         }
         activateMap = true;
       } else {

@@ -93,7 +93,7 @@ export const generateSearchStedsnavnUrl = (query: string, side: number, antall: 
       return `${urlGeonorge}stedsnavn/v1/navn?sok=${query}&treffPerSide=${antall}&side=${side}`;
     }
   }
-  query = query ? query.indexOf('*') !== -1 ? query : query + '*' : '';
+  query = query ? (query.indexOf('*') !== -1 ? query : query + '*') : '';
   return `${urlGeonorge}stedsnavn/v1/navn?sok=${query}&treffPerSide=${antall}&side=${side}`;
 };
 
@@ -656,4 +656,7 @@ export const toDms = (value: string) => {
 };
 export const zerofill = (value: number) => {
   return value < 10 ? `0${value}` : value;
+};
+export const round = (value:number, decimals:number) => {
+  return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals);
 };

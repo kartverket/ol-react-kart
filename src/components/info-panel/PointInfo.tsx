@@ -20,6 +20,7 @@ import {
   generateProjeksjonerUrl,
   generatStedsnavnPunktsok,
   toDms,
+  round
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
 
@@ -279,8 +280,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-            ? nodplakatStedsnavnRef.current.value
-            : '',
+              ? nodplakatStedsnavnRef.current.value
+              : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
@@ -429,11 +430,11 @@ const PointInfo = () => {
               <div className="container mt-3">
                 <div className="row">
                   <div className="col-4">{t('koord_nord')}</div>
-                  <div className="col-8">{coordinates[1]}</div>
+                  <div className="col-8">{round(coordinates[1], 2)}</div>
                 </div>
                 <div className="row">
                   <div className="col-4">{t('koord_ost')}:</div>
-                  <div className="col-8">{coordinates[0]}</div>
+                  <div className="col-8">{round(coordinates[0], 2)}</div>
                 </div>
               </div>
             </div>
