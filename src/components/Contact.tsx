@@ -24,25 +24,43 @@ const Contact = () => {
       </div>
       {show ? (
         <div className="expandContent container">
-            <div className="row pt-0">
-              <div className="col-13 pt-0">
-                <div className="contact-info pt-0">
-                  {t('kontakt_oss_info')}
-                  <div className="contact-info-item">
+          <div className="row pt-0">
+            <div className="col-13 pt-0">
+              <div className="contact-info pt-0">
+                {t('kontakt_oss_info')}
+                <div className="contact-info-item">
                   Telefon:
-                    <a className="button button__green--tertiary button--xs" href='tel:32118000'>32 11 80 00</a>
-                  </div>
-                  <div className="contact-info-item">
-                    E-Post:
-                    <a className="button button__green--tertiary button--xs" href="mailto:post@kartverket.no">post@kartverket.no</a>
-                  </div>
-                  <div className="contact-info-item">
-                    <a className="button button__green--tertiary button--xs" href="https://www.kartverket.no/om-kartverket" target="_blank" rel="noreferrer">Adresser og kontaktinformasjon</a>
-                  </div>
-                  <div className="contact-info-item">
-                    <a className="button button__green--tertiary button--xs" href="https://www.kartverket.no/om-kartverket/personvern" target="_blank" rel="noreferrer">Personvern og cookies</a>
-                  </div>
+                  <a className="button button__green--tertiary button--xs" href="tel:32118000">
+                    32 11 80 00
+                  </a>
                 </div>
+                <div className="contact-info-item">
+                  E-Post:
+                  <a className="button button__green--tertiary button--xs" href="mailto:post@kartverket.no">
+                    post@kartverket.no
+                  </a>
+                </div>
+                <div className="contact-info-item">
+                  <a
+                    className="button button__green--tertiary button--xs"
+                    href="https://www.kartverket.no/om-kartverket"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Adresser og kontaktinformasjon
+                  </a>
+                </div>
+                <div className="contact-info-item">
+                  <a
+                    className="button button__green--tertiary button--xs"
+                    href="https://www.kartverket.no/om-kartverket/personvern"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Personvern og cookies
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
