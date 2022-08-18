@@ -45,7 +45,7 @@
       "distributionProtocol": "WMTS",
       "type": "map",
       "gatekeeper": "true",
-      "name": "Rasterkart",
+      "name": "rasterkart",
       "description": "Viser kart slik den ser ut på papirkart",
       "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
       "params": {

@@ -27,6 +27,8 @@ addCustomProj('EPSG:32634');
 addCustomProj('EPSG:32635');
 addCustomProj('EPSG:32636');
 addCustomProj('EPSG:4258');
+addCustomProj('EPSG:4326');
+
 
 const _getLayersWithGuid = function () {
   return map

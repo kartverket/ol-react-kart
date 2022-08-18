@@ -20,9 +20,14 @@ import {
   generateProjeksjonerUrl,
   generatStedsnavnPunktsok,
   toDms,
+  round
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
-
+import Turkart from './Turkart';
+import { getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
+import { IProsjektion } from '../../utils/mapUtil';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store'
 export interface IPunktInfo {
   datakilde: string;
   terreng: string;
@@ -33,11 +38,6 @@ export interface IPunktInfo {
 export interface IHoydeResult {
   koordsys?: number;
   punkter?: IPunktInfo[];
-}
-export interface IProsjektion {
-  epsg: number;
-  info: string;
-  name: string;
 }
 
 const PointInfo = () => {
@@ -180,51 +180,7 @@ const PointInfo = () => {
       ' sekunder'
     );
   };
-  const getUTMZoneFromGeographicPoint = (lon: number, lat: number) => {
-    let sone = '32V',
-      localProj = 'EPSG:32632';
-    if (lat > 72) {
-      if (lon < 21) {
-        sone = '33X';
-        localProj = 'EPSG:32633';
-      } else {
-        sone = '35X';
-        localProj = 'EPSG:32635';
-      }
-    } else if (lat > 64) {
-      if (lon < 6) {
-        sone = '31W';
-        localProj = 'EPSG:32631';
-      } else if (lon < 12) {
-        sone = '32W';
-        localProj = 'EPSG:32632';
-      } else if (lon < 18) {
-        sone = '33W';
-        localProj = 'EPSG:32633';
-      } else if (lon < 24) {
-        sone = '34W';
-        localProj = 'EPSG:32634';
-      } else if (lon < 30) {
-        sone = '35W';
-        localProj = 'EPSG:32635';
-      } else {
-        sone = '36W';
-        localProj = 'EPSG:32636';
-      }
-    } else {
-      if (lon < 3) {
-        sone = '31V';
-        localProj = 'EPSG:32631';
-      } else if (lon >= 12) {
-        sone = '33V';
-        localProj = 'EPSG:32633';
-      }
-    }
-    return {
-      sone: sone,
-      localProj: localProj,
-    };
-  };
+
   const replaceNorwegianChars = (emergencyPosterServiceUrl: string) => {
     emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C2%B0/g, '%B0'); // °
     emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%A6/g, '%E6'); // æ
@@ -249,7 +205,7 @@ const PointInfo = () => {
     if (clickCoordinates && clickCoordinates.coordinate && clickCoordinates.center && clickCoordinates.extent) {
       const googleCoordinates = transform(clickCoordinates.coordinate, clickCoordinates.epsg, 'EPSG:4326');
       const UTM = getUTMZoneFromGeographicPoint(googleCoordinates[0], googleCoordinates[1]);
-      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.localProj);
+      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.epsg);
       const pixels = {
         width: 1145,
         height: 660,
@@ -279,8 +235,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-            ? nodplakatStedsnavnRef.current.value
-            : '',
+              ? nodplakatStedsnavnRef.current.value
+              : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
@@ -321,6 +277,7 @@ const PointInfo = () => {
 
         <p className="fs-5 mt-3 ms-2">{t('hva_vil_du_gjore')}</p>
         <div className="d-flex flex-column">
+          {/* Eiendomsinformasjon */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -334,6 +291,7 @@ const PointInfo = () => {
               <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Stedsnavn */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -347,6 +305,7 @@ const PointInfo = () => {
               <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Koordinater */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -360,6 +319,7 @@ const PointInfo = () => {
               <span className="material-icons-outlined">{showCoordinates ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Turkart */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -373,6 +333,8 @@ const PointInfo = () => {
               <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Fargeleggingskart */}
+          {/*
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -385,7 +347,8 @@ const PointInfo = () => {
               <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
               <span className="material-icons-outlined">{showFargeleggingskart ? 'expand_less' : 'expand_more'}</span>
             </div>
-          </div>
+          </div> */}
+          {/* Nodplakat */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -402,7 +365,7 @@ const PointInfo = () => {
           </div>
         </div>
       </div>
-      {/* Koordinater */}
+      {/* Koordinater open */}
       <div className={showCoordinates ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -422,25 +385,25 @@ const PointInfo = () => {
               <select className="form-select form-select-sm" onChange={e => handleTransform(e)} value={projection}>
                 {projeksjoner.map((result, index) => (
                   <option value={result.epsg} key={index}>
-                    {result.name}
+                    EPSG:{result.epsg} - {result.name} 
                   </option>
                 ))}
               </select>
               <div className="container mt-3">
                 <div className="row">
                   <div className="col-4">{t('koord_nord')}</div>
-                  <div className="col-8">{coordinates[1]}</div>
+                  <div className="col-8">{round(coordinates[1], 2)}</div>
                 </div>
                 <div className="row">
                   <div className="col-4">{t('koord_ost')}:</div>
-                  <div className="col-8">{coordinates[0]}</div>
+                  <div className="col-8">{round(coordinates[0], 2)}</div>
                 </div>
               </div>
             </div>
           ) : null}
         </div>
       </div>
-      {/* Turkart */}
+      {/* Turkart open */}
       <div className={showTurkart ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -451,12 +414,14 @@ const PointInfo = () => {
             className={style.expandBtn}
           >
             <span className="material-icons-outlined me-1">blind</span>
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
             <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
+        {showTurkart ? <Turkart/> : null}
       </div>
-      {/* Fargeleggingskart */}
+      {/* Fargeleggingskart open */}
+      {/*
       <div className={showFargeleggingskart ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -467,12 +432,13 @@ const PointInfo = () => {
             className={style.expandBtn}
           >
             <span className="material-icons-outlined me-1">brush</span>
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
             <span className="material-icons-outlined">{showFargeleggingskart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
       </div>
-      {/* Nodplakat */}
+      */}
+      {/* Nodplakat open */}
       <div className={showNodplakat ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -581,7 +547,7 @@ const PointInfo = () => {
           </div>
         </div>
       </div>
-      {/* Eiendomsinformasjon */}
+      {/* Eiendomsinformasjon open */}
       <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -632,10 +598,10 @@ const PointInfo = () => {
             </div>
           </div>
         ) : (
-          <div>{t('noMatrikkel')}</div>
+          <div>{t('seEiendom_no_results')}</div>
         )}
       </div>
-      {/* Stedsnavn */}
+      {/* Stedsnavn open */}
       <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -670,7 +636,7 @@ const PointInfo = () => {
             ))}
           </ul>
         ) : (
-          <div> {t('noStedsnavn')}</div>
+          <div> {t('ssrFakta_no_results')}</div>
         )}
       </div>
     </>
