@@ -25,6 +25,9 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "flybilder",
+      "uuid": "efae19ae-c267-47b7-ae0d-61861fb3b24f",
+      "link": "https://www.norgeibilder.no/",
+      "description": "Dette er flybilder, mer info finner du på geonorge",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
       "params": {
         "layers": "Nibcache_UTM33_EUREF89",
@@ -43,6 +46,7 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "rasterkart",
+      "description": "Viser kart slik den ser ut på papirkart",
       "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
       "params": {
         "layers": "toporaster",
@@ -62,6 +66,7 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "gratone",
+      "description": "Viser kartet gratone slik at man kan enkeltere ser info's som blir lagt på toppen",
       "url": "https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/",
       "params": {
         "layers": "norges_grunnkart_graatone",
