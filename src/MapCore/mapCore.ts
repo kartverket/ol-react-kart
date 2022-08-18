@@ -167,7 +167,10 @@ const MapApi = function () {
             positioning: 'bottom-center',
             element: document.getElementById('marker') || document.createElement('marker'),
           });
-
+          const markerElement = overlay.getElement();
+          if (markerElement) {
+            markerElement.style.visibility = 'hidden';
+          }
           myMap = new Map({
             layers: [
               new TileLayer({

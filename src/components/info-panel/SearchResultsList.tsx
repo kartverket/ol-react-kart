@@ -5,9 +5,10 @@ import { Vector as VectorLayer } from 'ol/layer.js';
 import { transform } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Icon, Style } from 'ol/style';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import pin_orange from '../../assets/pin-md-orange.png';
+import pin_blue from '../../assets/pin-md-blueish.png';
 import { useAppSelector, useEventDispatch } from '../../index';
 import { setCenter } from '../../MapCore/Project/projectSlice';
 import { selectSearch } from '../search/searchSlice';
@@ -20,11 +21,19 @@ const SearchResultsList = () => {
   const searchResult = useAppSelector(selectSearch);
   const dispatch = useEventDispatch();
   const [expandedAdress, setStateAdress] = useState(false);
-  const [expandedSsr, setStateSsr] = useState(false);
+  const [expandedSsr, setStateSsr] = useState(true);
   const [expandedMatrikkel, setStateMatrikkel] = useState(false);
-  const vectorLayer = new VectorLayer({ source: vectorSource });
-  window.olMap.addLayer(vectorLayer);
+  let vectorLayer: any;
 
+  useEffect(() => {
+    vectorLayer = new VectorLayer({ source: vectorSource, properties: { name: 'searchResultsLayer' } });
+    window.olMap.addLayer(vectorLayer);
+    vectorSource.clear();
+    return () => {
+      vectorSource.clear();
+      window.olMap.removeLayer(vectorLayer);
+    }
+  }, []);
   const icon_orange = new Style({
     image: new Icon({
       anchor: [0.5, 46],
@@ -33,22 +42,38 @@ const SearchResultsList = () => {
       src: pin_orange,
     }),
   });
-
+  const icon_blue = new Style({
+    image: new Icon({
+      anchor: [0.5, 46],
+      anchorXUnits: 'fraction',
+      anchorYUnits: 'pixels',
+      src: pin_blue
+    })
+  })
   const showInfoMarker = (coordinate: Coordinate) => {
     const iconFeature = new Feature({ geometry: new Point(coordinate) });
     iconFeature.setStyle(icon_orange);
     vectorSource.addFeature(iconFeature);
   };
-
+  const clearMarkers = () => {
+    vectorSource.clear();
+  }
   const constructPoint = (coord: { lon: number; lat: number; epsg: number | string }, epsgTo = 'EPSG:25833') => {
     const epsgFrom: string = typeof coord.epsg === 'number' ? 'EPSG:' + coord.epsg : coord.epsg;
     return transform([Number(coord.lon), Number(coord.lat)], epsgFrom, epsgTo);
   };
-
+  const mouseOver = (coordinate: Coordinate) => {
+    const features = vectorSource.getFeaturesAtCoordinate(coordinate)
+    features.forEach(feature => feature.setStyle(icon_blue))
+  }
+  const mouseOut = (coordinate: Coordinate) => {
+    const features = vectorSource.getFeaturesAtCoordinate(coordinate)
+    features.forEach(feature => feature.setStyle(icon_orange))
+  }
   return (
     <>
       <div id="ssrResult" className="search-result ps-2">
-        <div onClick={() => setStateSsr(!expandedSsr)} className={style.expandBtn}>
+        <div onClick={() => { setStateSsr(!expandedSsr); clearMarkers(); }} className={style.expandBtn}>
           <span className={style.ellipsisToggle}>{t('searchResult_placenames')}</span>
           <span className="badge text-bg-secondary">{searchResult?.ssr?.metadata?.totaltAntallTreff || 0}</span>
           <span className="ps-2 material-icons-outlined">{expandedSsr ? 'expand_less' : 'expand_more'}</span>
@@ -57,13 +82,15 @@ const SearchResultsList = () => {
           {searchResult.ssr ? (
             <ul className="list-group list-group-flush search-result-list">
               {searchResult?.ssr?.navn?.map((result, index) => {
-                showInfoMarker(
-                  constructPoint({
-                    lon: result.representasjonspunkt.øst,
-                    lat: result.representasjonspunkt.nord,
-                    epsg: result.representasjonspunkt.koordsys,
-                  }),
-                );
+                if (expandedSsr) {
+                  showInfoMarker(
+                    constructPoint({
+                      lon: result.representasjonspunkt.øst,
+                      lat: result.representasjonspunkt.nord,
+                      epsg: result.representasjonspunkt.koordsys,
+                    }),
+                  );
+                }
                 return (
                   <li
                     key={index}
@@ -77,6 +104,15 @@ const SearchResultsList = () => {
                         }),
                       )
                     }
+                    onMouseOver={() => mouseOver(constructPoint({
+                      lon: result.representasjonspunkt.øst,
+                      lat: result.representasjonspunkt.nord,
+                      epsg: result.representasjonspunkt.koordsys,
+                    }))} onMouseOut={() => mouseOut(constructPoint({
+                      lon: result.representasjonspunkt.øst,
+                      lat: result.representasjonspunkt.nord,
+                      epsg: result.representasjonspunkt.koordsys,
+                    }))}
                   >
                     <span>
                       {result.skrivemåte}, {result.navneobjekttype}{' '}
@@ -91,7 +127,7 @@ const SearchResultsList = () => {
       </div>
 
       <div id="addressREsult" className="search-result ps-2">
-        <div onClick={() => setStateAdress(!expandedAdress)} className={style.expandBtn}>
+        <div onClick={() => { setStateAdress(!expandedAdress); clearMarkers(); }} className={style.expandBtn}>
           <span className={style.ellipsisToggle}>{t('searchResult_addresses')}</span>
           <span className="badge text-bg-secondary">{searchResult?.adresser?.metadata?.totaltAntallTreff || 0}</span>
           <span className="material-icons-outlined">{expandedAdress ? 'expand_less' : 'expand_more'}</span>
@@ -100,12 +136,14 @@ const SearchResultsList = () => {
           {searchResult.adresser ? (
             <ul className="list-group list-group-flush search-result-list">
               {searchResult?.adresser?.adresser?.map((result, index) => {
-                showInfoMarker(constructPoint(result.representasjonspunkt));
+                if (expandedAdress) { showInfoMarker(constructPoint(result.representasjonspunkt)); }
                 return (
                   <li
                     key={index}
                     className="list-group-item pt-2 pb-2 search-result-list-item"
                     onClick={() => dispatch(setCenter(result.representasjonspunkt))}
+                    onMouseOver={() => mouseOver(constructPoint(result.representasjonspunkt))}
+                    onMouseOut={() => mouseOut(constructPoint(result.representasjonspunkt))}
                   >
                     <span>
                       Adresse {result.adressetekst}, {result.objtype}{' '}
@@ -120,7 +158,7 @@ const SearchResultsList = () => {
       </div>
 
       <div id="matrikkelResult" className="search-result ps-2">
-        <div onClick={() => setStateMatrikkel(!expandedMatrikkel)} className={style.expandBtn}>
+        <div onClick={() => { setStateMatrikkel(!expandedMatrikkel); clearMarkers(); }} className={style.expandBtn}>
           <span className={style.ellipsisToggle}>Eiendom</span>
           <span className="badge text-bg-secondary">{searchResult?.matrikkel?.metadata?.totaltAntallTreff || 0}</span>
           <span className="material-icons-outlined">{expandedMatrikkel ? 'expand_less' : 'expand_more'}</span>
@@ -129,12 +167,14 @@ const SearchResultsList = () => {
           {searchResult.matrikkel ? (
             <ul className="list-group list-group-flush search-result-list">
               {searchResult?.matrikkel?.adresser?.map((result, index) => {
-                showInfoMarker(constructPoint(result.representasjonspunkt));
+                if (expandedMatrikkel) { showInfoMarker(constructPoint(result.representasjonspunkt)); }
                 return (
                   <li
                     key={index}
                     className="list-group-item pt-2 pb-2 search-result-list-item"
                     onClick={() => dispatch(setCenter(result.representasjonspunkt))}
+                    onMouseOver={() => mouseOver(constructPoint(result.representasjonspunkt))}
+                    onMouseOut={() => mouseOut(constructPoint(result.representasjonspunkt))}
                   >
                     <span>
                       Adresse {result.adressetekst}, {result.objtype}{' '}

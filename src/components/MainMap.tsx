@@ -6,6 +6,7 @@ import pinOrange from '../assets/pin-md-orange.png';
 import { selectActiveProject } from '../components/main-menu-panel/projects-list/projectsListSlice';
 import { useAppSelector, useEventDispatch } from '../index';
 import { setCenter } from '../MapCore/Project/projectSlice';
+import Position from './Position'
 
 const MainMap = () => {
   const [mapInit, setMapInit] = useState(false);
@@ -64,6 +65,7 @@ const MainMap = () => {
           <img className="markerImg" src={pinOrange}></img>
         </div>
       </div>
+      {mapInit ? <Position/> : null}
     </>
   );
 };

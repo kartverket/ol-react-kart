@@ -17,6 +17,7 @@ function Search() {
   const [query, setQuery] = useState('');
   const appDispatch = useAppDispatch();
   const eventDispatch = useEventDispatch();
+  const [reset, setReset] = useState(false);
 
   useEffect(() => {
     if (query) {
@@ -43,15 +44,28 @@ function Search() {
   }, [query, appDispatch]);
 
   const handleInputChange = () => {
-    console.log('SEARCH: ', search?.value);
+    setReset(true);
     if (search?.value) {
       setQuery(search?.value);
       eventDispatch(setClickCoordinates({}));
     } else {
-      // appDispatch(setResult({}));
+      appDispatch(setSsrResult({}));
+      appDispatch(setAdresseResult({}));
+      appDispatch(setMatrikkelResult({}));
       eventDispatch(setClickCoordinates({}));
     }
   };
+  const resetHandler = () => {
+    if (search?.value) {
+      search.value = '';
+    }
+    setReset(false);
+    setQuery('');
+    appDispatch(setSsrResult({}));
+    appDispatch(setAdresseResult({}));
+    appDispatch(setMatrikkelResult({}));
+    eventDispatch(setClickCoordinates({}));
+  }
   let search: HTMLInputElement | null;
 
   return (
@@ -82,6 +96,13 @@ function Search() {
           }}
           onChange={handleInputChange}
         />
+        {reset && (
+          <button className="btn btn-outline-secondary border border-start-0 menu-icon" onClick={() => {
+            resetHandler()
+          }}>
+            <span className="material-icons" >close</span>
+          </button>
+        )}
         {/* <Suggestions results={this.state.results} /> */}
         <button
           className="input-group-text search-icon"
