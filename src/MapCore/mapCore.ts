@@ -8,7 +8,7 @@ import Projection from 'ol/proj/Projection';
 import { WMTS } from 'ol/source';
 import View from 'ol/View';
 import { useEffect } from 'react';
-import { useEventDispatch, useEventSelector } from '../../src/index';
+import { useEventDispatch, useEventSelector, useAppSelector } from '../../src/index';
 import baseconfig from '../config/baseconfig.json';
 import { generateKoordTransUrl } from '../utils/n3api';
 import { GetClickCoordinates } from './Events/GetClickCoordinates';
@@ -26,6 +26,7 @@ import {
   toggleTileLayer,
   toggleVectorLayer,
 } from './Layers/layersSlice';
+import { selectLayersState } from '../components/mainMapSlice';
 import { IProjectConfig } from './Models/config-model';
 import { Project } from './Project/Project';
 import { addProject, selectCenter, selectToken } from './Project/projectSlice';
@@ -41,18 +42,18 @@ window.olMap = window.olMap || {};
 let myMap: Map;
 let activateMap = false;
 
-const MapApi = function () {
-  const dispatch = useEventDispatch();
-  const mapMoveEnd = MapMoveEnd(dispatch);
+const MapApi = () => {
+  const eventDispatch = useEventDispatch();
+  const mapMoveEnd = MapMoveEnd(eventDispatch);
   const getClickCoordinates = GetClickCoordinates();
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = useEventSelector(selectBaseLayers);
-  const appProject = Project(dispatch);
+  const appProject = Project(eventDispatch);
   const toggleVector = useEventSelector(selectToggleVectorLayer);
   const toggleTile = useEventSelector(selectToggleTileLayer);
-
   const token = useEventSelector(selectToken);
   const center = useEventSelector(selectCenter);
+  const layersState = useAppSelector(selectLayersState);
 
   useEffect(() => {
     if (center) {
@@ -70,14 +71,23 @@ const MapApi = function () {
 
   useEffect(() => {
     if (token && visibleBaseLayer && baseLayers) {
-      // console.log('TOKEN updated, baseLayer: ', token, visibleBaseLayer);
       const layers = Layers(myMap);
       baseLayers.forEach(b => {
         layers.hideLayer(b.guid);
       });
       layers.createTileLayer(visibleBaseLayer, token);
 
-      // TODO: temporary commented
+      /*
+      if (baseLayers && baseLayers.length > 0) {
+        if (layersState) {
+          if (typeof layersState === 'string') {
+            const test = baseLayers.filter(l => l.name === layersState);
+            console.log(test);
+          }
+        }
+      }
+      */
+    // TODO: temporary commented
       // if (newBaseLayer) {
       //     myMap.addLayer(newBaseLayer);
       //     if (newBaseLayer.get('wmtsextent')) {
@@ -98,45 +108,43 @@ const MapApi = function () {
       const layers = Layers(myMap);
       if (toggleVector.options.visibility === 'false') {
         layers.createVectorLayer(toggleVector);
-        dispatch(toggleVectorLayer());
+        eventDispatch(toggleVectorLayer());
       } else {
         layers.hideLayer(toggleVector.guid);
-        dispatch(toggleVectorLayer());
+        eventDispatch(toggleVectorLayer());
       }
     }
-  }, [toggleVector, dispatch]);
+  }, [toggleVector, eventDispatch]);
 
   useEffect(() => {
     if (toggleTile && token) {
       const layers = Layers(myMap);
       if (toggleTile.options.visibility === 'false') {
         layers.createTileLayer(toggleTile, token);
-        dispatch(toggleTileLayer());
+        eventDispatch(toggleTileLayer());
       } else {
         layers.hideLayer(toggleTile.guid);
-        dispatch(toggleTileLayer());
+        eventDispatch(toggleTileLayer());
       }
     }
-  }, [toggleTile, token, dispatch]);
+  }, [toggleTile, token, eventDispatch]);
 
   return {
     init(projectConfig: IProjectConfig) {
       if (!activateMap) {
         if (projectConfig.config.project) {
-          dispatch(addProject(projectConfig.config.project));
+          eventDispatch(addProject(projectConfig.config.project));
         } else {
-          dispatch(addProject(baseconfig.project));
+          eventDispatch(addProject(baseconfig.project));
         }
-        dispatch(addGroups(projectConfig.config.maplayer));
-        dispatch(addTileLayers(projectConfig.config.layer));
+        eventDispatch(addGroups(projectConfig.config.maplayer));
+        eventDispatch(addTileLayers(projectConfig.config.layer));
         if (projectConfig.config.vector) {
-          dispatch(addVectorLayers(projectConfig.config.vector));
+          eventDispatch(addVectorLayers(projectConfig.config.vector));
         }
 
         if (!myMap) {
-          const mapepsg = projectConfig.config.project
-            ? projectConfig.config.project.mapepsg
-            : baseconfig.project.mapepsg;
+          const mapepsg = projectConfig.config.project ? projectConfig.config.mapepsg : baseconfig.project.mapepsg;
 
           const sm = new Projection({
             code: mapepsg,
@@ -158,12 +166,18 @@ const MapApi = function () {
             resolutions[z] = size / Math.pow(2, z);
             matrixIds[z] = String(z);
           }
-          const lon = projectConfig.config.project ? projectConfig.config.project.lon : baseconfig.project.lon;
-          const lat = projectConfig.config.project ? projectConfig.config.project.lat : baseconfig.project.lat;
+          const center =
+            projectConfig.config && !isNaN(projectConfig.config.center[0])
+              ? projectConfig.config.center
+              : baseconfig.project.center;
+          const zoom =
+            projectConfig.config && !isNaN(projectConfig.config.zoom)
+              ? projectConfig.config.zoom
+              : baseconfig.project.zoom;
 
           const overlay = new Overlay({
             id: 'marker',
-            position: [lon, lat],
+            position: center,
             positioning: 'bottom-center',
             element: document.getElementById('marker') || document.createElement('marker'),
           });
@@ -171,6 +185,7 @@ const MapApi = function () {
           if (markerElement) {
             markerElement.style.visibility = 'hidden';
           }
+
           myMap = new Map({
             layers: [
               new TileLayer({
@@ -194,9 +209,11 @@ const MapApi = function () {
             overlays: [overlay],
             target: 'map',
             view: new View({
-              center: [lon, lat],
+              center: center,
               projection: sm,
-              zoom: 4,
+              zoom: zoom,
+              minZoom: 3,
+              maxZoom: 18,
             }),
             controls: defaults({ zoom: true, attribution: false, rotate: false }).extend([new ScaleLine()]),
           });
@@ -214,7 +231,7 @@ const MapApi = function () {
       // myMap.dispose();
       const layers = Layers(myMap);
       layers.removeAllLayers();
-      dispatch(removeAll());
+      eventDispatch(removeAll());
       activateMap = false;
     },
   };

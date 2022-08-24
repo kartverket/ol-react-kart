@@ -1,4 +1,3 @@
-
 export interface IProsjektion {
   epsg: number;
   info: string;

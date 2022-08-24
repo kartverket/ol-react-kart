@@ -62,7 +62,9 @@ const MainMenuPanelProjectLayers = () => {
                             id={tileLayer.name}
                             checked={tileLayer.options.visibility === 'true' ? true : false}
                             defaultChecked={false}
-                            onClick={(e) => {e.stopPropagation();}}
+                            onClick={e => {
+                              e.stopPropagation();
+                            }}
                           />
                           <label htmlFor={tileLayer.name}>{t(tileLayer.name)}</label>
                         </div>

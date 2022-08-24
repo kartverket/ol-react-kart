@@ -2,9 +2,7 @@ import { Coordinate } from 'ol/coordinate';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrintBoxSelect } from '../../MapCore/printBoxSelect';
-import {
-  generateLagTurkartUrl,
-} from '../../utils/n3api';
+import { generateLagTurkartUrl } from '../../utils/n3api';
 export interface IScale {
   scale: number;
   label: string;
@@ -41,7 +39,7 @@ const Turkart = () => {
   useEffect(() => {
     return () => {
       printBoxSelectTool.deactivate();
-    }
+    };
   }, []);
   const deactivatePrintBoxSelect = () => {
     const printBox = document.getElementById('printBox');
@@ -58,43 +56,45 @@ const Turkart = () => {
   const mapReadyForDownload = (data: any, url: string) => {
     const mapLink = url.replace('turkart2', '') + data.linkPdf;
     console.log('mapLink', mapLink);
-  }
+  };
   const mapCreationFailed = (data: any) => {
     console.log('mapCreationFailed', data);
-  }
+  };
   const createJson = () => {
     extent = printBoxSelectTool.getExtentOfPrintBox();
     return {
       map: {
         bbox: extent.bbox,
         center: extent.center,
-        dpi: "300",
-        layers: [{
-          baseURL: "https://wms.geonorge.no/skwms1/wms.toporaster4",
-          customParams: {
-            TRANSPARENT: "false"
+        dpi: '300',
+        layers: [
+          {
+            baseURL: 'https://wms.geonorge.no/skwms1/wms.toporaster4',
+            customParams: {
+              TRANSPARENT: 'false',
+            },
+            imageFormat: 'image/jpeg',
+            layers: ['toporaster'],
+            opacity: 1,
+            type: 'WMS',
           },
-          imageFormat: "image/jpeg",
-          layers: ["toporaster"],
-          opacity: 1,
-          type: "WMS"
-        }],
+        ],
         projection: extent.projection,
         sone: extent.sone,
-        biSone: extent.biSone
+        biSone: extent.biSone,
       },
       paging: 12,
-      layout: "A4 landscape",
+      layout: 'A4 landscape',
       scale: extent.scale,
       titel: titel,
       legend: legend,
       trips: trips,
       sweden: sweden,
       compass: compass,
-      link: "https://norgeskart.no/"
+      link: 'https://norgeskart.no/',
       //link: "https://norgeskart.no/#!?z=" + activePosition.zoom + "&ma=" + Number(Math.round(activePosition.lat + 'e' + 2) + 'e-' + 2) + "&mo=" + Number(Math.round(activePosition.lon + 'e' + 2) + 'e-' + 2) + '&p=tur'
     };
-  }
+  };
   const orderMap = () => {
     const map = document.getElementById('map');
     if (map) {
@@ -106,23 +106,21 @@ const Turkart = () => {
     const json = createJson();
     const jsonData = JSON.stringify(json);
     const urlLagTurkart = generateLagTurkartUrl();
-    fetch(urlLagTurkart,
-      {
-        method: "POST",
-        body: jsonData,
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then((res) => {
-        return res.json()
+    fetch(urlLagTurkart, {
+      method: 'POST',
+      body: jsonData,
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => {
+        return res.json();
       })
       .then(response => {
         mapReadyForDownload(response, urlLagTurkart);
       })
       .catch((error: any) => {
         mapCreationFailed(error);
-      }
-      );
+      });
     const showSpinner = true;
     //document.getElementById('spinner1').style.backgroundColor = 'rgba(0,0,0,0.4)';
     //document.getElementById('spinner1').style.transition = '0.8s';
@@ -145,7 +143,10 @@ const Turkart = () => {
                 <select
                   id="turkart_scale"
                   className="form-select"
-                  onChange={e => { setScale(Number(e.target.value)); applyScale() }}
+                  onChange={e => {
+                    setScale(Number(e.target.value));
+                    applyScale();
+                  }}
                   value={scale}
                 >
                   {scales.map((item, index) => (
@@ -162,7 +163,12 @@ const Turkart = () => {
           <div className="title-text">{t('Turkart_navn')}</div>
           <div className="row">
             <div className="col-xs-12">
-              <input type="text" placeholder={t('Turkart_navn_eks')} onChange={(e) => setTitel(e.target.value)} className="full-width" />
+              <input
+                type="text"
+                placeholder={t('Turkart_navn_eks')}
+                onChange={e => setTitel(e.target.value)}
+                className="full-width"
+              />
             </div>
           </div>
         </div>

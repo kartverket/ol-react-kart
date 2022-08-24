@@ -1,38 +1,35 @@
 /* farger */
 
-:root{
-    /*svart og hvit*/
-    --svart: #222222;
-    --hvit: #FFFFFF;
+:root {
+  /*svart og hvit*/
+  --svart: #222222;
+  --hvit: #ffffff;
 
-    /*graa*/
-    --graa_moerk: #505050;
-    --graa: #707070;
-    --graa_lys: #F5F2F2;
+  /*graa*/
+  --graa_moerk: #505050;
+  --graa: #707070;
+  --graa_lys: #f5f2f2;
 
-    /*Blaa*/
-    --blaa_moerk: #175092;
-    --blaa: #1A589F;
-    --blaa_lys: #E4F1F8;
-    --blaa_hover: #439CCD;
-    --blaa_moerk_knapp: #213060;
+  /*Blaa*/
+  --blaa_moerk: #175092;
+  --blaa: #1a589f;
+  --blaa_lys: #e4f1f8;
+  --blaa_hover: #439ccd;
+  --blaa_moerk_knapp: #213060;
 
-    /*groenn*/
-    --groenn_moerk: #05520A; 
-    --groenn_standard: #156630;
-    --groenn_hover: #1A833B;
-    --groenn_lys: #D0ECD6;
+  /*groenn*/
+  --groenn_moerk: #05520a;
+  --groenn_standard: #156630;
+  --groenn_hover: #1a833b;
+  --groenn_lys: #d0ecd6;
 
-    /*roed og rosa*/
-    --roed_feilmelding: #A32F00;
-    --roed_moerk: #D04a14;
-    --rosa: #F7E6EB;
+  /*roed og rosa*/
+  --roed_feilmelding: #a32f00;
+  --roed_moerk: #d04a14;
+  --rosa: #f7e6eb;
 
-    /*oransje og gul*/
-    --oransje: #FCF1E8;
-    --gul: #FFDD9D;
-    --gul_lys: #FCEBCD;
+  /*oransje og gul*/
+  --oransje: #fcf1e8;
+  --gul: #ffdd9d;
+  --gul_lys: #fcebcd;
 }
-
-
-

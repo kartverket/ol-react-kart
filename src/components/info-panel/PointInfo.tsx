@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { getUTMZoneFromGeographicPoint, IProsjektion } from '../../utils/mapUtil';
 import {
   generateAdressePunktsokUrl,
   generateEiendomAddressUrl,
@@ -19,15 +20,11 @@ import {
   generateMatrikkelInfoUrl,
   generateProjeksjonerUrl,
   generatStedsnavnPunktsok,
+  round,
   toDms,
-  round
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
-import { getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
-import { IProsjektion } from '../../utils/mapUtil';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../app/store'
 export interface IPunktInfo {
   datakilde: string;
   terreng: string;
@@ -235,8 +232,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-              ? nodplakatStedsnavnRef.current.value
-              : '',
+            ? nodplakatStedsnavnRef.current.value
+            : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
@@ -385,7 +382,7 @@ const PointInfo = () => {
               <select className="form-select form-select-sm" onChange={e => handleTransform(e)} value={projection}>
                 {projeksjoner.map((result, index) => (
                   <option value={result.epsg} key={index}>
-                    EPSG:{result.epsg} - {result.name} 
+                    EPSG:{result.epsg} - {result.name}
                   </option>
                 ))}
               </select>
@@ -418,7 +415,7 @@ const PointInfo = () => {
             <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
-        {showTurkart ? <Turkart/> : null}
+        {showTurkart ? <Turkart /> : null}
       </div>
       {/* Fargeleggingskart open */}
       {/*
@@ -587,7 +584,7 @@ const PointInfo = () => {
               </div>
               <div className="row mt-3">
                 <a
-                  className='button button__green--tertiary button--xs'
+                  className="button button__green--tertiary button--xs"
                   href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
                   target="_blank"
                   rel="noreferrer"
@@ -624,7 +621,12 @@ const PointInfo = () => {
                   <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
                   <div className="text-muted">
                     {t('Stedsnummer')}:{' '}
-                    <a className="button button__green--tertiary button--xs" href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
+                    <a
+                      className="button button__green--tertiary button--xs"
+                      href={generateFaktaarkUrl(result.stedsnummer)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       {result.stedsnummer}
                     </a>
                   </div>

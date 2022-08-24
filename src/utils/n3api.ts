@@ -657,6 +657,6 @@ export const toDms = (value: string) => {
 export const zerofill = (value: number) => {
   return value < 10 ? `0${value}` : value;
 };
-export const round = (value:number, decimals:number) => {
+export const round = (value: number, decimals: number) => {
   return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals);
 };

@@ -39,7 +39,6 @@ export const GetClickCoordinates = function () {
                   });
                 /*
                 const formats = element.getSource().getParams().info_formats;
-                console.log(formats);
                 let indexFormat = 0;
                 if (formats.indexOf('text/plain') > 0) {
                   indexFormat = formats.indexOf('text/plain');

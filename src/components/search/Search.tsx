@@ -1,23 +1,32 @@
 // const { API_KEY } = process.env;
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useEventDispatch } from '../../index';
+import { useAppDispatch, useEventDispatch, useAppSelector } from '../../index';
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 import {
   generateAdresseSokUrl,
   generateSearchMatrikkelAdresseUrl,
   generateSearchStedsnavnUrl,
 } from '../../utils/n3api';
+import { selectSokState } from '../mainMapSlice';
 import { setAdresseResult, setMatrikkelResult, setSsrResult } from '../search/searchSlice';
 import { IAdresser, ISsr } from './search-model';
 
-function Search() {
+const Search = () => {
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const appDispatch = useAppDispatch();
   const eventDispatch = useEventDispatch();
   const [reset, setReset] = useState(false);
+  const searchState = useAppSelector(selectSokState);
+  const searchInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (searchState) {
+      setQuery(searchState);
+    }
+  }, [searchState]);
 
   useEffect(() => {
     if (query) {
@@ -43,10 +52,10 @@ function Search() {
     }
   }, [query, appDispatch]);
 
-  const handleInputChange = () => {
+  const handleInputChange = (value: string) => {
     setReset(true);
-    if (search?.value) {
-      setQuery(search?.value);
+    if (value) {
+      setQuery(value);
       eventDispatch(setClickCoordinates({}));
     } else {
       appDispatch(setSsrResult({}));
@@ -56,17 +65,13 @@ function Search() {
     }
   };
   const resetHandler = () => {
-    if (search?.value) {
-      search.value = '';
-    }
     setReset(false);
     setQuery('');
     appDispatch(setSsrResult({}));
     appDispatch(setAdresseResult({}));
     appDispatch(setMatrikkelResult({}));
     eventDispatch(setClickCoordinates({}));
-  }
-  let search: HTMLInputElement | null;
+  };
 
   return (
     <>
@@ -89,18 +94,21 @@ function Search() {
           style={{ width: '350px' }}
           className="border border-start-0 border-end-0 ps-2"
           placeholder={t('search_text')}
-          ref={input => (search = input)}
+          ref={searchInput}
+          value={query}
           onClick={() => {
-            if (search?.value) setQuery('\t' + query);
             eventDispatch(setClickCoordinates({}));
           }}
-          onChange={handleInputChange}
+          onChange={e => handleInputChange(e.target.value)}
         />
         {reset && (
-          <button className="btn btn-outline-secondary border border-start-0 menu-icon" onClick={() => {
-            resetHandler()
-          }}>
-            <span className="material-icons" >close</span>
+          <button
+            className="btn btn-outline-secondary border border-start-0 menu-icon"
+            onClick={() => {
+              resetHandler();
+            }}
+          >
+            <span className="material-icons">close</span>
           </button>
         )}
         {/* <Suggestions results={this.state.results} /> */}

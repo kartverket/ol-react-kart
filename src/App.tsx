@@ -8,7 +8,7 @@ import MainMap from './components/MainMap';
 import Search from './components/search/Search';
 import listProjects from './config/listprojects.json';
 
-function App() {
+const App = () => {
   const dispatch = useAppDispatch();
   const projectsList = listProjects as IProject[];
   projectsList.forEach(p => {

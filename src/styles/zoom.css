@@ -4,31 +4,29 @@ MERK! Denne er ikke UU-godkjent eller sjekket av Wanni
 
 */
 
-.zoom{
-    background-color: var(--blaa);
-    color: var(--hvit);
+.zoom {
+  background-color: var(--blaa);
+  color: var(--hvit);
 
-    height: 2rem;
-    width: 2rem;
-    /* border-radius: 0.125rem; */
+  height: 2rem;
+  width: 2rem;
+  /* border-radius: 0.125rem; */
 
-    margin: 0.063rem; /* basert på eksisterende zoom knapp i historiske kart */
+  margin: 0.063rem; /* basert på eksisterende zoom knapp i historiske kart */
 
-    vertical-align: middle;
-    display: flex;
-    justify-content: space-evenly;
+  vertical-align: middle;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.zoom:hover{
-    background-color: var(--blaa_hover);
+.zoom:hover {
+  background-color: var(--blaa_hover);
 }
 
-.zoom:active{
-    background-color: var(--blaa_moerk_knapp);
+.zoom:active {
+  background-color: var(--blaa_moerk_knapp);
 }
 
-
-
-.zoom__icon-padding{
-    padding: 00.063rem;
+.zoom__icon-padding {
+  padding: 00.063rem;
 }

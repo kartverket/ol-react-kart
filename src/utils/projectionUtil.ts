@@ -81,10 +81,10 @@ export const zerofill = (value: string | number) => {
 };
 export const getResolutionForScale = (scale: string, units: string | number) => {
   const dpi = 25.4 / 0.28;
-  const mpu = METERS_PER_UNIT[units];
+  const mpu = METERS_PER_UNIT;
   const inchesPerMeter = 39.37;
 
-  return parseFloat(scale) / (mpu * inchesPerMeter * dpi);
+  return parseFloat(scale) / (mpu.m * inchesPerMeter * dpi);
 };
 export const roundScale = (scale: number) => {
   let roundScale;
