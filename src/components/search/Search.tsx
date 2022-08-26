@@ -70,10 +70,10 @@ const Search = () => {
   };
 
   return (
-    <>
-      <div className="input-group mb-3 shadow bg-body rounded" style={{ height: '50px' }}>
-        <button
-          className="btn btn-outline-secondary border border-end-0 menu-icon"
+    <div className='container container-md' style={{ width: '250rem', }}>
+      <div className="searchbar__wrapper">
+         <button
+          className="button button__menu"
           onClick={() => {
             const mySidenav = document.getElementById('mySidenav');
             const sideMenuPosition = document.getElementById('sideMenuPosition');
@@ -86,17 +86,19 @@ const Search = () => {
         >
           <span className="material-icons-outlined">menu</span>
         </button>
-        <input
-          style={{ width: '350px' }}
-          className="border border-start-0 border-end-0 ps-2"
-          placeholder={t('search_text')}
-          ref={searchInput}
-          value={query}
-          onClick={() => {
-            eventDispatch(setClickCoordinates({}));
-          }}
-          onChange={e => handleInputChange(e.target.value)}
-        />
+        <div className="inputField__wrapper">
+          <input
+            type="text"
+            className="inputField"
+            placeholder={t('search_text')}
+            ref={searchInput}
+            value={query}
+            onClick={() => {
+              eventDispatch(setClickCoordinates({}));
+            }}
+            onChange={e => handleInputChange(e.target.value)}
+          />
+        </div>
         {reset && (
           <button
             className="btn btn-outline-secondary border border-start-0 menu-icon"
@@ -109,7 +111,7 @@ const Search = () => {
         )}
         {/* <Suggestions results={this.state.results} /> */}
         <button
-          className="input-group-text search-icon"
+          className="button button__searchbar"
           onClick={() => {
             console.log('search click');
           }}
@@ -124,7 +126,7 @@ const Search = () => {
           </span>
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

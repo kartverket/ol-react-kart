@@ -1,38 +1,34 @@
-/* Søkefeltet til historiske kart
-
-Noen verdier er hentet fra søkefeltet på kartverket.no
-
-*/
-
-.searchbar {
-  background-color: var(--groenn_standard);
-  color: var(--hvit);
-
-  height: 2.75rem;
-  width: 4rem;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-
-  margin: 0rem; /* basert på eksisterende søkeknapp på Kartverket.no */
-  z-index: 2;
-
-  vertical-align: middle;
-  display: flex;
-  justify-content: space-evenly;
+/*css-klasser for å style søkeknappen i søkefelt. SØkefelt bruker også klasser fra input.css*/
+.button__searchbar{
+    background-color: var(--green_dark);
+    color: var(--white);
+    height:var(--inputHeight);
+    width: 3rem;
+    border-radius: 0 0.25rem 0.25rem 0;
+    margin: 0;
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    top: 25px;
 }
 
-.searchbar:hover {
-  background-color: var(--groenn_hover);
+.button__searchbar:hover{
+    background-color: var(--green);
 }
 
-.searchbar:active {
-  background-color: var(--groenn_moerk);
+.button__searchbar:active{
+    background-color: var(--green_active);
 }
 
-.searchbar:focus-visible {
-  outline-offset: 0;
+.button__searchbar:focus-visible{
+    outline-offset: 0;
 }
 
-.searchbar__icon-padding {
-  padding: 0.563rem 1.25rem;
+.button__searchbar span {
+    position: relative;
+}
+
+.searchbar__wrapper {
+    position: relative;
+    align-items: center;
 }

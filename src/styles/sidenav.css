@@ -28,3 +28,38 @@
   margin-right: 20px;
   padding: 5px 8px 3px 8px;
 }
+
+
+.button__menu{
+  background-color: var(--green_dark);
+  color: var(--white);
+  height:var(--inputHeight);
+  width: 3rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+  margin: 0;
+  z-index: 2;
+  position: absolute;
+  left: -2rem;
+  top: 25px;
+}
+
+.button__menu:hover{
+  background-color: var(--green);
+}
+
+.button__menu:active{
+  background-color: var(--green_active);
+}
+
+.button__menu:focus-visible{
+  outline-offset: 0;
+}
+
+.button__menu span {
+  position: relative;
+}
+
+.menu__wrapper {
+  position: relative;
+  align-items: center;
+}
