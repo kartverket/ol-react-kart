@@ -2,31 +2,25 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useEventDispatch, useAppSelector } from '../../index';
+import { useAppDispatch, useEventDispatch } from '../../index';
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 import {
   generateAdresseSokUrl,
   generateSearchMatrikkelAdresseUrl,
   generateSearchStedsnavnUrl,
 } from '../../utils/n3api';
-import { selectSokState } from '../mainMapSlice';
+import { useGlobalStore } from '../../app/globalStore';
 import { setAdresseResult, setMatrikkelResult, setSsrResult } from '../search/searchSlice';
 import { IAdresser, ISsr } from './search-model';
 
 const Search = () => {
   const { t } = useTranslation();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(useGlobalStore(state => state.sok));
   const appDispatch = useAppDispatch();
   const eventDispatch = useEventDispatch();
   const [reset, setReset] = useState(false);
-  const searchState = useAppSelector(selectSokState);
   const searchInput = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (searchState) {
-      setQuery(searchState);
-    }
-  }, [searchState]);
+  const setSok = useGlobalStore(state => state.setSok);
 
   useEffect(() => {
     if (query) {
@@ -48,6 +42,7 @@ const Search = () => {
         appDispatch(setSsrResult(s));
         appDispatch(setAdresseResult(a));
         appDispatch(setMatrikkelResult(m));
+        setSok(query);
       });
     }
   }, [query, appDispatch]);
@@ -67,6 +62,7 @@ const Search = () => {
   const resetHandler = () => {
     setReset(false);
     setQuery('');
+    setSok('');
     appDispatch(setSsrResult({}));
     appDispatch(setAdresseResult({}));
     appDispatch(setMatrikkelResult({}));

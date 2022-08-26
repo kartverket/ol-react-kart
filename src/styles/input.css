@@ -68,7 +68,7 @@ input[type='text'].input__error:invalid:active {
 .inputError-container {
   width: 100%;
   position: relative;
-  height: calc(var(--inputHeight)+ 0.5rem);
+  height: calc(var(--inputHeight) + 0.5rem);
   display: flex;
   flex-direction: row;
   align-items: flex-end;

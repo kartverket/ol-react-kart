@@ -26,7 +26,6 @@ import {
   toggleTileLayer,
   toggleVectorLayer,
 } from './Layers/layersSlice';
-import { selectLayersState } from '../components/mainMapSlice';
 import { IProjectConfig } from './Models/config-model';
 import { Project } from './Project/Project';
 import { addProject, selectCenter, selectToken } from './Project/projectSlice';
@@ -53,7 +52,6 @@ const MapApi = () => {
   const toggleTile = useEventSelector(selectToggleTileLayer);
   const token = useEventSelector(selectToken);
   const center = useEventSelector(selectCenter);
-  const layersState = useAppSelector(selectLayersState);
 
   useEffect(() => {
     if (center) {
@@ -77,16 +75,6 @@ const MapApi = () => {
       });
       layers.createTileLayer(visibleBaseLayer, token);
 
-      /*
-      if (baseLayers && baseLayers.length > 0) {
-        if (layersState) {
-          if (typeof layersState === 'string') {
-            const test = baseLayers.filter(l => l.name === layersState);
-            console.log(test);
-          }
-        }
-      }
-      */
     // TODO: temporary commented
       // if (newBaseLayer) {
       //     myMap.addLayer(newBaseLayer);
