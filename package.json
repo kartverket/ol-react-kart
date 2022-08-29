@@ -1,7 +1,7 @@
 {
   "name": "ol-react-kart",
   "version": "0.1.0",
-  "type": "module",
+  "type": "commonjs",
   "private": true,
   "homepage": ".",
   "dependencies": {
@@ -37,9 +37,9 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
-    "eslint": "^8.22.0",
+    "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-react": "^7.31.0",
+    "eslint-plugin-react": "^7.31.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "gh-pages": "^4.0.0",
     "lint-staged": "^13.0.3",

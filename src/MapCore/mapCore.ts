@@ -75,7 +75,7 @@ const MapApi = () => {
       });
       layers.createTileLayer(visibleBaseLayer, token);
 
-    // TODO: temporary commented
+      // TODO: temporary commented
       // if (newBaseLayer) {
       //     myMap.addLayer(newBaseLayer);
       //     if (newBaseLayer.get('wmtsextent')) {

@@ -96,7 +96,7 @@ export const useGlobalStore = create<GlobalState>(set => ({
       updateURL(state);
       return { ...state, selection };
     }),
-  setSok: (sok: string ) =>
+  setSok: (sok: string) =>
     set(state => {
       const queryValues = queryString.parse(window.location.search);
       queryValues.sok = sok;

@@ -19,7 +19,7 @@ const App = () => {
   return (
     <div className="App">
       <MainMap />
-      <div className="position-absolute mt-3 ms-4">
+      <div className="position-absolute ms-4">
         <Search />
         <InfoPanel />
       </div>
@@ -27,6 +27,6 @@ const App = () => {
       <ChangeBaseLayer />
     </div>
   );
-}
+};
 
 export default App;

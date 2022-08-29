@@ -49,7 +49,7 @@ const MainMenuPanel = () => {
     <div id="mySidenav" className="sidenav">
       <div id="sideMenuPosition" className="side-menu-position list-group">
         <div className="list-group-item norgeskart-logo ps-2 pt-0 pe-0 pb-0 m-0">
-          <div className="container p-0 mt-3">
+          <div className="container p-0">
             <div className="d-flex flex-row align-items-center">
               <div className="p-2">
                 <h1>

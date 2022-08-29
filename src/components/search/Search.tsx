@@ -70,9 +70,9 @@ const Search = () => {
   };
 
   return (
-    <div className='container container-md' style={{ width: '250rem', }}>
+    <div className="container container-md" style={{ width: '250rem' }}>
       <div className="searchbar__wrapper">
-         <button
+        <button
           className="button button__menu"
           onClick={() => {
             const mySidenav = document.getElementById('mySidenav');
@@ -128,6 +128,6 @@ const Search = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Search;

@@ -6,12 +6,7 @@ import pinOrange from '../assets/pin-md-orange.png';
 import { selectActiveProject } from '../components/main-menu-panel/projects-list/projectsListSlice';
 import { useAppSelector } from '../index';
 import Position from './Position';
-import {
-  useGlobalStore, center,
-  marker,
-  selection,
-  wms,
-} from '../app/globalStore';
+import { useGlobalStore, center, marker, selection, wms } from '../app/globalStore';
 
 const MainMap = () => {
   const setSok = useGlobalStore(state => state.setSok);
@@ -77,19 +72,20 @@ const MainMap = () => {
   };
   useEffect(() => {
     if (!mapInit) {
-      const projectUrl = document.location.origin + document.location.pathname + 'projects/' + activeProject.SiteTitle + '.json';
+      const projectUrl =
+        document.location.origin + document.location.pathname + 'projects/' + activeProject.SiteTitle + '.json';
       axios.get(`${projectUrl}`).then(function (response) {
         response.data.config.center = mapConfig.center;
         response.data.config.zoom = mapConfig.zoom;
         if (layers) {
           response.data.config.layer.forEach((l: any) => {
             if (l.distributionProtocol === 'WMTS') {
-              l.options.visibility = "false";
+              l.options.visibility = 'false';
             }
             if (l.name === layers) {
-              l.options.visibility = "true";
+              l.options.visibility = 'true';
             }
-            return l
+            return l;
           });
         }
         mapApi.init(response.data);
