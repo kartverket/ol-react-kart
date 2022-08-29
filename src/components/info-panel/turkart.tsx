@@ -135,66 +135,52 @@ const Turkart = () => {
     <>
       <div>
         <p>{t('Turkart_info')}</p>
-        <div>
-          <div className="title-text">{t('Scale')}</div>
-          <div className="row">
-            <div className="col-xs-12">
-              <select
-                id="turkart_scale"
-                className="dropdown"
-                onChange={e => {
-                  setScale(Number(e.target.value));
-                  applyScale();
-                }}
-                value={scale}
-              >
-                {scales.map((item, index) => (
-                  <option value={item.scale} key={index}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+        <div >
+          <label className="label label--sml label--dropdown" htmlFor='turkart_scale'>{t('Scale')}</label>
+          <select
+            id="turkart_scale"
+            className="dropdown"
+            onChange={e => {
+              setScale(Number(e.target.value));
+              applyScale();
+            }}
+            value={scale}
+          >
+            {scales.map((item, index) => (
+              <option value={item.scale} key={index}>
+                {item.label}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
-          <div className="title-text">{t('Turkart_navn')}</div>
-          <div className="row">
-            <div className="col-xs-12">
-              <input
-                type="text"
-                placeholder={t('Turkart_navn_eks')}
-                onChange={e => setTitel(e.target.value)}
-                className="full-width"
-              />
-            </div>
-          </div>
+        <div className="inputField__wrapper">
+          <label className="label label--sml" htmlFor='text'>{t('Turkart_navn')}</label>
+          <input
+            type="text"
+            placeholder={t('Turkart_navn_eks')}
+            onChange={e => setTitel(e.target.value)}
+            className="inputField"
+          />
         </div>
-        <div>
-          <div className="row">
-            <div className="col-xs-12">
-              <input id="showTrips" type="checkbox" onClick={() => setTrips(!trips)} />
-              <label htmlFor="showSweden">{t('FremhevMerkedeStier')}</label>
-            </div>
+        <div className='pt-4 mt-4'>
+
+          <div className="checkbox">
+            <input id="showTrips" type="checkbox" onClick={() => setTrips(!trips)} />
+            <label className='detail detail--sml' htmlFor="showSweden">{t('FremhevMerkedeStier')}</label>
           </div>
-          <div className="row">
-            <div className="col-xs-12">
-              <input id="showLegend" type="checkbox" onClick={() => setLegend(!legend)} />
-              <label htmlFor="showLegend">{t('AddLegend')}</label>
-            </div>
+          <div className="checkbox">
+            <input id="showLegend" type="checkbox" onClick={() => setLegend(!legend)} />
+            <label className='detail detail--sml' htmlFor="showLegend">{t('AddLegend')}</label>
           </div>
-          <div className="row">
-            <div className="col-xs-12">
-              <input id="showSweden" type="checkbox" onClick={() => setSweden(!sweden)} />
-              <label htmlFor="showSweden">{t('AddSweden')}</label>
-            </div>
+          <div className="checkbox">
+            <input id="showSweden" type="checkbox" onClick={() => setSweden(!sweden)} />
+            <label className='detail detail--sml' htmlFor="showSweden">{t('AddSweden')}</label>
           </div>
-          <div className="row">
-            <div className="col-xs-12">
-              <input id="showCompass" type="checkbox" onClick={() => setCompass(!compass)} />
-              <label htmlFor="showCompass">{t('AddCompass')}</label>
-            </div>
+          <div className="checkbox">
+            <input id="showCompass" type="checkbox" onClick={() => setCompass(!compass)} />
+            <label className="detail detail--sml" htmlFor="showCompass">{t('AddCompass')}</label>
           </div>
+
         </div>
         <div>
           {/*
