@@ -135,8 +135,10 @@ const Turkart = () => {
     <>
       <div>
         <p>{t('Turkart_info')}</p>
-        <div >
-          <label className="label label--sml label--dropdown" htmlFor='turkart_scale'>{t('Scale')}</label>
+        <div>
+          <label className="label label--sml label--dropdown" htmlFor="turkart_scale">
+            {t('Scale')}
+          </label>
           <select
             id="turkart_scale"
             className="dropdown"
@@ -154,7 +156,9 @@ const Turkart = () => {
           </select>
         </div>
         <div className="inputField__wrapper">
-          <label className="label label--sml" htmlFor='text'>{t('Turkart_navn')}</label>
+          <label className="label label--sml" htmlFor="text">
+            {t('Turkart_navn')}
+          </label>
           <input
             type="text"
             placeholder={t('Turkart_navn_eks')}
@@ -162,25 +166,31 @@ const Turkart = () => {
             className="inputField"
           />
         </div>
-        <div className='pt-4 mt-4'>
-
+        <div className="pt-4 mt-4">
           <div className="checkbox">
             <input id="showTrips" type="checkbox" onClick={() => setTrips(!trips)} />
-            <label className='detail detail--sml' htmlFor="showSweden">{t('FremhevMerkedeStier')}</label>
+            <label className="detail detail--sml" htmlFor="showSweden">
+              {t('FremhevMerkedeStier')}
+            </label>
           </div>
           <div className="checkbox">
             <input id="showLegend" type="checkbox" onClick={() => setLegend(!legend)} />
-            <label className='detail detail--sml' htmlFor="showLegend">{t('AddLegend')}</label>
+            <label className="detail detail--sml" htmlFor="showLegend">
+              {t('AddLegend')}
+            </label>
           </div>
           <div className="checkbox">
             <input id="showSweden" type="checkbox" onClick={() => setSweden(!sweden)} />
-            <label className='detail detail--sml' htmlFor="showSweden">{t('AddSweden')}</label>
+            <label className="detail detail--sml" htmlFor="showSweden">
+              {t('AddSweden')}
+            </label>
           </div>
           <div className="checkbox">
             <input id="showCompass" type="checkbox" onClick={() => setCompass(!compass)} />
-            <label className="detail detail--sml" htmlFor="showCompass">{t('AddCompass')}</label>
+            <label className="detail detail--sml" htmlFor="showCompass">
+              {t('AddCompass')}
+            </label>
           </div>
-
         </div>
         <div>
           {/*
