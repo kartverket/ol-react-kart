@@ -139,23 +139,21 @@ const Turkart = () => {
           <div className="title-text">{t('Scale')}</div>
           <div className="row">
             <div className="col-xs-12">
-              <div className="dropdown">
-                <select
-                  id="turkart_scale"
-                  className="form-select"
-                  onChange={e => {
-                    setScale(Number(e.target.value));
-                    applyScale();
-                  }}
-                  value={scale}
-                >
-                  {scales.map((item, index) => (
-                    <option value={item.scale} key={index}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                id="turkart_scale"
+                className="dropdown"
+                onChange={e => {
+                  setScale(Number(e.target.value));
+                  applyScale();
+                }}
+                value={scale}
+              >
+                {scales.map((item, index) => (
+                  <option value={item.scale} key={index}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
