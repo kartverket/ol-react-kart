@@ -31,8 +31,7 @@ export const GetClickCoordinates = function () {
               // @ts-expect-error
               if (element.getSource().constructor.name === 'TileWMS') {
                 // @ts-expect-error
-                const url: string = element
-                  .getSource()
+                const url: string = element.getSource()
                   .getFeatureInfoUrl(evt.coordinate, map.getView().getResolution(), map.getView().getProjection(), {
                     INFO_FORMAT: 'text/plain',
                     // @ts-expect-error

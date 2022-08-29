@@ -232,8 +232,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-            ? nodplakatStedsnavnRef.current.value
-            : '',
+              ? nodplakatStedsnavnRef.current.value
+              : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
@@ -379,7 +379,7 @@ const PointInfo = () => {
           {projeksjoner && coordinates ? (
             <div>
               <span className="small"> {t('koord_info')}</span>
-              <select className="form-select form-select-sm" onChange={e => handleTransform(e)} value={projection}>
+              <select className="dropdown" onChange={e => handleTransform(e)} value={projection}>
                 {projeksjoner.map((result, index) => (
                   <option value={result.epsg} key={index}>
                     EPSG:{result.epsg} - {result.name}
@@ -466,28 +466,28 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
             <form id="form" onSubmit={downloadEmergencyPoster}>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatName">
+              <div className="inputField__wrapper">
+                <label className="label label--sml" htmlFor="nodplakatName">
                   {t('GiPunktetNavn')}
                 </label>
                 <input
                   id="nodplakatName"
                   type="text"
                   ref={nodplakatNameRef}
-                  className="form-control form-control-sm"
+                  className="inputField"
                   value={nodplakatName}
                   onChange={e => setNodplakatName(e.target.value)}
                 />
               </div>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatStedsnavn">
+              <div className="">
+                <label className="label label--sml  label--dropdown" htmlFor="nodplakatStedsnavn">
                   {t('PlaceIs')}
                 </label>
                 {stedsnavn.navn ? (
                   <select
                     id="nodplakatStedsnavn"
                     ref={nodplakatStedsnavnRef}
-                    className="form-select"
+                    className="dropdown"
                     onChange={e => setNodplakatStedsnavn(e.target.value)}
                     value={nodplakatStedsnavn}
                   >
@@ -499,15 +499,15 @@ const PointInfo = () => {
                   </select>
                 ) : null}
               </div>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatVeg">
+              <div className="">
+                <label className="label label--sml label--dropdown" htmlFor="nodplakatVeg">
                   {t('FoundRoadIs')}
                 </label>
                 {emergencyPointInfo ? (
                   <select
                     id="nodplakatVeg"
                     ref={nodplakatVegRef}
-                    className="form-select"
+                    className="dropdown"
                     onChange={e => setNodplakatVeg(e.target.value)}
                     value={nodplakatVeg}
                   >
