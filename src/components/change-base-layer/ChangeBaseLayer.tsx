@@ -34,7 +34,7 @@ const ChangeBaseLayer = () => {
 
   return (
     <>
-      <div className="changeBaseLayer baseMapPanel baseLayerPanel">
+      <div className="changeBaseLayer baseMapPanel baseLayerPanel change-base-map-mobile">
         {baseLayers.map((baseLayer, index) => (
           <button
             key={index}

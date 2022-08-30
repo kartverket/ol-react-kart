@@ -70,7 +70,7 @@ const Search = () => {
   };
 
   return (
-    <div className="container container-md" style={{ width: '250rem' }}>
+    <div className="container container-md">
       <div className="searchbar__wrapper">
         <button
           className="button button__menu"

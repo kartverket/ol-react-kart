@@ -33,6 +33,9 @@
 @import 'changebaselayer';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+@import 'mobile.css';
+@import 'mobileLandscape.css';
+
 /* kan eventuellt fjeneres */
 @import 'utils.css';
 
