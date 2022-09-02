@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector, useEventSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import Draw from '../Draw';
+import ElevationProfile from '../ElevationProfile';
 import Faq from '../Faq';
+import Measure from '../Measure';
+import PrintMap from '../Print.Map';
+import ShareMap from '../ShareMap';
 import Contact from './../Contact';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
@@ -125,6 +132,16 @@ const MainMenuPanel = () => {
                 </div>
               ) : null}
             </div>
+
+            <div className="list-group-item list-group-item-action">
+              {t('tools')}
+              <Measure />
+              <Draw />
+              <ElevationProfile />
+              <PrintMap />
+              <ShareMap />
+            </div>
+
             <div className="list-group-item list-group-item-action">
               <Faq />
             </div>
