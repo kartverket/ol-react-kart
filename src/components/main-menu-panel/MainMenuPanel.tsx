@@ -77,7 +77,7 @@ const MainMenuPanel = () => {
         </div>
         {!showActiveProject ? (
           <div className="list-group-item list-group-item-action">
-            <div className="d-flex" onClick={() => toggleBaseLayerPanel()}>
+            <div className="d-flex expandBtn" onClick={() => toggleBaseLayerPanel()}>
               <div className="ps-2 pe-2">
                 <span className="material-icons-outlined">map</span>
               </div>
@@ -96,7 +96,7 @@ const MainMenuPanel = () => {
           </div>
         ) : (
           <div className="list-group-item list-group-item-action">
-            <div className="d-flex" onClick={() => toggleShowActiveProject()}>
+            <div className="d-flex expandBtn" onClick={() => toggleShowActiveProject()}>
               <div className="ps-2 pe-2">
                 <span className="material-icons-outlined">park</span>
               </div>
@@ -114,7 +114,7 @@ const MainMenuPanel = () => {
         {!showBaseLayersList && !showActiveProject ? (
           <>
             <div className="list-group-item list-group-item-action">
-              <div className="d-flex" onClick={() => toggleThematicMap()}>
+              <div className="d-flex expandBtn" onClick={() => toggleThematicMap()}>
                 <div className="ps-2 pe-2">
                   <span className="material-icons-outlined">map</span>
                 </div>
@@ -135,7 +135,7 @@ const MainMenuPanel = () => {
             </div>
 
             <div className="list-group-item list-group-item-action">
-              <div className="d-flex" onClick={() => setShowTools(!showTools)}>
+              <div className="d-flex expandBtn" onClick={() => setShowTools(!showTools)}>
                 <div className="ps-2 pe-2">
                   <span className="material-icons-outlined">build</span>
                 </div>
