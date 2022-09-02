@@ -1,25 +1,25 @@
+import get from 'lodash/get.js';
+
 import { GML as GMLFormat, WFS as WFSFormat } from 'ol/format';
 import GML2Format from 'ol/format/GML2';
-import OlWMSCapabilities from 'ol/format/WMSCapabilities';
-import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import OlLayerImage from 'ol/layer/Image';
-import TileLayer from 'ol/layer/Tile';
-import OlSourceImageWMS from 'ol/source/ImageWMS';
-import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS';
+import GML32Format from 'ol/format/GML32';
 //import GML3Format from 'ol/format/GML3'
 import GeoJSON from 'ol/format/GeoJSON.js';
-import GML32Format from 'ol/format/GML32';
+import OlWMSCapabilities from 'ol/format/WMSCapabilities';
+import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import { Vector as VectorLayer } from 'ol/layer.js';
+import OlLayerImage from 'ol/layer/Image';
+import TileLayer from 'ol/layer/Tile';
 import { bbox as bboxStrategy } from 'ol/loadingstrategy.js';
 import { Vector as VectorSource } from 'ol/source.js';
+import OlSourceImageWMS from 'ol/source/ImageWMS';
+import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
-import pin from '../assets/img/pin-md-orange.png';
-import { Layer } from './Domain';
-
-import get from 'lodash/get.js';
-import { createDummyGroup, createNotExistGroup, getWmsUrl, mapConfig } from './maplibHelper';
 
 import { mergeDefaultParams } from '../Utils/MapHelper';
+import pin from '../assets/img/pin-md-orange.png';
+import { Layer } from './Domain';
+import { createDummyGroup, createNotExistGroup, getWmsUrl, mapConfig } from './maplibHelper';
 
 export const newMaplibLayer = (sourceType, source) => {
   let catIds = [999];

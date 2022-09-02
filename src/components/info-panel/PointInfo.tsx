@@ -1,14 +1,18 @@
+import React, { useEffect, useRef, useState } from 'react';
+
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
+import { useTranslation } from 'react-i18next';
+
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
-import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
-import { getUTMZoneFromGeographicPoint, IProsjektion } from '../../utils/mapUtil';
+import { IProsjektion, getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
 import {
+  generatStedsnavnPunktsok,
   generateAdressePunktsokUrl,
   generateEiendomAddressUrl,
   generateEmergencyPosterPointUrl,
@@ -19,12 +23,12 @@ import {
   generateMapLinkServiceUrl,
   generateMatrikkelInfoUrl,
   generateProjeksjonerUrl,
-  generatStedsnavnPunktsok,
   round,
   toDms,
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
+
 export interface IPunktInfo {
   datakilde: string;
   terreng: string;

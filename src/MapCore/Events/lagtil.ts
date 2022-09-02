@@ -1,5 +1,5 @@
-import TileLayer from 'ol/layer/Tile';
 import Map from 'ol/Map';
+import TileLayer from 'ol/layer/Tile';
 import { OSM } from 'ol/source';
 
 export const lagtil = (map: Map) => {

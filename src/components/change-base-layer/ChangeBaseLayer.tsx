@@ -1,11 +1,11 @@
 import React from 'react';
-import { useEventDispatch, useEventSelector } from '../../index';
+
 import { selectVisibleBaseLayer, setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
 import { useGlobalStore } from '../../app/globalStore';
+import { useEventDispatch, useEventSelector } from '../../index';
 
 const ChangeBaseLayer = () => {
   const setGlobalLayers = useGlobalStore(state => state.setLayers);
-
   const dispatch = useEventDispatch();
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = [

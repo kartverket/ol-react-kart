@@ -1,16 +1,20 @@
-import { Coordinate } from 'ol/coordinate';
+import React, { useEffect, useState } from 'react';
+
+import { useTranslation } from 'react-i18next';
+
 import Feature from 'ol/Feature.js';
+import { Coordinate } from 'ol/coordinate';
 import Point from 'ol/geom/Point';
 import { Vector as VectorLayer } from 'ol/layer.js';
 import { transform } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Icon, Style } from 'ol/style';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { setCenter } from '../../MapCore/Project/projectSlice';
+import useMap from '../../app/useMap';
 import pin_blue from '../../assets/pin-md-blueish.png';
 import pin_orange from '../../assets/pin-md-orange.png';
 import { useAppSelector, useEventDispatch } from '../../index';
-import { setCenter } from '../../MapCore/Project/projectSlice';
 import { selectSearch } from '../search/searchSlice';
 import style from './SearchBar.module.scss';
 
@@ -24,16 +28,18 @@ const SearchResultsList = () => {
   const [expandedSsr, setStateSsr] = useState(true);
   const [expandedMatrikkel, setStateMatrikkel] = useState(false);
   let vectorLayer: any;
+  const map = useMap();
 
   useEffect(() => {
+    if (!map) return;
     vectorLayer = new VectorLayer({ source: vectorSource, properties: { name: 'searchResultsLayer' } });
-    window.olMap.addLayer(vectorLayer);
+    map.addLayer(vectorLayer);
     vectorSource.clear();
     return () => {
       vectorSource.clear();
-      window.olMap.removeLayer(vectorLayer);
+      map.removeLayer(vectorLayer);
     };
-  }, []);
+  }, [map]);
   const icon_orange = new Style({
     image: new Icon({
       anchor: [0.5, 46],

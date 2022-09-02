@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { useAppSelector, useEventSelector } from '../../index';
+
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { useAppSelector, useEventSelector } from '../../index';
 import { selectSearch } from '../search/searchSlice';
 import PointInfo from './PointInfo';
 import SearchResultsList from './SearchResultsList';

@@ -1,6 +1,7 @@
-import { EventsKey } from 'ol/events';
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
+import { EventsKey } from 'ol/events';
+
 import { mapMoveEnd } from '../Events/mapMoveSlice';
 import type { EventStoreDispatch } from './Event/eventStore';
 

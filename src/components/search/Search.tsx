@@ -1,15 +1,17 @@
 // const { API_KEY } = process.env;
+import React, { useEffect, useRef, useState } from 'react';
+
 import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useEventDispatch } from '../../index';
+
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { useGlobalStore } from '../../app/globalStore';
+import { useAppDispatch, useEventDispatch } from '../../index';
 import {
   generateAdresseSokUrl,
   generateSearchMatrikkelAdresseUrl,
   generateSearchStedsnavnUrl,
 } from '../../utils/n3api';
-import { useGlobalStore } from '../../app/globalStore';
 import { setAdresseResult, setMatrikkelResult, setSsrResult } from '../search/searchSlice';
 import { IAdresser, ISsr } from './search-model';
 
@@ -70,7 +72,7 @@ const Search = () => {
   };
 
   return (
-    <div className="container container-md">
+    <div className="container container-lg" style={{ minWidth: '40rem' }}>
       <div className="searchbar__wrapper">
         <button
           className="button button__menu"

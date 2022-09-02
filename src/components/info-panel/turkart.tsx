@@ -1,8 +1,13 @@
-import { Coordinate } from 'ol/coordinate';
 import React, { useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+
+import { Coordinate } from 'ol/coordinate';
+
 import { PrintBoxSelect } from '../../MapCore/printBoxSelect';
+import useMap from '../../app/useMap';
 import { generateLagTurkartUrl } from '../../utils/n3api';
+
 export interface IScale {
   scale: number;
   label: string;
@@ -29,9 +34,9 @@ const Turkart = () => {
   const [compass, setCompass] = useState<boolean>(false);
   const [createMapButtonOn, setCreateMapButtonOn] = useState<boolean>(false);
   const [mapAvailable, setMapAvailable] = useState<boolean>(false);
+  const map = useMap();
 
   let extent = { bbox: [0, 0, 0, 0], center: [0, 0], projection: 'EPSG:4326', sone: 0, biSone: 0, scale: 0 };
-  const map = window.olMap;
 
   const printBoxSelectTool: any = new PrintBoxSelect();
   printBoxSelectTool.activate({ scale: scale, cols: 4, rows: 3, extent });

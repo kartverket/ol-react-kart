@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { EventStoreState } from '../Events/Event/eventStore';
 import { IMapLayer, ITileLayer, IVector } from '../Models/config-model';
 

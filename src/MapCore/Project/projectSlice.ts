@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { RepresentasjonsPunkt } from '../../components/search/search-model';
 import { EventStoreState } from '../Events/Event/eventStore';
 import { IProject } from '../Models/config-model';

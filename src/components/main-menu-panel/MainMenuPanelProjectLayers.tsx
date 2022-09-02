@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { useEventDispatch, useEventSelector } from '../../index';
+
 import {
   selectLayersGroups,
   selectTileLayers,
@@ -10,6 +11,7 @@ import {
   toggleVectorLayer,
 } from '../../MapCore/Layers/layersSlice';
 import { IMapLayer, ITileLayer, IVector } from '../../MapCore/Models/config-model';
+import { useEventDispatch, useEventSelector } from '../../index';
 import Legend from './legend/legend';
 
 const MainMenuPanelProjectLayers = () => {

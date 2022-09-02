@@ -1,17 +1,20 @@
-import { getTopLeft, getWidth } from 'ol/extent';
-import TileLayer from 'ol/layer/Tile';
-import { TileWMS, WMTS } from 'ol/source';
-import { ITileLayer, IVector } from '../Models/config-model';
-import { wmtsTileGrid } from '../TileGrid/wmts';
 // import { useEventStoreSelector } from '../Events/Event/eventHooks';
 import axios from 'axios';
-import GeoJSON from 'ol/format/GeoJSON';
-import OLVectorLayer from 'ol/layer/Vector';
+
 import Map from 'ol/Map';
+import { getTopLeft, getWidth } from 'ol/extent';
+import GeoJSON from 'ol/format/GeoJSON';
+import TileLayer from 'ol/layer/Tile';
+import OLVectorLayer from 'ol/layer/Vector';
 import { get } from 'ol/proj';
+import { TileWMS, WMTS } from 'ol/source';
 import { Vector as VectorSource } from 'ol/source';
+
 import { addCustomProj, loadCustomCrs } from '../../utils/projectionUtil';
+import { ITileLayer, IVector } from '../Models/config-model';
+import { wmtsTileGrid } from '../TileGrid/wmts';
 import { createStyle } from './Style';
+
 let map: Map;
 
 const sProjection = 'EPSG:25833';

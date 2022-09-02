@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { useEventSelector } from '../../../index';
+
 import { selectTileLayers } from '../../../MapCore/Layers/layersSlice';
 import { ITileLayer } from '../../../MapCore/Models/config-model';
+import { useEventSelector } from '../../../index';
 
 const Legend = () => {
   const wmsLayers = useEventSelector(selectTileLayers);

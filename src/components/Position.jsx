@@ -1,16 +1,17 @@
+import React, { useEffect, useState } from 'react';
+
 import OlMousePositionControl from 'ol/control/MousePosition';
 import { format } from 'ol/coordinate.js';
-import React, { useEffect, useState } from 'react';
+
+import useMap from '../app/useMap';
 import style from './Position.module.css';
 
 const Position = () => {
   const [projection, setProjectionString] = useState('EPSG:25833');
+  const map = useMap();
 
   useEffect(() => {
-    createOlMousePositionControl(window.olMap);
-  });
-
-  const createOlMousePositionControl = map => {
+    if (!map) return;
     const existingControls = map.getControls();
     let mousePositionControl = existingControls.getArray().find(c => c instanceof OlMousePositionControl);
     setProjectionString(map.getView().getProjection().getCode());
@@ -27,7 +28,7 @@ const Position = () => {
       mousePositionControl = new OlMousePositionControl(options);
       map.addControl(mousePositionControl);
     }
-  };
+  }, [map]);
 
   return (
     <>

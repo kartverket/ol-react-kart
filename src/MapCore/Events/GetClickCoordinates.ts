@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { EventsKey } from 'ol/events';
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
+import { EventsKey } from 'ol/events';
+
 import { setSsrResult } from '../../components/search/searchSlice';
 import { useAppDispatch, useEventDispatch } from '../../index';
 import { parseFeatureInfo } from '../../utils/FeatureUtil';

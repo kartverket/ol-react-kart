@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector } from '../../../index';
 import { IProject, selectProjectsList, setActiveProject, showActiveProjectFromList } from './projectsListSlice';
 
