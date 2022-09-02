@@ -26,6 +26,7 @@ const MainMenuPanel = () => {
   const appDispatch = useAppDispatch();
   const [showBaseLayersList, setShowBaseLayersList] = useState(false);
   const [collapseThematicMap, setCollapseThematicMap] = useState(false);
+  const [showTools, setShowTools] = useState(false);
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const showActiveProject = useAppSelector(selectShowActiveProject);
   const activeProject = useAppSelector(selectActiveProject);
@@ -122,7 +123,7 @@ const MainMenuPanel = () => {
                 </div>
                 <div className="ms-auto ps-2 pe-2">
                   <span className="material-icons-outlined">
-                    {!collapseThematicMap ? 'expand_less' : 'expand_more'}
+                    {!collapseThematicMap ? 'expand_more' : 'chevron_right'}
                   </span>
                 </div>
               </div>
@@ -134,12 +135,28 @@ const MainMenuPanel = () => {
             </div>
 
             <div className="list-group-item list-group-item-action">
-              {t('tools')}
-              <Measure />
-              <Draw />
-              <ElevationProfile />
-              <PrintMap />
-              <ShareMap />
+              <div className="d-flex" onClick={() => setShowTools(!showTools)}>
+                <div className="ps-2 pe-2">
+                  <span className="material-icons-outlined">build</span>
+                </div>
+                <div className="ps-2 pe-2">
+                  <span className="">{t('tools')}</span>
+                </div>
+                <div className="ms-auto ps-2 pe-2">
+                  <span className="material-icons-outlined">
+                    {!showTools ? 'expand_more' : 'chevron_right'}
+                  </span>
+                </div>
+              </div>
+              {!showTools ? (
+                <div>
+                  <Measure />
+                  <Draw />
+                  <ElevationProfile />
+                  <PrintMap />
+                  <ShareMap />
+                </div>
+              ) : null}
             </div>
 
             <div className="list-group-item list-group-item-action">

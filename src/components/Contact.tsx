@@ -20,7 +20,7 @@ const Contact = () => {
           <span className="text-capitalize">{t('kontakt_oss')}</span>
         </div>
         <div className="ms-auto ps-2 pe-2">
-          <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
+          <span className="material-icons-outlined">{show ? 'expand_more' : 'chevron_right'}</span>
         </div>
       </div>
       {show ? (

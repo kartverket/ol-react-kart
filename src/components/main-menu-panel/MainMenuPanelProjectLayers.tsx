@@ -44,7 +44,7 @@ const MainMenuPanelProjectLayers = () => {
                 <span>{t(group.name)}</span>
               </div>
               <div className="ms-auto ps-2 pe-2">
-                <span className="material-icons-outlined">{group.isOpen ? 'expand_less' : 'expand_more'}</span>
+                <span className="material-icons-outlined">{group.isOpen ? 'expand_more' : 'chevron_right'}</span>
               </div>
             </div>
             {group.isOpen ? (
@@ -62,8 +62,7 @@ const MainMenuPanelProjectLayers = () => {
                           <input
                             type="checkbox"
                             id={tileLayer.name}
-                            checked={tileLayer.options.visibility === 'true' ? true : false}
-                            defaultChecked={false}
+                            defaultChecked={tileLayer.options.visibility === 'true' ? true : false}
                             onClick={e => {
                               e.stopPropagation();
                             }}
@@ -84,8 +83,8 @@ const MainMenuPanelProjectLayers = () => {
                           <input
                             type="checkbox"
                             id={vectorLayer.name}
-                            checked={vectorLayer.options.visibility === 'true' ? true : false}
-                            defaultChecked={false}
+                            defaultChecked={vectorLayer.options.visibility === 'true' ? true : false}
+                            onChange={() => {console.log('toggleVector')}}
                           />
                           <label htmlFor={vectorLayer.name}>{t(vectorLayer.name)}</label>
                         </div>
