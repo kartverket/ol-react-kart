@@ -1,8 +1,9 @@
-import { Extent } from 'ol/extent';
-import { addProjection, Projection } from 'ol/proj';
-import { register } from 'ol/proj/proj4.js';
-import { METERS_PER_UNIT } from 'ol/proj/Units';
 import proj4 from 'proj4';
+
+import { Extent } from 'ol/extent';
+import { Projection, addProjection } from 'ol/proj';
+import { METERS_PER_UNIT } from 'ol/proj/Units';
+import { register } from 'ol/proj/proj4.js';
 
 export const loadCustomCrs = () => {
   // proj4 is on the global scope
