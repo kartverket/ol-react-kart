@@ -1,10 +1,11 @@
 @media screen and (max-width: 736px) {
-  .search-bar-overlay {
+  .searchbar__wrapper {
     z-index: 13;
     position: relative;
     top: 0;
     left: 0;
     margin: 7px;
+    min-width: 20rem;
   }
   .search-content {
     max-height: 80%;

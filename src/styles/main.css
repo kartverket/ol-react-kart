@@ -39,6 +39,9 @@
 /* kan eventuellt fjeneres */
 @import 'utils.css';
 
+searchbar__wrapper {
+  min-width: 40rem;
+}
 .search-result {
   background-color: var(--blue_light); /* to be removed/changed */
 }
