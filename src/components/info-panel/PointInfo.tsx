@@ -1,24 +1,18 @@
-import {
-  faAmbulance,
-  faAngleDown,
-  faAngleUp,
-  faBlind,
-  faFlag,
-  faHome,
-  faMapMarker,
-  faPaintbrush,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useRef, useState } from 'react';
+
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
+import { useTranslation } from 'react-i18next';
+
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
-import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { IProsjektion, getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
 import {
+  generatStedsnavnPunktsok,
   generateAdressePunktsokUrl,
   generateEiendomAddressUrl,
   generateEmergencyPosterPointUrl,
@@ -29,10 +23,11 @@ import {
   generateMapLinkServiceUrl,
   generateMatrikkelInfoUrl,
   generateProjeksjonerUrl,
-  generatStedsnavnPunktsok,
+  round,
   toDms,
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
+import Turkart from './Turkart';
 
 export interface IPunktInfo {
   datakilde: string;
@@ -44,11 +39,6 @@ export interface IPunktInfo {
 export interface IHoydeResult {
   koordsys?: number;
   punkter?: IPunktInfo[];
-}
-export interface IProsjektion {
-  epsg: number;
-  info: string;
-  name: string;
 }
 
 const PointInfo = () => {
@@ -191,51 +181,7 @@ const PointInfo = () => {
       ' sekunder'
     );
   };
-  const getUTMZoneFromGeographicPoint = (lon: number, lat: number) => {
-    let sone = '32V',
-      localProj = 'EPSG:32632';
-    if (lat > 72) {
-      if (lon < 21) {
-        sone = '33X';
-        localProj = 'EPSG:32633';
-      } else {
-        sone = '35X';
-        localProj = 'EPSG:32635';
-      }
-    } else if (lat > 64) {
-      if (lon < 6) {
-        sone = '31W';
-        localProj = 'EPSG:32631';
-      } else if (lon < 12) {
-        sone = '32W';
-        localProj = 'EPSG:32632';
-      } else if (lon < 18) {
-        sone = '33W';
-        localProj = 'EPSG:32633';
-      } else if (lon < 24) {
-        sone = '34W';
-        localProj = 'EPSG:32634';
-      } else if (lon < 30) {
-        sone = '35W';
-        localProj = 'EPSG:32635';
-      } else {
-        sone = '36W';
-        localProj = 'EPSG:32636';
-      }
-    } else {
-      if (lon < 3) {
-        sone = '31V';
-        localProj = 'EPSG:32631';
-      } else if (lon >= 12) {
-        sone = '33V';
-        localProj = 'EPSG:32633';
-      }
-    }
-    return {
-      sone: sone,
-      localProj: localProj,
-    };
-  };
+
   const replaceNorwegianChars = (emergencyPosterServiceUrl: string) => {
     emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C2%B0/g, '%B0'); // °
     emergencyPosterServiceUrl = emergencyPosterServiceUrl.replace(/%C3%A6/g, '%E6'); // æ
@@ -260,7 +206,7 @@ const PointInfo = () => {
     if (clickCoordinates && clickCoordinates.coordinate && clickCoordinates.center && clickCoordinates.extent) {
       const googleCoordinates = transform(clickCoordinates.coordinate, clickCoordinates.epsg, 'EPSG:4326');
       const UTM = getUTMZoneFromGeographicPoint(googleCoordinates[0], googleCoordinates[1]);
-      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.localProj);
+      const localUTMPoint = transform(clickCoordinates.coordinate, clickCoordinates.epsg, UTM.epsg);
       const pixels = {
         width: 1145,
         height: 660,
@@ -332,6 +278,7 @@ const PointInfo = () => {
 
         <p className="fs-5 mt-3 ms-2">{t('hva_vil_du_gjore')}</p>
         <div className="d-flex flex-column">
+          {/* Eiendomsinformasjon */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -340,11 +287,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faHome} className="me-2" />
+              <span className="material-icons-outlined me-1">home</span>
               <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
-              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Stedsnavn */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -353,11 +301,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faFlag} className="me-2" />
+              <span className="material-icons-outlined me-1">flag</span>
               <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
-              <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Koordinater */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -366,11 +315,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faMapMarker} className="me-2" />
+              <span className="material-icons-outlined me-1">place</span>
               <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-              <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showCoordinates ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Turkart */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -379,11 +329,13 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faBlind} className="me-2" />
+              <span className="material-icons-outlined me-1">blind</span>
               <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
-              <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* Fargeleggingskart */}
+          {/*
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -392,11 +344,12 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faPaintbrush} className="me-2" />
+              <span className="material-icons-outlined me-1">brush</span>
               <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
-              <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showFargeleggingskart ? 'expand_less' : 'expand_more'}</span>
             </div>
-          </div>
+          </div> */}
+          {/* Nodplakat */}
           <div className="p-2 bg-light mb-2">
             <div
               onClick={() => {
@@ -406,14 +359,14 @@ const PointInfo = () => {
               }}
               className={style.expandBtn}
             >
-              <FontAwesomeIcon icon={faAmbulance} className="me-2" />
+              <span className="material-icons-outlined me-1">emergency</span>
               <span className={style.ellipsisToggle}>{t('lagNodplakat')}</span>
-              <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+              <span className="material-icons-outlined">{showNodplakat ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
         </div>
       </div>
-      {/* Koordinater */}
+      {/* Koordinater open */}
       <div className={showCoordinates ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -423,35 +376,35 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faMapMarker} className="me-2" />
+            <span className="material-icons-outlined me-1">place</span>
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showCoordinates ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showCoordinates ? 'expand_less' : 'expand_more'}</span>
           </div>
           {projeksjoner && coordinates ? (
             <div>
               <span className="small"> {t('koord_info')}</span>
-              <select className="form-select form-select-sm" onChange={e => handleTransform(e)} value={projection}>
+              <select className="dropdown" onChange={e => handleTransform(e)} value={projection}>
                 {projeksjoner.map((result, index) => (
                   <option value={result.epsg} key={index}>
-                    {result.name}
+                    EPSG:{result.epsg} - {result.name}
                   </option>
                 ))}
               </select>
               <div className="container mt-3">
                 <div className="row">
                   <div className="col-4">{t('koord_nord')}</div>
-                  <div className="col-8">{coordinates[1]}</div>
+                  <div className="col-8">{round(coordinates[1], 2)}</div>
                 </div>
                 <div className="row">
                   <div className="col-4">{t('koord_ost')}:</div>
-                  <div className="col-8">{coordinates[0]}</div>
+                  <div className="col-8">{round(coordinates[0], 2)}</div>
                 </div>
               </div>
             </div>
           ) : null}
         </div>
       </div>
-      {/* Turkart */}
+      {/* Turkart open */}
       <div className={showTurkart ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -461,13 +414,15 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faBlind} className="me-2" />
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showTurkart ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined me-1">blind</span>
+            <span className={style.ellipsisToggle}>{t('lagTurkart')}</span>
+            <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
+        {showTurkart ? <Turkart /> : null}
       </div>
-      {/* Fargeleggingskart */}
+      {/* Fargeleggingskart open */}
+      {/*
       <div className={showFargeleggingskart ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -477,13 +432,14 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faPaintbrush} className="me-2" />
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showFargeleggingskart ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined me-1">brush</span>
+            <span className={style.ellipsisToggle}>{t('lagFargeleggingskart')}</span>
+            <span className="material-icons-outlined">{showFargeleggingskart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
       </div>
-      {/* Nodplakat */}
+      */}
+      {/* Nodplakat open */}
       <div className={showNodplakat ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -493,9 +449,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faAmbulance} className="me-2" />
+            <span className="material-icons-outlined me-1">emergency</span>
             <span className={style.ellipsisToggle}>{t('Nodplakat')}</span>
-            <FontAwesomeIcon icon={showNodplakat ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showNodplakat ? 'expand_less' : 'expand_more'}</span>
           </div>
           <div className={showNodplakat1 ? `${style.selected} ${style.open}` : style.selected}>
             <h4 className=""> {t('Ansvar')}</h4>
@@ -503,7 +459,7 @@ const PointInfo = () => {
             <div className="small"> {t('NodplakatText2')}</div>
             <div className="small"> {t('NodplakatText3')}</div>
             <button
-              className="btn btn-primary"
+              className="button button__green--primary button--xs"
               onClick={() => {
                 setShowNodplakat1(false);
                 setShowNodplakat2(true);
@@ -514,28 +470,28 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
             <form id="form" onSubmit={downloadEmergencyPoster}>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatName">
+              <div className="inputField__wrapper">
+                <label className="label label--sml" htmlFor="nodplakatName">
                   {t('GiPunktetNavn')}
                 </label>
                 <input
                   id="nodplakatName"
                   type="text"
                   ref={nodplakatNameRef}
-                  className="form-control form-control-sm"
+                  className="inputField"
                   value={nodplakatName}
                   onChange={e => setNodplakatName(e.target.value)}
                 />
               </div>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatStedsnavn">
+              <div className="">
+                <label className="label label--sml  label--dropdown" htmlFor="nodplakatStedsnavn">
                   {t('PlaceIs')}
                 </label>
                 {stedsnavn.navn ? (
                   <select
                     id="nodplakatStedsnavn"
                     ref={nodplakatStedsnavnRef}
-                    className="form-select"
+                    className="dropdown"
                     onChange={e => setNodplakatStedsnavn(e.target.value)}
                     value={nodplakatStedsnavn}
                   >
@@ -547,15 +503,15 @@ const PointInfo = () => {
                   </select>
                 ) : null}
               </div>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatVeg">
+              <div className="">
+                <label className="label label--sml label--dropdown" htmlFor="nodplakatVeg">
                   {t('FoundRoadIs')}
                 </label>
                 {emergencyPointInfo ? (
                   <select
                     id="nodplakatVeg"
                     ref={nodplakatVegRef}
-                    className="form-select"
+                    className="dropdown"
                     onChange={e => setNodplakatVeg(e.target.value)}
                     value={nodplakatVeg}
                   >
@@ -570,7 +526,7 @@ const PointInfo = () => {
               <div className="mb-4">
                 {t('In')} {emergencyPointInfo.kommune} {t('Municipality')}
               </div>
-              <button className="btn btn-primary" type="submit">
+              <button className="button button__green--primary button--xs" type="submit">
                 {t('downloadEmergencyPoster')}
               </button>
             </form>
@@ -588,11 +544,11 @@ const PointInfo = () => {
             className={style.expandBtn}
           >
             <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
-            <FontAwesomeIcon icon={showGetFeatureInfo ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showGetFeatureInfo ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
       </div>
-      {/* Eiendomsinformasjon */}
+      {/* Eiendomsinformasjon open */}
       <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -602,9 +558,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faHome} className="me-2" />
+            <span className="material-icons-outlined me-1">home</span>
             <span className={style.ellipsisToggle}>{t('seEiendom')}</span>
-            <FontAwesomeIcon icon={showMatrikkel ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showMatrikkel ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
         {matrikkel && matrikkel.GARDSNR ? (
@@ -632,6 +588,7 @@ const PointInfo = () => {
               </div>
               <div className="row mt-3">
                 <a
+                  className="button button__green--tertiary button--xs"
                   href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
                   target="_blank"
                   rel="noreferrer"
@@ -642,10 +599,10 @@ const PointInfo = () => {
             </div>
           </div>
         ) : (
-          <div>{t('noMatrikkel')}</div>
+          <div>{t('seEiendom_no_results')}</div>
         )}
       </div>
-      {/* Stedsnavn */}
+      {/* Stedsnavn open */}
       <div className={showStedsnavn ? `${style.selected} pointInfo` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -655,9 +612,9 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <FontAwesomeIcon icon={faFlag} className="me-2" />
+            <span className="material-icons-outlined me-1">flag</span>
             <span className={style.ellipsisToggle}>{t('ssrFakta')}</span>
-            <FontAwesomeIcon icon={showStedsnavn ? faAngleUp : faAngleDown} />
+            <span className="material-icons-outlined">{showStedsnavn ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
         {stedsnavn.navn ? (
@@ -668,7 +625,12 @@ const PointInfo = () => {
                   <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
                   <div className="text-muted">
                     {t('Stedsnummer')}:{' '}
-                    <a href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
+                    <a
+                      className="button button__green--tertiary button--xs"
+                      href={generateFaktaarkUrl(result.stedsnummer)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       {result.stedsnummer}
                     </a>
                   </div>
@@ -680,7 +642,7 @@ const PointInfo = () => {
             ))}
           </ul>
         ) : (
-          <div> {t('noStedsnavn')}</div>
+          <div> {t('ssrFakta_no_results')}</div>
         )}
       </div>
     </>

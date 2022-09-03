@@ -1,8 +1,11 @@
 import React from 'react';
-import { useEventDispatch, useEventSelector } from '../../index';
+
 import { selectVisibleBaseLayer, setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import { useGlobalStore } from '../../app/globalStore';
+import { useEventDispatch, useEventSelector } from '../../index';
 
 const ChangeBaseLayer = () => {
+  const setGlobalLayers = useGlobalStore(state => state.setLayers);
   const dispatch = useEventDispatch();
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = [
@@ -26,11 +29,12 @@ const ChangeBaseLayer = () => {
 
   const toggleBaseLayer = (index: number): void => {
     dispatch(setVisibleBaseLayer(baseLayers[index].name));
+    setGlobalLayers(baseLayers[index].name);
   };
 
   return (
     <>
-      <div className="changeBaseLayer baseMapPanel baseLayerPanel">
+      <div className="changeBaseLayer baseMapPanel baseLayerPanel change-base-map-mobile">
         {baseLayers.map((baseLayer, index) => (
           <button
             key={index}

@@ -1,0 +1,13 @@
+:local(.mouseposition) span {
+  position: absolute;
+  right: 180px;
+  padding: 0 5px 0 5px;
+  cursor: inherit;
+  border-radius: 1px;
+  z-index: 99;
+  bottom: 5px;
+  padding-left: 5px;
+  background-color: #fff;
+  color: #4c4c4e;
+  opacity: 0.9;
+}

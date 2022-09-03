@@ -1,11 +1,12 @@
 // const { API_KEY } = process.env;
-import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useRef, useState } from 'react';
+
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useEventDispatch } from '../../index';
+
 import { setClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { useGlobalStore } from '../../app/globalStore';
+import { useAppDispatch, useEventDispatch } from '../../index';
 import {
   generateAdresseSokUrl,
   generateSearchMatrikkelAdresseUrl,
@@ -14,11 +15,14 @@ import {
 import { setAdresseResult, setMatrikkelResult, setSsrResult } from '../search/searchSlice';
 import { IAdresser, ISsr } from './search-model';
 
-function Search() {
+const Search = () => {
   const { t } = useTranslation();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(useGlobalStore(state => state.sok));
   const appDispatch = useAppDispatch();
   const eventDispatch = useEventDispatch();
+  const [reset, setReset] = useState(false);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const setSok = useGlobalStore(state => state.setSok);
 
   useEffect(() => {
     if (query) {
@@ -40,27 +44,38 @@ function Search() {
         appDispatch(setSsrResult(s));
         appDispatch(setAdresseResult(a));
         appDispatch(setMatrikkelResult(m));
+        setSok(query);
       });
     }
   }, [query, appDispatch]);
 
-  const handleInputChange = () => {
-    console.log('SEARCH: ', search?.value);
-    if (search?.value) {
-      setQuery(search?.value);
+  const handleInputChange = (value: string) => {
+    setReset(true);
+    if (value) {
+      setQuery(value);
       eventDispatch(setClickCoordinates({}));
     } else {
-      // appDispatch(setResult({}));
+      appDispatch(setSsrResult({}));
+      appDispatch(setAdresseResult({}));
+      appDispatch(setMatrikkelResult({}));
       eventDispatch(setClickCoordinates({}));
     }
   };
-  let search: HTMLInputElement | null;
+  const resetHandler = () => {
+    setReset(false);
+    setQuery('');
+    setSok('');
+    appDispatch(setSsrResult({}));
+    appDispatch(setAdresseResult({}));
+    appDispatch(setMatrikkelResult({}));
+    eventDispatch(setClickCoordinates({}));
+  };
 
   return (
-    <>
-      <div className="input-group mb-3 shadow bg-body rounded" style={{ height: '50px' }}>
+    <div className="container container-lg" style={{ minWidth: '40rem' }}>
+      <div className="searchbar__wrapper">
         <button
-          className="btn btn-outline-secondary border border-end-0"
+          className="button button__menu"
           onClick={() => {
             const mySidenav = document.getElementById('mySidenav');
             const sideMenuPosition = document.getElementById('sideMenuPosition');
@@ -71,36 +86,50 @@ function Search() {
             }
           }}
         >
-          <FontAwesomeIcon icon={faBars} />
+          <span className="material-icons-outlined">menu</span>
         </button>
-        <input
-          style={{ width: '350px' }}
-          className="border border-start-0 border-end-0"
-          placeholder={t('search_text')}
-          ref={input => (search = input)}
-          onClick={() => {
-            if (search?.value) setQuery('\t' + query);
-            eventDispatch(setClickCoordinates({}));
-          }}
-          onChange={handleInputChange}
-        />
+        <div className="inputField__wrapper">
+          <input
+            type="text"
+            className="inputField"
+            placeholder={t('search_text')}
+            ref={searchInput}
+            value={query}
+            onClick={() => {
+              eventDispatch(setClickCoordinates({}));
+            }}
+            onChange={e => handleInputChange(e.target.value)}
+          />
+        </div>
+        {reset && (
+          <button
+            className="btn btn-outline-secondary border border-start-0 menu-icon"
+            onClick={() => {
+              resetHandler();
+            }}
+          >
+            <span className="material-icons">close</span>
+          </button>
+        )}
         {/* <Suggestions results={this.state.results} /> */}
-        <span
-          className="input-group-text border-start-0 bg-transparent border"
+        <button
+          className="button button__searchbar"
           onClick={() => {
             console.log('search click');
           }}
         >
-          <FontAwesomeIcon
-            icon={faMagnifyingGlass}
+          <span
+            className="material-icons-outlined"
             onClick={() => {
               console.log('menu click');
             }}
-          />
-        </span>
+          >
+            search
+          </span>
+        </button>
       </div>
-    </>
+    </div>
   );
-}
+};
 
 export default Search;

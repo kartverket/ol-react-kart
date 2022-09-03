@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useTranslation } from 'react-i18next';
 
 interface Lng {
@@ -15,7 +16,7 @@ const LanguageSelector = () => {
   const { i18n } = useTranslation();
   return (
     <>
-      <div>
+      <div className="expandBtn">
         {Object.keys(lngs).map((lng, index) => (
           <span key={lng}>
             <a

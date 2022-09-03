@@ -161,6 +161,9 @@ export interface ITileLayer {
   distributionProtocol?: 'WMS' | 'WMTS';
   groupid?: number;
   legendurl?: string;
+  uuid?: string;
+  description?: string;
+  link?: string;
 }
 
 export interface ICodeLists {
@@ -181,12 +184,6 @@ export interface IProjectList {
 }
 
 export interface IProject {
-  lat: number;
-  lon: number;
-  mapepsg: string;
-  zoom: number;
-  mapbackgroundcolor: string;
-  displayCenter: string;
   isygatekeeper: string;
   tickethost: string;
   name: string;
@@ -197,9 +194,12 @@ export interface IMapBounds {
 }
 
 export interface IConfig {
+  center: [number, number];
+  mapepsg: string;
+  zoom: number;
   mapbounds: IMapBounds;
   maplayer: IMapLayer[];
-  project: IProject;
+  project?: IProject;
   vector?: IVector[];
   layer: ITileLayer[];
 }

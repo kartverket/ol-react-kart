@@ -1,10 +1,10 @@
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { useEventSelector } from '../../../index';
+
 import { selectTileLayers } from '../../../MapCore/Layers/layersSlice';
 import { ITileLayer } from '../../../MapCore/Models/config-model';
+import { useEventSelector } from '../../../index';
 
 const Legend = () => {
   const wmsLayers = useEventSelector(selectTileLayers);
@@ -20,7 +20,7 @@ const Legend = () => {
         <div className="d-flex p-0">
           <span>{t('legend_txt')}</span>
           <div className="ms-auto ps-2 pe-2">
-            {!collapsedLegend ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}
+            <span className="material-icons-outlined">{!collapsedLegend ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
         {!collapsedLegend ? (

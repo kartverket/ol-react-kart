@@ -3,11 +3,6 @@
   overflow: hidden;
   // transition: 0.1s all ease-in-out;
 
-  div {
-    > label {
-      padding: 0 4px;
-    }
-  }
   &:local(.open) {
     max-height: 80000px;
   }
@@ -24,6 +19,12 @@
 }
 :local(.expandBtn) {
   &:hover {
+    cursor: pointer;
+  }
+}
+:local(li) {
+  &:hover {
+    background-color: var(--hvit);
     cursor: pointer;
   }
 }

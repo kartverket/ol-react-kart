@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { Coordinate } from 'ol/coordinate';
 import { Extent } from 'ol/extent';
+
 import { EventStoreState } from './Event/eventStore';
 
 export interface IMapClickInfo {

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import { layersSlice } from '../../Layers/layersSlice';
 import { projectSlice } from '../../Project/projectSlice';
 import { getClickCoordinatesSlice } from '../getClickCoordinatesSlice';

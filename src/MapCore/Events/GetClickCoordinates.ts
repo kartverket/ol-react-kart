@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { EventsKey } from 'ol/events';
 import Map from 'ol/Map';
 import { unByKey } from 'ol/Observable';
+import { EventsKey } from 'ol/events';
+
 import { setSsrResult } from '../../components/search/searchSlice';
 import { useAppDispatch, useEventDispatch } from '../../index';
 import { parseFeatureInfo } from '../../utils/FeatureUtil';
@@ -17,6 +18,15 @@ export const GetClickCoordinates = function () {
       if (!isActive) {
         if (map) {
           infoKey = map.on('singleclick', function (evt) {
+            const markerOerlay = map.getOverlayById('marker');
+            if (markerOerlay) {
+              markerOerlay.setPosition(evt.coordinate);
+              const markerElement = markerOerlay.getElement();
+              if (markerElement) {
+                markerElement.style.visibility = 'visible';
+              }
+            }
+
             const layers = map.getLayers().getArray();
             layers.forEach(element => {
               // @ts-expect-error
@@ -30,7 +40,6 @@ export const GetClickCoordinates = function () {
                   });
                 /*
                 const formats = element.getSource().getParams().info_formats;
-                console.log(formats);
                 let indexFormat = 0;
                 if (formats.indexOf('text/plain') > 0) {
                   indexFormat = formats.indexOf('text/plain');
@@ -45,11 +54,9 @@ export const GetClickCoordinates = function () {
                 }
                 */
                 if (url) {
-                  console.log('url', url);
                   fetch(url)
                     .then(response => response.text())
                     .then(data => {
-                      console.log(data);
                       const parsedFeature = parseFeatureInfo(data, 'text/plain');
                       console.log('parsedFeature', parsedFeature);
                     })
