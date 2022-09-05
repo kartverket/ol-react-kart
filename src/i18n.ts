@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+
 //import { i18nextPlugin } from 'translation-check'
 
 i18n
@@ -15,7 +16,7 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    debug: true,
+    debug: false,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
@@ -332,7 +333,9 @@ i18n
           sykkelrute_middels: 'Intermediate',
           sykkelruter: 'Bicycle routes',
           annenruter: 'Other routes',
-          tegne_og_male: 'Draw and measure',
+          tools: 'Tools',
+          measure:'Measure areal and length',
+          draw: 'Draw',
           teiger_og_grenser: 'Properties and borders',
           telefon: 'Phone',
           temakart: 'Thematic map',
@@ -378,7 +381,7 @@ i18n
           cancel_print: 'Cancel print',
           print_format: 'Format',
           print_dpi: 'DPI',
-          generate_print: 'GENERATE PRINT FILE',
+          generate_print: 'Generate print file',
           '1_A4_portrait': 'A4 portrait',
           '2_A4_landscape': 'A4 landscape',
           '3_A3_portrait': 'A3 portrait',
@@ -708,7 +711,9 @@ i18n
           sykkelrute_middels: 'Middels',
           sykkelruter: 'Sykkelruter',
           annenruter: 'Annenruter',
-          tegne_og_male: 'Tegne og måle',
+          tools: 'Verktøy',
+          measure:'Måle areal og lengde',
+          draw: 'Tegne',
           teiger_og_grenser: 'Teiger og grenser',
           telefon: 'Telefon',
           temakart: 'Temakart',
@@ -1082,7 +1087,9 @@ i18n
           sykkelrute_middels: 'Middels',
           sykkelruter: 'Sykkelruter',
           annenruter: 'Annenruter',
-          tegne_og_male: 'Teikne og måle',
+          tools: 'Verktøy',
+          measure: 'Måle areal og lengde',
+          draw: 'Teikne',
           teiger_og_grenser: 'Teigar og grenser',
           telefon: 'Telefon',
           temakart: 'Temakart',

@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { useEventSelector } from '../../index';
 import type { EventStoreDispatch } from '../Events/Event/eventStore';
 import { selectProject, setToken } from './projectSlice';

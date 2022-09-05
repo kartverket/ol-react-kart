@@ -29,11 +29,11 @@
   padding: 2px;
 }
 .ol-control button {
-  background: var(--blaa_moerk);
-  color: var(--hvit);
+  background: var(--blue_dark);
+  color: var(--white);
 
   opacity: 0.7;
-  border: 2px solid var(--blaa_moerk_knapp);
+  border: 2px solid var(--dark_blue_button);
   border-radius: 0.125rem;
   display: block;
   font-size: 2rem;
@@ -43,14 +43,14 @@
   height: 2.625rem;
 }
 .ol-control button:hover {
-  background-color: var(--blaa_hover);
+  background-color: var(--blue_hover);
 }
 .ol-control button:active {
-  background-color: var(--blaa_moerk_knapp);
+  background-color: var(--dark_blue_button);
 }
 .ol-popup {
   position: absolute;
-  background-color: white;
+  background-color: var(--white);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 15px;
   border-radius: 10px;
@@ -70,7 +70,7 @@
   pointer-events: none;
 }
 .ol-popup:after {
-  border-top-color: white;
+  border-top-color: var(--white);
   border-width: 10px;
   left: 48px;
   margin-left: -10px;
@@ -103,7 +103,7 @@
   top: 220px;
   right: 20px;
   background-color: #175092;
-  color: white;
+  color: var(--white);
   height: 40px;
   border-radius: 10px;
 }
@@ -116,10 +116,10 @@
   position: absolute;
   bottom: 20px;
   background-color: rgba(255, 255, 255, 0.35);
-  border-color: black;
+  border-color: var(--black);
   border-style: solid;
   border-width: 0 2px 2px 2px;
-  color: black;
+  color: var(--black);
   font-size: 12px;
   font-weight: bold;
   padding: 2px 0;
@@ -133,8 +133,8 @@
   font-size: 14px;
   padding: 0 5px 0 5px;
   cursor: inherit;
-  background-color: #fff;
-  color: #4c4c4e;
+  background-color: var(--white);
+  color: var(--gray_dark);
   opacity: 0.9;
   border-radius: 1px;
   z-index: 99;

@@ -1,14 +1,17 @@
-import { Coordinate } from 'ol/coordinate';
+import { OlHTMLAttributes } from 'react';
+
 import Feature from 'ol/Feature.js';
+import Map from 'ol/Map';
+import { unByKey } from 'ol/Observable';
+import { Coordinate } from 'ol/coordinate';
 import { MultiPolygon, Point, Polygon } from 'ol/geom';
 import { DragPan } from 'ol/interaction';
 import { Vector as VectorLayer } from 'ol/layer.js';
-import Map from 'ol/Map';
-import { unByKey } from 'ol/Observable';
 import { getTransform } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Fill, Stroke, Style } from 'ol/style';
-import { getUTMZoneFromGeographicPoint, IUtm } from '../utils/mapUtil';
+
+import { IUtm, getLayerByName, getUTMZoneFromGeographicPoint } from '../utils/mapUtil';
 
 export class PrintBoxSelect {
   isActive = false;
@@ -145,19 +148,10 @@ export class PrintBoxSelect {
     return '';
   };
 
-  getLayerByName = (name: string) => {
-    let layers = this.map.getLayers().getArray();
-
-    layers = layers.filter(function (layer: { get: (arg0: string) => string }) {
-      return layer.get('name') === name;
-    });
-    return layers.length > 0 ? layers[0] : null;
-  };
-
   createFrame = () => {
-    if (this.getLayerByName('printBoxSelectionLayer')) {
+    if (getLayerByName(this.map, 'printBoxSelectionLayer')) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.map.removeLayer(this.getLayerByName('printBoxSelectionLayer') as any);
+      this.map.removeLayer(getLayerByName(this.map, 'printBoxSelectionLayer') as any);
     }
     const mapCenter = this.getMapCenter();
     this.oldCenter = mapCenter;
@@ -309,9 +303,9 @@ export class PrintBoxSelect {
 
   deactivate = () => {
     this.deregisterMouseEvents();
-    if (this.getLayerByName('printBoxSelectionLayer')) {
+    if (getLayerByName(this.map, 'printBoxSelectionLayer')) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.map.removeLayer(this.getLayerByName('printBoxSelectionLayer') as any);
+      this.map.removeLayer(getLayerByName(this.map, 'printBoxSelectionLayer') as any);
     }
   };
 }

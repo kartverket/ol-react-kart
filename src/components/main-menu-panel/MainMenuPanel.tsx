@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+
 import { useAppDispatch, useAppSelector, useEventSelector } from '../../../src/index';
 import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import Draw from '../Draw';
+import ElevationProfile from '../ElevationProfile';
 import Faq from '../Faq';
+import Measure from '../Measure';
+import PrintMap from '../Print.Map';
+import ShareMap from '../ShareMap';
 import Contact from './../Contact';
 import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
@@ -19,6 +26,7 @@ const MainMenuPanel = () => {
   const appDispatch = useAppDispatch();
   const [showBaseLayersList, setShowBaseLayersList] = useState(false);
   const [collapseThematicMap, setCollapseThematicMap] = useState(false);
+  const [showTools, setShowTools] = useState(false);
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const showActiveProject = useAppSelector(selectShowActiveProject);
   const activeProject = useAppSelector(selectActiveProject);
@@ -49,7 +57,7 @@ const MainMenuPanel = () => {
     <div id="mySidenav" className="sidenav">
       <div id="sideMenuPosition" className="side-menu-position list-group">
         <div className="list-group-item norgeskart-logo ps-2 pt-0 pe-0 pb-0 m-0">
-          <div className="container p-0 mt-3">
+          <div className="container p-0">
             <div className="d-flex flex-row align-items-center">
               <div className="p-2">
                 <h1>
@@ -69,7 +77,7 @@ const MainMenuPanel = () => {
         </div>
         {!showActiveProject ? (
           <div className="list-group-item list-group-item-action">
-            <div className="d-flex" onClick={() => toggleBaseLayerPanel()}>
+            <div className="d-flex expandBtn" onClick={() => toggleBaseLayerPanel()}>
               <div className="ps-2 pe-2">
                 <span className="material-icons-outlined">map</span>
               </div>
@@ -88,7 +96,7 @@ const MainMenuPanel = () => {
           </div>
         ) : (
           <div className="list-group-item list-group-item-action">
-            <div className="d-flex" onClick={() => toggleShowActiveProject()}>
+            <div className="d-flex expandBtn" onClick={() => toggleShowActiveProject()}>
               <div className="ps-2 pe-2">
                 <span className="material-icons-outlined">park</span>
               </div>
@@ -106,7 +114,7 @@ const MainMenuPanel = () => {
         {!showBaseLayersList && !showActiveProject ? (
           <>
             <div className="list-group-item list-group-item-action">
-              <div className="d-flex" onClick={() => toggleThematicMap()}>
+              <div className="d-flex expandBtn" onClick={() => toggleThematicMap()}>
                 <div className="ps-2 pe-2">
                   <span className="material-icons-outlined">map</span>
                 </div>
@@ -115,7 +123,7 @@ const MainMenuPanel = () => {
                 </div>
                 <div className="ms-auto ps-2 pe-2">
                   <span className="material-icons-outlined">
-                    {!collapseThematicMap ? 'expand_less' : 'expand_more'}
+                    {!collapseThematicMap ? 'expand_more' : 'chevron_right'}
                   </span>
                 </div>
               </div>
@@ -125,6 +133,32 @@ const MainMenuPanel = () => {
                 </div>
               ) : null}
             </div>
+
+            <div className="list-group-item list-group-item-action">
+              <div className="d-flex expandBtn" onClick={() => setShowTools(!showTools)}>
+                <div className="ps-2 pe-2">
+                  <span className="material-icons-outlined">build</span>
+                </div>
+                <div className="ps-2 pe-2">
+                  <span className="">{t('tools')}</span>
+                </div>
+                <div className="ms-auto ps-2 pe-2">
+                  <span className="material-icons-outlined">
+                    {!showTools ? 'expand_more' : 'chevron_right'}
+                  </span>
+                </div>
+              </div>
+              {!showTools ? (
+                <div>
+                  <Measure />
+                  <Draw />
+                  <ElevationProfile />
+                  <PrintMap />
+                  <ShareMap />
+                </div>
+              ) : null}
+            </div>
+
             <div className="list-group-item list-group-item-action">
               <Faq />
             </div>

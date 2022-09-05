@@ -184,11 +184,6 @@ export interface IProjectList {
 }
 
 export interface IProject {
-  lat: number;
-  lon: number;
-  mapepsg: string;
-  zoom: number;
-  displayCenter: string;
   isygatekeeper: string;
   tickethost: string;
   name: string;
@@ -199,6 +194,9 @@ export interface IMapBounds {
 }
 
 export interface IConfig {
+  center: [number, number];
+  mapepsg: string;
+  zoom: number;
   mapbounds: IMapBounds;
   maplayer: IMapLayer[];
   project?: IProject;

@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { useAppSelector, useEventSelector } from '../../index';
+
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { useAppSelector, useEventSelector } from '../../index';
 import { selectSearch } from '../search/searchSlice';
 import PointInfo from './PointInfo';
 import SearchResultsList from './SearchResultsList';
@@ -15,7 +17,7 @@ const InfoPanel = () => {
   return (
     <>
       {(clickCoordinates && clickCoordinates?.coordinate) || (searchResult && searchResult.ssr?.navn) ? (
-        <div style={{ width: '428px' }} className="border border-1 bg-white shadow rounded">
+        <div style={{ width: '428px' }} className="border border-1 bg-white shadow rounded mt-4">
           <div className="m-2">
             {searchResult && searchResult.ssr?.navn ? <SearchResultsList /> : null}
             {clickCoordinates && clickCoordinates.coordinate ? <PointInfo /> : null}

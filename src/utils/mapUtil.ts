@@ -1,3 +1,4 @@
+import OlMap from 'ol/Map';
 
 export interface IProsjektion {
   epsg: number;
@@ -54,4 +55,13 @@ export const getUTMZoneFromGeographicPoint = function (lon: number, lat: number)
     sone: sone,
     epsg: epsg,
   };
+};
+
+export const getLayerByName = (map: OlMap, name: string) => {
+  let layers = map.getLayers().getArray();
+
+  layers = layers.filter(function (layer: { get: (arg0: string) => string }) {
+    return layer.get('name') === name;
+  });
+  return layers.length > 0 ? layers[0] : null;
 };

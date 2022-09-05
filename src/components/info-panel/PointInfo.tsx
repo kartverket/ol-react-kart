@@ -1,13 +1,18 @@
+import React, { useEffect, useRef, useState } from 'react';
+
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
+import { useTranslation } from 'react-i18next';
+
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
+import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
 import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
-import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
+import { IProsjektion, getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
 import {
+  generatStedsnavnPunktsok,
   generateAdressePunktsokUrl,
   generateEiendomAddressUrl,
   generateEmergencyPosterPointUrl,
@@ -18,16 +23,13 @@ import {
   generateMapLinkServiceUrl,
   generateMatrikkelInfoUrl,
   generateProjeksjonerUrl,
-  generatStedsnavnPunktsok,
+  round,
   toDms,
   round
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
-import { getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
-import { IProsjektion } from '../../utils/mapUtil';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../app/store'
+
 export interface IPunktInfo {
   datakilde: string;
   terreng: string;
@@ -382,10 +384,10 @@ const PointInfo = () => {
           {projeksjoner && coordinates ? (
             <div>
               <span className="small"> {t('koord_info')}</span>
-              <select className="form-select form-select-sm" onChange={e => handleTransform(e)} value={projection}>
+              <select className="dropdown" onChange={e => handleTransform(e)} value={projection}>
                 {projeksjoner.map((result, index) => (
                   <option value={result.epsg} key={index}>
-                    EPSG:{result.epsg} - {result.name} 
+                    EPSG:{result.epsg} - {result.name}
                   </option>
                 ))}
               </select>
@@ -418,7 +420,7 @@ const PointInfo = () => {
             <span className="material-icons-outlined">{showTurkart ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
-        {showTurkart ? <Turkart/> : null}
+        {showTurkart ? <Turkart /> : null}
       </div>
       {/* Fargeleggingskart open */}
       {/*
@@ -469,28 +471,28 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat2 ? `${style.selected} ${style.open}` : style.selected}>
             <form id="form" onSubmit={downloadEmergencyPoster}>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatName">
+              <div className="inputField__wrapper">
+                <label className="label label--sml" htmlFor="nodplakatName">
                   {t('GiPunktetNavn')}
                 </label>
                 <input
                   id="nodplakatName"
                   type="text"
                   ref={nodplakatNameRef}
-                  className="form-control form-control-sm"
+                  className="inputField"
                   value={nodplakatName}
                   onChange={e => setNodplakatName(e.target.value)}
                 />
               </div>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatStedsnavn">
+              <div className="">
+                <label className="label label--sml  label--dropdown" htmlFor="nodplakatStedsnavn">
                   {t('PlaceIs')}
                 </label>
                 {stedsnavn.navn ? (
                   <select
                     id="nodplakatStedsnavn"
                     ref={nodplakatStedsnavnRef}
-                    className="form-select"
+                    className="dropdown"
                     onChange={e => setNodplakatStedsnavn(e.target.value)}
                     value={nodplakatStedsnavn}
                   >
@@ -502,15 +504,15 @@ const PointInfo = () => {
                   </select>
                 ) : null}
               </div>
-              <div className="mb-2">
-                <label className="small" htmlFor="nodplakatVeg">
+              <div className="">
+                <label className="label label--sml label--dropdown" htmlFor="nodplakatVeg">
                   {t('FoundRoadIs')}
                 </label>
                 {emergencyPointInfo ? (
                   <select
                     id="nodplakatVeg"
                     ref={nodplakatVegRef}
-                    className="form-select"
+                    className="dropdown"
                     onChange={e => setNodplakatVeg(e.target.value)}
                     value={nodplakatVeg}
                   >
@@ -587,7 +589,7 @@ const PointInfo = () => {
               </div>
               <div className="row mt-3">
                 <a
-                  className='button button__green--tertiary button--xs'
+                  className="button button__green--tertiary button--xs"
                   href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
                   target="_blank"
                   rel="noreferrer"
@@ -624,7 +626,12 @@ const PointInfo = () => {
                   <div>{result.stedsnavn && result.stedsnavn[0].skrivemåte}</div>
                   <div className="text-muted">
                     {t('Stedsnummer')}:{' '}
-                    <a className="button button__green--tertiary button--xs" href={generateFaktaarkUrl(result.stedsnummer)} target="_blank" rel="noreferrer">
+                    <a
+                      className="button button__green--tertiary button--xs"
+                      href={generateFaktaarkUrl(result.stedsnummer)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       {result.stedsnummer}
                     </a>
                   </div>

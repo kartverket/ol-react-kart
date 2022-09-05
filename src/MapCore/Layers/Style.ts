@@ -1,5 +1,6 @@
 import { Fill, RegularShape, Stroke, Style, Text } from 'ol/style';
 import { StyleLike } from 'ol/style/Style';
+
 import { IFill, IStroke, IStyle } from '../Models/config-model';
 
 function createFillStyle(style: IFill): Fill {

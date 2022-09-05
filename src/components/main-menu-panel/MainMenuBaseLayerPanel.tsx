@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { useEventDispatch, useEventSelector } from '../../index';
+
 import { selectBaseLayers, setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import { useEventDispatch, useEventSelector } from '../../index';
 
 const LayerInfo = (props: any) => {
   return (

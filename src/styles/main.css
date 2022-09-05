@@ -1,6 +1,7 @@
 /* HovedCSS */
 
-@import 'farger.css';
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import 'colors.css';
 @import 'buttons.css';
 @import 'layout.css';
 @import 'typography.css';
@@ -8,14 +9,21 @@
 @import 'input.css';
 @import 'radiobutton.css';
 @import 'checkbox.css';
-@import 'sliderbutton.css';
 @import 'icons.css';
 @import 'slider.css';
 @import 'zoom.css';
 @import 'searchbar.css';
 @import 'cards.css';
+@import 'dropdown.css';
 @import 'cards.css';
 @import 'table.css';
+@import 'progressbar.css';
+@import 'circular_loader.css';
+@import 'details.css';
+@import 'button_toggle.css';
+@import 'header.css';
+@import 'tabs.css';
+@import 'stepper.css';
 
 /* spesific for ol-react-kart og ekstraktet fra norgeskart3 ( mulig at det ikke trengs i framtida ) */
 @import 'kart.css';
@@ -25,28 +33,34 @@
 @import 'changebaselayer';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+@import 'mobile.css';
+@import 'mobileLandscape.css';
+
 /* kan eventuellt fjeneres */
 @import 'utils.css';
 
+searchbar__wrapper {
+  min-width: 40rem;
+}
 .search-result {
-  background-color: var(--blaa_lys); /* to be removed/changed */
+  background-color: var(--blue_light); /* to be removed/changed */
 }
 .search-result-list {
   max-height: 30rem;
   overflow-y: auto;
 }
 .search-result-list-item {
-  background-color: var(--graa_lys); /* to be removed/changed */
+  background-color: var(--gray_light); /* to be removed/changed */
 }
 .search-icon {
-  background-color: var(--groenn_standard);
+  background-color: var(--green);
   color: var(--hvit);
 }
-.search-icon:hover{
+.search-icon:hover {
   background-color: var(--groenn_hover);
 }
 
-.search-icon:active{
+.search-icon:active {
   background-color: var(--groenn_moerk);
 }
 
@@ -66,26 +80,26 @@
 }
 
 .btn-toggle {
-  background-color: var(--groenn_standard);
-  color: var(--hvit);
+  background-color: var(--green);
+  color: var(--white);
 }
 
 .btn-default.focus,
 .btn-default:focus {
-  background-color: var(--blaa_hover);
-  color: var(--svart);
+  background-color: var(--blue_hover);
+  color: var(--black);
 }
 
 .btn-default.active,
 .btn-default:active,
 .open > .dropdown-toggle.btn-default {
-  background-color: var(--blaa_moerk);
-  color: var(--hvit);
+  background-color: var(--blue_dark);
+  color: var(--white);
 }
 
 .btn-default:hover {
-  background-color: var(--blaa_hover);
-  color: var(--svart);
+  background-color: var(--blue_hover);
+  color: var(--black);
 }
 
 .btn-default.disabled.focus,
@@ -97,9 +111,9 @@
 fieldset[disabled] .btn-default.focus,
 fieldset[disabled] .btn-default:focus,
 fieldset[disabled] .btn-default:hover {
-  border-color:#d2d2d2;
-  background-color:#d2d2d2;
-  color: white;
+  border-color: #d2d2d2;
+  background-color: #d2d2d2;
+  color: var(--white);
 }
 
 .btn-default.active.focus,
@@ -111,28 +125,28 @@ fieldset[disabled] .btn-default:hover {
 .open > .dropdown-toggle.btn-default.focus,
 .open > .dropdown-toggle.btn-default:focus,
 .open > .dropdown-toggle.btn-default:hover {
-  background-color: var(--blaa_hover);
-  color: var(--svart);
+  background-color: var(--blue_hover);
+  color: var(--black);
 }
 
 .btn-toggle.focus,
 .btn-toggle:focus {
-  background-color: var(--groenn_hover);
-  color: var(--hvit);
+  background-color: var(--green_active);
+  color: var(--white);
   outline: none;
 }
 
 .btn-toggle.active,
 .btn-toggle:active,
 .open > .dropdown-toggle.btn-toggle {
-  background-color: var(--groenn_moerk);
-  color: var(--hvit);
+  background-color: var(--green_dark);
+  color: var(--white);
   outline: none;
 }
 
 .btn-toggle:hover {
-  background-color: var(--groenn_hover);
-  color: var(--hvit);
+  background-color: var(--green_active);
+  color: var(--white);
   outline: none;
 }
 
@@ -145,8 +159,8 @@ fieldset[disabled] .btn-default:hover {
 fieldset[disabled] .btn-toggle.focus,
 fieldset[disabled] .btn-toggle:focus,
 fieldset[disabled] .btn-toggle:hover {
-  background-color: var(--groenn_hover);
-  color: var(--hvit);
+  background-color: var(--green_active);
+  color: var(--white);
   outline: none;
 }
 
@@ -159,14 +173,14 @@ fieldset[disabled] .btn-toggle:hover {
 .open > .dropdown-toggle.btn-toggle.focus,
 .open > .dropdown-toggle.btn-toggle:focus,
 .open > .dropdown-toggle.btn-toggle:hover {
-  background-color: var(--groenn_hover);
-  color: var(--hvit);
+  background-color: var(--green_active);
+  color: var(--white);
   outline: none;
 }
 
 .btn-active {
-  background-color: var(--groenn_moerk);
-  color: var(--hvit);
+  background-color: var(--green_dark);
+  color: var(--white);
   outline: none;
 }
 input:focus-visible {
@@ -177,4 +191,13 @@ input:focus-visible {
 .pointInfo {
   max-height: 30rem;
   overflow-y: auto;
+}
+
+/* Fix material-icons not centered  */
+.material-icons-outlined {
+  line-height: inherit;
+}
+
+.inputField {
+  padding: 1rem;
 }

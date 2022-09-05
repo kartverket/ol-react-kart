@@ -1,6 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
+import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+
 import { generateFaqUrl } from '../utils/n3api';
 
 export interface iFAQ {
@@ -46,7 +48,7 @@ const Faq = () => {
           <span className="text-capitalize">{t('tips_og_triks')}</span>
         </div>
         <div className="ms-auto ps-2 pe-2">
-          <span className="material-icons-outlined">{show ? 'chevron_left' : 'chevron_right'}</span>
+          <span className="material-icons-outlined">{show ? 'expand_more' : 'chevron_right'}</span>
         </div>
       </div>
       {show && faq ? (
@@ -61,7 +63,7 @@ const Faq = () => {
                 >
                   <div className="card-header px-1">
                     {aq.question}
-                    <span className="material-icons-outlined">{showAnswer ? 'expand_less' : 'expand_more'}</span>
+                    <span className="material-icons-outlined">{showAnswer ? 'expand_more' : 'chevron_right'}</span>
                   </div>
                   {showAnswer === index ? <div className="card-body">{aq.answer}</div> : null}
                 </li>

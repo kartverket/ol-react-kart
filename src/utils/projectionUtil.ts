@@ -1,8 +1,9 @@
-import { Extent } from 'ol/extent';
-import { addProjection, Projection } from 'ol/proj';
-import { register } from 'ol/proj/proj4.js';
-import { METERS_PER_UNIT } from 'ol/proj/Units';
 import proj4 from 'proj4';
+
+import { Extent } from 'ol/extent';
+import { Projection, addProjection } from 'ol/proj';
+import { METERS_PER_UNIT } from 'ol/proj/Units';
+import { register } from 'ol/proj/proj4.js';
 
 export const loadCustomCrs = () => {
   // proj4 is on the global scope
@@ -81,10 +82,10 @@ export const zerofill = (value: string | number) => {
 };
 export const getResolutionForScale = (scale: string, units: string | number) => {
   const dpi = 25.4 / 0.28;
-  const mpu = METERS_PER_UNIT[units];
+  const mpu = METERS_PER_UNIT;
   const inchesPerMeter = 39.37;
 
-  return parseFloat(scale) / (mpu * inchesPerMeter * dpi);
+  return parseFloat(scale) / (mpu.m * inchesPerMeter * dpi);
 };
 export const roundScale = (scale: number) => {
   let roundScale;

@@ -1,16 +1,22 @@
-import { Coordinate } from 'ol/coordinate';
+import React, { useEffect, useState } from 'react';
+
+import { useTranslation } from 'react-i18next';
+import pin_orange from '../../assets/pin-md-orange.png';
+import pin_blue from '../../assets/pin-md-blueish.png';
+
 import Feature from 'ol/Feature.js';
+import { Coordinate } from 'ol/coordinate';
 import Point from 'ol/geom/Point';
 import { Vector as VectorLayer } from 'ol/layer.js';
 import { transform } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Icon, Style } from 'ol/style';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import pin_orange from '../../assets/pin-md-orange.png';
-import pin_blue from '../../assets/pin-md-blueish.png';
-import { useAppSelector, useEventDispatch } from '../../index';
+
 import { setCenter } from '../../MapCore/Project/projectSlice';
+import useMap from '../../app/useMap';
+import pin_blue from '../../assets/pin-md-blueish.png';
+import pin_orange from '../../assets/pin-md-orange.png';
+import { useAppSelector, useEventDispatch } from '../../index';
 import { selectSearch } from '../search/searchSlice';
 import style from './SearchBar.module.scss';
 
@@ -24,16 +30,18 @@ const SearchResultsList = () => {
   const [expandedSsr, setStateSsr] = useState(true);
   const [expandedMatrikkel, setStateMatrikkel] = useState(false);
   let vectorLayer: any;
+  const map = useMap();
 
   useEffect(() => {
+    if (!map) return;
     vectorLayer = new VectorLayer({ source: vectorSource, properties: { name: 'searchResultsLayer' } });
-    window.olMap.addLayer(vectorLayer);
+    map.addLayer(vectorLayer);
     vectorSource.clear();
     return () => {
       vectorSource.clear();
-      window.olMap.removeLayer(vectorLayer);
-    }
-  }, []);
+      map.removeLayer(vectorLayer);
+    };
+  }, [map]);
   const icon_orange = new Style({
     image: new Icon({
       anchor: [0.5, 46],
@@ -47,9 +55,9 @@ const SearchResultsList = () => {
       anchor: [0.5, 46],
       anchorXUnits: 'fraction',
       anchorYUnits: 'pixels',
-      src: pin_blue
-    })
-  })
+      src: pin_blue,
+    }),
+  });
   const showInfoMarker = (coordinate: Coordinate) => {
     const iconFeature = new Feature({ geometry: new Point(coordinate) });
     iconFeature.setStyle(icon_orange);
@@ -57,23 +65,29 @@ const SearchResultsList = () => {
   };
   const clearMarkers = () => {
     vectorSource.clear();
-  }
+  };
   const constructPoint = (coord: { lon: number; lat: number; epsg: number | string }, epsgTo = 'EPSG:25833') => {
     const epsgFrom: string = typeof coord.epsg === 'number' ? 'EPSG:' + coord.epsg : coord.epsg;
     return transform([Number(coord.lon), Number(coord.lat)], epsgFrom, epsgTo);
   };
   const mouseOver = (coordinate: Coordinate) => {
-    const features = vectorSource.getFeaturesAtCoordinate(coordinate)
-    features.forEach(feature => feature.setStyle(icon_blue))
-  }
+    const features = vectorSource.getFeaturesAtCoordinate(coordinate);
+    features.forEach(feature => feature.setStyle(icon_blue));
+  };
   const mouseOut = (coordinate: Coordinate) => {
-    const features = vectorSource.getFeaturesAtCoordinate(coordinate)
-    features.forEach(feature => feature.setStyle(icon_orange))
-  }
+    const features = vectorSource.getFeaturesAtCoordinate(coordinate);
+    features.forEach(feature => feature.setStyle(icon_orange));
+  };
   return (
     <>
       <div id="ssrResult" className="search-result ps-2">
-        <div onClick={() => { setStateSsr(!expandedSsr); clearMarkers(); }} className={style.expandBtn}>
+        <div
+          onClick={() => {
+            setStateSsr(!expandedSsr);
+            clearMarkers();
+          }}
+          className={style.expandBtn}
+        >
           <span className={style.ellipsisToggle}>{t('searchResult_placenames')}</span>
           <span className="badge text-bg-secondary">{searchResult?.ssr?.metadata?.totaltAntallTreff || 0}</span>
           <span className="ps-2 material-icons-outlined">{expandedSsr ? 'expand_less' : 'expand_more'}</span>
@@ -104,15 +118,24 @@ const SearchResultsList = () => {
                         }),
                       )
                     }
-                    onMouseOver={() => mouseOver(constructPoint({
-                      lon: result.representasjonspunkt.øst,
-                      lat: result.representasjonspunkt.nord,
-                      epsg: result.representasjonspunkt.koordsys,
-                    }))} onMouseOut={() => mouseOut(constructPoint({
-                      lon: result.representasjonspunkt.øst,
-                      lat: result.representasjonspunkt.nord,
-                      epsg: result.representasjonspunkt.koordsys,
-                    }))}
+                    onMouseOver={() =>
+                      mouseOver(
+                        constructPoint({
+                          lon: result.representasjonspunkt.øst,
+                          lat: result.representasjonspunkt.nord,
+                          epsg: result.representasjonspunkt.koordsys,
+                        }),
+                      )
+                    }
+                    onMouseOut={() =>
+                      mouseOut(
+                        constructPoint({
+                          lon: result.representasjonspunkt.øst,
+                          lat: result.representasjonspunkt.nord,
+                          epsg: result.representasjonspunkt.koordsys,
+                        }),
+                      )
+                    }
                   >
                     <span>
                       {result.skrivemåte}, {result.navneobjekttype}{' '}
@@ -127,7 +150,13 @@ const SearchResultsList = () => {
       </div>
 
       <div id="addressREsult" className="search-result ps-2">
-        <div onClick={() => { setStateAdress(!expandedAdress); clearMarkers(); }} className={style.expandBtn}>
+        <div
+          onClick={() => {
+            setStateAdress(!expandedAdress);
+            clearMarkers();
+          }}
+          className={style.expandBtn}
+        >
           <span className={style.ellipsisToggle}>{t('searchResult_addresses')}</span>
           <span className="badge text-bg-secondary">{searchResult?.adresser?.metadata?.totaltAntallTreff || 0}</span>
           <span className="material-icons-outlined">{expandedAdress ? 'expand_less' : 'expand_more'}</span>
@@ -136,7 +165,9 @@ const SearchResultsList = () => {
           {searchResult.adresser ? (
             <ul className="list-group list-group-flush search-result-list">
               {searchResult?.adresser?.adresser?.map((result, index) => {
-                if (expandedAdress) { showInfoMarker(constructPoint(result.representasjonspunkt)); }
+                if (expandedAdress) {
+                  showInfoMarker(constructPoint(result.representasjonspunkt));
+                }
                 return (
                   <li
                     key={index}
@@ -158,7 +189,13 @@ const SearchResultsList = () => {
       </div>
 
       <div id="matrikkelResult" className="search-result ps-2">
-        <div onClick={() => { setStateMatrikkel(!expandedMatrikkel); clearMarkers(); }} className={style.expandBtn}>
+        <div
+          onClick={() => {
+            setStateMatrikkel(!expandedMatrikkel);
+            clearMarkers();
+          }}
+          className={style.expandBtn}
+        >
           <span className={style.ellipsisToggle}>Eiendom</span>
           <span className="badge text-bg-secondary">{searchResult?.matrikkel?.metadata?.totaltAntallTreff || 0}</span>
           <span className="material-icons-outlined">{expandedMatrikkel ? 'expand_less' : 'expand_more'}</span>
@@ -167,7 +204,9 @@ const SearchResultsList = () => {
           {searchResult.matrikkel ? (
             <ul className="list-group list-group-flush search-result-list">
               {searchResult?.matrikkel?.adresser?.map((result, index) => {
-                if (expandedMatrikkel) { showInfoMarker(constructPoint(result.representasjonspunkt)); }
+                if (expandedMatrikkel) {
+                  showInfoMarker(constructPoint(result.representasjonspunkt));
+                }
                 return (
                   <li
                     key={index}
