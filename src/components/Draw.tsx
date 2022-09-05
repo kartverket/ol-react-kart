@@ -353,7 +353,7 @@ const DrawMeasure = () => {
           setDrawType('LineString')
         }}
       >
-        {t('tegne')}
+        {t('Draw_title')}
       </div>
       {show ? (
         <div className="expandContent container">

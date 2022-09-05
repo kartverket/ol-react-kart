@@ -81,7 +81,7 @@ const DrawMeasure = () => {
     });
     map.addInteraction(draw);
 
-    const formatLength = function (line: any) {
+    const formatLength = function (line: LineString) {
       const length = getLength(line);
       let output;
       if (length > 100) {
@@ -91,7 +91,7 @@ const DrawMeasure = () => {
       }
       return output;
     };
-    const formatArea = function (polygon: any) {
+    const formatArea = function (polygon: Polygon) {
       const area = getArea(polygon);
       let output;
       if (area > 10000) {
@@ -137,8 +137,7 @@ const DrawMeasure = () => {
       measureTooltip.setOffset([0, -7]);
       // unset sketch
       sketch = null;
-      // unset tooltip so that a new one can be created
-      measureTooltipElement = null;
+      createHelpTooltip();
       createMeasureTooltip();
       unByKey(listener);
     });
@@ -149,6 +148,7 @@ const DrawMeasure = () => {
       map.removeInteraction(draw);
     };
   }, [map, drawType]);
+
   const defaultDigitizeStyleFunction = (type: string) => {
     if (!type) {
       return undefined;
@@ -198,7 +198,7 @@ const DrawMeasure = () => {
   const createHelpTooltip = () => {
     if (!map) return;
     if (helpTooltipElement) {
-      //helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+      map.removeOverlay(helpTooltip as Overlay)
       return;
     }
     helpTooltipElement = document.createElement('div');
@@ -214,7 +214,7 @@ const DrawMeasure = () => {
   const createMeasureTooltip = () => {
     if (!map) return;
     if (measureTooltipElement) {
-      //measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+      measureTooltipElement = null;
       return;
     }
     measureTooltipElement = document.createElement('div');
@@ -239,12 +239,11 @@ const DrawMeasure = () => {
     if (sketch) {
       const geom = sketch.getGeometry();
       if (geom instanceof Polygon) {
-        helpMsg = continuePolygonMsg;
+        helpMsg = t('continue_measure');
       } else if (geom instanceof LineString) {
         helpMsg = continueLineMsg;
       }
     }
-
     helpTooltipElement.innerHTML = helpMsg;
     helpTooltip.setPosition(evt.coordinate);
 
