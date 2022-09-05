@@ -57,12 +57,6 @@ const DrawMeasure = () => {
 
   let draw;
   let sketch: OlFeature<OlGeometry> | null = null;
-  let helpTooltipElement: HTMLDivElement | null = null;
-  let helpTooltip: OlOverlay | null = null;
-  let measureTooltipElement: HTMLDivElement | null = null;
-  let measureTooltip: OlOverlay | null = null;
-  const continuePolygonMsg = t('continue_measure');
-  const continueLineMsg = 'Click to continue drawing the line';
 
   useEffect(() => {
     if (!map) return;
@@ -140,10 +134,8 @@ const DrawMeasure = () => {
     });
     map.addLayer(vector);
 
-    let geometryFunction;
     let type: 'Point' | 'Circle' | 'LineString' | 'Polygon';
     if (drawType === 'Rectangle') {
-      geometryFunction = createBox();
       type = 'Circle';
     } else if (drawType === 'Text') {
       type = 'Point';
@@ -158,76 +150,15 @@ const DrawMeasure = () => {
     });
     map.addInteraction(draw);
 
-    /**
-     * Format length output.
-     * @param {LineString} line The line.
-     * @return {string} The formatted length.
-     */
-    const formatLength = function (line: any) {
-      const length = getLength(line);
-      let output;
-      if (length > 100) {
-        output = Math.round((length / 1000) * 100) / 100 + ' ' + 'km';
-      } else {
-        output = Math.round(length * 100) / 100 + ' ' + 'm';
-      }
-      return output;
-    };
-    /**
-     * Format area output.
-     * @param {Polygon} polygon The polygon.
-     * @return {string} Formatted area.
-     */
-    const formatArea = function (polygon: any) {
-      const area = getArea(polygon);
-      let output;
-      if (area > 10000) {
-        output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km<sup>2</sup>';
-      } else {
-        output = Math.round(area * 100) / 100 + ' ' + 'm<sup>2</sup>';
-      }
-      return output;
-    };
-
-    createMeasureTooltip();
-    createHelpTooltip();
-
-    let listener: any;
     draw.on('drawstart', function (evt: any) {
       // set sketch
       sketch = evt.feature;
       if (!sketch) return;
-      /** @type {import("../src/ol/coordinate.js").Coordinate|undefined} */
-      let tooltipCoord = evt.coordinate;
-
-      listener = sketch.getGeometry()?.on('change', function (evt: any) {
-        if (!measureTooltipElement) return;
-        if (!measureTooltip) return;
-        const geom = evt.target;
-        let output;
-        if (geom instanceof Polygon) {
-          output = formatArea(geom);
-          tooltipCoord = geom.getInteriorPoint().getCoordinates();
-        } else if (geom instanceof LineString) {
-          output = formatLength(geom);
-          tooltipCoord = geom.getLastCoordinate();
-        }
-        measureTooltipElement.innerHTML = output ? output : '';
-        measureTooltip.setPosition(tooltipCoord);
-      });
     });
 
     draw.on('drawend', function () {
-      if (!measureTooltipElement) return;
-      if (!measureTooltip) return;
-      measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
-      measureTooltip.setOffset([0, -7]);
       // unset sketch
       sketch = null;
-      // unset tooltip so that a new one can be created
-      measureTooltipElement = null;
-      createMeasureTooltip();
-      unByKey(listener);
     });
   };
   useEffect(() => {
@@ -289,60 +220,10 @@ const DrawMeasure = () => {
     };
   }, [drawType, layer, drawInteractionConfig, drawStyle, map]);
 
-  const createHelpTooltip = () => {
-    if (!map) return;
-    if (helpTooltipElement) {
-      //helpTooltipElement.parentNode.removeChild(helpTooltipElement);
-      return;
-    }
-    helpTooltipElement = document.createElement('div');
-    helpTooltipElement.className = 'ol-tooltip hidden';
-    helpTooltip = new Overlay({
-      element: helpTooltipElement,
-      offset: [15, 0],
-      positioning: 'center-left',
-    });
-    map.addOverlay(helpTooltip);
-  };
-
-  const createMeasureTooltip = () => {
-    if (!map) return;
-    if (measureTooltipElement) {
-      //measureTooltipElement.parentNode.removeChild(measureTooltipElement);
-      return;
-    }
-    measureTooltipElement = document.createElement('div');
-    measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
-    measureTooltip = new Overlay({
-      element: measureTooltipElement,
-      offset: [0, -15],
-      positioning: 'bottom-center',
-      stopEvent: false,
-      insertFirst: false,
-    });
-    map.addOverlay(measureTooltip);
-  };
   const pointerMoveHandler = function (evt: any) {
-    if (!helpTooltipElement) return;
-    if (!helpTooltip) return;
     if (evt.dragging) {
       return;
     }
-    let helpMsg = t('start_measure');
-
-    if (sketch) {
-      const geom = sketch.getGeometry();
-      if (geom instanceof Polygon) {
-        helpMsg = continuePolygonMsg;
-      } else if (geom instanceof LineString) {
-        helpMsg = continueLineMsg;
-      }
-    }
-
-    helpTooltipElement.innerHTML = helpMsg;
-    helpTooltip.setPosition(evt.coordinate);
-
-    helpTooltipElement.classList.remove('hidden');
   };
 
   return (
@@ -350,17 +231,25 @@ const DrawMeasure = () => {
       <div
         className="d-flex expandBtn"
         onClick={() => {
-          setDrawType('LineString')
+          setShow(!show);
         }}
       >
         {t('Draw_title')}
       </div>
       {show ? (
         <div className="expandContent container">
-          <button onClick={() => setDrawType('Point')}>{t('punkt')}</button>
-          <button onClick={() => setDrawType('LineString')}>{t('linje')}</button>
-          <button onClick={() => setDrawType('Polygon')}>{t('flate')}</button>
-          {/* <button onClick={()=> setDrawType('Text')}>{t('tekst')}</button> */}
+          <button className="button button__green--primary button--xs" onClick={() => setDrawType('Point')}>
+            {t('punkt')}
+          </button>
+          <button className="button button__green--primary button--xs" onClick={() => setDrawType('LineString')}>
+            {t('linje')}
+          </button>
+          <button className="button button__green--primary button--xs" onClick={() => setDrawType('Polygon')}>
+            {t('flate')}
+          </button>
+          <button className="button button__green--primary button--xs" onClick={() => setDrawType('Text')}>
+            {t('tekst')}
+          </button>
         </div>
       ) : null}
     </>
