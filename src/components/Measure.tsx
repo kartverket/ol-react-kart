@@ -198,7 +198,7 @@ const DrawMeasure = () => {
   const createHelpTooltip = () => {
     if (!map) return;
     if (helpTooltipElement) {
-      map.removeOverlay(helpTooltip as Overlay)
+      map.removeOverlay(helpTooltip as Overlay);
       return;
     }
     helpTooltipElement = document.createElement('div');

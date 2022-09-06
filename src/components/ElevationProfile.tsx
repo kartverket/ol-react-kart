@@ -15,7 +15,7 @@ const ElevationProfile = () => {
   const inputRef = useRef(null);
 
   const handleClick = (event: any) => {
-    console.log('handleClick', event  )
+    console.log('handleClick', event);
     //inputRef.current.click();
   };
   const fileread = (e: any) => {

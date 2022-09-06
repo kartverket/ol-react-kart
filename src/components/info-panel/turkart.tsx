@@ -103,7 +103,7 @@ const Turkart = () => {
     };
   };
   const orderMap = () => {
-    console.log('orderMap')
+    console.log('orderMap');
     const map = document.getElementById('map');
     if (map) {
       map.style.order = '1';
@@ -129,7 +129,7 @@ const Turkart = () => {
       .catch((error: any) => {
         mapCreationFailed(error);
       });
-    setShowSpinner(true)
+    setShowSpinner(true);
     //document.getElementById('spinner1').style.backgroundColor = 'rgba(0,0,0,0.4)';
     //document.getElementById('spinner1').style.transition = '0.8s';
   };

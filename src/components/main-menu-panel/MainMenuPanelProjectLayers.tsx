@@ -84,7 +84,9 @@ const MainMenuPanelProjectLayers = () => {
                             type="checkbox"
                             id={vectorLayer.name}
                             defaultChecked={vectorLayer.options.visibility === 'true' ? true : false}
-                            onChange={() => {console.log('toggleVector')}}
+                            onChange={() => {
+                              console.log('toggleVector');
+                            }}
                           />
                           <label htmlFor={vectorLayer.name}>{t(vectorLayer.name)}</label>
                         </div>
