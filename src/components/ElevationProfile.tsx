@@ -1,6 +1,22 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+import axios from 'axios';
+import * as fxparser from 'fast-xml-parser';
 import { useTranslation } from 'react-i18next';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Vector as VectorSource } from 'ol/source';
+import GPX from 'ol/format/GPX';
+import { Circle as CircleStyle, Fill, Stroke } from 'ol/style';
+import OlStyleCircle from 'ol/style/Circle';
+import OlStyleFill from 'ol/style/Fill';
+import OlStyleStroke from 'ol/style/Stroke';
+import OlStyle, { StyleLike } from 'ol/style/Style';
+import OlStyleText from 'ol/style/Text';
+import OlCollection from 'ol/Collection';
+import OlFeature from 'ol/Feature';
+
+import useMap from '../app/useMap';
+import { generateElevationChartServiceUrl, uploadGpxFileService } from '../utils/n3api';
 
 const ElevationProfile = () => {
   const { t } = useTranslation();
@@ -8,20 +24,129 @@ const ElevationProfile = () => {
   const [drawProfile, setDrawProfile] = useState(true);
   const [isDrawActive, setIsDrawActive] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [elevationProfileActive, setElevationProfileActive] = useState(false);
   const [isElevationProfileActive, setIsElevationProfileActive] = useState(false);
+  const [gpx, setGpx] = useState<string>();
   const [name, setName] = useState('');
-  const inputRef = useRef(null);
+  const [elevationImage, setElevationImage] = useState<string | undefined>(undefined);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const map = useMap();
 
-  const handleClick = (event: any) => {
-    console.log('handleClick', event);
-    //inputRef.current.click();
+  const _uploadGpxFile = (gpx: string) => {
+    if (!gpx) return;
+    const upload = new URL(uploadGpxFileService());
+    fetch(upload, {
+      method: 'POST',
+      body: gpx,
+      mode: 'cors',
+    })
+      .then(response => response.text())
+      .then(data => {
+        setElevationImage(undefined);
+        console.error('data: ', data);
+        _generateElevationChart(data as string);
+      })
+      .catch((error: any) => {
+        console.error('_uploadGpxFile error: ', error);
+      });
+    return;
   };
-  const fileread = (e: any) => {
-    console.log('fileread', e);
-    //setFile([...file, e.target.files[0]]);
+  const generateElevationProfile = (gpx: string) => {
+    return _uploadGpxFile(gpx);
   };
+  const _generateElevationChart = (gpxUrl: string) => {
+    axios
+      .get(generateElevationChartServiceUrl(gpxUrl))
+      .then(result => {
+        const parser = new fxparser.XMLParser({
+          ignoreAttributes: true,
+          ignorePiTags: true,
+          removeNSPrefix: true,
+        });
+        const dataXml = parser.parse(result.data);
+        if (dataXml.ExecuteResponse.Status.ProcessFailed) {
+          console.warn(
+            'ERROR: Exception from WPS-server "' +
+            dataXml.ExecuteResponse.Status.ProcessFailed.ExceptionReport.Exception['@exceptionCode'] +
+            '"',
+          );
+          return;
+        }
+        setElevationImage(dataXml.ExecuteResponse.ProcessOutputs.Output.Data.ComplexData);
+      })
+      .catch((error: any) => {
+        console.error('_generateElevationChart error: ', error);
+      });
+  };
+
+  const fileread = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFile(e.target.files[0]);
+      setName(selectedFile?.name as string);
+      const reader = new FileReader();
+      reader.onload = loadEvent => {
+        if (loadEvent && loadEvent.target) {
+          console.log('', loadEvent.target.result);
+          setGpx(loadEvent.target.result as string);
+        }
+      };
+      if (selectedFile) {
+        reader.readAsText(selectedFile as File);
+      }
+    }
+  };
+  const showDrawing = (gpx:string) => {
+    if (!map) return;
+    const format = new GPX({
+      //dataProjection: 'EPSG:4326',
+      //featureProjection: map.getView().getProjection()
+    });
+    const newFeatures = format.readFeatures(gpx);
+    newFeatures.forEach(function (feature) {
+      feature.getGeometry()?.transform('EPSG:4326', map.getView().getProjection());
+    });
+    const featureCollection = new OlCollection(newFeatures);
+    const source = new VectorSource({
+      features: featureCollection
+    });
+    const vector = new VectorLayer({
+      source: source,
+      style: new OlStyle({
+        fill: new Fill({
+          color: 'rgba(255, 255, 255, 0.2)',
+        }),
+        stroke: new Stroke({
+          color: '#ffcc33',
+          width: 2,
+        }),
+        image: new CircleStyle({
+          radius: 7,
+          fill: new Fill({
+            color: '#ffcc33',
+          }),
+        }),
+      }),
+    });
+    map.addLayer(vector)
+  }
+
+  useEffect(() => {
+    showDrawing(gpx as string)
+    generateElevationProfile(gpx as string);
+    /*.then(function () {
+      document.getElementById('spinner2').style.backgroundColor = 'transparent';
+      document.getElementById('spinner2').style.transition = '0.8s';
+      showSpinner = false;
+      imageExists = true;
+      showElevationProfilePage2();
+    });*/
+  }, [gpx]);
+
+  useEffect(() => {
+    console.log('Image is set', elevationImage);
+  }, [elevationImage]);
+
   const removeGeometry = () => {
     console.log('removeGeometry');
   };
@@ -34,6 +159,7 @@ const ElevationProfile = () => {
   const closeOverlay = () => {
     console.log('closeOverlay');
   };
+
   return (
     <>
       <div
@@ -67,7 +193,7 @@ const ElevationProfile = () => {
               </li>
             </ul>
             <div className="tab-content search-content">
-              <div role="tabpanel" className="tab-pane active" id="drawProfile">
+              <div role="tabpanel" className="tab-pane" id="drawProfile">
                 <span>{t('profileInfo_txt')}</span>
                 <div className="new-section navigation-button">
                   <button
@@ -86,34 +212,32 @@ const ElevationProfile = () => {
                   </button>
                 </div>
               </div>
-              <div role="tabpanel" className="tab-pane" id="uploadFile">
-                <div className="new-section">
-                  <div className="input-group">
+              <div role="tabpanel" className="tab-pane active" id="uploadFile">
+                <div className="">
+                  <div className="">
                     <input
                       type="text"
-                      className="form-control btn-group"
+                      className="inputField input__disabled"
                       aria-label="..."
-                      data-ng-disabled="true"
+                      disabled={true}
                       value={name}
                     ></input>
-                    <div className="input-group-btn">
-                      <input
-                        className="no-display btn-group"
-                        type="file"
-                        id="files"
-                        accept=".gpx"
-                        onChange={fileread}
-                        ref={inputRef}
-                      ></input>
-                      <button
-                        type="button"
-                        id="clickInput"
-                        className="btn btn-default btn-important"
-                        onClick={handleClick}
-                      >
-                        {t('chooseFile_txt')}
-                      </button>
-                    </div>
+                    <input
+                      className="no-display"
+                      type="file"
+                      id="files"
+                      accept=".gpx"
+                      onChange={fileread}
+                      ref={inputRef}
+                    ></input>
+                    <button
+                      type="button"
+                      id="clickInput"
+                      className="button button__green--primary button--xs"
+                      onClick={() => inputRef.current?.click()}
+                    >
+                      {t('chooseFile_txt')}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -121,12 +245,12 @@ const ElevationProfile = () => {
             <div className="row">
               <div className="col-xs-12">
                 <div className="navigation-button pull-right">
-                  <button className="btn btn-default btn-ordinary" onClick={closeOverlay}>
+                  <button className="button button__blue--secondary button--xs" onClick={closeOverlay}>
                     {t('Cancel_txt')}
                   </button>
                   <button
                     disabled={!isElevationProfileActive}
-                    className="btn btn-default btn-important"
+                    className="button button__green--primary button--xs"
                     onClick={calculateElevationProfile}
                   >
                     {t('showElevationProfile_txt')}

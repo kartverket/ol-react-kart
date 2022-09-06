@@ -25,7 +25,6 @@ import {
   generateProjeksjonerUrl,
   round,
   toDms,
-  round
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
@@ -237,8 +236,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-              ? nodplakatStedsnavnRef.current.value
-              : '',
+            ? nodplakatStedsnavnRef.current.value
+            : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',

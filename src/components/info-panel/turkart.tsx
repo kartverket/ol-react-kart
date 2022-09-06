@@ -212,7 +212,7 @@ const Turkart = () => {
             onClick={() => {
               orderMap();
             }}
-            disabled={!createMapButtonOn}
+            disabled={createMapButtonOn}
           >
             {t('lagTurkart')}
           </button>
