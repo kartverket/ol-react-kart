@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import axios from 'axios';
+import pinOrange from '../assets/pin-md-orange.png';
 import queryString from 'query-string';
 
 import OlMap from 'ol/Map';
