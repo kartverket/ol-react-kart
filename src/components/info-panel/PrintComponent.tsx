@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-const printCapabilitiesUrl = 'http://localhost:5000/capabilities'; //'https://ws.geonorge.no/print/kv/capabilities.json'
-const printUrl = 'http://localhost:5000/create'; //'https://ws.geonorge.no/print/kv/report.pdf'
+const printCapabilitiesUrl = 'https://ws.geonorge.no/print/kv/capabilities.json'; //'https://ws.geonorge.no/print/kv/capabilities.json'
+const printUrl = 'https://ws.geonorge.no/print/kv/create'; //'https://ws.geonorge.no/print/kv/report.pdf'
 const printScales = [250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2500000];
+
 const Print = (props: any) => {
   const [printCapabilities, setPrintCapabilities] = useState<any>();
   const [maltype, setMaltype] = useState<string>();
   const [selectedPrintScale, setScale] = useState<string>();
   const [selectedDpi, setSelectedDpi] = useState(128);
+  
   useEffect(() => {
     fetch(printCapabilitiesUrl)
       .then(response => {
@@ -553,7 +555,9 @@ const Print = (props: any) => {
           ))}
         </select>
       </div>
-      <button onClick={() => makePrint()}>Lage utskrift</button>
+      <button className="button button__green--primary button--xs" onClick={() => makePrint()}>
+        Lage utskrift
+      </button>
     </>
   );
 };

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
+
+import Print from './info-panel/PrintComponent';
 
 const PrintMap = () => {
   const { t } = useTranslation();
@@ -18,7 +20,7 @@ const PrintMap = () => {
       </div>
       {show ? (
         <div className="expandContent container">
-          <div className="row pt-0">TEST</div>
+          <Print />
         </div>
       ) : null}
     </>
