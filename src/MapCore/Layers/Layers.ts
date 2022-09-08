@@ -3,12 +3,12 @@ import axios from 'axios';
 
 import Map from 'ol/Map';
 import { getTopLeft, getWidth } from 'ol/extent';
-import GeoJSON from 'ol/format/GeoJSON';
 import TileLayer from 'ol/layer/Tile';
 import OLVectorLayer from 'ol/layer/Vector';
 import { get } from 'ol/proj';
 import { TileWMS, WMTS } from 'ol/source';
 import { Vector as VectorSource } from 'ol/source';
+import { GeoJSON, MVT } from 'ol/format';
 
 import { addCustomProj, loadCustomCrs } from '../../utils/projectionUtil';
 import { ILayer } from '../Models/config-model';
@@ -155,6 +155,25 @@ export const Layers = function (myMap: Map) {
             vectorLayer.set('guid', layer.guid);
             map.addLayer(vectorLayer);
           });
+          break;
+        }
+        case 'MVT': {
+          const source = new VectorSource({
+            format: new MVT(),
+            url: layer.url,
+          });
+          const vectorLayer = new OLVectorLayer({
+            source,
+          });
+          if (layer.style) {
+            vectorLayer.setStyle(createStyle(layer.style));
+          }
+          vectorLayer.set('guid', layer.guid);
+          map.addLayer(vectorLayer);
+          break;
+        }
+        default: {
+          console.warn('Unknown distribution protocol: ' + layer.distributionProtocol);
           break;
         }
       }
