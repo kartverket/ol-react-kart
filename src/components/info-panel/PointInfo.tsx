@@ -23,7 +23,6 @@ import {
   generateMapLinkServiceUrl,
   generateMatrikkelInfoUrl,
   generateProjeksjonerUrl,
-  round,
   toDms,
   round
 } from '../../utils/n3api';

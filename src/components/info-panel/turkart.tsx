@@ -35,6 +35,7 @@ const Turkart = () => {
   const [createMapButtonOn, setCreateMapButtonOn] = useState<boolean>(false);
   const [mapAvailable, setMapAvailable] = useState<boolean>(false);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [mapLink, setMapLink] = useState<string>('');
 
   const map = useMap();
 
@@ -63,9 +64,13 @@ const Turkart = () => {
   const mapReadyForDownload = (data: any, url: string) => {
     const mapLink = url.replace('turkart2', '') + data.linkPdf;
     console.log('mapLink', mapLink);
+    setMapAvailable(true);
+    setMapLink(mapLink);
+    setShowSpinner(false);
   };
   const mapCreationFailed = (data: any) => {
     console.log('mapCreationFailed', data);
+    setShowSpinner(false);
   };
   const createJson = () => {
     extent = printBoxSelectTool.getExtentOfPrintBox();
@@ -134,14 +139,11 @@ const Turkart = () => {
     //document.getElementById('spinner1').style.transition = '0.8s';
   };
   const downloadMap = () => {
-    const map = document.getElementById('map');
-    if (map) {
-      map.style.order = '2';
-    }
+    window.open(mapLink, '_blank');
   };
   return (
     <>
-      <div>
+      <div className="">
         <p>{t('Turkart_info')}</p>
         <div>
           <label className="label label--sml label--dropdown" htmlFor="turkart_scale">
@@ -177,7 +179,7 @@ const Turkart = () => {
         <div className="pt-4 mt-4">
           <div className="checkbox">
             <input id="showTrips" type="checkbox" onClick={() => setTrips(!trips)} />
-            <label className="detail detail--sml" htmlFor="showSweden">
+            <label className="detail detail--sml" htmlFor="showTrips">
               {t('FremhevMerkedeStier')}
             </label>
           </div>
@@ -205,8 +207,7 @@ const Turkart = () => {
           <button className="button button__green--primary button--xs"
             onClick={() => { deactivatePrintBoxSelect(); showSearchOptionsPanel() }}>{t('Cancel_txt')}
           </button>
-
- */}{' '}
+          */}
           <button
             className="button button__green--primary button--xs"
             onClick={() => {
@@ -217,7 +218,7 @@ const Turkart = () => {
             {t('lagTurkart')}
           </button>
           <button
-            className=""
+            className={`button button__green--primary button--xs ${mapAvailable ? '' : 'button--disabled'}`}
             onClick={() => {
               downloadMap();
             }}
@@ -225,6 +226,13 @@ const Turkart = () => {
           >
             {t('DownloadMap')}
           </button>
+          {showSpinner ? (
+            <div className="progressbar__container">
+              <div className="progressbar__wrapper">
+                <div className="progressbar progressbar--demo" />
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </>
