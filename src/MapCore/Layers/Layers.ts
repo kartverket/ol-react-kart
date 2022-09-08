@@ -3,15 +3,15 @@ import axios from 'axios';
 
 import Map from 'ol/Map';
 import { getTopLeft, getWidth } from 'ol/extent';
-import GeoJSON from 'ol/format/GeoJSON';
 import TileLayer from 'ol/layer/Tile';
 import OLVectorLayer from 'ol/layer/Vector';
 import { get } from 'ol/proj';
 import { TileWMS, WMTS } from 'ol/source';
 import { Vector as VectorSource } from 'ol/source';
+import { GeoJSON, MVT } from 'ol/format';
 
 import { addCustomProj, loadCustomCrs } from '../../utils/projectionUtil';
-import { ITileLayer, IVector } from '../Models/config-model';
+import { ILayer } from '../Models/config-model';
 import { wmtsTileGrid } from '../TileGrid/wmts';
 import { createStyle } from './Style';
 
@@ -65,97 +65,118 @@ const _isLayerVisible = function (layerGuid: string) {
 export const Layers = function (myMap: Map) {
   map = myMap;
   return {
-    createTileLayer(layer: ITileLayer, token: string): TileLayer<WMTS | TileWMS> | undefined {
-      if (layer.distributionProtocol === 'WMTS') {
-        let extent = projection.getExtent();
-        if (layer.wmtsextent) {
-          const wmtsExtent = layer.wmtsextent.split(',').map((c: string) => Number(c));
-          if (wmtsExtent.length === 4) {
-            extent = [wmtsExtent[0], wmtsExtent[1], wmtsExtent[2], wmtsExtent[3]];
+    createTileLayer(layer: ILayer , token: string) {
+      switch (layer.distributionProtocol) {
+        case 'WMTS': {
+          let extent = projection.getExtent();
+          if (layer.wmtsextent) {
+            const wmtsExtent = layer.wmtsextent.split(',').map((c: string) => Number(c));
+            if (wmtsExtent.length === 4) {
+              extent = [wmtsExtent[0], wmtsExtent[1], wmtsExtent[2], wmtsExtent[3]];
+            }
           }
-        }
-        const size = getWidth(extent) / 256;
+          const size = getWidth(extent) / 256;
 
-        const resolutions = [];
-        const matrixIds = [];
+          const resolutions = [];
+          const matrixIds = [];
 
-        let matrixSet = layer.matrixset;
-        if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
-          matrixSet = layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
-        }
+          let matrixSet = layer.matrixset;
+          if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
+            matrixSet = layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
+          }
 
-        for (let z = 0; z < 21; ++z) {
-          //Max 18?
-          resolutions[z] = size / Math.pow(2, z);
-          matrixIds[z] = layer.matrixprefix === 'true' ? matrixSet + ':' + String(z) : String(z);
-        }
+          for (let z = 0; z < 21; ++z) {
+            //Max 18?
+            resolutions[z] = size / Math.pow(2, z);
+            matrixIds[z] = layer.matrixprefix === 'true' ? matrixSet + ':' + String(z) : String(z);
+          }
 
-        const tileGrid = wmtsTileGrid({
-          extent: extent,
-          origin: getTopLeft(extent),
-          resolutions: resolutions,
-          matrixIds: matrixIds,
-        });
+          const tileGrid = wmtsTileGrid({
+            extent: extent,
+            origin: getTopLeft(extent),
+            resolutions: resolutions,
+            matrixIds: matrixIds,
+          });
 
-        let tokenUrl = '';
-        if (layer.gatekeeper === 'true') {
-          tokenUrl = layer.url.split('|')[0] + '&gkt=' + token;
+          let tokenUrl = '';
+          if (layer.gatekeeper === 'true') {
+            tokenUrl = layer.url.split('|')[0] + '&gkt=' + token;
+          }
+          const newTileLayer = new TileLayer({
+            source: new WMTS({
+              url: tokenUrl ? tokenUrl : layer.url.split('|')[0],
+              layer: layer.params.layers ? layer.params.layers : '',
+              matrixSet: matrixSet,
+              projection: projection,
+              tileGrid: tileGrid,
+              style: 'default',
+              format: layer.params.format,
+              wrapX: true,
+            }),
+          });
+          newTileLayer.set('guid', layer.guid);
+          if (layer.wmtsextent) newTileLayer.set('wmtsextent', extent);
+          if (layer.options.isbaselayer) {
+            newTileLayer.set('zIndex', -1);
+          }
+          map.addLayer(newTileLayer);
+          break;
         }
-        const newTileLayer = new TileLayer({
-          source: new WMTS({
-            url: tokenUrl ? tokenUrl : layer.url.split('|')[0],
-            layer: layer.params.layers ? layer.params.layers : '',
-            matrixSet: matrixSet,
-            projection: projection,
-            tileGrid: tileGrid,
-            style: 'default',
-            format: layer.params.format,
-            wrapX: true,
-          }),
-        });
-        newTileLayer.set('guid', layer.guid);
-        if (layer.wmtsextent) newTileLayer.set('wmtsextent', extent);
-        if (layer.options.isbaselayer) {
-          newTileLayer.set('zIndex', -1);
+        case 'WMS': {
+          const newTileLayer = new TileLayer({
+            source: new TileWMS({
+              urls: layer.url.split('|'),
+              url: layer.url.split('|')[0],
+              params: layer.params,
+              projection: projection,
+            }),
+          });
+          newTileLayer.set('guid', layer.guid);
+          map.addLayer(newTileLayer);
+          break;
         }
-        map.addLayer(newTileLayer);
-        return newTileLayer;
+        case 'GEOJSON': {
+          axios.get(`${layer.url}`).then(function (response) {
+            const source = new VectorSource({
+              features: new GeoJSON().readFeatures(response.data, {
+                featureProjection: get('EPSG:25833') || undefined,
+                dataProjection: get(layer.epsg) || undefined,
+              }),
+            });
+            const vectorLayer = new OLVectorLayer({
+              source,
+            });
+            if (layer.style) {
+              vectorLayer.setStyle(createStyle(layer.style));
+              //   const fill = layer.style.regularshape.fill;
+
+              //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
+            }
+            vectorLayer.set('guid', layer.guid);
+            map.addLayer(vectorLayer);
+          });
+          break;
+        }
+        case 'MVT': {
+          const source = new VectorSource({
+            format: new MVT(),
+            url: layer.url,
+          });
+          const vectorLayer = new OLVectorLayer({
+            source,
+          });
+          if (layer.style) {
+            vectorLayer.setStyle(createStyle(layer.style));
+          }
+          vectorLayer.set('guid', layer.guid);
+          map.addLayer(vectorLayer);
+          break;
+        }
+        default: {
+          console.warn('Unknown distribution protocol: ' + layer.distributionProtocol);
+          break;
+        }
       }
-      if (layer.distributionProtocol === 'WMS') {
-        const newTileLayer = new TileLayer({
-          source: new TileWMS({
-            urls: layer.url.split('|'),
-            url: layer.url.split('|')[0],
-            params: layer.params,
-            projection: projection,
-          }),
-        });
-        newTileLayer.set('guid', layer.guid);
-        map.addLayer(newTileLayer);
-        return newTileLayer;
-      }
-    },
-
-    createVectorLayer(layer: IVector) {
-      axios.get(`${layer.url}`).then(function (response) {
-        const source = new VectorSource({
-          features: new GeoJSON().readFeatures(response.data, {
-            featureProjection: get('EPSG:25833') || undefined,
-            dataProjection: get(layer.epsg) || undefined,
-          }),
-        });
-        const vectorLayer = new OLVectorLayer({
-          source,
-        });
-        if (layer.style) {
-          vectorLayer.setStyle(createStyle(layer.style));
-          //   const fill = layer.style.regularshape.fill;
-
-          //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
-        }
-        vectorLayer.set('guid', layer.guid);
-        map.addLayer(vectorLayer);
-      });
     },
 
     hideLayer(layerGuid: string): void {

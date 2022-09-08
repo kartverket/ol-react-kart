@@ -144,11 +144,12 @@ export interface ITileLayerOptions {
   visibility: string;
 }
 
-export interface ITileLayer {
+export interface ILayer {
   type: string;
   gatekeeper?: string;
   name: string;
   url: string;
+  epsg?: string;
   params: ITileLayerParams;
   matrixprefix?: string;
   matrixset?: string;
@@ -158,12 +159,12 @@ export interface ITileLayer {
   Layers?: ILayers;
   ticket?: string;
   wmtsextent?: string;
-  distributionProtocol?: 'WMS' | 'WMTS';
+  distributionProtocol?: 'WMS' | 'WMTS' | 'WFS' | 'TMS' | 'XYZ' | 'GEOJSON'| 'KML' | 'MVT';
   groupid?: number;
   legendurl?: string;
   uuid?: string;
   description?: string;
-  link?: string;
+  style?: IStyle;
 }
 
 export interface ICodeLists {
@@ -201,7 +202,7 @@ export interface IConfig {
   maplayer: IMapLayer[];
   project?: IProject;
   vector?: IVector[];
-  layer: ITileLayer[];
+  layer: ILayer[];
 }
 
 export interface IProjectConfig {

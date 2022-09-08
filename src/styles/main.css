@@ -187,7 +187,9 @@ input:focus-visible {
   outline: none;
 }
 /* bootstrap end */
-
+.no-display {
+  display: none !important;
+}
 .pointInfo {
   max-height: 30rem;
   overflow-y: auto;

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { selectTileLayers } from '../../../MapCore/Layers/layersSlice';
-import { ITileLayer } from '../../../MapCore/Models/config-model';
+import { ILayer } from '../../../MapCore/Models/config-model';
 import { useEventSelector } from '../../../index';
 
 const Legend = () => {
@@ -28,7 +28,7 @@ const Legend = () => {
             {wmsLayers
               .filter(w => w.options.visibility === 'true')
               .map(
-                (wmsLayer: ITileLayer, wmsIndex: number) =>
+                (wmsLayer: ILayer, wmsIndex: number) =>
                   wmsLayer.legendurl && (
                     <li key={wmsIndex}>
                       <p>{t(wmsLayer.name)}</p>

@@ -34,6 +34,8 @@ const Turkart = () => {
   const [compass, setCompass] = useState<boolean>(false);
   const [createMapButtonOn, setCreateMapButtonOn] = useState<boolean>(false);
   const [mapAvailable, setMapAvailable] = useState<boolean>(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+
   const map = useMap();
 
   let extent = { bbox: [0, 0, 0, 0], center: [0, 0], projection: 'EPSG:4326', sone: 0, biSone: 0, scale: 0 };
@@ -101,6 +103,7 @@ const Turkart = () => {
     };
   };
   const orderMap = () => {
+    console.log('orderMap');
     const map = document.getElementById('map');
     if (map) {
       map.style.order = '1';
@@ -126,7 +129,7 @@ const Turkart = () => {
       .catch((error: any) => {
         mapCreationFailed(error);
       });
-    const showSpinner = true;
+    setShowSpinner(true);
     //document.getElementById('spinner1').style.backgroundColor = 'rgba(0,0,0,0.4)';
     //document.getElementById('spinner1').style.transition = '0.8s';
   };
@@ -209,7 +212,7 @@ const Turkart = () => {
             onClick={() => {
               orderMap();
             }}
-            ng-disabled="!createMapButtonOn"
+            disabled={createMapButtonOn}
           >
             {t('lagTurkart')}
           </button>
@@ -218,7 +221,7 @@ const Turkart = () => {
             onClick={() => {
               downloadMap();
             }}
-            ng-disabled="!mapAvailable"
+            disabled={!mapAvailable}
           >
             {t('DownloadMap')}
           </button>

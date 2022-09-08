@@ -101,7 +101,7 @@ const MainMenuPanel = () => {
                 <span className="material-icons-outlined">park</span>
               </div>
               <div className="ps-2 pe-2">
-                <span className="text-capitalize">{t(activeProject.ProjectName)}</span>
+                  <span className={` ${showActiveProject ? 'text-capitalize fw-semibold' : 'text-capitalize'} `}>{t(activeProject.ProjectName)}</span>
               </div>
               <div className="ms-auto ps-2 pe-2">
                 <span className="material-icons-outlined">chevron_left</span>
@@ -143,9 +143,7 @@ const MainMenuPanel = () => {
                   <span className="">{t('tools')}</span>
                 </div>
                 <div className="ms-auto ps-2 pe-2">
-                  <span className="material-icons-outlined">
-                    {!showTools ? 'expand_more' : 'chevron_right'}
-                  </span>
+                  <span className="material-icons-outlined">{!showTools ? 'expand_more' : 'chevron_right'}</span>
                 </div>
               </div>
               {!showTools ? (

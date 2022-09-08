@@ -1,15 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { EventStoreState } from '../Events/Event/eventStore';
-import { IMapLayer, ITileLayer, IVector } from '../Models/config-model';
+import { IMapLayer, ILayer, IVector } from '../Models/config-model';
 
 export interface ILayers {
-  tileLayers: ITileLayer[];
+  tileLayers: ILayer[];
   vectorLayers: IVector[];
   groups: IMapLayer[];
-  filterBaseLayers?: ITileLayer[];
+  filterBaseLayers?: ILayer[];
   toggleVectorLayer?: IVector;
-  toggleTileLayer?: ITileLayer;
+  toggleTileLayer?: ILayer;
 }
 
 const initialState: ILayers = {
@@ -22,11 +22,11 @@ export const layersSlice = createSlice({
   name: 'layers',
   initialState,
   reducers: {
-    addTileLayer: (state, action: PayloadAction<ITileLayer>) => {
+    addTileLayer: (state, action: PayloadAction<ILayer>) => {
       state.tileLayers.push(action.payload);
       state.filterBaseLayers = state.tileLayers.filter(l => l.options.isbaselayer === 'true');
     },
-    addTileLayers: (state, action: PayloadAction<ITileLayer[]>) => {
+    addTileLayers: (state, action: PayloadAction<ILayer[]>) => {
       const tileLayers = JSON.parse(JSON.stringify(action.payload));
       state.tileLayers = tileLayers;
       state.filterBaseLayers = state.tileLayers.filter(l => l.options.isbaselayer === 'true');
@@ -66,7 +66,7 @@ export const layersSlice = createSlice({
         }
       }
     },
-    toggleTileLayer: (state, action: PayloadAction<ITileLayer | undefined>) => {
+    toggleTileLayer: (state, action: PayloadAction<ILayer | undefined>) => {
       state.toggleTileLayer = action && action.payload ? action.payload : undefined;
       if (action && action.payload) {
         const layer = state.tileLayers.find(w => w.guid === action.payload?.guid && w.name === action.payload?.name);
@@ -133,10 +133,10 @@ export const selectToggleTileLayer = (state: EventStoreState) => {
 // const a = layersSlice.actions.filterBaseLayers();
 // return state.layers.visibleBaseLayers;
 
-// const wmtsLayers = JSON.parse(JSON.stringify(state.layers.wmtsLayers)) as ITileLayer[];
-// const wmsLayers = JSON.parse(JSON.stringify(state.layers.wmsLayers)) as ITileLayer[];
+// const wmtsLayers = JSON.parse(JSON.stringify(state.layers.wmtsLayers)) as ILayer[];
+// const wmsLayers = JSON.parse(JSON.stringify(state.layers.wmsLayers)) as ILayer[];
 // return wmtsLayers.concat(wmsLayers).filter(l => l.name === 'landkart');
-// const test: ITileLayer[] = [];
+// const test: ILayer[] = [];
 // state.layers.wmtsLayers.forEach(w => test.push(w));
 // return state.layers.wmtsLayers.concat(state.layers.wmsLayers);
 // return getVisibleBaseLayers(state.layers.wmtsLayers);

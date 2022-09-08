@@ -10,7 +10,7 @@ import {
   toggleTileLayer,
   toggleVectorLayer,
 } from '../../MapCore/Layers/layersSlice';
-import { IMapLayer, ITileLayer, IVector } from '../../MapCore/Models/config-model';
+import { IMapLayer, ILayer, IVector } from '../../MapCore/Models/config-model';
 import { useEventDispatch, useEventSelector } from '../../index';
 import Legend from './legend/legend';
 
@@ -25,7 +25,7 @@ const MainMenuPanelProjectLayers = () => {
     eventDispatch(toggleVectorLayer(vector));
   };
 
-  const toggleLayer = (layer: ITileLayer): void => {
+  const toggleLayer = (layer: ILayer): void => {
     eventDispatch(toggleTileLayer(layer));
   };
 
@@ -84,7 +84,9 @@ const MainMenuPanelProjectLayers = () => {
                             type="checkbox"
                             id={vectorLayer.name}
                             defaultChecked={vectorLayer.options.visibility === 'true' ? true : false}
-                            onChange={() => {console.log('toggleVector')}}
+                            onChange={() => {
+                              console.log('toggleVector');
+                            }}
                           />
                           <label htmlFor={vectorLayer.name}>{t(vectorLayer.name)}</label>
                         </div>

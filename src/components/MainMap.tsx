@@ -26,7 +26,6 @@ import {
   selectToggleVectorLayer,
   selectVisibleBaseLayer,
   toggleTileLayer,
-  toggleVectorLayer,
 } from '../MapCore/Layers/layersSlice';
 import { IProjectConfig } from '../MapCore/Models/config-model';
 import { Project } from '../MapCore/Project/Project';
@@ -71,7 +70,6 @@ const MainMap = ({ children }: Props) => {
   const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
   const baseLayers = useEventSelector(selectBaseLayers);
   const appProject = Project(eventDispatch);
-  const toggleVector = useEventSelector(selectToggleVectorLayer);
   const toggleTile = useEventSelector(selectToggleTileLayer);
   const token = useEventSelector(selectToken);
   const center = useEventSelector(selectCenter);
@@ -276,19 +274,6 @@ const MainMap = ({ children }: Props) => {
       //   }
     }
   }, [token, visibleBaseLayer, baseLayers]);
-
-  useEffect(() => {
-    if (toggleVector) {
-      const layers = Layers(myMap);
-      if (toggleVector.options.visibility === 'false') {
-        layers.createVectorLayer(toggleVector);
-        eventDispatch(toggleVectorLayer());
-      } else {
-        layers.hideLayer(toggleVector.guid);
-        eventDispatch(toggleVectorLayer());
-      }
-    }
-  }, [toggleVector, eventDispatch]);
 
   useEffect(() => {
     if (toggleTile && token) {
