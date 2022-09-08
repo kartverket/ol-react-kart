@@ -21,11 +21,6 @@ const LayerInfo = (props: any) => {
             gå til geonorge
           </a>
         ) : null}
-        {props.link ? (
-          <a href={props.link} className="button button__green--tertiary button--xs" target="_blank" rel="noreferrer">
-            {props.link}
-          </a>
-        ) : null}
       </div>
     </div>
   );
@@ -59,7 +54,6 @@ const MainMenuBaseLayerPanel = () => {
                   name={baseLayer.name}
                   uuid={baseLayer.uuid}
                   description={baseLayer.description}
-                  link={baseLayer.link}
                 />
               ) : null}
             </li>
