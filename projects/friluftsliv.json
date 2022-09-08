@@ -6,6 +6,8 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "landkart",
+      "uuid": "c0d063aa-59fc-42db-bc5d-a1c88f2bf256",
+      "description": "Viser data fra Topografisk norgeskart WMS, Dybdedata WMS og Svalvard data fra Polar Instituttet",
       "url": "https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/",
       "params": {
         "layers": "norgeskart_bakgrunn",
@@ -26,7 +28,6 @@
       "gatekeeper": "true",
       "name": "flybilder",
       "uuid": "efae19ae-c267-47b7-ae0d-61861fb3b24f",
-      "link": "https://www.norgeibilder.no/",
       "description": "Dette er flybilder, mer info finner du på geonorge",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?|https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.nib_utm33_wmts_v2?",
       "params": {
@@ -46,6 +47,7 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "rasterkart",
+      "uuid": "99de348d-fdc1-4b04-a79e-31feeeba030a",
       "description": "Viser kart slik den ser ut på papirkart",
       "url": "https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/|https://cache.kartverket.no/toporaster/v1/wmts/1.0.0/",
       "params": {
@@ -66,7 +68,8 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "gratone",
-      "description": "Viser kartet gratone slik at man kan enkeltere ser info's som blir lagt på toppen",
+      "uuid": "e84c9a6d-2297-4323-9078-36ac4b8e35e4",
+      "description": "Viser topografiske kart som er ment som bakgrunnskart",
       "url": "https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/",
       "params": {
         "layers": "norges_grunnkart_graatone",
@@ -86,6 +89,8 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "enkel",
+      "uuid":"",
+      "description":"Viser kartet i et enkelt uttrykk",
       "url": "https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart/v1/wmts/1.0.0/",
       "params": {
         "layers": "norges_grunnkart",
@@ -104,6 +109,8 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "terreng",
+      "uuid": "db2280ab-1f55-4596-b1fc-26ff147a2bc5",
+      "description": "Viser kartet med terreng og høyde",
       "url": "https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/|https://cache.kartverket.no/terreng_norgeskart/v1/wmts/1.0.0/",
       "params": {
         "layers": "terreng_norgeskart",
@@ -122,6 +129,8 @@
       "type": "map",
       "gatekeeper": "true",
       "name": "sjokart",
+      "uuid":"72044503-938b-4955-a931-9e5a7eabf28e",
+      "description": "Viser kartet med sjøkartene (papirkartene) i rasterutgave",
       "url": "https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/|https://cache.kartverket.no/sjokartraster/v1/wmts/1.0.0/",
       "params": {
         "layers": "sjokartraster",
@@ -139,6 +148,8 @@
       "distributionProtocol": "WMTS",
       "type": "map",
       "name": "jan_mayen",
+      "uuid": "32165035-2d7b-4ac4-ba97-881b616e31b7",
+      "description": "Viser de offisielle topografiske data over Jan Mayen",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_JanMayen_WMTS_25833/MapServer/WMTS?",
       "params": {
         "layers": "Basisdata_NP_Basiskart_JanMayen_WMTS_25833",
@@ -157,6 +168,8 @@
       "distributionProtocol": "WMTS",
       "type": "map",
       "name": "svalbard",
+      "uuid": "c4d0693a-d723-494c-9c90-42f72139b876",
+      "description": "Viser de offisielle topografiske data over Svalbard",
       "url": "https://geodata.npolar.no/arcgis/rest/services/Basisdata/NP_Basiskart_Svalbard_WMTS_25833/MapServer/WMTS?",
       "params": {
         "layers": "Basisdata_NP_Basiskart_Svalbard_WMTS_25833",
@@ -181,6 +194,8 @@
       },
       "ticket": "true",
       "name": "elektron_sjokart",
+      "uuid":"",
+      "description": "Viser kartet med elektron sjokart",
       "url": "https://wms.geonorge.no/skwms1/wms.ecc_enc",
       "params": {
         "layers": "cells",
@@ -202,6 +217,8 @@
       },
       "gatekeeper": "true",
       "name": "ok_1_utgave",
+      "uuid":"79ea9761-1ac9-4780-a065-e4738835643e",
+      "description": "Viser 1. gangs økonomisk kartverk",
       "url": "https://wms.geonorge.no/skwms1/wms.n5raster2",
       "params": {
         "layers": "n5raster_foerstegang_metadata,n5raster_foerstegang",
