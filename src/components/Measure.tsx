@@ -51,7 +51,7 @@ const DrawMeasure = () => {
         }),
         stroke: new Stroke({
           color: STROKE_COLOR,
-          width: 2,
+          width: 3,
         }),
         image: new CircleStyle({
           radius: 7,
@@ -173,7 +173,7 @@ const DrawMeasure = () => {
         return new OlStyle({
           stroke: new Stroke({
             color: DEFAULT_STROKE_COLOR,
-            width: 2,
+            width: 3,
           }),
         });
       }
@@ -186,7 +186,7 @@ const DrawMeasure = () => {
           }),
           stroke: new Stroke({
             color: DEFAULT_STROKE_COLOR,
-            width: 2,
+            width: 3,
           }),
         });
       }
