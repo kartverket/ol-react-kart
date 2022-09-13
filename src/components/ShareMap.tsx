@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 const ShareMap = () => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ const ShareMap = () => {
               <span>{t('facebook_txt')}</span>
             </div>
             <div onClick={() => getTwitterUrl()} className="pointer-cursor">
-              <span className="material-icons-outlined">twitter</span>
+            <TwitterIcon></TwitterIcon>
               <span>{t('twitter_txt')}</span>
             </div>
             <div onClick={() => getMailUrl()} className="pointer-cursor">
