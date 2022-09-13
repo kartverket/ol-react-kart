@@ -3,12 +3,12 @@ import axios from 'axios';
 
 import Map from 'ol/Map';
 import { getTopLeft, getWidth } from 'ol/extent';
+import { GeoJSON, MVT } from 'ol/format';
 import TileLayer from 'ol/layer/Tile';
 import OLVectorLayer from 'ol/layer/Vector';
 import { get } from 'ol/proj';
 import { TileWMS, WMTS } from 'ol/source';
 import { Vector as VectorSource } from 'ol/source';
-import { GeoJSON, MVT } from 'ol/format';
 
 import { addCustomProj, loadCustomCrs } from '../../utils/projectionUtil';
 import { ILayer } from '../Models/config-model';
@@ -65,7 +65,7 @@ const _isLayerVisible = function (layerGuid: string) {
 export const Layers = function (myMap: Map) {
   map = myMap;
   return {
-    createTileLayer(layer: ILayer , token: string) {
+    createTileLayer(layer: ILayer, token: string) {
       switch (layer.distributionProtocol) {
         case 'WMTS': {
           let extent = projection.getExtent();
@@ -82,7 +82,8 @@ export const Layers = function (myMap: Map) {
 
           let matrixSet = layer.matrixset;
           if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
-            matrixSet = layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
+            matrixSet =
+              layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
           }
 
           for (let z = 0; z < 21; ++z) {

@@ -50,11 +50,7 @@ const MainMenuBaseLayerPanel = () => {
                 <span className="material-icons-outlined">info</span>
               </button>
               {index == activeIndex ? (
-                <LayerInfo
-                  name={baseLayer.name}
-                  uuid={baseLayer.uuid}
-                  description={baseLayer.description}
-                />
+                <LayerInfo name={baseLayer.name} uuid={baseLayer.uuid} description={baseLayer.description} />
               ) : null}
             </li>
           ))}

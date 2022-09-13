@@ -159,7 +159,7 @@ export interface ILayer {
   Layers?: ILayers;
   ticket?: string;
   wmtsextent?: string;
-  distributionProtocol?: 'WMS' | 'WMTS' | 'WFS' | 'TMS' | 'XYZ' | 'GEOJSON'| 'KML' | 'MVT';
+  distributionProtocol?: 'WMS' | 'WMTS' | 'WFS' | 'TMS' | 'XYZ' | 'GEOJSON' | 'KML' | 'MVT';
   groupid?: number;
   legendurl?: string;
   uuid?: string;

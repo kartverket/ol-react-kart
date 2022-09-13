@@ -3,17 +3,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
 import { useTranslation } from 'react-i18next';
+
+import OlCollection from 'ol/Collection';
+import OlFeature from 'ol/Feature';
+import GPX from 'ol/format/GPX';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
-import GPX from 'ol/format/GPX';
 import { Circle as CircleStyle, Fill, Stroke } from 'ol/style';
 import OlStyleCircle from 'ol/style/Circle';
 import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyle, { StyleLike } from 'ol/style/Style';
 import OlStyleText from 'ol/style/Text';
-import OlCollection from 'ol/Collection';
-import OlFeature from 'ol/Feature';
 
 import useMap from '../app/useMap';
 import { generateElevationChartServiceUrl, uploadGpxFileService } from '../utils/n3api';
@@ -68,8 +69,8 @@ const ElevationProfile = () => {
         if (dataXml.ExecuteResponse.Status.ProcessFailed) {
           console.warn(
             'ERROR: Exception from WPS-server "' +
-            dataXml.ExecuteResponse.Status.ProcessFailed.ExceptionReport.Exception['@exceptionCode'] +
-            '"',
+              dataXml.ExecuteResponse.Status.ProcessFailed.ExceptionReport.Exception['@exceptionCode'] +
+              '"',
           );
           return;
         }
@@ -96,7 +97,7 @@ const ElevationProfile = () => {
       }
     }
   };
-  const showDrawing = (gpx:string) => {
+  const showDrawing = (gpx: string) => {
     if (!map) return;
     const format = new GPX({
       //dataProjection: 'EPSG:4326',
@@ -108,7 +109,7 @@ const ElevationProfile = () => {
     });
     const featureCollection = new OlCollection(newFeatures);
     const source = new VectorSource({
-      features: featureCollection
+      features: featureCollection,
     });
     const vector = new VectorLayer({
       source: source,
@@ -128,11 +129,11 @@ const ElevationProfile = () => {
         }),
       }),
     });
-    map.addLayer(vector)
-  }
+    map.addLayer(vector);
+  };
 
   useEffect(() => {
-    showDrawing(gpx as string)
+    showDrawing(gpx as string);
     generateElevationProfile(gpx as string);
     /*.then(function () {
       document.getElementById('spinner2').style.backgroundColor = 'transparent';

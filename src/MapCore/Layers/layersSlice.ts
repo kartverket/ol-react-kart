@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { EventStoreState } from '../Events/Event/eventStore';
-import { IMapLayer, ILayer, IVector } from '../Models/config-model';
+import { ILayer, IMapLayer, IVector } from '../Models/config-model';
 
 export interface ILayers {
   tileLayers: ILayer[];

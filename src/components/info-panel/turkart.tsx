@@ -108,7 +108,6 @@ const Turkart = () => {
     };
   };
   const orderMap = () => {
-    console.log('orderMap');
     const map = document.getElementById('map');
     if (map) {
       map.style.order = '1';
