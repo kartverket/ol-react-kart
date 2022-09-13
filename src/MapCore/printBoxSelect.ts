@@ -149,9 +149,9 @@ export class PrintBoxSelect {
   };
 
   createFrame = () => {
-    if (getLayerByName(this.map, 'printBoxSelectionLayer')) {
+    if (getLayerByName(this.map, 'PrintBox')) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.map.removeLayer(getLayerByName(this.map, 'printBoxSelectionLayer') as any);
+      this.map.removeLayer(getLayerByName(this.map, 'PrintBox') as any);
     }
     const mapCenter = this.getMapCenter();
     this.oldCenter = mapCenter;
@@ -170,7 +170,7 @@ export class PrintBoxSelect {
       updateWhileAnimating: true,
       updateWhileInteracting: true,
       properties: {
-        name: 'printBoxSelectionLayer',
+        name: 'PrintBox',
       },
     });
 
@@ -303,9 +303,9 @@ export class PrintBoxSelect {
 
   deactivate = () => {
     this.deregisterMouseEvents();
-    if (getLayerByName(this.map, 'printBoxSelectionLayer')) {
+    if (getLayerByName(this.map, 'PrintBox')) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.map.removeLayer(getLayerByName(this.map, 'printBoxSelectionLayer') as any);
+      this.map.removeLayer(getLayerByName(this.map, 'PrintBox') as any);
     }
   };
 }

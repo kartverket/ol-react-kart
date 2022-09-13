@@ -1,17 +1,38 @@
 import React, { useEffect, useState } from 'react';
 
+import { PrintBoxSelect } from '../../MapCore/printBoxSelect';
+import useMap from '../../app/useMap';
+
 const printCapabilitiesUrl = 'https://ws.geonorge.no/print/kv/capabilities.json'; //'https://ws.geonorge.no/print/kv/capabilities.json'
 const printUrl = 'https://ws.geonorge.no/print/kv/create'; //'https://ws.geonorge.no/print/kv/report.pdf'
 const printScales = [250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2500000];
 
-const Print = (props: any) => {
+const Print = () => {
   const [printCapabilities, setPrintCapabilities] = useState<any>();
-  const [maltype, setMaltype] = useState<string>();
-  const [selectedPrintScale, setScale] = useState<string>();
+  const [layout, setLayout] = useState<string>('A4');
+  const [selectedPrintScale, setScale] = useState<number>(2500);
   const [selectedDpi, setSelectedDpi] = useState(128);
-  
+
+  const map = useMap();
+
+  const extent = { bbox: [0, 0, 0, 0], center: [0, 0], projection: 'EPSG:4326', sone: 0, biSone: 0, scale: 0 };
+
+  const printBoxSelectTool: any = new PrintBoxSelect();
+  printBoxSelectTool.activate({ scale: selectedPrintScale, cols: 1, rows: 1, extent });
+
   useEffect(() => {
-    fetch(printCapabilitiesUrl)
+    return () => {
+      printBoxSelectTool.deactivate();
+    };
+  }, []);
+
+  useEffect(() => {
+    fetch(printCapabilitiesUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -25,14 +46,14 @@ const Print = (props: any) => {
     console.log('setPrintBox');
   };
   const setLayoutType = (layout: string) => {
-    setMaltype(layout);
+    setLayout(layout);
     setPrintBox();
   };
-  const setPrintScale = (scale: string) => {
+  const setPrintScale = (scale: number) => {
     setScale(scale);
     setPrintBox();
   };
-  const removeKeys = (obj: { [x: string]: any; hasOwnProperty: (arg0: string) => any }, keys: string | string[]) => {
+  const removeKeys = (obj: any, keys: any) => {
     let index;
     for (const prop in obj) {
       // eslint-disable-next-line no-prototype-builtins
@@ -59,20 +80,25 @@ const Print = (props: any) => {
     }
   };
   const makePrint = () => {
-    const center = window.olMap.getView().getCenter();
-    let layers = window.olMap.getLayers().getArray();
+    if (!map) return;
+    const center = map.getView().getCenter() ?? [0, 0];
+    let layers: any = map.getLayers().getArray();
 
     layers = layers
-      .filter(function (layer: { get: (arg0: string) => string }) {
+      .filter(function (layer: any) {
         return layer.get('name') !== 'PrintBox';
       })
-      .filter(function (layer: { getVisible: () => boolean }) {
+      .filter(function (layer: any) {
+        return layer.get('name') !== 'react-geo_digitize';
+      })
+      .filter(function (layer: any) {
         return layer.getVisible() === true;
       })
-      .sort(function (a: { layerIndex: any }, b: { layerIndex: number }) {
-        return b.layerIndex - (a.layerIndex || Infinity);
+      .sort(function (a: any, b: any) {
+        return a.getZIndex() - b.getZIndex();
+        //return b.layerIndex - (a.layerIndex || Infinity);
       });
-    const tmpLayers: any[] = [];
+    const tmpLayers: any = [];
     const printJson = {
       attributes: {
         map: {
@@ -90,13 +116,13 @@ const Print = (props: any) => {
         scale_string: '1:' + selectedPrintScale,
         title: 'Geonorge Print',
       },
-      layout: maltype,
+      layout: layout,
       outputFormat: 'pdf',
       outputFilename: 'norgeskart-utskrift',
     };
     for (let i = 0; i < layers.length; i++) {
-      let printLayer: { [index: string]: any } = {};
-      let customParams: { [index: string]: any } = {
+      let printLayer: any = {};
+      let customParams: any = {
         TRANSPARENT: 'true',
       };
       let baseUrl = '';
@@ -104,8 +130,12 @@ const Print = (props: any) => {
       if (layers[i].getProperties().config) {
         baseUrl = layers[i].getProperties().config.url[0];
         sourceType = layers[i].getProperties().config.source;
-      } else if (layers[i].getSource().getUrl()) {
+      } else if (layers[i].constructor.name === 'VectorLayer') {
         baseUrl = layers[i].getSource().getUrl();
+        sourceType = 'VECTOR';
+      } else if (layers[i].constructor.name === 'TileLayer') {
+        sourceType = 'WMTS';
+        baseUrl = layers[i].getSource().getUrls()[0];
       }
       if (layers[0].getSource().constructor.name === 'ImageWMS') {
         sourceType = 'WMS';
@@ -126,7 +156,7 @@ const Print = (props: any) => {
 
       let identifier = '';
       let geojson;
-      const styleCollection: { [index: string]: any } = {
+      const styleCollection: any = {
         version: '2',
       };
       let rgba;
@@ -151,17 +181,17 @@ const Print = (props: any) => {
           }
           break;
         case 'WMTS':
-          if (layers[i].getProperties().config.matrixPrefix) {
+          if (layers[i].getProperties().config && layers[i].getProperties().config.matrixPrefix) {
             identifier = layers[i].getSource().getMatrixSet() + ':';
           }
           printLayer = {
             baseURL: baseUrl,
             customParams: customParams,
             style: 'default',
-            imageFormat: layers[i].getProperties().config.format,
-            layer: layers[i].getProperties().config.name,
+            imageFormat: layers[i].getSource().getFormat(),
+            layer: layers[i].getSource().getLayer(),
             opacity: 1,
-            type: layers[i].getProperties().config.source,
+            type: sourceType,
             dimensions: null,
             requestEncoding: 'KVP',
             dimensionParams: {},
@@ -340,7 +370,7 @@ const Print = (props: any) => {
                   measurement: any;
                 };
               }) {
-                let symbolizers: any[] = [];
+                let symbolizers: any = [];
                 const id = "[IN('" + feature.id + "')]";
                 switch (feature.geometry.type) {
                   case 'Point':
@@ -526,16 +556,30 @@ const Print = (props: any) => {
         <select
           className="custom-select"
           id="inputGroupSelect02"
-          value={maltype}
+          value={layout}
           onChange={e => setLayoutType(e.target.value)}
         >
           <option>Velg...</option>
           {printCapabilities
-            ? printCapabilities.layouts.map((layout: { name: string }, i: any) => (
-                <option key={i} value={layout.name}>
-                  {layout.name}
-                </option>
-              ))
+            ? printCapabilities.layouts.map(
+                (
+                  layout: {
+                    name:
+                      | string
+                      | number
+                      | boolean
+                      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+                      | React.ReactFragment
+                      | null
+                      | undefined;
+                  },
+                  i: React.Key | null | undefined,
+                ) => (
+                  <option key={i} value={layout.name as string}>
+                    {layout.name}
+                  </option>
+                ),
+              )
             : ''}
         </select>
       </div>
@@ -545,7 +589,7 @@ const Print = (props: any) => {
           className="custom-select"
           id="inputGroupSelect02"
           value={selectedPrintScale}
-          onChange={e => setPrintScale(e.target.value)}
+          onChange={e => setPrintScale(Number(e.target.value))}
         >
           <option>Velg...</option>
           {printScales.map((scale, i) => (
