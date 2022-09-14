@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 import { useTranslation } from 'react-i18next';
 
 import { selectBaseLayers, setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
@@ -7,27 +9,27 @@ import { useEventDispatch, useEventSelector } from '../../index';
 
 const LayerInfo = (props: any) => {
   return (
-    <div className="card" style={{ width: '18rem' }}>
-      <div className="card-body">
-        <h5 className="card-title">{props.name}</h5>
-        <p className="card-text"> {props.description}</p>
-        {props.uuid ? (
-          <a
-            href={'https://kartkatalog.geonorge.no/metadata?text=' + props.uuid}
-            className="button button__green--tertiary button--xs"
-            target="_blank"
-            rel="noreferrer"
-          >
-            gå til geonorge
-          </a>
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">{props.baseLayer.name}</Popover.Header>
+      <Popover.Body>
+        <div>{props.baseLayer.description}</div>
+        {props.baseLayer.uuid ? (
+          <div>
+            <a
+              href={'https://kartkatalog.geonorge.no/metadata?text=' + props.uuid}
+              className="underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              gå til geonorge
+            </a>
+          </div>
         ) : null}
-      </div>
-    </div>
+      </Popover.Body>
+    </Popover>
   );
 };
-
 const MainMenuBaseLayerPanel = () => {
-  const [activeIndex, setActiveIndex] = useState<number>();
   const { t } = useTranslation();
   const baseLayers = useEventSelector(selectBaseLayers);
   const dispatch = useEventDispatch();
@@ -46,12 +48,11 @@ const MainMenuBaseLayerPanel = () => {
               onClick={() => changeBaseLayer(baseLayer.name)}
             >
               {t(baseLayer.name)}
-              <button className="button position-absolute end-0 projectlist-item" onClick={() => setActiveIndex(index)}>
-                <span className="material-icons-outlined">info</span>
-              </button>
-              {index == activeIndex ? (
-                <LayerInfo name={baseLayer.name} uuid={baseLayer.uuid} description={baseLayer.description} />
-              ) : null}
+              <OverlayTrigger placement="right" delay={{ show: 50, hide: 500 }} overlay={LayerInfo({ baseLayer })}>
+                <button className="button position-absolute end-0 projectlist-item">
+                  <span className="material-icons-outlined">info</span>
+                </button>
+              </OverlayTrigger>
             </li>
           ))}
         </ul>
