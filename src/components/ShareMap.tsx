@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { useTranslation } from 'react-i18next';
 
@@ -47,28 +49,32 @@ const ShareMap = () => {
       </div>
       {show ? (
         <div className="expandContent container">
-          <div className="row pt-0">
-            <div onClick={() => getFacebookUrl()} className="pointer-cursor">
-              <span className="material-icons-outlined">facebook</span>
-              <span>{t('facebook_txt')}</span>
-            </div>
-            <div onClick={() => getTwitterUrl()} className="pointer-cursor">
-              <TwitterIcon></TwitterIcon>
-              <span>{t('twitter_txt')}</span>
-            </div>
-            <div onClick={() => getMailUrl()} className="pointer-cursor">
-              <span className="material-icons-outlined">email</span>
-              <span>{t('email_txt')}</span>
-            </div>
-            <div className="col-xs-12">
-              <span className="label label--sml">{t('copyLink_txt')}</span>
-              <div className="inputField__wrapper">
-                <input id="copyUrlText" type="text" className="inputField input__disabled" placeholder={getUrl()} />
-              </div>
-              <button className="button button__green--primary button--xs" onClick={() => copyURL()}>
-                {t('copy_txt')}
-              </button>
-            </div>
+          <div className="pt-0">
+            <form>
+              <fieldset>
+                <div onClick={() => getFacebookUrl()} className="pointer-cursor">
+                  <FacebookIcon />
+                  <span>{t('facebook_txt')}</span>
+                </div>
+                <div onClick={() => getTwitterUrl()} className="pointer-cursor">
+                  <TwitterIcon />
+                  <span>{t('twitter_txt')}</span>
+                </div>
+                <div onClick={() => getMailUrl()} className="pointer-cursor">
+                  <EmailIcon />
+                  <span>{t('email_txt')}</span>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="copyUrlText" className="label label--sml">
+                    {t('copyLink_txt')}
+                  </label>
+                  <input id="copyUrlText" type="text" className="inputField input__disabled" placeholder={getUrl()} />
+                </div>
+                <button className="button button__green--primary button--xs" onClick={() => copyURL()}>
+                  {t('copy_txt')}
+                </button>
+              </fieldset>
+            </form>
           </div>
         </div>
       ) : null}

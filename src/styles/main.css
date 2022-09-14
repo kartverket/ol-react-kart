@@ -204,6 +204,10 @@ input:focus-visible {
   padding: 1rem;
 }
 
+.pointer-cursor{
+  cursor: pointer;
+}
+
 /* test kvib fixes */
 
 .progressbar::after {
