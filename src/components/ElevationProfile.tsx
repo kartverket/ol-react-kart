@@ -2,18 +2,21 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import axios from 'axios';
 import * as fxparser from 'fast-xml-parser';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import { useTranslation } from 'react-i18next';
+
+import OlCollection from 'ol/Collection';
+import OlFeature from 'ol/Feature';
+import GPX from 'ol/format/GPX';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
-import GPX from 'ol/format/GPX';
 import { Circle as CircleStyle, Fill, Stroke } from 'ol/style';
 import OlStyleCircle from 'ol/style/Circle';
 import OlStyleFill from 'ol/style/Fill';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyle, { StyleLike } from 'ol/style/Style';
 import OlStyleText from 'ol/style/Text';
-import OlCollection from 'ol/Collection';
-import OlFeature from 'ol/Feature';
 
 import useMap from '../app/useMap';
 import { generateElevationChartServiceUrl, uploadGpxFileService } from '../utils/n3api';
@@ -68,8 +71,8 @@ const ElevationProfile = () => {
         if (dataXml.ExecuteResponse.Status.ProcessFailed) {
           console.warn(
             'ERROR: Exception from WPS-server "' +
-            dataXml.ExecuteResponse.Status.ProcessFailed.ExceptionReport.Exception['@exceptionCode'] +
-            '"',
+              dataXml.ExecuteResponse.Status.ProcessFailed.ExceptionReport.Exception['@exceptionCode'] +
+              '"',
           );
           return;
         }
@@ -96,7 +99,7 @@ const ElevationProfile = () => {
       }
     }
   };
-  const showDrawing = (gpx:string) => {
+  const showDrawing = (gpx: string) => {
     if (!map) return;
     const format = new GPX({
       //dataProjection: 'EPSG:4326',
@@ -108,7 +111,7 @@ const ElevationProfile = () => {
     });
     const featureCollection = new OlCollection(newFeatures);
     const source = new VectorSource({
-      features: featureCollection
+      features: featureCollection,
     });
     const vector = new VectorLayer({
       source: source,
@@ -128,11 +131,11 @@ const ElevationProfile = () => {
         }),
       }),
     });
-    map.addLayer(vector)
-  }
+    map.addLayer(vector);
+  };
 
   useEffect(() => {
-    showDrawing(gpx as string)
+    showDrawing(gpx as string);
     generateElevationProfile(gpx as string);
     /*.then(function () {
       document.getElementById('spinner2').style.backgroundColor = 'transparent';
@@ -179,83 +182,59 @@ const ElevationProfile = () => {
               </div>
             </div>
           ) : null}
+          <Tabs defaultActiveKey="uploadFile" id="myElevationTabs" className="mb-3">
+            <Tab eventKey="drawProfile" title={t('drawInMap_txt')}>
+              <span>{t('profileInfo_txt')}</span>
+              <div className="new-section navigation-button">
+                <button
+                  className="btn btn-default btn-ordinary"
+                  onClick={removeGeometry}
+                  disabled={!elevationProfileActive}
+                >
+                  {t('remove_txt')}
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-default ${isDrawActive ? 'activeBtn' : 'btn-toggle'}`}
+                  onClick={drawLineElevation}
+                >
+                  {t('drawProfile_txt')}
+                </button>
+              </div>
+            </Tab>
+            <Tab eventKey="uploadFile" title={t('uploadFile_txt')}>
+              <div className="mb-3 pt-0">
+                <input
+                  type="text"
+                  className="inputField input__disabled"
+                  aria-label="..."
+                  disabled={true}
+                  value={name}
+                />
+                <input className="no-display" type="file" id="files" accept=".gpx" onChange={fileread} ref={inputRef} />
+              </div>
+              <button
+                type="button"
+                className="button button__green--primary button--xs"
+                onClick={() => inputRef.current?.click()}
+              >
+                {t('chooseFile_txt')}
+              </button>
+            </Tab>
+          </Tabs>
           <div className="panel-body">
-            <ul className="nav nav-tabs" role="tablist" id="myElevationTabs">
-              <li role="presentation" className="active">
-                <a href="" data-target="#drawProfile" aria-controls="drawProfile" role="tab" data-toggle="tab">
-                  {t('drawInMap_txt')}
-                </a>
-              </li>
-              <li role="presentation">
-                <a href="" data-target="#uploadFile" aria-controls="uploadFile" role="tab" data-toggle="tab">
-                  {t('uploadFile_txt')}
-                </a>
-              </li>
-            </ul>
-            <div className="tab-content search-content">
-              <div role="tabpanel" className="tab-pane" id="drawProfile">
-                <span>{t('profileInfo_txt')}</span>
-                <div className="new-section navigation-button">
-                  <button
-                    className="btn btn-default btn-ordinary"
-                    onClick={removeGeometry}
-                    disabled={!elevationProfileActive}
-                  >
-                    {t('remove_txt')}
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn btn-default ${isDrawActive ? 'activeBtn' : 'btn-toggle'}`}
-                    onClick={drawLineElevation}
-                  >
-                    {t('drawProfile_txt')}
-                  </button>
-                </div>
-              </div>
-              <div role="tabpanel" className="tab-pane active" id="uploadFile">
-                <div className="">
-                  <div className="">
-                    <input
-                      type="text"
-                      className="inputField input__disabled"
-                      aria-label="..."
-                      disabled={true}
-                      value={name}
-                    ></input>
-                    <input
-                      className="no-display"
-                      type="file"
-                      id="files"
-                      accept=".gpx"
-                      onChange={fileread}
-                      ref={inputRef}
-                    ></input>
-                    <button
-                      type="button"
-                      id="clickInput"
-                      className="button button__green--primary button--xs"
-                      onClick={() => inputRef.current?.click()}
-                    >
-                      {t('chooseFile_txt')}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="row">
-              <div className="col-xs-12">
-                <div className="navigation-button pull-right">
-                  <button className="button button__blue--secondary button--xs" onClick={closeOverlay}>
-                    {t('Cancel_txt')}
-                  </button>
-                  <button
-                    disabled={!isElevationProfileActive}
-                    className="button button__green--primary button--xs"
-                    onClick={calculateElevationProfile}
-                  >
-                    {t('showElevationProfile_txt')}
-                  </button>
-                </div>
+              <div className="navigation-button pull-right">
+                <button className="button button__blue--secondary button--xs" onClick={closeOverlay}>
+                  {t('Cancel_txt')}
+                </button>
+                <button
+                  disabled={!isElevationProfileActive}
+                  className="button button__green--primary button--xs"
+                  onClick={calculateElevationProfile}
+                >
+                  {t('showElevationProfile_txt')}
+                </button>
               </div>
             </div>
           </div>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import pin_orange from '../../assets/pin-md-orange.png';
-import pin_blue from '../../assets/pin-md-blueish.png';
 
 import Feature from 'ol/Feature.js';
 import { Coordinate } from 'ol/coordinate';

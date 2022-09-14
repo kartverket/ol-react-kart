@@ -10,7 +10,7 @@ import {
   toggleTileLayer,
   toggleVectorLayer,
 } from '../../MapCore/Layers/layersSlice';
-import { IMapLayer, ILayer, IVector } from '../../MapCore/Models/config-model';
+import { ILayer, IMapLayer, IVector } from '../../MapCore/Models/config-model';
 import { useEventDispatch, useEventSelector } from '../../index';
 import Legend from './legend/legend';
 
