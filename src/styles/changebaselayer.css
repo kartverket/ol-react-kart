@@ -10,15 +10,14 @@
   border-radius: 2px;
   background-color: white;
 }
-.changeBaseLayer .btn {
+.changeBaseLayer .button {
   padding: 3px;
 }
-.baseMapPanel {
-  padding-top: 10px;
-  background-color: white;
+.changeBaseLayer .button:hover {
+  background-color: var(--green);
 }
 .baseLayerPanel {
-  padding: 5px;
+  padding-left: 8px;
 }
 .baseLayerPanel button:first-child {
   margin-left: 0;

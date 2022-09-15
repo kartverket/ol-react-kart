@@ -34,11 +34,11 @@ const ChangeBaseLayer = () => {
 
   return (
     <>
-      <div className="changeBaseLayer baseMapPanel baseLayerPanel change-base-map-mobile">
+      <div className="changeBaseLayer baseLayerPanel change-base-map-mobile">
         {baseLayers.map((baseLayer, index) => (
           <button
             key={index}
-            className={`btn btn-default ${baseLayer.name === visibleBaseLayer?.name ? 'activeBtn' : 'btn-toggle'}`}
+            className={`button ${baseLayer.name === visibleBaseLayer?.name ? 'button__green--primary' : ''}`}
             onClick={() => toggleBaseLayer(index)}
           >
             <div className={baseLayer.symbol} title={baseLayer.name}></div>
