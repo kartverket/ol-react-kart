@@ -201,9 +201,33 @@ input:focus-visible {
 }
 
 .inputField {
-  padding: 1rem;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
 }
 
+.reset__button {
+  position: absolute;
+  right: 2rem;
+  top: 18px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.infopanel {
+  min-width: 40rem;
+  background-color: var(--white);
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 3.5rem;
+  margin-right: 3.5rem;
+}
+
+.searchbar {
+  min-width: 40rem;
+}
 .pointer-cursor {
   cursor: pointer;
 }

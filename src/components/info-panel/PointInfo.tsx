@@ -455,9 +455,18 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat1 ? `${style.selected} ${style.open}` : style.selected}>
             <h4 className=""> {t('Ansvar')}</h4>
-            <div className="small"> {t('NodplakatText1')}</div>
-            <div className="small"> {t('NodplakatText2')}</div>
-            <div className="small"> {t('NodplakatText3')}</div>
+            <p className="body-text body-text--xs text-wrap" style={{ width: '40rem' }}>
+              {' '}
+              {t('NodplakatText1')}
+            </p>
+            <p className="body-text body-text--xs text-wrap" style={{ width: '40rem' }}>
+              {' '}
+              {t('NodplakatText2')}
+            </p>
+            <p className="body-text body-text--xs text-wrap" style={{ width: '40rem' }}>
+              {' '}
+              {t('NodplakatText3')}
+            </p>
             <button
               className="button button__green--primary button--xs"
               onClick={() => {
