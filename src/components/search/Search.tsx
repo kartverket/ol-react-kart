@@ -72,7 +72,7 @@ const Search = () => {
   };
 
   return (
-    <div className="container container-lg" style={{ minWidth: '40rem' }}>
+    <div className="searchbar container container-lg">
       <div className="searchbar__wrapper">
         <button
           className="button button__menu"
@@ -103,7 +103,7 @@ const Search = () => {
         </div>
         {reset && (
           <button
-            className="btn btn-outline-secondary border border-start-0 menu-icon"
+            className="button reset__button"
             onClick={() => {
               resetHandler();
             }}
