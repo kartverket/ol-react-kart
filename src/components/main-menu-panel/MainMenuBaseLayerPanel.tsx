@@ -4,8 +4,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { useTranslation } from 'react-i18next';
 
-import { selectBaseLayers, setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
-import { useEventDispatch, useEventSelector } from '../../index';
+import { useBaseLayersStore } from '../../app/baseStore'
 
 const LayerInfo = (props: any) => {
   return (
@@ -30,18 +29,19 @@ const LayerInfo = (props: any) => {
   );
 };
 const MainMenuBaseLayerPanel = () => {
+  const setVisibleBaseLayer = useBaseLayersStore((state) => state.setVisibleBaseLayer)
+  const baseLayers = useBaseLayersStore();
   const { t } = useTranslation();
-  const baseLayers = useEventSelector(selectBaseLayers);
-  const dispatch = useEventDispatch();
+
   const changeBaseLayer = (name: string): void => {
-    dispatch(setVisibleBaseLayer(name));
+    setVisibleBaseLayer(name);
   };
 
   return (
     <>
       {baseLayers ? (
         <ul className="list-group list-group-flush">
-          {baseLayers.map((baseLayer, index) => (
+          {baseLayers.layers.map((baseLayer, index) => (
             <li
               key={index}
               className="list-group-item list-group-item-action ps-5 px-2 projectlist-item"

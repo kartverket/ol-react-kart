@@ -26,7 +26,7 @@ const Legend = () => {
         {!collapsedLegend ? (
           <ul className="list-group list-group-flush">
             {wmsLayers
-              .filter(w => w.options.visibility === 'true')
+              .filter(w => w.options.visibility === true)
               .map(
                 (wmsLayer: ILayer, wmsIndex: number) =>
                   wmsLayer.legendurl && (

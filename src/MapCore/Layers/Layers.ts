@@ -83,13 +83,13 @@ export const Layers = function (myMap: Map) {
           let matrixSet = layer.matrixset;
           if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
             matrixSet =
-              layer.matrixprefix === 'true' ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
+              layer.matrixprefix === true ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
           }
 
           for (let z = 0; z < 21; ++z) {
             //Max 18?
             resolutions[z] = size / Math.pow(2, z);
-            matrixIds[z] = layer.matrixprefix === 'true' ? matrixSet + ':' + String(z) : String(z);
+            matrixIds[z] = layer.matrixprefix === true ? matrixSet + ':' + String(z) : String(z);
           }
 
           const tileGrid = wmtsTileGrid({
@@ -100,7 +100,7 @@ export const Layers = function (myMap: Map) {
           });
 
           let tokenUrl = '';
-          if (layer.gatekeeper === 'true') {
+          if (layer.gatekeeper === true) {
             tokenUrl = layer.url.split('|')[0] + '&gkt=' + token;
           }
           const newTileLayer = new TileLayer({

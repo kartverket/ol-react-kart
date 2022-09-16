@@ -67,7 +67,7 @@ export interface IFeatureInfoProjectConfig {
 }
 
 export interface IVectorOptions {
-  visibility: string;
+  visibility: boolean;
 }
 
 export interface IFill {
@@ -115,9 +115,9 @@ export interface IVector {
 }
 
 export interface IWmsLayer {
-  name: string;
-  queryable: string;
-  title: string;
+  name?: string;
+  queryable: boolean;
+  title?: string;
 }
 
 export interface IFeatureInfoFormats {
@@ -136,35 +136,58 @@ export interface ILayers {
 export interface ITileLayerParams {
   layers?: string;
   format?: string;
+  styles?: string;
 }
 
 export interface ITileLayerOptions {
-  isbaselayer: string;
-  singletile: string;
-  visibility: string;
+  isbaselayer?: boolean;
+  singletile?: boolean;
+  visibility?: boolean;
 }
-
-export interface ILayer {
-  type: string;
-  gatekeeper?: string;
+export interface IField {
   name: string;
+  type?: string;
+  alias?: string;
+  baseurl?: string;
+  filetype?: string;
+  unit?: string;
+}
+export interface IIncludedFields {
+  field: IField[];
+  capitalize?: boolean;
+}
+export interface IBaseLayers {
+  setVisibleBaseLayer: any;
+  layers: ILayer[];
+}
+export interface ILayer {
+  type?: string;
+  gatekeeper?: boolean;
+  name: string;
+  info?: string;
   url: string;
+  url_mvt?: string;
+  styleUrl?: string;
   epsg?: string;
   params: ITileLayerParams;
-  matrixprefix?: string;
+  order?: number;
+  matrixprefix?: boolean;
   matrixset?: string;
   guid: string;
   options: ITileLayerOptions;
   thumbnail?: string;
   Layers?: ILayers;
-  ticket?: string;
+  ticket?: boolean;
   wmtsextent?: string;
   distributionProtocol?: 'WMS' | 'WMTS' | 'WFS' | 'TMS' | 'XYZ' | 'GEOJSON' | 'KML' | 'MVT';
+  getcapabilities?: boolean;
   groupid?: number;
+  maxResolution?: number;
   legendurl?: string;
   uuid?: string;
   description?: string;
   style?: IStyle;
+  includedfields?: IIncludedFields;
 }
 
 export interface ICodeLists {
@@ -175,38 +198,95 @@ export interface ISearchParams {
   searchparam: ISearchParam[];
 }
 
-export interface IProjectList {
+export interface IProject {
   HeaderIcon: string;
   HeaderTitle: string;
   ProjectName: string;
   SiteTitle: string;
-  Restricted: boolean;
-  UpdateExtent: boolean;
+  Config: IConfig;
 }
 
-export interface IProject {
-  isygatekeeper: string;
+export interface IProjectConfig {
+  gatekeeperhost: string;
   tickethost: string;
   name: string;
 }
 
-export interface IMapBounds {
-  mapbound: IMapBound[];
+export interface IProjectList {
+  projects: IProject[];
+  status: 'loading' | 'done';
+  showActiveProject: boolean;
+  activeProject: IProject;
 }
 
-export interface IConfig {
+export interface IBaseConfig {
   center: [number, number];
   mapepsg: string;
   zoom: number;
-  mapbounds: IMapBounds;
-  maplayer: IMapLayer[];
-  project?: IProject;
-  vector?: IVector[];
-  layer: ILayer[];
+  mapbound: IMapBound[];
+  name: string;
+  displayCenter: string;
+  gatekeeperhost: string;
+  tickethost: string;
 }
 
-export interface IProjectConfig {
-  config: IConfig;
+export interface IBaseMap {
+  url: string;
+  gatekeeper?: boolean;
+  name: string;
+  layers: string;
+  format: string;
+  matrixPrefix: boolean;
+  matrixSet: string;
+  options: ITileLayerOptions;
+}
+
+export interface IIFeatureDictPunktType {
+  T: string;
+  L: string;
+  S: string;
+  N: string;
+}
+
+export interface IIFeatureDictStatus {
+  E: string;
+  P: string;
+  O: string;
+  U: string;
+}
+
+export interface IFeatureDictLyssetting {
+  IL: string;
+  UKJ: string;
+  LIA: string;
+  LIB: string;
+  LIC: string;
+  LID: string;
+  MIA: string;
+  MIB: string;
+  MIC: string;
+  HIA: string;
+  HIB: string;
+  FLO: string;
+  FR: string;
+  FH: string;
+  BH: string;
+  BR: string;
+  L: string;
+}
+
+export interface IFeatureDict {
+  Punkttype?: IIFeatureDictPunktType;
+  Status?: IIFeatureDictStatus;
+  Lyssetting?: IFeatureDictLyssetting;
+}
+
+export interface IConfig {
+  name: string;
+  layer: ILayer[];
+  maplayer?: IMapLayer[];
+  vector?: IVector[];
+  featureDict?: IFeatureDict;
 }
 
 export interface IJobtechQueryParams {

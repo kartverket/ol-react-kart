@@ -3,7 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../../../index';
-import { IProject, selectProjectsList, setActiveProject, showActiveProjectFromList } from './projectsListSlice';
+import { selectProjectsList, setActiveProject, showActiveProjectFromList } from './projectsListSlice';
+import { IProject } from '../../../MapCore/Models/config-model';
 
 const ProjectsList = () => {
   const { t } = useTranslation();

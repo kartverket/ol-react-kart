@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { selectVisibleBaseLayer, setVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
 import { useGlobalStore } from '../../app/globalStore';
-import { useEventDispatch, useEventSelector } from '../../index';
+import { useBaseLayersStore } from '../../app/baseStore'
 
 const ChangeBaseLayer = () => {
   const setGlobalLayers = useGlobalStore(state => state.setLayers);
-  const dispatch = useEventDispatch();
-  const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
+  const setVisibleBaseLayer = useBaseLayersStore((state) => state.setVisibleBaseLayer)
+  const activeBaseLayer = useBaseLayersStore(state => state.layers.find(layer => layer.options.visibility === true));
+
   const baseLayers = [
     {
       name: 'landkart',
@@ -28,7 +28,7 @@ const ChangeBaseLayer = () => {
   ];
 
   const toggleBaseLayer = (index: number): void => {
-    dispatch(setVisibleBaseLayer(baseLayers[index].name));
+    setVisibleBaseLayer(baseLayers[index].name);
     setGlobalLayers(baseLayers[index].name);
   };
 
@@ -38,7 +38,7 @@ const ChangeBaseLayer = () => {
         {baseLayers.map((baseLayer, index) => (
           <button
             key={index}
-            className={`button ${baseLayer.name === visibleBaseLayer?.name ? 'button__green--primary' : ''}`}
+            className={`button ${baseLayer.name === activeBaseLayer?.name ? 'button__green--primary' : ''}`}
             onClick={() => toggleBaseLayer(index)}
           >
             <div className={baseLayer.symbol} title={baseLayer.name}></div>

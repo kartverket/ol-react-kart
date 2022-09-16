@@ -24,12 +24,12 @@ export const layersSlice = createSlice({
   reducers: {
     addTileLayer: (state, action: PayloadAction<ILayer>) => {
       state.tileLayers.push(action.payload);
-      state.filterBaseLayers = state.tileLayers.filter(l => l.options.isbaselayer === 'true');
+      state.filterBaseLayers = state.tileLayers.filter(l => l.options.isbaselayer === true);
     },
     addTileLayers: (state, action: PayloadAction<ILayer[]>) => {
       const tileLayers = JSON.parse(JSON.stringify(action.payload));
       state.tileLayers = tileLayers;
-      state.filterBaseLayers = state.tileLayers.filter(l => l.options.isbaselayer === 'true');
+      state.filterBaseLayers = state.tileLayers.filter(l => l.options.isbaselayer === true);
     },
     addVectorLayer: (state, action: PayloadAction<IVector>) => {
       state.vectorLayers.push(action.payload);
@@ -37,7 +37,7 @@ export const layersSlice = createSlice({
     addVectorLayers: (state, action: PayloadAction<IVector[]>) => {
       state.vectorLayers = action.payload;
     },
-    addGroups: (state, action: PayloadAction<IMapLayer[]>) => {
+    addGroups: (state, action: PayloadAction<IMapLayer[] | undefined>) => {
       const groups = JSON.parse(JSON.stringify(action.payload));
       groups.forEach((g: IMapLayer) => (g.isOpen = false));
       state.groups = groups;
@@ -52,8 +52,8 @@ export const layersSlice = createSlice({
     },
     setVisibleBaseLayer: (state, action: PayloadAction<string>) => {
       state.tileLayers.map(w => {
-        if (w.options.isbaselayer === 'true') {
-          w.options.visibility = w.name === action.payload ? 'true' : 'false';
+        if (w.options.isbaselayer === true) {
+          w.options.visibility = w.name === action.payload ? true : false;
         }
       });
     },
@@ -62,7 +62,7 @@ export const layersSlice = createSlice({
       if (action && action.payload) {
         const vector = state.vectorLayers.find(v => v.guid === action.payload?.guid && v.name === action.payload?.name);
         if (vector) {
-          vector.options.visibility = vector.options.visibility === 'true' ? 'false' : 'true';
+          vector.options.visibility = vector.options.visibility === true ? false : true;
         }
       }
     },
@@ -71,7 +71,7 @@ export const layersSlice = createSlice({
       if (action && action.payload) {
         const layer = state.tileLayers.find(w => w.guid === action.payload?.guid && w.name === action.payload?.name);
         if (layer) {
-          layer.options.visibility = layer.options.visibility === 'true' ? 'false' : 'true';
+          layer.options.visibility = layer.options.visibility === true ? false : true;
         }
       }
     },
@@ -99,7 +99,7 @@ export const {
 
 //selectors
 export const selectVisibleBaseLayer = (state: EventStoreState) => {
-  return state.layers.tileLayers.find(l => l.options.isbaselayer === 'true' && l.options.visibility === 'true');
+  return state.layers.tileLayers.find(l => l.options.isbaselayer === true && l.options.visibility === true);
 };
 
 export const selectBaseLayers = (state: EventStoreState) => {

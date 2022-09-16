@@ -17,6 +17,7 @@ import Legend from './legend/legend';
 const MainMenuPanelProjectLayers = () => {
   const { t } = useTranslation();
   const layerGroups = useEventSelector(selectLayersGroups);
+  console.log('layerGroups', layerGroups);
   const tileLayers = useEventSelector(selectTileLayers);
   const vectorLayers = useEventSelector(selectVectorLayers);
   const eventDispatch = useEventDispatch();
@@ -62,7 +63,7 @@ const MainMenuPanelProjectLayers = () => {
                           <input
                             type="checkbox"
                             id={tileLayer.name}
-                            defaultChecked={tileLayer.options.visibility === 'true' ? true : false}
+                            defaultChecked={tileLayer.options.visibility === true ? true : false}
                             onClick={e => {
                               e.stopPropagation();
                             }}
@@ -83,7 +84,7 @@ const MainMenuPanelProjectLayers = () => {
                           <input
                             type="checkbox"
                             id={vectorLayer.name}
-                            defaultChecked={vectorLayer.options.visibility === 'true' ? true : false}
+                            defaultChecked={vectorLayer.options.visibility === true ? true : false}
                             onChange={() => {
                               console.log('toggleVector');
                             }}

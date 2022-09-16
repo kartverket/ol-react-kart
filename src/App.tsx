@@ -5,7 +5,8 @@ import MainMap from './components/MainMap';
 import ChangeBaseLayer from './components/change-base-layer/ChangeBaseLayer';
 import InfoPanel from './components/info-panel/InfoPanel';
 import MainMenuPanel from './components/main-menu-panel/MainMenuPanel';
-import { IProject, addProjectList, setStatusDone } from './components/main-menu-panel/projects-list/projectsListSlice';
+import { addProjectList, setStatusDone } from './components/main-menu-panel/projects-list/projectsListSlice';
+import { IProject } from './MapCore/Models/config-model';
 import Search from './components/search/Search';
 import listProjects from './config/listprojects.json';
 
