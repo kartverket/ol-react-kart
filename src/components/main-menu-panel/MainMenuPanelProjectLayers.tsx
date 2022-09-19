@@ -14,6 +14,8 @@ import { ILayer, IMapLayer, IVector } from '../../MapCore/Models/config-model';
 import { useEventDispatch, useEventSelector } from '../../index';
 import Legend from './legend/legend';
 
+import { useProjectStore } from '../../app/projetStore'
+
 const MainMenuPanelProjectLayers = () => {
   const { t } = useTranslation();
   const layerGroups = useEventSelector(selectLayersGroups);
@@ -21,6 +23,8 @@ const MainMenuPanelProjectLayers = () => {
   const tileLayers = useEventSelector(selectTileLayers);
   const vectorLayers = useEventSelector(selectVectorLayers);
   const eventDispatch = useEventDispatch();
+
+  const project = useProjectStore()
 
   const toggleVector = (vector: IVector): void => {
     eventDispatch(toggleVectorLayer(vector));
