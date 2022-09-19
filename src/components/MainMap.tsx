@@ -289,7 +289,7 @@ const MainMap = ({ children }: Props) => {
   useEffect(() => {
     if (!mapInit) {
       const projectUrl =
-        document.location.origin + document.location.pathname + 'projects/' + activeProject.SiteTitle + '.json';
+        document.location.origin + document.location.pathname + 'projects/' + activeProject.ProjectName + '.json';
       axios.get(`${projectUrl}`).then(function (response) {
         response.data.config.center = mapConfig.center;
         response.data.config.zoom = mapConfig.zoom;
@@ -309,10 +309,10 @@ const MainMap = ({ children }: Props) => {
         window.olMap.on('moveend', updateMapInfoState);
       });
     }
-  }, [mapInit, activeProject.SiteTitle, mapConfig.center, mapConfig.zoom]);
+  }, [mapInit, activeProject.ProjectName, mapConfig.center, mapConfig.zoom]);
 
   useEffect(() => {
-    if (activeProject.SiteTitle) {
+    if (activeProject.ProjectName) {
       if (mapInit) {
         destroyProject();
         setMapInit(false);

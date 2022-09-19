@@ -1,54 +1,54 @@
 [
   {
-    "SiteTitle": "eiendom",
+    "SiteTitle": "seEiendom_title",
     "ProjectName": "eiendom",
     "HeaderIcon": "home",
     "HeaderTitle": "eiendom"
   },
   {
-    "SiteTitle": "friluftsliv",
+    "SiteTitle": "Friluft_title",
     "ProjectName": "friluftsliv",
     "HeaderIcon": "park",
     "HeaderTitle": "friluftsliv"
   },
   {
-    "SiteTitle": "ssr",
+    "SiteTitle": "Stedsnavn_title",
     "ProjectName": "ssr",
     "HeaderIcon": "signpost",
     "HeaderTitle": "ssr"
   },
   {
-    "SiteTitle": "tilgjengelighet",
-    "ProjectName": "Tilgjengelighet_title",
+    "SiteTitle": "Tilgjengelighet_title",
+    "ProjectName": "tilgjengelighet",
     "HeaderIcon": "accessible",
     "HeaderTitle": "tilgjengelighet"
   },
   {
-    "SiteTitle": "fastmerker",
-    "ProjectName": "Fastmerker_title",
+    "SiteTitle": "Fastmerker_title",
+    "ProjectName": "fastmerker",
     "HeaderIcon": "navigation",
     "HeaderTitle": "fastmerker"
   },
   {
-    "SiteTitle": "nrl",
+    "SiteTitle": "Luftfartshindre_title",
     "ProjectName": "nrl",
     "HeaderIcon": "flight",
     "HeaderTitle": "nrl"
   },
   {
-    "SiteTitle": "dekning",
-    "ProjectName": "Dekning_title",
+    "SiteTitle": "Dekning_title",
+    "ProjectName": "dekning",
     "HeaderIcon": "map",
     "HeaderTitle": "dekning"
   },
   {
-    "SiteTitle": "arbeidsgiveravgiftsoner",
+    "SiteTitle": "Arbeidsgiveravgiftsoner_title",
     "ProjectName": "arbeidsgiveravgiftsoner",
     "HeaderIcon": "payments",
     "HeaderTitle": "arbeidsgiveravgiftsoner"
   },
   {
-    "SiteTitle": "vectortilesdemo",
+    "SiteTitle": "vectortilesdemo (beta)",
     "ProjectName": "vectortilesdemo",
     "HeaderIcon": "map",
     "HeaderTitle": "vectortilesdemo"
