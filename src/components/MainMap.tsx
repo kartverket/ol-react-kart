@@ -52,7 +52,7 @@ const MainMap = ({ children }: Props) => {
   const baseConfig = useBaseConfigStore();
   const baseMap = useBaseMapStore();
   const baseLayers = useBaseLayersStore();
-  
+
   const setSok = useGlobalStore(state => state.setSok);
   const setGlobalCenter = useGlobalStore(state => state.setCenter);
   const setGlobalMarker = useGlobalStore(state => state.setMarkerCenter);
@@ -281,10 +281,10 @@ const MainMap = ({ children }: Props) => {
       setMapInit(true);
       window.olMap.on('moveend', updateMapInfoState);
     }
-  }, [mapInit, activeProject.SiteTitle, mapConfig.center, mapConfig.zoom]);
+  }, [mapInit, activeProject.ProjectName, mapConfig.center, mapConfig.zoom]);
 
   useEffect(() => {
-    if (activeProject.SiteTitle) {
+    if (activeProject.ProjectName) {
       if (mapInit) {
         setMapInit(false);
       }

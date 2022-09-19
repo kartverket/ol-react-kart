@@ -27,7 +27,7 @@ const ProjectsList = () => {
             onClick={() => toggleShowActiveProjectFromList(project)}
           >
             <span className="material-icons-outlined me-2">{t(project.HeaderIcon)}</span>
-            <label className="text-capitalize">{t(project.ProjectName)}</label>
+            <label className="text-capitalize">{t(project.SiteTitle)}</label>
           </li>
         ))}
       </ul>
