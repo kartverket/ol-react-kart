@@ -213,6 +213,12 @@ export interface IProjectConfig {
 }
 
 export interface IProjectList {
+  setToggleLayer: any;
+  setToggleGroup: any;
+  setActiveProject: any;
+  showActiveProjectFromList: any;
+  toggleTileLayer: any;
+
   projects: IProject[];
   status: 'loading' | 'done';
   showActiveProject: boolean;

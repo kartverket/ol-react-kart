@@ -385,4 +385,5 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
   },
 
   setBaseLayers: (baselayers: IBaseLayers) => set(baselayers),
+
 }));

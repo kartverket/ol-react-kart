@@ -822,6 +822,11 @@ const initialState: IProjectList = {
       ],
     },
   },
+  setToggleLayer: [],
+  setToggleGroup: [],
+  setActiveProject: [],
+  showActiveProjectFromList: [],
+  toggleTileLayer: [],
 };
 
 export const projectsListSlice = createSlice({

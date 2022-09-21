@@ -15,19 +15,14 @@ import { WMTS } from 'ol/source';
 import { GetClickCoordinates } from '../MapCore/Events/GetClickCoordinates';
 import { MapMoveEnd } from '../MapCore/Events/MapMoveEnd';
 import { Layers } from '../MapCore/Layers/Layers';
-import {
-  addGroups,
-  addTileLayers,
-  addVectorLayers,
-  selectToggleTileLayer,
-  toggleTileLayer,
-} from '../MapCore/Layers/layersSlice';
+
 import { IProject } from '../MapCore/Models/config-model';
 import { addProject, selectCenter } from '../MapCore/Project/projectSlice';
 import { wmtsTileGrid } from '../MapCore/TileGrid/wmts';
+import { useBaseConfigStore, useBaseLayersStore, useBaseMapStore } from '../app/baseStore';
 import { center, marker, selection, useGlobalStore, wms } from '../app/globalStore';
-import { useBaseConfigStore, useBaseMapStore, useBaseLayersStore } from '../app/baseStore'
 import MapContext from '../app/mapContext';
+import { useProjectStore } from '../app/projetStore';
 import pinOrange from '../assets/pin-md-orange.png';
 import { selectActiveProject } from '../components/main-menu-panel/projects-list/projectsListSlice';
 import { useAppSelector, useEventDispatch, useEventSelector } from '../index';
@@ -66,7 +61,7 @@ const MainMap = ({ children }: Props) => {
   const mapMoveEnd = MapMoveEnd(eventDispatch);
   const getClickCoordinates = GetClickCoordinates();
 
-  const toggleTile = useEventSelector(selectToggleTileLayer);
+  const toggleTile = useProjectStore(state => state.toggleTileLayer);
 
   const [token, setToken] = useState();
 
@@ -102,7 +97,7 @@ const MainMap = ({ children }: Props) => {
         setToken(response.data);
       });
     }
-  }
+  };
 
   const init = (projectConfig: IProject) => {
     if (!activateMap) {
@@ -111,11 +106,6 @@ const MainMap = ({ children }: Props) => {
       } else {
         //eventDispatch(addProject(baseConfig.project));
         console.log('projectConfig is undefined');
-      }
-      eventDispatch(addGroups(projectConfig.Config.maplayer));
-      eventDispatch(addTileLayers(projectConfig.Config.layer));
-      if (projectConfig.Config.vector) {
-        eventDispatch(addVectorLayers(projectConfig.Config.vector));
       }
 
       if (!myMap) {
@@ -241,7 +231,9 @@ const MainMap = ({ children }: Props) => {
   }, [center]);
 
   useEffect(() => {
-    const _visibleBaseLayer = baseLayers.layers.find(l => l.options.isbaselayer === true && l.options.visibility === true);
+    const _visibleBaseLayer = baseLayers.layers.find(
+      l => l.options.isbaselayer === true && l.options.visibility === true,
+    );
     if (token && _visibleBaseLayer && baseLayers) {
       const layers = Layers(myMap);
       baseLayers.layers.forEach(b => {
@@ -254,12 +246,10 @@ const MainMap = ({ children }: Props) => {
   useEffect(() => {
     if (toggleTile && token) {
       const layers = Layers(myMap);
-      if (toggleTile.options.visibility === false) {
+      if (toggleTile.options.visibility === true) {
         layers.createTileLayer(toggleTile, token);
-        eventDispatch(toggleTileLayer());
       } else {
         layers.hideLayer(toggleTile.guid);
-        eventDispatch(toggleTileLayer());
       }
     }
   }, [toggleTile, token, eventDispatch]);
@@ -267,15 +257,17 @@ const MainMap = ({ children }: Props) => {
   useEffect(() => {
     if (!mapInit) {
       if (layers) {
-        activeProject.Config.layer.forEach((l: any) => {
-          if (l.distributionProtocol === 'WMTS') {
-            l.options.visibility = false;
-          }
-          if (l.name === layers) {
-            l.options.visibility = true;
-          }
-          return l;
-        });
+        if (activeProject.Config) {
+          activeProject.Config.layer.forEach((l: any) => {
+            if (l.distributionProtocol === 'WMTS') {
+              l.options.visibility = false;
+            }
+            if (l.name === layers) {
+              l.options.visibility = true;
+            }
+            return l;
+          });
+        }
       }
       init(activeProject);
       setMapInit(true);

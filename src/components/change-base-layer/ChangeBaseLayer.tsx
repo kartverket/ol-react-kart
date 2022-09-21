@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { useBaseLayersStore } from '../../app/baseStore';
 import { useGlobalStore } from '../../app/globalStore';
-import { useBaseLayersStore } from '../../app/baseStore'
 
 const ChangeBaseLayer = () => {
   const setGlobalLayers = useGlobalStore(state => state.setLayers);
-  const setVisibleBaseLayer = useBaseLayersStore((state) => state.setVisibleBaseLayer)
+  const setVisibleBaseLayer = useBaseLayersStore(state => state.setVisibleBaseLayer);
   const activeBaseLayer = useBaseLayersStore(state => state.layers.find(layer => layer.options.visibility === true));
 
   const baseLayers = [

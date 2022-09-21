@@ -1,11 +1,12 @@
+import produce from 'immer';
 import create from 'zustand';
 
-import { IProjectList } from '../MapCore/Models/config-model';
+import { ILayer, IMapLayer, IProject, IProjectList } from '../MapCore/Models/config-model';
 
-export const useProjectStore = create<IProjectList>((set) => ({
+export const useProjectStore = create<IProjectList>(set => ({
   projects: [
     {
-      SiteTitle: 'eiendom',
+      SiteTitle: 'seEiendom_title',
       ProjectName: 'eiendom',
       HeaderIcon: 'home',
       HeaderTitle: 'eiendom',
@@ -73,12 +74,13 @@ export const useProjectStore = create<IProjectList>((set) => ({
             index: 1,
             name: 'matrikkel_data',
             groupid: 1,
+            isOpen: true,
           },
         ],
       },
     },
     {
-      SiteTitle: 'friluftsliv',
+      SiteTitle: 'Friluft_title',
       ProjectName: 'friluftsliv',
       HeaderIcon: 'park',
       HeaderTitle: 'friluftsliv',
@@ -893,7 +895,7 @@ export const useProjectStore = create<IProjectList>((set) => ({
       },
     },
     {
-      SiteTitle: 'ssr',
+      SiteTitle: 'Stedsnavn_title',
       ProjectName: 'ssr',
       HeaderIcon: 'signpost',
       HeaderTitle: 'ssr',
@@ -2707,8 +2709,8 @@ export const useProjectStore = create<IProjectList>((set) => ({
       },
     },
     {
-      SiteTitle: 'tilgjengelighet',
-      ProjectName: 'Tilgjengelighet_title',
+      SiteTitle: 'Tilgjengelighet_title',
+      ProjectName: 'tilgjengelighet',
       HeaderIcon: 'accessible',
       HeaderTitle: 'tilgjengelighet',
       Config: {
@@ -8168,8 +8170,8 @@ export const useProjectStore = create<IProjectList>((set) => ({
       },
     },
     {
-      SiteTitle: 'fastmerker',
-      ProjectName: 'Fastmerker_title',
+      SiteTitle: 'Fastmerker_title',
+      ProjectName: 'fastmerker',
       HeaderIcon: 'navigation',
       HeaderTitle: 'fastmerker',
       Config: {
@@ -8671,7 +8673,7 @@ export const useProjectStore = create<IProjectList>((set) => ({
       },
     },
     {
-      SiteTitle: 'nrl',
+      SiteTitle: 'Luftfartshindre_title',
       ProjectName: 'nrl',
       HeaderIcon: 'flight',
       HeaderTitle: 'nrl',
@@ -10026,8 +10028,8 @@ export const useProjectStore = create<IProjectList>((set) => ({
       },
     },
     {
-      SiteTitle: 'dekning',
-      ProjectName: 'Dekning_title',
+      SiteTitle: 'Dekning_title',
+      ProjectName: 'dekning',
       HeaderIcon: 'map',
       HeaderTitle: 'dekning',
       Config: {
@@ -10454,7 +10456,7 @@ export const useProjectStore = create<IProjectList>((set) => ({
       },
     },
     {
-      SiteTitle: 'arbeidsgiveravgiftsoner',
+      SiteTitle: 'Arbeidsgiveravgiftsoner_title',
       ProjectName: 'arbeidsgiveravgiftsoner',
       HeaderIcon: 'payments',
       HeaderTitle: 'arbeidsgiveravgiftsoner',
@@ -11359,5 +11361,41 @@ export const useProjectStore = create<IProjectList>((set) => ({
       ],
     },
   },
+  toggleTileLayer: null,
 
+  setToggleLayer: (layername: string, ProjectName: string) =>
+    set(
+      produce(state => {
+        state.toggleTileLayer = state.projects
+          .find((project: IProject) => project.ProjectName === ProjectName)
+          .Config.layer.find((layer: ILayer) => layer.name === layername);
+        state.projects
+          .find((project: IProject) => project.ProjectName === ProjectName)
+          .Config.layer.find((layer: ILayer) => layer.name === layername).options.visibility = !state.projects
+          .find((project: IProject) => project.ProjectName === ProjectName)
+          .Config.layer.find((layer: ILayer) => layer.name === layername).options.visibility;
+      }),
+    ),
+  setToggleGroup: (groupid: number, ProjectName: string) =>
+    set(
+      produce(state => {
+        state.projects
+          .find((project: IProject) => project.ProjectName === ProjectName)
+          .Config.maplayer.find((group: IMapLayer) => group.groupid === groupid).isOpen = !state.projects
+          .find((project: IProject) => project.ProjectName === ProjectName)
+          .Config.maplayer.find((group: IMapLayer) => group.groupid === groupid).isOpen;
+      }),
+    ),
+  setActiveProject: (ProjectName: string) =>
+    set(
+      produce(state => {
+        state.activeProject = state.projects.find((project: IProject) => project.ProjectName === ProjectName);
+      }),
+    ),
+  showActiveProjectFromList: () =>
+    set(
+      produce(state => {
+        state.showActiveProject = !state.showActiveProject;
+      }),
+    ),
 }));

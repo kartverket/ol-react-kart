@@ -82,8 +82,7 @@ export const Layers = function (myMap: Map) {
 
           let matrixSet = layer.matrixset;
           if (matrixSet === null || matrixSet === '' || matrixSet === undefined) {
-            matrixSet =
-              layer.matrixprefix === true ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
+            matrixSet = layer.matrixprefix === true ? sProjection : sProjection.substring(sProjection.indexOf(':') + 1);
           }
 
           for (let z = 0; z < 21; ++z) {

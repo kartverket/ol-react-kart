@@ -4,7 +4,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { useTranslation } from 'react-i18next';
 
-import { useBaseLayersStore } from '../../app/baseStore'
+import { useBaseLayersStore } from '../../app/baseStore';
 
 const LayerInfo = (props: any) => {
   return (
@@ -29,7 +29,7 @@ const LayerInfo = (props: any) => {
   );
 };
 const MainMenuBaseLayerPanel = () => {
-  const setVisibleBaseLayer = useBaseLayersStore((state) => state.setVisibleBaseLayer)
+  const setVisibleBaseLayer = useBaseLayersStore(state => state.setVisibleBaseLayer);
   const baseLayers = useBaseLayersStore();
   const { t } = useTranslation();
 
