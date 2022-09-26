@@ -35,7 +35,6 @@ declare global {
 window.olMap = window.olMap || {};
 
 let myMap: OlMap;
-let activateMap = false;
 
 type Props = {
   children?: React.ReactNode;
@@ -100,7 +99,6 @@ const MainMap = ({ children }: Props) => {
   };
 
   const init = (projectConfig: IProject) => {
-    if (!activateMap) {
       if (projectConfig) {
         eventDispatch(addProject(projectConfig));
       } else {
@@ -182,12 +180,9 @@ const MainMap = ({ children }: Props) => {
         window.olMap = myMap;
         return () => myMap.setTarget(undefined);
       }
-      activateMap = true;
-    } else {
       generateToken();
       getClickCoordinates.activate(myMap);
       mapMoveEnd.activate(myMap);
-    }
   };
 
   useEffect(() => {
@@ -255,7 +250,6 @@ const MainMap = ({ children }: Props) => {
   }, [toggleTile, token, eventDispatch]);
 
   useEffect(() => {
-    console.log('activeProject.Config', activeProject.Config);
     if (activeProject.Config && token) {
       const layers = Layers(myMap);
       const l_guids = layers.getLayersWithGuid().filter(elem => {
@@ -307,15 +301,6 @@ const MainMap = ({ children }: Props) => {
     const successGetGeolocation = (position: any) => {
       const coordinates = [position.coords.longitude, position.coords.latitude];
       setGlobalCenter(coordinates as any);
-      /*
-      appDispatch(
-        setCenter({
-          lon: coordinates[0],
-          lat: coordinates[1],
-          epsg: 'EPSG:4258',
-        }),
-      );
-      */
     };
     const errorGetGeolcation = () => console.log('Unable to retrieve your location');
 
