@@ -25,9 +25,7 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
   };
 
   const toggleLayer = (layer: ILayer): void => {
-    console.log('toggleLayer', layer);
-    const test = setToggleLayer(layer.name, ProjectName);
-    console.log('test', test);
+    setToggleLayer(layer.name, ProjectName);
   };
 
   const toggleLayerGroup = (group: IMapLayer): void => {
