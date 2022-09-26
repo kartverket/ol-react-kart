@@ -24,8 +24,7 @@ import { center, marker, selection, useGlobalStore, wms } from '../app/globalSto
 import MapContext from '../app/mapContext';
 import { useProjectStore } from '../app/projetStore';
 import pinOrange from '../assets/pin-md-orange.png';
-import { selectActiveProject } from '../components/main-menu-panel/projects-list/projectsListSlice';
-import { useAppSelector, useEventDispatch, useEventSelector } from '../index';
+import { useEventDispatch, useEventSelector } from '../index';
 import { generateKoordTransUrl } from '../utils/n3api';
 import Position from './Position';
 
@@ -61,14 +60,16 @@ const MainMap = ({ children }: Props) => {
   const mapMoveEnd = MapMoveEnd(eventDispatch);
   const getClickCoordinates = GetClickCoordinates();
 
+  const projects = useProjectStore(state => state.projects);
   const toggleTile = useProjectStore(state => state.toggleTileLayer);
+  const activeProject = useProjectStore(state => state.activeProject);
 
   const [token, setToken] = useState();
 
   const center = useEventSelector(selectCenter);
 
   const [mapInit, setMapInit] = useState(false);
-  const activeProject = useAppSelector(selectActiveProject);
+
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<OlMap | null>(null);
 
@@ -253,6 +254,26 @@ const MainMap = ({ children }: Props) => {
       }
     }
   }, [toggleTile, token, eventDispatch]);
+
+  useEffect(() => {
+    console.log('activeProject.Config', activeProject.Config);
+    if (activeProject.Config && token) {
+      const layers = Layers(myMap);
+      const l_guids = layers.getLayersWithGuid().filter((elem) => {
+        return elem.get('guid') !== undefined && Number(elem.get('guid').charAt(0)) > 0;
+      });
+      if (l_guids.length > 0) {
+        l_guids.forEach((elem) => {
+          layers.hideLayer(elem.get('guid'));
+        });
+      }
+      activeProject.Config.layer.forEach((l: any) => {
+        if (l.distributionProtocol === 'WMS' && l.options.visibility === true) {
+          layers.createTileLayer(l, token);
+        }
+      });
+    }
+  }, [activeProject, token]);
 
   useEffect(() => {
     if (!mapInit) {

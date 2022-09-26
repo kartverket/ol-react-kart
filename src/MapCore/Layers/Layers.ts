@@ -208,5 +208,13 @@ export const Layers = function (myMap: Map) {
 
       // sourceUrl = sourceUrl + '&GKT=' + token;
     },
+
+    getLayerByGuid(layerGuid: string) {
+      return _getLayerByGuid(layerGuid);
+    },
+
+    getLayersWithGuid() {
+      return _getLayersWithGuid();
+    },
   };
 };
