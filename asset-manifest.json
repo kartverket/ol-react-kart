@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "./static/css/main.00ad1cd0.css",
+    "main.js": "./static/js/main.1e311cc2.js",
+    "static/js/496.c69d2b37.chunk.js": "./static/js/496.c69d2b37.chunk.js",
+    "static/media/raster.png": "./static/media/raster.0073bbebd0d91fd7a6a9.png",
+    "static/media/aerial.png": "./static/media/aerial.414d4d9f5a775194201e.png",
+    "static/media/land.png": "./static/media/land.54834e80266092c93ebb.png",
+    "static/media/grey.png": "./static/media/grey.9bfec015982f72a76f22.png",
+    "static/media/KV_logo_staa.svg": "./static/media/KV_logo_staa.81d2c2bf97a0055e14ea.svg",
+    "index.html": "./index.html",
+    "static/media/location_on-24px.svg": "./static/media/location_on-24px.4e94ed966c8d9b325239.svg",
+    "main.00ad1cd0.css.map": "./static/css/main.00ad1cd0.css.map",
+    "main.1e311cc2.js.map": "./static/js/main.1e311cc2.js.map",
+    "496.c69d2b37.chunk.js.map": "./static/js/496.c69d2b37.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.00ad1cd0.css",
+    "static/js/main.1e311cc2.js"
+  ]
+}
