@@ -147,11 +147,21 @@ const MainMenuPanel = () => {
               </div>
               {showTools ? (
                 <div>
-                  <Measure />
-                  <Draw />
-                  <ElevationProfile />
-                  <PrintMap />
-                  <ShareMap />
+                  <div className="list-group-item list-group-item-action">
+                    <Measure />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <Draw />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <ElevationProfile />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <PrintMap />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <ShareMap />
+                  </div>
                 </div>
               ) : null}
             </div>
