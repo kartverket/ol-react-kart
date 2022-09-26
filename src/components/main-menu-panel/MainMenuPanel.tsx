@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useAppDispatch, useAppSelector, useEventSelector } from '../../../src/index';
-import { selectVisibleBaseLayer } from '../../MapCore/Layers/layersSlice';
+import { useProjectStore } from '../../app/projetStore';
+import { useBaseLayersStore } from '../../app/baseStore';
+
 import Draw from '../Draw';
 import ElevationProfile from '../ElevationProfile';
 import Faq from '../Faq';
@@ -15,21 +16,18 @@ import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
 import ProjectsList from './projects-list/ProjectsList';
-import {
-  selectActiveProject,
-  selectShowActiveProject,
-  showActiveProjectFromList,
-} from './projects-list/projectsListSlice';
+import { ILayer } from '../../MapCore/Models/config-model';
 
 const MainMenuPanel = () => {
   const { t } = useTranslation();
-  const appDispatch = useAppDispatch();
   const [showBaseLayersList, setShowBaseLayersList] = useState(false);
   const [collapseThematicMap, setCollapseThematicMap] = useState(false);
   const [showTools, setShowTools] = useState(false);
-  const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
-  const showActiveProject = useAppSelector(selectShowActiveProject);
-  const activeProject = useAppSelector(selectActiveProject);
+
+  const showActiveProjectFromList = useProjectStore(state => state.showActiveProjectFromList);
+  const showActiveProject = useProjectStore(state => state.showActiveProject);
+  const activeProject = useProjectStore(state => state.activeProject);
+  const visibleBaseLayer = useBaseLayersStore(state => state.layers.find((layer: ILayer) => layer.options.visibility));
 
   const closeNav = (): void => {
     const mySidenav = document.getElementById('mySidenav');
@@ -50,7 +48,7 @@ const MainMenuPanel = () => {
   };
 
   const toggleShowActiveProject = (): void => {
-    appDispatch(showActiveProjectFromList());
+    showActiveProjectFromList();
   };
 
   return (
@@ -112,7 +110,7 @@ const MainMenuPanel = () => {
           </div>
         )}
         {showBaseLayersList ? <MainMenuBaseLayerPanel /> : null}
-        {showActiveProject ? <MainMenuPanelProjectLayers /> : null}
+        {showActiveProject ? <MainMenuPanelProjectLayers ProjectName={activeProject.ProjectName} /> : null}
         {!showBaseLayersList && !showActiveProject ? (
           <>
             <div className="list-group-item list-group-item-action">
@@ -145,10 +143,10 @@ const MainMenuPanel = () => {
                   <span className="">{t('tools')}</span>
                 </div>
                 <div className="ms-auto ps-2 pe-2">
-                  <span className="material-icons-outlined">{!showTools ? 'expand_more' : 'chevron_right'}</span>
+                  <span className="material-icons-outlined">{showTools ? 'expand_more' : 'chevron_right'}</span>
                 </div>
               </div>
-              {!showTools ? (
+              {showTools ? (
                 <div>
                   <Measure />
                   <Draw />

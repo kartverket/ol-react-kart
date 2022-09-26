@@ -2,23 +2,24 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useAppDispatch, useAppSelector } from '../../../index';
-import { IProject, selectProjectsList, setActiveProject, showActiveProjectFromList } from './projectsListSlice';
+import { IProject } from '../../../MapCore/Models/config-model';
+import { useProjectStore } from '../../../app/projetStore';
 
 const ProjectsList = () => {
   const { t } = useTranslation();
 
-  const listProjects = useAppSelector(selectProjectsList);
-  const dispatch = useAppDispatch();
+  const setActiveProject = useProjectStore(state => state.setActiveProject);
+  const listProjects = useProjectStore(state => state.projects);
+  const showActiveProjectFromList = useProjectStore(state => state.showActiveProjectFromList);
 
   const toggleShowActiveProjectFromList = (project: IProject): void => {
-    dispatch(showActiveProjectFromList());
-    dispatch(setActiveProject(project));
+    showActiveProjectFromList();
+    setActiveProject(project.ProjectName);
   };
 
   return (
     <>
-      <ul className="list-group list-group-flush">
+      <ul className="list-group list-group-flush" id="ProjectsList">
         {listProjects.map((project, index) => (
           <li
             key={index}

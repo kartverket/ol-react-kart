@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { selectTileLayers } from '../../../MapCore/Layers/layersSlice';
 import { ILayer } from '../../../MapCore/Models/config-model';
-import { useEventSelector } from '../../../index';
+import { useProjectStore } from '../../../app/projetStore';
 
 const Legend = () => {
-  const wmsLayers = useEventSelector(selectTileLayers);
+  const listProjects = useProjectStore(state => state.projects);
+  const listLayers = listProjects.filter(project => {
+    const filterLayers = project.Config.layer.filter(layer => {
+      if (layer.options.visibility === true && layer.options.isbaselayer === false) {
+        return layer;
+      }
+    })
+    if (filterLayers.length > 0) {
+      return project;
+    }
+  })
   const { t } = useTranslation();
   const [collapsedLegend, setCollapsedLegend] = useState(false);
 
@@ -25,8 +34,8 @@ const Legend = () => {
         </div>
         {!collapsedLegend ? (
           <ul className="list-group list-group-flush">
-            {wmsLayers
-              .filter(w => w.options.visibility === 'true')
+            {listLayers.map((project, index) => (
+              project.Config.layer.filter(w => w.options.visibility === true)
               .map(
                 (wmsLayer: ILayer, wmsIndex: number) =>
                   wmsLayer.legendurl && (
@@ -43,7 +52,7 @@ const Legend = () => {
                       />
                     </li>
                   ),
-              )}
+              ) )) }
           </ul>
         ) : null}
       </div>

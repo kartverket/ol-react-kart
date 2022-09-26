@@ -15,27 +15,16 @@ import { WMTS } from 'ol/source';
 import { GetClickCoordinates } from '../MapCore/Events/GetClickCoordinates';
 import { MapMoveEnd } from '../MapCore/Events/MapMoveEnd';
 import { Layers } from '../MapCore/Layers/Layers';
-import {
-  addGroups,
-  addTileLayers,
-  addVectorLayers,
-  removeAll,
-  selectBaseLayers,
-  selectToggleTileLayer,
-  selectToggleVectorLayer,
-  selectVisibleBaseLayer,
-  toggleTileLayer,
-} from '../MapCore/Layers/layersSlice';
-import { IProjectConfig } from '../MapCore/Models/config-model';
-import { Project } from '../MapCore/Project/Project';
-import { addProject, selectCenter, selectToken } from '../MapCore/Project/projectSlice';
+
+import { IProject } from '../MapCore/Models/config-model';
+import { addProject, selectCenter } from '../MapCore/Project/projectSlice';
 import { wmtsTileGrid } from '../MapCore/TileGrid/wmts';
+import { useBaseConfigStore, useBaseLayersStore, useBaseMapStore } from '../app/baseStore';
 import { center, marker, selection, useGlobalStore, wms } from '../app/globalStore';
 import MapContext from '../app/mapContext';
+import { useProjectStore } from '../app/projetStore';
 import pinOrange from '../assets/pin-md-orange.png';
-import { selectActiveProject } from '../components/main-menu-panel/projects-list/projectsListSlice';
-import baseconfig from '../config/baseconfig.json';
-import { useAppSelector, useEventDispatch, useEventSelector } from '../index';
+import { useEventDispatch, useEventSelector } from '../index';
 import { generateKoordTransUrl } from '../utils/n3api';
 import Position from './Position';
 
@@ -54,6 +43,10 @@ type Props = {
 };
 
 const MainMap = ({ children }: Props) => {
+  const baseConfig = useBaseConfigStore();
+  const baseMap = useBaseMapStore();
+  const baseLayers = useBaseLayersStore();
+
   const setSok = useGlobalStore(state => state.setSok);
   const setGlobalCenter = useGlobalStore(state => state.setCenter);
   const setGlobalMarker = useGlobalStore(state => state.setMarkerCenter);
@@ -66,25 +59,23 @@ const MainMap = ({ children }: Props) => {
   const eventDispatch = useEventDispatch();
   const mapMoveEnd = MapMoveEnd(eventDispatch);
   const getClickCoordinates = GetClickCoordinates();
-  const visibleBaseLayer = useEventSelector(selectVisibleBaseLayer);
-  const baseLayers = useEventSelector(selectBaseLayers);
-  const appProject = Project(eventDispatch);
-  const toggleTile = useEventSelector(selectToggleTileLayer);
-  const token = useEventSelector(selectToken);
+
+  const projects = useProjectStore(state => state.projects);
+  const toggleTile = useProjectStore(state => state.toggleTileLayer);
+  const activeProject = useProjectStore(state => state.activeProject);
+
+  const [token, setToken] = useState();
+
   const center = useEventSelector(selectCenter);
 
-  //const unsub1 = useGlobalStore.subscribe(console.log)
-
   const [mapInit, setMapInit] = useState(false);
-  const activeProject = useAppSelector(selectActiveProject);
+
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<OlMap | null>(null);
 
   const queryValues = queryString.parse(window.location.search);
   const hashValues = queryString.parse(window.location.hash);
   Object.assign(queryValues, hashValues);
-  // http://localhost:3000/?project=norgeskart&layers=1002&zoom=16&lat=6635873.73&lon=213092.49&markerLat=6635921.241120491&markerLon=212992.02435685016&p=Seeiendom&sok=Semsveien&showSelection=true
-  // http://localhost:3000/?project=norgeskart&layers=landkart&zoom=3&lat=7197864.00&lon=396722.00
 
   const lat = Number(queryValues['lat']) || undefined;
   const lon = Number(queryValues['lon']) || undefined;
@@ -101,26 +92,29 @@ const MainMap = ({ children }: Props) => {
   const drawing = (queryValues['drawing'] as string) || undefined;
   const addLayer = (queryValues['addLayer'] as string) || undefined;
 
-  const init = (projectConfig: IProjectConfig) => {
+  const generateToken = () => {
+    if (baseConfig) {
+      axios.get(`${baseConfig.gatekeeperhost}`).then(function (response) {
+        setToken(response.data);
+      });
+    }
+  };
+
+  const init = (projectConfig: IProject) => {
     if (!activateMap) {
-      if (projectConfig.config.project) {
-        eventDispatch(addProject(projectConfig.config.project));
+      if (projectConfig) {
+        eventDispatch(addProject(projectConfig));
       } else {
-        eventDispatch(addProject(baseconfig.project));
-      }
-      eventDispatch(addGroups(projectConfig.config.maplayer));
-      eventDispatch(addTileLayers(projectConfig.config.layer));
-      if (projectConfig.config.vector) {
-        eventDispatch(addVectorLayers(projectConfig.config.vector));
+        //eventDispatch(addProject(baseConfig.project));
+        console.log('projectConfig is undefined');
       }
 
       if (!myMap) {
-        const mapepsg = projectConfig.config.project ? projectConfig.config.mapepsg : baseconfig.project.mapepsg;
-
+        const mapepsg = baseConfig.mapepsg;
         const sm = new Projection({
           code: mapepsg,
         });
-        const projectExtent = projectConfig.config.mapbounds.mapbound.find(m => m.epsg === mapepsg)?.extent;
+        const projectExtent = baseConfig.mapbound.find(m => m.epsg === mapepsg)?.extent;
         const newExtent = [0, 0, 0, 0] as [number, number, number, number];
         if (projectExtent) {
           projectExtent
@@ -137,14 +131,8 @@ const MainMap = ({ children }: Props) => {
           resolutions[z] = size / Math.pow(2, z);
           matrixIds[z] = String(z);
         }
-        const center =
-          projectConfig.config && !isNaN(projectConfig.config.center[0])
-            ? projectConfig.config.center
-            : baseconfig.project.center;
-        const zoom =
-          projectConfig.config && !isNaN(projectConfig.config.zoom)
-            ? projectConfig.config.zoom
-            : baseconfig.project.zoom;
+        const center = baseConfig.center;
+        const zoom = baseConfig.zoom;
 
         const overlay = new Overlay({
           id: 'marker',
@@ -161,9 +149,9 @@ const MainMap = ({ children }: Props) => {
           layers: [
             new TileLayer({
               source: new WMTS({
-                url: baseconfig.basemap.url,
-                layer: baseconfig.basemap.layers,
-                matrixSet: baseconfig.basemap.matrixSet,
+                url: baseMap.url,
+                layer: baseMap.layers,
+                matrixSet: baseMap.matrixSet,
                 projection: sm,
                 tileGrid: wmtsTileGrid({
                   extent: newExtent,
@@ -172,7 +160,7 @@ const MainMap = ({ children }: Props) => {
                   matrixIds: matrixIds,
                 }),
                 style: 'default',
-                format: baseconfig.basemap.format,
+                format: baseMap.format,
               }),
               zIndex: -1,
             }),
@@ -197,17 +185,10 @@ const MainMap = ({ children }: Props) => {
       }
       activateMap = true;
     } else {
-      appProject.generateToken();
+      generateToken();
       getClickCoordinates.activate(myMap);
       mapMoveEnd.activate(myMap);
     }
-  };
-  const destroyProject = () => {
-    // myMap.dispose();
-    const layers = Layers(myMap);
-    layers.removeAllLayers();
-    eventDispatch(removeAll());
-    activateMap = false;
   };
 
   useEffect(() => {
@@ -251,70 +232,73 @@ const MainMap = ({ children }: Props) => {
   }, [center]);
 
   useEffect(() => {
-    if (token && visibleBaseLayer && baseLayers) {
+    const _visibleBaseLayer = baseLayers.layers.find(
+      l => l.options.isbaselayer === true && l.options.visibility === true,
+    );
+    if (token && _visibleBaseLayer && baseLayers) {
       const layers = Layers(myMap);
-      baseLayers.forEach(b => {
+      baseLayers.layers.forEach(b => {
         layers.hideLayer(b.guid);
       });
-      layers.createTileLayer(visibleBaseLayer, token);
-
-      // TODO: temporary commented
-      // if (newBaseLayer) {
-      //     myMap.addLayer(newBaseLayer);
-      //     if (newBaseLayer.get('wmtsextent')) {
-      //       const wmtsExtent:Extent = newBaseLayer.get('wmtsextent');
-      //       const projection = new Projection({
-      //         code: 'EPSG:25832',
-      //         extent: wmtsExtent,
-      //       });
-      //       const newCenter = getCenter(projection.getExtent());
-      //       myMap.getView().setCenter(newCenter);
-      //     }
-      //   }
+      layers.createTileLayer(_visibleBaseLayer, token);
     }
-  }, [token, visibleBaseLayer, baseLayers]);
+  }, [token, baseLayers]);
 
   useEffect(() => {
     if (toggleTile && token) {
       const layers = Layers(myMap);
-      if (toggleTile.options.visibility === 'false') {
+      if (toggleTile.options.visibility === true) {
         layers.createTileLayer(toggleTile, token);
-        eventDispatch(toggleTileLayer());
       } else {
         layers.hideLayer(toggleTile.guid);
-        eventDispatch(toggleTileLayer());
       }
     }
   }, [toggleTile, token, eventDispatch]);
+
+  useEffect(() => {
+    console.log('activeProject.Config', activeProject.Config);
+    if (activeProject.Config && token) {
+      const layers = Layers(myMap);
+      const l_guids = layers.getLayersWithGuid().filter((elem) => {
+        return elem.get('guid') !== undefined && Number(elem.get('guid').charAt(0)) > 0;
+      });
+      if (l_guids.length > 0) {
+        l_guids.forEach((elem) => {
+          layers.hideLayer(elem.get('guid'));
+        });
+      }
+      activeProject.Config.layer.forEach((l: any) => {
+        if (l.distributionProtocol === 'WMS' && l.options.visibility === true) {
+          layers.createTileLayer(l, token);
+        }
+      });
+    }
+  }, [activeProject, token]);
+
   useEffect(() => {
     if (!mapInit) {
-      const projectUrl =
-        document.location.origin + document.location.pathname + 'projects/' + activeProject.ProjectName + '.json';
-      axios.get(`${projectUrl}`).then(function (response) {
-        response.data.config.center = mapConfig.center;
-        response.data.config.zoom = mapConfig.zoom;
-        if (layers) {
-          response.data.config.layer.forEach((l: any) => {
+      if (layers) {
+        if (activeProject.Config) {
+          activeProject.Config.layer.forEach((l: any) => {
             if (l.distributionProtocol === 'WMTS') {
-              l.options.visibility = 'false';
+              l.options.visibility = false;
             }
             if (l.name === layers) {
-              l.options.visibility = 'true';
+              l.options.visibility = true;
             }
             return l;
           });
         }
-        init(response.data);
-        setMapInit(true);
-        window.olMap.on('moveend', updateMapInfoState);
-      });
+      }
+      init(activeProject);
+      setMapInit(true);
+      window.olMap.on('moveend', updateMapInfoState);
     }
   }, [mapInit, activeProject.ProjectName, mapConfig.center, mapConfig.zoom]);
 
   useEffect(() => {
     if (activeProject.ProjectName) {
       if (mapInit) {
-        destroyProject();
         setMapInit(false);
       }
     }
