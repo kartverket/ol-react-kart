@@ -7,7 +7,6 @@ import MainMenuPanel from './components/main-menu-panel/MainMenuPanel';
 import Search from './components/search/Search';
 
 const App = () => {
-
   return (
     <div className="App">
       <MainMap>

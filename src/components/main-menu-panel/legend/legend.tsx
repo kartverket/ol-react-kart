@@ -12,11 +12,11 @@ const Legend = () => {
       if (layer.options.visibility === true && layer.options.isbaselayer === false) {
         return layer;
       }
-    })
+    });
     if (filterLayers.length > 0) {
       return project;
     }
-  })
+  });
   const { t } = useTranslation();
   const [collapsedLegend, setCollapsedLegend] = useState(false);
 
@@ -34,25 +34,27 @@ const Legend = () => {
         </div>
         {!collapsedLegend ? (
           <ul className="list-group list-group-flush">
-            {listLayers.map((project, index) => (
-              project.Config.layer.filter(w => w.options.visibility === true)
-              .map(
-                (wmsLayer: ILayer, wmsIndex: number) =>
-                  wmsLayer.legendurl && (
-                    <li key={wmsIndex}>
-                      <p>{t(wmsLayer.name)}</p>
-                      <img
-                        src={
-                          wmsLayer.legendurl?.replace(/\?$/, '') +
-                          '?Service=wms&Request=GetLegendGraphic&Version=1.0.0&Format=' +
-                          wmsLayer.params.format +
-                          '&Layer=' +
-                          wmsLayer.params.layers
-                        }
-                      />
-                    </li>
-                  ),
-              ) )) }
+            {listLayers.map((project, index) =>
+              project.Config.layer
+                .filter(w => w.options.visibility === true)
+                .map(
+                  (wmsLayer: ILayer, wmsIndex: number) =>
+                    wmsLayer.legendurl && (
+                      <li key={wmsIndex}>
+                        <p>{t(wmsLayer.name)}</p>
+                        <img
+                          src={
+                            wmsLayer.legendurl?.replace(/\?$/, '') +
+                            '?Service=wms&Request=GetLegendGraphic&Version=1.0.0&Format=' +
+                            wmsLayer.params.format +
+                            '&Layer=' +
+                            wmsLayer.params.layers
+                          }
+                        />
+                      </li>
+                    ),
+                ),
+            )}
           </ul>
         ) : null}
       </div>
