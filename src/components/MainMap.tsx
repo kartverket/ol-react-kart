@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay';
 import View from 'ol/View';
-import { ScaleLine, defaults } from 'ol/control';
+import { ScaleLine, defaults, Zoom } from 'ol/control';
 import { getTopLeft, getWidth } from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
 import Projection from 'ol/proj/Projection';
@@ -142,6 +142,14 @@ const MainMap = ({ children }: Props) => {
           markerElement.style.visibility = 'hidden';
         }
 
+        const zoomOut = document.createElement('span');
+        zoomOut.className = 'material-icons-outlined';
+        zoomOut.innerHTML = 'remove';
+
+        const zoomIn = document.createElement('span');
+        zoomIn.className = 'material-icons-outlined';
+        zoomIn.innerHTML = 'add';
+
         myMap = new OlMap({
           layers: [
             new TileLayer({
@@ -172,7 +180,7 @@ const MainMap = ({ children }: Props) => {
             maxZoom: 18,
             constrainResolution: true,
           }),
-          controls: defaults({ zoom: true, attribution: false, rotate: false }).extend([new ScaleLine()]),
+          controls: defaults({ zoom: false, attribution: false, rotate: false }).extend([new ScaleLine()]).extend([new Zoom({zoomInLabel: zoomIn, zoomOutLabel: zoomOut})]),
         });
         if (!mapRef.current) return;
         myMap.setTarget(mapRef.current);

@@ -9,44 +9,56 @@
   position: fixed;
 }
 .ol-zoom {
-  top: 12px;
+  top: 1rem;
   left: auto;
-  right: 16px;
-}
-.ol-geolocation {
-  bottom: auto;
-  left: auto;
-  right: 16px;
-  top: 100px;
-  z-index: 13;
-}
-.ol-rotate {
-  display: none;
+  right: 1rem;
+
 }
 .ol-control {
   position: absolute;
   border-radius: 4px;
-  padding: 2px;
+}
+.ol-rotate {
+  display: none;
 }
 .ol-control button {
   background: var(--blue_dark);
   color: var(--white);
-
   opacity: 0.7;
-  border: 2px solid var(--dark_blue_button);
-  border-radius: 0.125rem;
   display: block;
-  font-size: 2rem;
-  line-height: 1;
-  margin-bottom: 2px;
-  width: 2.625rem;
-  height: 2.625rem;
+  width: 3rem;
+  height: 3rem;
+  margin: 1px;
+  padding: 0;
+  text-align: center;
+  border-radius: 4px;
+  top:50%;
+  font-family: "Material Icons";
 }
-.ol-control button:hover {
+.ol-control button:hover,
+.ol-control button:focus {
+  text-decoration: none;
   background-color: var(--blue_hover);
 }
 .ol-control button:active {
   background-color: var(--dark_blue_button);
+}
+.ol-geolocation {
+  bottom: auto;
+  left: auto;
+  right: 1rem;
+  top: 7.1em;
+  z-index: 13;
+}
+.ol-geolocation button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  text-decoration: none;
+  text-align: center;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 4px;
 }
 .ol-popup {
   position: absolute;
@@ -136,7 +148,7 @@
 .ol-mouse-position {
   position: absolute;
   bottom: 5px;
-  right: 5px;
+  right: 1rem;
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 14px;
   padding: 0 5px 0 5px;

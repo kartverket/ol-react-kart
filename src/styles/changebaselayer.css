@@ -1,8 +1,8 @@
 .changeBaseLayer {
   z-index: 16;
   position: absolute;
-  bottom: 25px;
-  right: 19px;
+  bottom: 2rem;
+  right: 1rem;
   min-width: 100px;
   box-shadow: rgba(0, 0, 0, 0.24) 1px 1px 3px 1px;
   -webkit-border-radius: 2px;
