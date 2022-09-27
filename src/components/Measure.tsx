@@ -78,6 +78,7 @@ const DrawMeasure = () => {
       source: source,
       type: type,
       style: defaultDigitizeStyleFunction(type),
+      stopClick: true,
     });
     map.addInteraction(draw);
 
