@@ -111,7 +111,6 @@ export const useBaseConfigStore = create<IBaseConfig>(set => ({
 
 export const useBaseMapStore = create<IBaseMap>(set => ({
   url: 'https://cache.kartverket.no/europa_forenklet/v1/wmts/1.0.0/',
-  gatekeeper: true,
   name: 'europa_forenklet',
   layers: 'europa_forenklet',
   format: 'image/png',
@@ -131,7 +130,6 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
     {
       distributionProtocol: 'WMTS',
       type: 'map',
-      gatekeeper: true,
       name: 'landkart',
       uuid: 'c0d063aa-59fc-42db-bc5d-a1c88f2bf256',
       description: 'Viser data fra Topografisk norgeskart WMS, Dybdedata WMS og Svalvard data fra Polar Instituttet',
@@ -174,7 +172,6 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
     {
       distributionProtocol: 'WMTS',
       type: 'map',
-      gatekeeper: true,
       name: 'rasterkart',
       uuid: '99de348d-fdc1-4b04-a79e-31feeeba030a',
       description: 'Viser kart slik den ser ut på papirkart',
@@ -196,7 +193,6 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
     {
       distributionProtocol: 'WMTS',
       type: 'map',
-      gatekeeper: true,
       name: 'gratone',
       uuid: 'e84c9a6d-2297-4323-9078-36ac4b8e35e4',
       description: 'Viser topografiske kart som er ment som bakgrunnskart',
@@ -218,7 +214,6 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
     {
       distributionProtocol: 'WMTS',
       type: 'map',
-      gatekeeper: true,
       name: 'enkel',
       uuid: '',
       description: 'Viser kartet i et enkelt uttrykk',
@@ -239,7 +234,6 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
     {
       distributionProtocol: 'WMTS',
       type: 'map',
-      gatekeeper: true,
       name: 'terreng',
       uuid: 'db2280ab-1f55-4596-b1fc-26ff147a2bc5',
       description: 'Viser kartet med terreng og høyde',
@@ -260,7 +254,6 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
     {
       distributionProtocol: 'WMTS',
       type: 'map',
-      gatekeeper: true,
       name: 'sjokart',
       uuid: '72044503-938b-4955-a931-9e5a7eabf28e',
       description: 'Viser kartet med sjøkartene (papirkartene) i rasterutgave',
