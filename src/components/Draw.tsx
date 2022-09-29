@@ -15,12 +15,12 @@ import View from 'ol/View';
 import { Coordinate } from 'ol/coordinate';
 import { EventsKey } from 'ol/events';
 import * as OlEventConditions from 'ol/events/condition';
-import { Geometry, LineString, MultiLineString, Polygon, MultiPolygon } from 'ol/geom';
+import { Geometry, LineString, MultiLineString, MultiPolygon, Polygon } from 'ol/geom';
 import OlInteractionDraw, { DrawEvent as OlDrawEvent, Options as OlDrawOptions, createBox } from 'ol/interaction/Draw';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { OSM, Vector as VectorSource } from 'ol/source';
 import { getArea, getLength } from 'ol/sphere';
-import { Circle as CircleStyle, Fill, RegularShape, Stroke, Text as OlStyleText } from 'ol/style';
+import { Circle as CircleStyle, Fill, Text as OlStyleText, RegularShape, Stroke } from 'ol/style';
 import OlStyle, { StyleLike } from 'ol/style/Style';
 
 import useMap from '../app/useMap';
@@ -30,20 +30,22 @@ type DrawType = 'Point' | 'LineString' | 'Polygon' | 'Circle' | 'Rectangle' | 'T
 type textStyleKeys = 'normal' | 'bold' | 'italic' | 'bold-italic';
 interface pointType {
   type: string;
-  value: number;
+  points: number;
   label: string;
-};
-const pointTypes:pointType[] = [
-  { type: 'Circle', value: 64, label: '○' },
-  { type: 'Star', value: 5, label: '*' },
-  { type: 'Triangle', value: 3, label: '▲' },
-  { type: 'Square', value: 4, label: '■' },
-  { type: 'Rectangle', value: 4, label: '□' },
-  { type: 'Stacked', value: 4, label: '△' },
-  { type: 'Diamond', value: 4, label: '◇' },
-  { type: 'X', value: 4, label: 'X' },
-  { type: 'Cross', value: 4, label: '+' },
-]
+  radius: number;
+  angle: number;
+}
+const pointTypes: pointType[] = [
+  { type: 'Circle', points: 64, label: '○', radius: 5, angle: 0 },
+  { type: 'Star', points: 5, label: '*', radius: 5, angle: 0 },
+  { type: 'Triangle', points: 3, label: '▲', radius: 5, angle: 0 },
+  { type: 'Square', points: 4, label: '■', radius: 5, angle: 0 },
+  { type: 'Rectangle', points: 4, label: '□', radius: 5, angle: 0 },
+  { type: 'Stacked', points: 4, label: '△', radius: 5, angle: 0 },
+  { type: 'Diamond', points: 4, label: '◇', radius: 5, angle: 0 },
+  { type: 'X', points: 4, label: 'X', radius: 5, angle: 0 },
+  { type: 'Cross', points: 4, label: '+', radius: 5, angle: 0 },
+];
 const colors = [
   { color: 'black', colorValue: '#000000' },
   { color: 'yellow', colorValue: '#FFFF00' },
@@ -55,32 +57,32 @@ const colors = [
   { color: 'grey', colorValue: '#808080' },
 ];
 const pointSizes = [
-  { sizeType: 'Small', size: 7, },
-  { sizeType: 'Medium', size: 14, },
-  { sizeType: 'Large', size: 21, },
+  { sizeType: 'Small', size: 7 },
+  { sizeType: 'Medium', size: 14 },
+  { sizeType: 'Large', size: 21 },
 ];
 const lineTypes = [
-  { lineTypeId: 'line', lineLength: 15, lineSpace: 0, lineType: '_____', },
-  { lineTypeId: 'dash', lineLength: 15, lineSpace: 15, lineType: '_ _ _ _', },
-  { lineTypeId: 'dot', lineLength: 2, lineSpace: 15, lineType: '.......', },
+  { lineTypeId: 'line', lineLength: 15, lineSpace: 0, lineType: '_____' },
+  { lineTypeId: 'dash', lineLength: 15, lineSpace: 15, lineType: '_ _ _ _' },
+  { lineTypeId: 'dot', lineLength: 2, lineSpace: 15, lineType: '.......' },
 ];
 const lineWidthSizes = [
-  { lineTypeId: 1, lineWidth: 2, sizeType: 'Small', },
-  { lineTypeId: 2, lineWidth: 4, sizeType: 'Medium', },
-  { lineTypeId: 3, lineWidth: 6, sizeType: 'Large', },
-  { lineTypeId: 4, lineWidth: 8, sizeType: 'Extra Large', },
+  { lineTypeId: 1, lineWidth: 2, sizeType: 'S' },
+  { lineTypeId: 2, lineWidth: 4, sizeType: 'M' },
+  { lineTypeId: 3, lineWidth: 6, sizeType: 'L' },
+  { lineTypeId: 4, lineWidth: 8, sizeType: 'XL' },
 ];
 const polygonOpacities = [
-  { opacityType: '0%', opacityValue: 0, },
-  { opacityType: '25%', opacityValue: 25, },
-  { opacityType: '50%', opacityValue: 50, },
-  { opacityType: '75%', opacityValue: 75, },
-  { opacityType: '100%', opacityValue: 100, },
+  { opacityType: '0%', opacityValue: 0 },
+  { opacityType: '25%', opacityValue: 25 },
+  { opacityType: '50%', opacityValue: 50 },
+  { opacityType: '75%', opacityValue: 75 },
+  { opacityType: '100%', opacityValue: 100 },
 ];
 const textHightSizes = [
-  { textType: 'Small', textHight: 10, },
-  { textType: 'Medium', textHight: 15, },
-  { textType: 'Large', textHight: 18, },
+  { textType: 'Small', textHight: 10 },
+  { textType: 'Medium', textHight: 15 },
+  { textType: 'Large', textHight: 18 },
 ];
 
 const DrawMeasure = () => {
@@ -95,10 +97,21 @@ const DrawMeasure = () => {
   const [digitizeLayer, setDigitizeLayer] = useState<VectorLayer<VectorSource<Geometry>> | null>(null);
   const [color, setColor] = useState<string>('#000000');
   const [pointSize, setPointSize] = useState<number>(7);
-  const [pointType, setPointType] = useState<pointType>({ type: 'Circle', value: 64, label: '○' });
+  const [pointType, setPointType] = useState<pointType>({
+    type: 'Circle',
+    points: 64,
+    label: '○',
+    radius: 5,
+    angle: 0,
+  });
+  const [lineType, setLineType] = useState<{
+    lineTypeId: string;
+    lineLength: number;
+    lineSpace: number;
+    lineType: string;
+  }>({ lineTypeId: 'line', lineLength: 15, lineSpace: 0, lineType: '_____' });
   const map = useMap();
 
-  let draw;
   let sketch: OlFeature<Geometry> | null = null;
 
   useEffect(() => {
@@ -175,7 +188,8 @@ const DrawMeasure = () => {
               color: color,
             }),
             radius: pointSize,
-            points: pointType.value,
+            points: pointType.points,
+            angle: pointType.angle,
           }),
         });
       }
@@ -321,16 +335,17 @@ const DrawMeasure = () => {
       {show ? (
         <div className="expandContent container">
           <Tabs defaultActiveKey="point" id="drawtabs" className="" onChange={handleChange}>
-            <Tab eventKey="point" title={t('point_txt')} >
+            <Tab eventKey="point" title={t('point_txt')}>
               <div className="row">
                 <span className="title-text">{t('pointType_txt')}</span>
                 <div className="hstack gap-1">
                   {pointTypes.map((item, index) => {
-                      return (
-                        <button key={index} className="border" onClick={() => setPointType(item)}>{item.label}</button>
-                      );
-                    })
-                  }
+                    return (
+                      <button key={index} className="border" onClick={() => setPointType(item)}>
+                        {item.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               <div className="row">
@@ -338,7 +353,9 @@ const DrawMeasure = () => {
                 <div className="hstack gap-1">
                   {pointSizes.map((item: any, index: any) => {
                     return (
-                      <button className="border" key={index} onClick={() => setPointSize(item.size)}>{t(item.sizeType)}</button>
+                      <button className="border" key={index} onClick={() => setPointSize(item.size)}>
+                        {t(item.sizeType)}
+                      </button>
                     );
                   })}
                 </div>
@@ -348,7 +365,7 @@ const DrawMeasure = () => {
                 <div className="hstack gap-1">
                   {colors.map((item: any, index: any) => {
                     return (
-                      <button className="border" key={index} onClick={() => setColor(item.colorValue)} >
+                      <button className="border" key={index} onClick={() => setColor(item.colorValue)}>
                         <div className="color-box" style={{ backgroundColor: item.color, border: 'none' }}></div>
                       </button>
                     );
@@ -364,18 +381,75 @@ const DrawMeasure = () => {
               </button>
             </Tab>
             <Tab eventKey="linestring" title={t('line_txt')}>
+              <div className="row">
+                <div className="title-text">{t('lineType_txt')}</div>
+                <div className="hstack gap-1">
+                  {lineTypes.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setLineType(item)}>
+                        {item.lineType}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="row">
+                <div className="title-text">{t('width_txt')}</div>
+                <div className="hstack gap-1">
+                  {lineWidthSizes.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setLineType(item)}>
+                        {item.sizeType}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="title-text">{t('color_txt')}</div>
+                <div className="hstack gap-1">
+                  {colors.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setColor(item.colorValue)}>
+                        <div className="color-box" style={{ backgroundColor: item.color, border: 'none' }}></div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
+              <button className="button button__green--primary button--xs">{t('change_txt')}</button>
+
               <button className="button button__green--primary button--xs" onClick={() => setDrawType('LineString')}>
                 {t('line_txt')}
               </button>
-              {t('lineType_txt')}
-              {t('width_txt')}
-              {t('color_txt')}
-              <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
-              <button className="button button__green--primary button--xs">{t('change_txt')}</button>
             </Tab>
             <Tab eventKey="polygon" title={t('polygon_txt')}>
-              {t('opacity_txt')}
-              {t('color_txt')}
+              <div className="row">
+                <div className="title-text">{t('opacity_txt')}</div>
+                <div className="hstack gap-1">
+                  {polygonOpacities.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setLineType(item)}>
+                        {item.opacityType}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="row">
+                <div className="title-text">{t('color_txt')}</div>
+                <div className="hstack gap-1">
+                  {colors.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setColor(item.colorValue)}>
+                        <div className="color-box" style={{ backgroundColor: item.color, border: 'none' }}></div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
               <button className="button button__green--primary button--xs">{t('change_txt')}</button>
               <button className="button button__green--primary button--xs" onClick={() => setDrawType('Polygon')}>
@@ -386,7 +460,18 @@ const DrawMeasure = () => {
               <label htmlFor="text_txt_label">{t('text_txt_label')}</label>
               <input id="text_txt_label" type="text" className="inputField" placeholder={t('text_label_placeholder')} />
               {t('size_txt')}
-              {t('color_txt')}
+              <div className="row">
+                <div className="title-text">{t('color_txt')}</div>
+                <div className="hstack gap-1">
+                  {colors.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setColor(item.colorValue)}>
+                        <div className="color-box" style={{ backgroundColor: item.color, border: 'none' }}></div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
               <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
               <button className="button button__green--primary button--xs">{t('change_txt')}</button>
