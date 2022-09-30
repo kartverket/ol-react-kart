@@ -90,7 +90,7 @@ const DrawMeasure = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [digitizeTextFeature, setDigitizeTextFeature] = useState<OlFeature<OlGeometry> | null>(null);
-  const [drawType, setDrawType] = useState<DrawType>();
+  const [drawType, setDrawType] = useState<DrawType>('Point');
   //const [drawStyle, setDrawStyle] = useState<StyleLike>();
   const [color, setColor] = useState<string>('#000000');
   const [pointSize, setPointSize] = useState<number>(7);
