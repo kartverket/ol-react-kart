@@ -85,7 +85,13 @@ const textHightSizes = [
   { textType: 'Medium', textHight: 15 },
   { textType: 'Large', textHight: 18 },
 ];
-
+const hex2rgba = (hexRGB:string, alpha:number) => {
+  const r = parseInt(hexRGB.slice(1, 3), 16);
+  const g = parseInt(hexRGB.slice(3, 5), 16);
+  const b = parseInt(hexRGB.slice(5, 7), 16);
+  const rgba = `rgba(${r},${g},${b},${alpha})`;
+  return rgba;
+}
 const DrawMeasure = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
@@ -107,6 +113,12 @@ const DrawMeasure = () => {
     lineSpace: number;
     lineType: string;
   }>({ lineTypeId: 'line', lineLength: 15, lineSpace: 0, lineType: '_____' });
+  const [lineWidthSize, setLineWidthSize] = useState < {
+    lineTypeId: number;
+    lineWidth: number;
+    sizeType: string;
+  }>({ lineTypeId: 1, lineWidth: 2, sizeType: 'S', });
+  const [polygonOpacity, setPolygonOpacity] = useState<number>(50);
   const map = useMap();
   let sketch: OlFeature<OlGeometry> | null = null;
 
@@ -134,7 +146,8 @@ const DrawMeasure = () => {
         return new OlStyle({
           stroke: new Stroke({
             color: color ?? DigitizeUtil.DEFAULT_STROKE_COLOR,
-            width: 2,
+            width: lineWidthSize.lineWidth,
+            lineDash: [lineType.lineLength, lineType.lineSpace],
           }),
         });
       }
@@ -143,7 +156,7 @@ const DrawMeasure = () => {
       case 'Circle': {
         return new OlStyle({
           fill: new Fill({
-            color: color ?? DigitizeUtil.DEFAULT_FILL_COLOR,
+            color: color ? hex2rgba(color, (100 - polygonOpacity) / 100) : DigitizeUtil.DEFAULT_FILL_COLOR,
           }),
           stroke: new Stroke({
             color: color ?? DigitizeUtil.DEFAULT_STROKE_COLOR,
@@ -231,7 +244,7 @@ const DrawMeasure = () => {
       unByKey(key);
       map.removeInteraction(drawInteraction);
     };
-  }, [drawType, map, color, pointSize, pointType, lineType]);
+  }, [drawType, map, color, pointSize, pointType, lineType, lineWidthSize, polygonOpacity]);
 
   const pointerMoveHandler = function (evt: any) {
     if (evt.dragging) {
@@ -313,7 +326,7 @@ const DrawMeasure = () => {
                 <div className="hstack gap-1">
                   {lineWidthSizes.map((item: any, index: any) => {
                     return (
-                      <button className="border" key={index} onClick={() => setLineType(item)}>
+                      <button className="border" key={index} onClick={() => setLineWidthSize(item)}>
                         {item.sizeType}
                       </button>
                     );
@@ -342,7 +355,7 @@ const DrawMeasure = () => {
                 <div className="hstack gap-1">
                   {polygonOpacities.map((item: any, index: any) => {
                     return (
-                      <button className="border" key={index} onClick={() => setLineType(item)}>
+                      <button className="border" key={index} onClick={() => setPolygonOpacity(item.opacityValue)}>
                         {item.opacityType}
                       </button>
                     );
