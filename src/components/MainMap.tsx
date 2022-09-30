@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay';
 import View from 'ol/View';
-import { ScaleLine, defaults, Zoom } from 'ol/control';
+import { ScaleLine, Zoom, defaults } from 'ol/control';
 import { getTopLeft, getWidth } from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
 import Projection from 'ol/proj/Projection';
@@ -99,98 +99,100 @@ const MainMap = ({ children }: Props) => {
   };
 
   const init = (projectConfig: IProject) => {
-      if (projectConfig) {
-        eventDispatch(addProject(projectConfig));
-      } else {
-        //eventDispatch(addProject(baseConfig.project));
-        console.log('projectConfig is undefined');
+    if (projectConfig) {
+      eventDispatch(addProject(projectConfig));
+    } else {
+      //eventDispatch(addProject(baseConfig.project));
+      console.log('projectConfig is undefined');
+    }
+
+    if (!myMap) {
+      const mapepsg = baseConfig.mapepsg;
+      const sm = new Projection({
+        code: mapepsg,
+      });
+      const projectExtent = baseConfig.mapbound.find(m => m.epsg === mapepsg)?.extent;
+      const newExtent = [0, 0, 0, 0] as [number, number, number, number];
+      if (projectExtent) {
+        projectExtent
+          .split(',')
+          .map(e => Number(e))
+          .forEach((v, index) => (newExtent[index] = v));
+      }
+      sm.setExtent(newExtent);
+
+      const size = getWidth(newExtent) / 256;
+      const resolutions = [];
+      const matrixIds = [];
+      for (let z = 0; z < 21; ++z) {
+        resolutions[z] = size / Math.pow(2, z);
+        matrixIds[z] = String(z);
+      }
+      const center = baseConfig.center;
+      const zoom = baseConfig.zoom;
+
+      const overlay = new Overlay({
+        id: 'marker',
+        position: center,
+        positioning: 'bottom-center',
+        element: document.getElementById('marker') || document.createElement('marker'),
+      });
+      const markerElement = overlay.getElement();
+      if (markerElement) {
+        markerElement.style.visibility = 'hidden';
       }
 
-      if (!myMap) {
-        const mapepsg = baseConfig.mapepsg;
-        const sm = new Projection({
-          code: mapepsg,
-        });
-        const projectExtent = baseConfig.mapbound.find(m => m.epsg === mapepsg)?.extent;
-        const newExtent = [0, 0, 0, 0] as [number, number, number, number];
-        if (projectExtent) {
-          projectExtent
-            .split(',')
-            .map(e => Number(e))
-            .forEach((v, index) => (newExtent[index] = v));
-        }
-        sm.setExtent(newExtent);
+      const zoomOut = document.createElement('span');
+      zoomOut.className = 'material-icons-outlined';
+      zoomOut.innerHTML = 'remove';
 
-        const size = getWidth(newExtent) / 256;
-        const resolutions = [];
-        const matrixIds = [];
-        for (let z = 0; z < 21; ++z) {
-          resolutions[z] = size / Math.pow(2, z);
-          matrixIds[z] = String(z);
-        }
-        const center = baseConfig.center;
-        const zoom = baseConfig.zoom;
+      const zoomIn = document.createElement('span');
+      zoomIn.className = 'material-icons-outlined';
+      zoomIn.innerHTML = 'add';
 
-        const overlay = new Overlay({
-          id: 'marker',
-          position: center,
-          positioning: 'bottom-center',
-          element: document.getElementById('marker') || document.createElement('marker'),
-        });
-        const markerElement = overlay.getElement();
-        if (markerElement) {
-          markerElement.style.visibility = 'hidden';
-        }
-
-        const zoomOut = document.createElement('span');
-        zoomOut.className = 'material-icons-outlined';
-        zoomOut.innerHTML = 'remove';
-
-        const zoomIn = document.createElement('span');
-        zoomIn.className = 'material-icons-outlined';
-        zoomIn.innerHTML = 'add';
-
-        myMap = new OlMap({
-          layers: [
-            new TileLayer({
-              source: new WMTS({
-                url: baseMap.url,
-                layer: baseMap.layers,
-                matrixSet: baseMap.matrixSet,
-                projection: sm,
-                tileGrid: wmtsTileGrid({
-                  extent: newExtent,
-                  origin: getTopLeft(newExtent),
-                  resolutions: resolutions,
-                  matrixIds: matrixIds,
-                }),
-                style: 'default',
-                format: baseMap.format,
+      myMap = new OlMap({
+        layers: [
+          new TileLayer({
+            source: new WMTS({
+              url: baseMap.url,
+              layer: baseMap.layers,
+              matrixSet: baseMap.matrixSet,
+              projection: sm,
+              tileGrid: wmtsTileGrid({
+                extent: newExtent,
+                origin: getTopLeft(newExtent),
+                resolutions: resolutions,
+                matrixIds: matrixIds,
               }),
-              zIndex: -1,
+              style: 'default',
+              format: baseMap.format,
             }),
-          ],
-          overlays: [overlay],
-          target: 'map',
-          view: new View({
-            center: center,
-            projection: sm,
-            zoom: zoom,
-            minZoom: 3,
-            maxZoom: 18,
-            constrainResolution: true,
+            zIndex: -1,
           }),
-          controls: defaults({ zoom: false, attribution: false, rotate: false }).extend([new ScaleLine()]).extend([new Zoom({zoomInLabel: zoomIn, zoomOutLabel: zoomOut})]),
-        });
-        if (!mapRef.current) return;
-        myMap.setTarget(mapRef.current);
-        setMap(myMap);
-        window.olMap = myMap;
-        return () => myMap.setTarget(undefined);
-      }
-      generateToken();
-      getClickCoordinates.activate(myMap);
-      mapMoveEnd.activate(myMap);
+        ],
+        overlays: [overlay],
+        target: 'map',
+        view: new View({
+          center: center,
+          projection: sm,
+          zoom: zoom,
+          minZoom: 3,
+          maxZoom: 18,
+          constrainResolution: true,
+        }),
+        controls: defaults({ zoom: false, attribution: false, rotate: false })
+          .extend([new ScaleLine()])
+          .extend([new Zoom({ zoomInLabel: zoomIn, zoomOutLabel: zoomOut })]),
+      });
+      if (!mapRef.current) return;
+      myMap.setTarget(mapRef.current);
+      setMap(myMap);
+      window.olMap = myMap;
+      return () => myMap.setTarget(undefined);
+    }
+    generateToken();
+    getClickCoordinates.activate(myMap);
+    mapMoveEnd.activate(myMap);
   };
 
   useEffect(() => {

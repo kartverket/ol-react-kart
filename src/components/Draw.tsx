@@ -15,9 +15,10 @@ import View from 'ol/View';
 import { Coordinate } from 'ol/coordinate';
 import { EventsKey } from 'ol/events';
 import * as OlEventConditions from 'ol/events/condition';
-import { Geometry, LineString, MultiLineString, MultiPolygon, Polygon } from 'ol/geom';
+import { LineString, MultiLineString, MultiPolygon, Geometry as OlGeometry, Polygon } from 'ol/geom';
 import OlInteractionDraw, { DrawEvent as OlDrawEvent, Options as OlDrawOptions, createBox } from 'ol/interaction/Draw';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import RenderFeature from 'ol/render/Feature';
 import { OSM, Vector as VectorSource } from 'ol/source';
 import { getArea, getLength } from 'ol/sphere';
 import { Circle as CircleStyle, Fill, Text as OlStyleText, RegularShape, Stroke } from 'ol/style';
@@ -88,13 +89,9 @@ const textHightSizes = [
 const DrawMeasure = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
-  const [drawInteraction, setDrawInteraction] = useState<OlInteractionDraw>();
-  const [layer, setLayer] = useState<VectorLayer<VectorSource<Geometry>> | null>(null);
-  const [digitizeTextFeature, setDigitizeTextFeature] = useState<OlFeature<Geometry> | null>(null);
+  const [digitizeTextFeature, setDigitizeTextFeature] = useState<OlFeature<OlGeometry> | null>(null);
   const [drawType, setDrawType] = useState<DrawType>();
-  const [drawStyle, setDrawStyle] = useState<StyleLike>();
-  const [drawInteractionConfig, setDrawInteractionConfig] = useState<OlDrawOptions>();
-  const [digitizeLayer, setDigitizeLayer] = useState<VectorLayer<VectorSource<Geometry>> | null>(null);
+  //const [drawStyle, setDrawStyle] = useState<StyleLike>();
   const [color, setColor] = useState<string>('#000000');
   const [pointSize, setPointSize] = useState<number>(7);
   const [pointType, setPointType] = useState<pointType>({
@@ -111,32 +108,78 @@ const DrawMeasure = () => {
     lineType: string;
   }>({ lineTypeId: 'line', lineLength: 15, lineSpace: 0, lineType: '_____' });
   const map = useMap();
+  let sketch: OlFeature<OlGeometry> | null = null;
 
-  let sketch: OlFeature<Geometry> | null = null;
-
+  const defaultDigitizeStyleFunction = (feature: OlFeature<OlGeometry> | RenderFeature): OlStyle | undefined => {
+    const geom = feature.getGeometry();
+    if (!geom) {
+      return undefined;
+    }
+    switch (geom.getType()) {
+      case 'MultiPoint':
+      case 'Point': {
+        return new OlStyle({
+          image: new RegularShape({
+            fill: new Fill({
+              color: color ?? DigitizeUtil.DEFAULT_FILL_COLOR,
+            }),
+            radius: pointSize,
+            points: pointType.points,
+            angle: pointType.angle,
+          }),
+        });
+      }
+      case 'MultiLineString':
+      case 'LineString': {
+        return new OlStyle({
+          stroke: new Stroke({
+            color: color ?? DigitizeUtil.DEFAULT_STROKE_COLOR,
+            width: 2,
+          }),
+        });
+      }
+      case 'MultiPolygon':
+      case 'Polygon':
+      case 'Circle': {
+        return new OlStyle({
+          fill: new Fill({
+            color: color ?? DigitizeUtil.DEFAULT_FILL_COLOR,
+          }),
+          stroke: new Stroke({
+            color: color ?? DigitizeUtil.DEFAULT_STROKE_COLOR,
+            width: 2,
+          }),
+        });
+      }
+      default:
+        return undefined;
+    }
+  };
   useEffect(() => {
     if (!map) return;
     if (!drawType) return;
-    const source = new VectorSource();
-    const vector = new VectorLayer({
-      source: source,
+
+    const drawSource = new VectorSource();
+    const drawLayer = new VectorLayer({
+      source: drawSource,
       style: new OlStyle({
         fill: new Fill({
-          color: 'rgba(255, 255, 255, 0.2)',
+          color: '#FF0000',
         }),
         stroke: new Stroke({
-          color: '#ffcc33',
+          color: '#FF0000',
           width: 2,
         }),
         image: new CircleStyle({
           radius: 7,
           fill: new Fill({
-            color: '#ffcc33',
+            color: '#FF0000',
           }),
         }),
       }),
     });
-    map.addLayer(vector);
+    map.addLayer(drawLayer);
+    drawLayer.setStyle(defaultDigitizeStyleFunction);
 
     let type: 'Point' | 'Circle' | 'LineString' | 'Polygon';
     let isLabel = false;
@@ -150,176 +193,53 @@ const DrawMeasure = () => {
       type = drawType;
     }
 
-    const draw = new OlInteractionDraw({
-      source: source,
+    map.on('pointermove', pointerMoveHandler);
+    let geometryFunction;
+
+    const drawInteraction = new OlInteractionDraw({
+      source: drawSource,
       type: type,
-      style: defaultDigitizeStyleFunction(type),
+      geometryFunction: geometryFunction,
+      style: defaultDigitizeStyleFunction,
+      freehandCondition: OlEventConditions.never,
       stopClick: true,
     });
-    setDrawStyle(defaultDigitizeStyleFunction(type));
-    map.addInteraction(draw);
 
-    draw.on('drawstart', function (evt: any) {
+    drawInteraction.set('name', `react-geo-draw-interaction-${drawType}`);
+    //drawInteraction.setActive(false);
+
+    let key: EventsKey;
+    drawInteraction.on('drawstart', function (evt: any) {
       // set sketch
       sketch = evt.feature;
       if (!sketch) return;
     });
 
-    draw.on('drawend', function () {
+    drawInteraction.on('drawend', function () {
       // unset sketch
       sketch = null;
     });
-    map.on('pointermove', pointerMoveHandler);
-    return () => {
-      map.removeInteraction(draw);
-    };
-  }, [map, drawType]);
-
-  const defaultDigitizeStyleFunction = (type: string) => {
-    if (!type) {
-      return undefined;
-    }
-    switch (type) {
-      case 'MultiPoint':
-      case 'Point': {
-        return new OlStyle({
-          image: new RegularShape({
-            fill: new Fill({
-              color: color,
-            }),
-            radius: pointSize,
-            points: pointType.points,
-            angle: pointType.angle,
-          }),
-        });
-      }
-      case 'MultiLineString':
-      case 'LineString': {
-        return new OlStyle({
-          stroke: new Stroke({
-            color: DigitizeUtil.DEFAULT_STROKE_COLOR,
-            width: 2,
-          }),
-        });
-      }
-      case 'MultiPolygon':
-      case 'Polygon':
-      case 'Circle': {
-        return new OlStyle({
-          fill: new Fill({
-            color: DigitizeUtil.DEFAULT_FILL_COLOR,
-          }),
-          stroke: new Stroke({
-            color: DigitizeUtil.DEFAULT_STROKE_COLOR,
-            width: 2,
-          }),
-        });
-      }
-      default:
-        return undefined;
-    }
-  };
-  const switchSymbol = (symbol: any) => {
-    if (!map) return;
-  };
-  const setSelectedPointStyle = (featureStyle: any, selectedColor: any) => {
-    if (featureStyle.getText()) {
-      return [setSelectedTextStyle(featureStyle, selectedColor), featureStyle];
-    } else {
-      return [
-        new OlStyle({
-          image: new RegularShape({
-            fill: new Fill({
-              color: selectedColor,
-            }),
-            radius: featureStyle.getImage().getRadius() + 3,
-            points: featureStyle.getImage().getPoints(),
-          }),
-        }),
-        featureStyle,
-      ];
-    }
-  };
-  const setSelectedTextStyle = (featureStyle: any, selectedColor: any) => {
-    return new OlStyle({
-      text: new OlStyleText({
-        font: featureStyle.getText().getFont(),
-        text: featureStyle.getText().getText(),
-        stroke: new Stroke({
-          color: selectedColor,
-          width: featureStyle.getText().getStroke().getWidth() + 5,
-        }),
-        fill: featureStyle.getText().getFill(),
-      }),
-    });
-  };
-
-  useEffect(() => {
-    if (!map) {
-      return;
-    }
-
-    if (digitizeLayer) {
-      setLayer(digitizeLayer);
-    } else {
-      setLayer(DigitizeUtil.getDigitizeLayer(map));
-    }
-  }, [map, digitizeLayer]);
-  useEffect(() => {
-    if (!map || !layer || !drawType) {
-      return undefined;
-    }
-    let geometryFunction;
-    let type: 'Point' | 'Circle' | 'LineString' | 'Polygon';
-
-    if (drawType === 'Rectangle') {
-      geometryFunction = createBox();
-      type = 'Circle';
-    } else if (drawType === 'Text') {
-      type = 'Point';
-    } else {
-      type = drawType;
-    }
-
-    console.log('drawType', drawType);
-    console.log('type', type);
-    const newInteraction = new OlInteractionDraw({
-      source: layer.getSource() || undefined,
-      type: type,
-      geometryFunction: geometryFunction,
-      style: drawStyle,
-      freehandCondition: OlEventConditions.never,
-      ...(drawInteractionConfig ?? {}),
-    });
-
-    newInteraction.set('name', `react-geo-draw-interaction-${drawType}`);
-    newInteraction.setActive(false);
-    map.addInteraction(newInteraction);
-    setDrawInteraction(newInteraction);
-
-    let key: EventsKey;
 
     if (drawType === 'Text') {
-      key = newInteraction.on('drawend', evt => {
+      key = drawInteraction.on('drawend', evt => {
         evt.feature.set('isLabel', true);
         setDigitizeTextFeature(evt.feature);
       });
     }
-
+    map.addInteraction(drawInteraction);
     return () => {
       unByKey(key);
-      map.removeInteraction(newInteraction);
+      map.removeInteraction(drawInteraction);
     };
-  }, [drawType, layer, drawInteractionConfig, drawStyle, map]);
+  }, [drawType, map, color, pointSize, pointType, lineType]);
 
   const pointerMoveHandler = function (evt: any) {
     if (evt.dragging) {
       return;
     }
   };
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    setDrawType(e.target.value);
+  const handleChange = (eventKey: any) => {
+    setDrawType(eventKey);
   };
 
   return (
@@ -334,8 +254,8 @@ const DrawMeasure = () => {
       </div>
       {show ? (
         <div className="expandContent container">
-          <Tabs defaultActiveKey="point" id="drawtabs" className="" onChange={handleChange}>
-            <Tab eventKey="point" title={t('point_txt')}>
+          <Tabs defaultActiveKey="Point" id="drawtabs" className="" onSelect={handleChange}>
+            <Tab eventKey="Point" title={t('point_txt')}>
               <div className="row">
                 <span className="title-text">{t('pointType_txt')}</span>
                 <div className="hstack gap-1">
@@ -372,15 +292,10 @@ const DrawMeasure = () => {
                   })}
                 </div>
               </div>
-
               <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
               <button className="button button__green--primary button--xs">{t('change_txt')}</button>
-
-              <button className="button button__green--primary button--xs" onClick={() => setDrawType('Point')}>
-                {t('point_txt')}
-              </button>
             </Tab>
-            <Tab eventKey="linestring" title={t('line_txt')}>
+            <Tab eventKey="LineString" title={t('line_txt')}>
               <div className="row">
                 <div className="title-text">{t('lineType_txt')}</div>
                 <div className="hstack gap-1">
@@ -420,12 +335,8 @@ const DrawMeasure = () => {
               </div>
               <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
               <button className="button button__green--primary button--xs">{t('change_txt')}</button>
-
-              <button className="button button__green--primary button--xs" onClick={() => setDrawType('LineString')}>
-                {t('line_txt')}
-              </button>
             </Tab>
-            <Tab eventKey="polygon" title={t('polygon_txt')}>
+            <Tab eventKey="Polygon" title={t('polygon_txt')}>
               <div className="row">
                 <div className="title-text">{t('opacity_txt')}</div>
                 <div className="hstack gap-1">
@@ -456,7 +367,7 @@ const DrawMeasure = () => {
                 {t('polygon_txt')}
               </button>
             </Tab>
-            <Tab eventKey="text" title={t('text_txt')}>
+            <Tab eventKey="Text" title={t('text_txt')}>
               <label htmlFor="text_txt_label">{t('text_txt_label')}</label>
               <input id="text_txt_label" type="text" className="inputField" placeholder={t('text_label_placeholder')} />
               {t('size_txt')}
@@ -472,13 +383,8 @@ const DrawMeasure = () => {
                   })}
                 </div>
               </div>
-
               <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
               <button className="button button__green--primary button--xs">{t('change_txt')}</button>
-
-              <button className="button button__green--primary button--xs" onClick={() => setDrawType('Text')}>
-                {t('text_txt')}
-              </button>
             </Tab>
           </Tabs>
         </div>

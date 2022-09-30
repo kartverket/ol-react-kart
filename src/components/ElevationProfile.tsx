@@ -176,7 +176,11 @@ const ElevationProfile = () => {
             <Tab eventKey="drawProfile" title={t('drawInMap_txt')}>
               <span>{t('profileInfo_txt')}</span>
               <div className="new-section navigation-button">
-                <button className="button button__blue--secondary button--xs" onClick={removeGeometry} disabled={!elevationProfileActive}>
+                <button
+                  className="button button__blue--secondary button--xs"
+                  onClick={removeGeometry}
+                  disabled={!elevationProfileActive}
+                >
                   {t('remove_txt')}
                 </button>
                 <button
