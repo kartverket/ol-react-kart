@@ -5,22 +5,15 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useTranslation } from 'react-i18next';
 
-import OlCollection from 'ol/Collection';
 import OlFeature from 'ol/Feature';
-import OlMap from 'ol/Map';
-import OlMapBrowserEvent from 'ol/MapBrowserEvent';
 import { unByKey } from 'ol/Observable';
-import Overlay from 'ol/Overlay';
-import View from 'ol/View';
-import { Coordinate } from 'ol/coordinate';
 import { EventsKey } from 'ol/events';
 import * as OlEventConditions from 'ol/events/condition';
 import { LineString, MultiLineString, MultiPolygon, Geometry as OlGeometry, Polygon } from 'ol/geom';
 import OlInteractionDraw, { DrawEvent as OlDrawEvent, Options as OlDrawOptions, createBox } from 'ol/interaction/Draw';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import RenderFeature from 'ol/render/Feature';
-import { OSM, Vector as VectorSource } from 'ol/source';
-import { getArea, getLength } from 'ol/sphere';
+import { Vector as VectorSource } from 'ol/source';
 import { Circle as CircleStyle, Fill, Text as OlStyleText, RegularShape, Stroke } from 'ol/style';
 import OlStyle, { StyleLike } from 'ol/style/Style';
 
@@ -28,7 +21,6 @@ import useMap from '../app/useMap';
 import { DigitizeUtil } from '../utils/DigitizeUtil';
 
 type DrawType = 'Point' | 'LineString' | 'Polygon' | 'Circle' | 'Rectangle' | 'Text' | undefined;
-type textStyleKeys = 'normal' | 'bold' | 'italic' | 'bold-italic';
 interface pointType {
   type: string;
   points: number;
@@ -40,12 +32,8 @@ const pointTypes: pointType[] = [
   { type: 'Circle', points: 64, label: '○', radius: 5, angle: 0 },
   { type: 'Star', points: 5, label: '*', radius: 5, angle: 0 },
   { type: 'Triangle', points: 3, label: '▲', radius: 5, angle: 0 },
-  { type: 'Square', points: 4, label: '■', radius: 5, angle: 0 },
-  { type: 'Rectangle', points: 4, label: '□', radius: 5, angle: 0 },
-  { type: 'Stacked', points: 4, label: '△', radius: 5, angle: 0 },
+  { type: 'Square', points: 4, label: '■', radius: 5, angle: Math.PI / 4 },
   { type: 'Diamond', points: 4, label: '◇', radius: 5, angle: 0 },
-  { type: 'X', points: 4, label: 'X', radius: 5, angle: 0 },
-  { type: 'Cross', points: 4, label: '+', radius: 5, angle: 0 },
 ];
 const colors = [
   { color: 'black', colorValue: '#000000' },
@@ -81,23 +69,23 @@ const polygonOpacities = [
   { opacityType: '100%', opacityValue: 100 },
 ];
 const textHightSizes = [
-  { textType: 'Small', textHight: 10 },
-  { textType: 'Medium', textHight: 15 },
-  { textType: 'Large', textHight: 18 },
+  { textType: 'Small', textHeight: 10 },
+  { textType: 'Medium', textHeight: 15 },
+  { textType: 'Large', textHeight: 18 },
 ];
-const hex2rgba = (hexRGB:string, alpha:number) => {
+const textStyles = ['normal', 'bold', 'italic'];
+const hex2rgba = (hexRGB: string, alpha: number) => {
   const r = parseInt(hexRGB.slice(1, 3), 16);
   const g = parseInt(hexRGB.slice(3, 5), 16);
   const b = parseInt(hexRGB.slice(5, 7), 16);
   const rgba = `rgba(${r},${g},${b},${alpha})`;
   return rgba;
-}
+};
 const DrawMeasure = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
-  const [digitizeTextFeature, setDigitizeTextFeature] = useState<OlFeature<OlGeometry> | null>(null);
   const [drawType, setDrawType] = useState<DrawType>('Point');
-  //const [drawStyle, setDrawStyle] = useState<StyleLike>();
+  const [label, setLabel] = useState<string>('');
   const [color, setColor] = useState<string>('#000000');
   const [pointSize, setPointSize] = useState<number>(7);
   const [pointType, setPointType] = useState<pointType>({
@@ -113,12 +101,14 @@ const DrawMeasure = () => {
     lineSpace: number;
     lineType: string;
   }>({ lineTypeId: 'line', lineLength: 15, lineSpace: 0, lineType: '_____' });
-  const [lineWidthSize, setLineWidthSize] = useState < {
+  const [lineWidthSize, setLineWidthSize] = useState<{
     lineTypeId: number;
     lineWidth: number;
     sizeType: string;
-  }>({ lineTypeId: 1, lineWidth: 2, sizeType: 'S', });
+  }>({ lineTypeId: 1, lineWidth: 2, sizeType: 'S' });
   const [polygonOpacity, setPolygonOpacity] = useState<number>(50);
+  const [textHeight, setTextHight] = useState<number>(15);
+  const [textStyle, setTextStyle] = useState<string>('normal');
   const map = useMap();
   let sketch: OlFeature<OlGeometry> | null = null;
 
@@ -130,16 +120,28 @@ const DrawMeasure = () => {
     switch (geom.getType()) {
       case 'MultiPoint':
       case 'Point': {
-        return new OlStyle({
-          image: new RegularShape({
-            fill: new Fill({
-              color: color ?? DigitizeUtil.DEFAULT_FILL_COLOR,
+        if (!feature.get('isLabel')) {
+          return new OlStyle({
+            image: new RegularShape({
+              fill: new Fill({
+                color: color ?? DigitizeUtil.DEFAULT_FILL_COLOR,
+              }),
+              radius: pointSize,
+              points: pointType.points,
+              angle: pointType.angle,
             }),
-            radius: pointSize,
-            points: pointType.points,
-            angle: pointType.angle,
-          }),
-        });
+          });
+        } else {
+          return new OlStyle({
+            text: new OlStyleText({
+              text: label,
+              fill: new Fill({
+                color: color ?? DigitizeUtil.DEFAULT_FILL_COLOR,
+              }),
+              font: textStyle + ' ' + textHeight + 'px ' + 'sans-serif',
+            }),
+          });
+        }
       }
       case 'MultiLineString':
       case 'LineString': {
@@ -195,13 +197,11 @@ const DrawMeasure = () => {
     drawLayer.setStyle(defaultDigitizeStyleFunction);
 
     let type: 'Point' | 'Circle' | 'LineString' | 'Polygon';
-    let isLabel = false;
 
     if (drawType === 'Rectangle') {
       type = 'Circle';
     } else if (drawType === 'Text') {
       type = 'Point';
-      isLabel = true;
     } else {
       type = drawType;
     }
@@ -236,7 +236,6 @@ const DrawMeasure = () => {
     if (drawType === 'Text') {
       key = drawInteraction.on('drawend', evt => {
         evt.feature.set('isLabel', true);
-        setDigitizeTextFeature(evt.feature);
       });
     }
     map.addInteraction(drawInteraction);
@@ -244,7 +243,19 @@ const DrawMeasure = () => {
       unByKey(key);
       map.removeInteraction(drawInteraction);
     };
-  }, [drawType, map, color, pointSize, pointType, lineType, lineWidthSize, polygonOpacity]);
+  }, [
+    drawType,
+    map,
+    color,
+    pointSize,
+    pointType,
+    lineType,
+    lineWidthSize,
+    polygonOpacity,
+    label,
+    textStyle,
+    textHeight,
+  ]);
 
   const pointerMoveHandler = function (evt: any) {
     if (evt.dragging) {
@@ -376,14 +387,48 @@ const DrawMeasure = () => {
               </div>
               <button className="button button__blue--secondary button--xs">{t('remove_txt')}</button>
               <button className="button button__green--primary button--xs">{t('change_txt')}</button>
-              <button className="button button__green--primary button--xs" onClick={() => setDrawType('Polygon')}>
-                {t('polygon_txt')}
-              </button>
             </Tab>
             <Tab eventKey="Text" title={t('text_txt')}>
-              <label htmlFor="text_txt_label">{t('text_txt_label')}</label>
-              <input id="text_txt_label" type="text" className="inputField" placeholder={t('text_label_placeholder')} />
-              {t('size_txt')}
+              <div className="row">
+                <div className="inputField__wrapper">
+                  <label htmlFor="text_txt_label" className="label label--sml">
+                    {t('text_txt_label')}
+                  </label>
+                  <input
+                    id="text_txt_label"
+                    type="text"
+                    className="inputField"
+                    placeholder={t('text_label_placeholder')}
+                    onChange={e => setLabel(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <span className="title-text">{t('size_txt')}</span>
+                <div className="hstack gap-1">
+                  {textHightSizes.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setTextHight(item.textHeight)}>
+                        {t(item.textType)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="row">
+                <span className="title-text">{t('style_txt')}</span>
+                <div className="hstack gap-1">
+                  {textStyles.map((item: any, index: any) => {
+                    return (
+                      <button className="border" key={index} onClick={() => setTextStyle(item)}>
+                        {t(item)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div className="row">
                 <div className="title-text">{t('color_txt')}</div>
                 <div className="hstack gap-1">
