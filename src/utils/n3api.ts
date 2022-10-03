@@ -142,15 +142,6 @@ export const generateFaktaarkUrl = (stedsnummer?: number) => {
   return urlFaktaark + stedsnummer;
 };
 
-/*
-// Gammel transform api
-export const generateKoordTransUrl = (ost, nord, resSosiKoordSys, sosiKoordSys) => {
-  resSosiKoordSys = resSosiKoordSys || 84
-  sosiKoordSys = sosiKoordSys || 84
-  return urlGeonorge + 'transApi?ost=' + ost + '&nord=' + nord + '&fra=' + sosiKoordSys + '&til=' + resSosiKoordSys
-}
-*/
-// Nytt transform API https://ws.geonorge.no/transformering/v1/
 export const generateKoordTransUrl = (x: number, y: number, tilEPSG: string, fraESPG: string) => {
   if (typeof fraESPG === 'string') {
     fraESPG = fraESPG.indexOf(':') !== -1 ? fraESPG.split(':')[1] : fraESPG;

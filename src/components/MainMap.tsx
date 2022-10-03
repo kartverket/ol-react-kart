@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay';
 import View from 'ol/View';
-import { ScaleLine, defaults } from 'ol/control';
+import { ScaleLine, Zoom, defaults } from 'ol/control';
 import { getTopLeft, getWidth } from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
 import Projection from 'ol/proj/Projection';
@@ -15,7 +15,6 @@ import { WMTS } from 'ol/source';
 import { GetClickCoordinates } from '../MapCore/Events/GetClickCoordinates';
 import { MapMoveEnd } from '../MapCore/Events/MapMoveEnd';
 import { Layers } from '../MapCore/Layers/Layers';
-
 import { IProject } from '../MapCore/Models/config-model';
 import { addProject, selectCenter } from '../MapCore/Project/projectSlice';
 import { wmtsTileGrid } from '../MapCore/TileGrid/wmts';
@@ -36,7 +35,6 @@ declare global {
 window.olMap = window.olMap || {};
 
 let myMap: OlMap;
-let activateMap = false;
 
 type Props = {
   children?: React.ReactNode;
@@ -101,94 +99,100 @@ const MainMap = ({ children }: Props) => {
   };
 
   const init = (projectConfig: IProject) => {
-    if (!activateMap) {
-      if (projectConfig) {
-        eventDispatch(addProject(projectConfig));
-      } else {
-        //eventDispatch(addProject(baseConfig.project));
-        console.log('projectConfig is undefined');
-      }
-
-      if (!myMap) {
-        const mapepsg = baseConfig.mapepsg;
-        const sm = new Projection({
-          code: mapepsg,
-        });
-        const projectExtent = baseConfig.mapbound.find(m => m.epsg === mapepsg)?.extent;
-        const newExtent = [0, 0, 0, 0] as [number, number, number, number];
-        if (projectExtent) {
-          projectExtent
-            .split(',')
-            .map(e => Number(e))
-            .forEach((v, index) => (newExtent[index] = v));
-        }
-        sm.setExtent(newExtent);
-
-        const size = getWidth(newExtent) / 256;
-        const resolutions = [];
-        const matrixIds = [];
-        for (let z = 0; z < 21; ++z) {
-          resolutions[z] = size / Math.pow(2, z);
-          matrixIds[z] = String(z);
-        }
-        const center = baseConfig.center;
-        const zoom = baseConfig.zoom;
-
-        const overlay = new Overlay({
-          id: 'marker',
-          position: center,
-          positioning: 'bottom-center',
-          element: document.getElementById('marker') || document.createElement('marker'),
-        });
-        const markerElement = overlay.getElement();
-        if (markerElement) {
-          markerElement.style.visibility = 'hidden';
-        }
-
-        myMap = new OlMap({
-          layers: [
-            new TileLayer({
-              source: new WMTS({
-                url: baseMap.url,
-                layer: baseMap.layers,
-                matrixSet: baseMap.matrixSet,
-                projection: sm,
-                tileGrid: wmtsTileGrid({
-                  extent: newExtent,
-                  origin: getTopLeft(newExtent),
-                  resolutions: resolutions,
-                  matrixIds: matrixIds,
-                }),
-                style: 'default',
-                format: baseMap.format,
-              }),
-              zIndex: -1,
-            }),
-          ],
-          overlays: [overlay],
-          target: 'map',
-          view: new View({
-            center: center,
-            projection: sm,
-            zoom: zoom,
-            minZoom: 3,
-            maxZoom: 18,
-            constrainResolution: true,
-          }),
-          controls: defaults({ zoom: true, attribution: false, rotate: false }).extend([new ScaleLine()]),
-        });
-        if (!mapRef.current) return;
-        myMap.setTarget(mapRef.current);
-        setMap(myMap);
-        window.olMap = myMap;
-        return () => myMap.setTarget(undefined);
-      }
-      activateMap = true;
+    if (projectConfig) {
+      eventDispatch(addProject(projectConfig));
     } else {
-      generateToken();
-      getClickCoordinates.activate(myMap);
-      mapMoveEnd.activate(myMap);
+      //eventDispatch(addProject(baseConfig.project));
+      console.log('projectConfig is undefined');
     }
+
+    if (!myMap) {
+      const mapepsg = baseConfig.mapepsg;
+      const sm = new Projection({
+        code: mapepsg,
+      });
+      const projectExtent = baseConfig.mapbound.find(m => m.epsg === mapepsg)?.extent;
+      const newExtent = [0, 0, 0, 0] as [number, number, number, number];
+      if (projectExtent) {
+        projectExtent
+          .split(',')
+          .map(e => Number(e))
+          .forEach((v, index) => (newExtent[index] = v));
+      }
+      sm.setExtent(newExtent);
+
+      const size = getWidth(newExtent) / 256;
+      const resolutions = [];
+      const matrixIds = [];
+      for (let z = 0; z < 21; ++z) {
+        resolutions[z] = size / Math.pow(2, z);
+        matrixIds[z] = String(z);
+      }
+      const center = baseConfig.center;
+      const zoom = baseConfig.zoom;
+
+      const overlay = new Overlay({
+        id: 'marker',
+        position: center,
+        positioning: 'bottom-center',
+        element: document.getElementById('marker') || document.createElement('marker'),
+      });
+      const markerElement = overlay.getElement();
+      if (markerElement) {
+        markerElement.style.visibility = 'hidden';
+      }
+
+      const zoomOut = document.createElement('span');
+      zoomOut.className = 'material-icons-outlined';
+      zoomOut.innerHTML = 'remove';
+
+      const zoomIn = document.createElement('span');
+      zoomIn.className = 'material-icons-outlined';
+      zoomIn.innerHTML = 'add';
+
+      myMap = new OlMap({
+        layers: [
+          new TileLayer({
+            source: new WMTS({
+              url: baseMap.url,
+              layer: baseMap.layers,
+              matrixSet: baseMap.matrixSet,
+              projection: sm,
+              tileGrid: wmtsTileGrid({
+                extent: newExtent,
+                origin: getTopLeft(newExtent),
+                resolutions: resolutions,
+                matrixIds: matrixIds,
+              }),
+              style: 'default',
+              format: baseMap.format,
+            }),
+            zIndex: -1,
+          }),
+        ],
+        overlays: [overlay],
+        target: 'map',
+        view: new View({
+          center: center,
+          projection: sm,
+          zoom: zoom,
+          minZoom: 3,
+          maxZoom: 18,
+          constrainResolution: true,
+        }),
+        controls: defaults({ zoom: false, attribution: false, rotate: false })
+          .extend([new ScaleLine()])
+          .extend([new Zoom({ zoomInLabel: zoomIn, zoomOutLabel: zoomOut })]),
+      });
+      if (!mapRef.current) return;
+      myMap.setTarget(mapRef.current);
+      setMap(myMap);
+      window.olMap = myMap;
+      return () => myMap.setTarget(undefined);
+    }
+    generateToken();
+    getClickCoordinates.activate(myMap);
+    mapMoveEnd.activate(myMap);
   };
 
   useEffect(() => {
@@ -256,14 +260,13 @@ const MainMap = ({ children }: Props) => {
   }, [toggleTile, token, eventDispatch]);
 
   useEffect(() => {
-    console.log('activeProject.Config', activeProject.Config);
     if (activeProject.Config && token) {
       const layers = Layers(myMap);
-      const l_guids = layers.getLayersWithGuid().filter((elem) => {
+      const l_guids = layers.getLayersWithGuid().filter(elem => {
         return elem.get('guid') !== undefined && Number(elem.get('guid').charAt(0)) > 0;
       });
       if (l_guids.length > 0) {
-        l_guids.forEach((elem) => {
+        l_guids.forEach(elem => {
           layers.hideLayer(elem.get('guid'));
         });
       }
@@ -308,15 +311,6 @@ const MainMap = ({ children }: Props) => {
     const successGetGeolocation = (position: any) => {
       const coordinates = [position.coords.longitude, position.coords.latitude];
       setGlobalCenter(coordinates as any);
-      /*
-      appDispatch(
-        setCenter({
-          lon: coordinates[0],
-          lat: coordinates[1],
-          epsg: 'EPSG:4258',
-        }),
-      );
-      */
     };
     const errorGetGeolcation = () => console.log('Unable to retrieve your location');
 

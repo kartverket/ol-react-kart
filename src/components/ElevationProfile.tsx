@@ -32,11 +32,11 @@ const ElevationProfile = () => {
   const [isElevationProfileActive, setIsElevationProfileActive] = useState(false);
   const [gpx, setGpx] = useState<string>();
   const [name, setName] = useState('');
-  const [elevationImage, setElevationImage] = useState<string | undefined>(undefined);
+  const [elevationImage, setElevationImage] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const map = useMap();
 
-  const _uploadGpxFile = (gpx: string) => {
+  const generateElevationProfile = (gpx: string) => {
     if (!gpx) return;
     const upload = new URL(uploadGpxFileService());
     fetch(upload, {
@@ -46,19 +46,15 @@ const ElevationProfile = () => {
     })
       .then(response => response.text())
       .then(data => {
-        setElevationImage(undefined);
-        console.error('data: ', data);
-        _generateElevationChart(data as string);
+        setElevationImage('');
+        generateElevationChart(data as string);
       })
       .catch((error: any) => {
-        console.error('_uploadGpxFile error: ', error);
+        console.error('generateElevationProfile error: ', error);
       });
     return;
   };
-  const generateElevationProfile = (gpx: string) => {
-    return _uploadGpxFile(gpx);
-  };
-  const _generateElevationChart = (gpxUrl: string) => {
+  const generateElevationChart = (gpxUrl: string) => {
     axios
       .get(generateElevationChartServiceUrl(gpxUrl))
       .then(result => {
@@ -79,18 +75,16 @@ const ElevationProfile = () => {
         setElevationImage(dataXml.ExecuteResponse.ProcessOutputs.Output.Data.ComplexData);
       })
       .catch((error: any) => {
-        console.error('_generateElevationChart error: ', error);
+        console.error('generateElevationChart error: ', error);
       });
   };
-
   const fileread = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setSelectedFile(e.target.files[0]);
-      setName(selectedFile?.name as string);
+      setName(e.target.files[0]?.name as string);
       const reader = new FileReader();
       reader.onload = loadEvent => {
         if (loadEvent && loadEvent.target) {
-          console.log('', loadEvent.target.result);
           setGpx(loadEvent.target.result as string);
         }
       };
@@ -137,17 +131,13 @@ const ElevationProfile = () => {
   useEffect(() => {
     showDrawing(gpx as string);
     generateElevationProfile(gpx as string);
-    /*.then(function () {
-      document.getElementById('spinner2').style.backgroundColor = 'transparent';
-      document.getElementById('spinner2').style.transition = '0.8s';
-      showSpinner = false;
-      imageExists = true;
-      showElevationProfilePage2();
-    });*/
   }, [gpx]);
 
   useEffect(() => {
-    console.log('Image is set', elevationImage);
+    if (elevationImage.length > 0) {
+      window.open(elevationImage, '_blank');
+      setShowSpinner(false);
+    }
   }, [elevationImage]);
 
   const removeGeometry = () => {
@@ -186,12 +176,16 @@ const ElevationProfile = () => {
             <Tab eventKey="drawProfile" title={t('drawInMap_txt')}>
               <span>{t('profileInfo_txt')}</span>
               <div className="new-section navigation-button">
-                <button className="button" onClick={removeGeometry} disabled={!elevationProfileActive}>
+                <button
+                  className="button button__blue--secondary button--xs"
+                  onClick={removeGeometry}
+                  disabled={!elevationProfileActive}
+                >
                   {t('remove_txt')}
                 </button>
                 <button
                   type="button"
-                  className={`button ${isDrawActive ? 'activeBtn' : 'btn-toggle'}`}
+                  className={`button button__green--primary button--xs ${isDrawActive ? 'activeBtn' : 'btn-toggle'}`}
                   onClick={drawLineElevation}
                 >
                   {t('drawProfile_txt')}

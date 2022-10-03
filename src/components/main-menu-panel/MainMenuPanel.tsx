@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useProjectStore } from '../../app/projetStore';
+import { ILayer } from '../../MapCore/Models/config-model';
 import { useBaseLayersStore } from '../../app/baseStore';
-
+import { useProjectStore } from '../../app/projetStore';
 import Draw from '../Draw';
 import ElevationProfile from '../ElevationProfile';
 import Faq from '../Faq';
@@ -16,7 +16,6 @@ import LanguageSelector from './../LanguageSelector';
 import MainMenuBaseLayerPanel from './MainMenuBaseLayerPanel';
 import MainMenuPanelProjectLayers from './MainMenuPanelProjectLayers';
 import ProjectsList from './projects-list/ProjectsList';
-import { ILayer } from '../../MapCore/Models/config-model';
 
 const MainMenuPanel = () => {
   const { t } = useTranslation();
@@ -148,11 +147,21 @@ const MainMenuPanel = () => {
               </div>
               {showTools ? (
                 <div>
-                  <Measure />
-                  <Draw />
-                  <ElevationProfile />
-                  <PrintMap />
-                  <ShareMap />
+                  <div className="list-group-item list-group-item-action">
+                    <Measure />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <Draw />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <ElevationProfile />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <PrintMap />
+                  </div>
+                  <div className="list-group-item list-group-item-action">
+                    <ShareMap />
+                  </div>
                 </div>
               ) : null}
             </div>
