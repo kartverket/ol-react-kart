@@ -10,7 +10,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
     "@reduxjs/toolkit": "^1.8.5",
-    "axios": "^0.27.2",
+    "axios": "^1.0.0",
     "bootstrap": "^5.2.1",
     "fast-xml-parser": "^4.0.10",
     "i18next": "^21.9.2",

@@ -72,7 +72,7 @@ const Search = () => {
   };
 
   return (
-    <div className="searchbar container container-lg">
+    <div className="searchbar container">
       <div className="searchbar__wrapper">
         <button
           className="button button__menu"

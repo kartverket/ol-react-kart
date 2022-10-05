@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div className="App">
       <MainMap>
-        <div className="position-absolute ms-4" style={{ zIndex: 1 }}>
+        <div className="position-absolute mt-3" style={{ zIndex: 1 }}>
           <Search />
           <InfoPanel />
         </div>

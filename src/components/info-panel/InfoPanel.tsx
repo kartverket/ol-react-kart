@@ -13,7 +13,7 @@ const InfoPanel = () => {
   return (
     <>
       {(clickCoordinates && clickCoordinates?.coordinate) || (searchResult && searchResult.ssr?.navn) ? (
-        <div className="infopanel border border-1 bg-white shadow rounded mt-4">
+        <div className="infopanel bg-white shadow rounded">
           <div className="m-1">
             {searchResult && searchResult.ssr?.navn ? <SearchResultsList /> : null}
             {clickCoordinates && clickCoordinates.coordinate ? <PointInfo /> : null}

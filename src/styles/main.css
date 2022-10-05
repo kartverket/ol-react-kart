@@ -211,14 +211,12 @@ input:focus-visible {
 
 .reset__button {
   position: absolute;
-  right: 2rem;
-  top: 18px;
-  padding: 0.5rem;
+  right: 5rem;
+  top: 0px;
   cursor: pointer;
 }
 
 .infopanel {
-  min-width: 40rem;
   background-color: var(--white);
   overflow-y: auto;
   box-sizing: border-box;
