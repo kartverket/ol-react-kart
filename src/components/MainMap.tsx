@@ -51,14 +51,11 @@ const MainMap = ({ children }: Props) => {
   const setGlobalLayers = useGlobalStore(state => state.setLayers);
   const setGlobalZoom = useGlobalStore(state => state.setZoom);
   const setGlobalSelection = useGlobalStore(state => state.setSelection);
-  const setGlobalWms = useGlobalStore(state => state.setWms);
-  const search = useGlobalStore(state => state.sok);
 
   const eventDispatch = useEventDispatch();
   const mapMoveEnd = MapMoveEnd(eventDispatch);
   const getClickCoordinates = GetClickCoordinates();
 
-  const projects = useProjectStore(state => state.projects);
   const toggleTile = useProjectStore(state => state.toggleTileLayer);
   const activeProject = useProjectStore(state => state.activeProject);
 
@@ -196,16 +193,6 @@ const MainMap = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    const addWms: wms = {
-      showWms: true,
-      wms: wms,
-      addLayer: addLayer,
-    };
-    const selection: selection = {
-      showSelection: showSelection,
-      p: p,
-    };
-    const center: center = [lat, lon, zoom];
     const markerCenter: marker = [markerLat, markerLon];
 
     setGlobalCenter([lon, lat]);
@@ -213,7 +200,6 @@ const MainMap = ({ children }: Props) => {
     setGlobalMarker(markerCenter);
     setGlobalSelection(p);
     setSok(sok);
-    //setGlobalWms(addWms);
   }, [layers, sok, project, drawing, wms, addLayer, showSelection, p, lat, lon, zoom, markerLat, markerLon]);
 
   const mapConfig = {

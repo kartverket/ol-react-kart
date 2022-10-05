@@ -1,4 +1,3 @@
-// import queryString from 'query-string';
 /**
  * Sammling av url api's brukt i norgeskart.no ( ekstraktet fra gammel noprgeskart, bare for å finne de som er brukt i norgeskart.no )
  */
@@ -638,7 +637,6 @@ export const toDms = (value: string) => {
   const deg = parseInt(value, 10);
   const min = parseInt(((parseFloat(value) - deg) * 60).toString(), 10);
   const sec = parseInt(((parseFloat(value) - deg - min / 60) * 3600).toString(), 10);
-  //return `${deg}° ${zerofill(min)}' ${zerofill(parseInt(sec.toFixed(2), 10))}''`;
   return {
     degrees: deg,
     minutes: min,

@@ -47,7 +47,7 @@ const Search = () => {
         setSok(query);
       });
     }
-  }, [query, appDispatch]);
+  }, [query, appDispatch, setSok]);
 
   const handleInputChange = (value: string) => {
     setReset(true);

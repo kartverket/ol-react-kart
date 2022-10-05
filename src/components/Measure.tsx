@@ -37,7 +37,6 @@ const DrawMeasure = () => {
   let measureTooltipElement: HTMLDivElement | null = null;
   let measureTooltip: Overlay | null = null;
 
-  const continuePolygonMsg = t('continue_measure');
   const continueLineMsg = 'Click to continue drawing the line';
 
   useEffect(() => {
@@ -63,10 +62,8 @@ const DrawMeasure = () => {
     });
     map.addLayer(vector);
 
-    let geometryFunction;
     let type: 'Point' | 'Circle' | 'LineString' | 'Polygon';
     if (drawType === 'Rectangle') {
-      geometryFunction = createBox();
       type = 'Circle';
     } else if (drawType === 'Text') {
       type = 'Point';

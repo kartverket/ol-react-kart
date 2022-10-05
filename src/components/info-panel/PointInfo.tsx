@@ -422,7 +422,6 @@ const PointInfo = () => {
         {showTurkart ? <Turkart /> : null}
       </div>
       {/* Fargeleggingskart open */}
-      {/*
       <div className={showFargeleggingskart ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -438,7 +437,6 @@ const PointInfo = () => {
           </div>
         </div>
       </div>
-      */}
       {/* Nodplakat open */}
       <div className={showNodplakat ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
