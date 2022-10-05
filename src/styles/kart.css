@@ -40,7 +40,7 @@
   background-color: var(--blue_hover);
 }
 .ol-control button:active {
-  background-color: var(--dark_blue_button);
+  background-color: var(--blue_dark_button);
 }
 .ol-geolocation {
   bottom: auto;

@@ -39,6 +39,10 @@
 /* kan eventuellt fjeneres */
 @import 'utils.css';
 
+html {
+  box-sizing: border-box;
+}
+
 searchbar__wrapper {
   min-width: 40rem;
 }
