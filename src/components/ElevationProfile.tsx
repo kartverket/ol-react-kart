@@ -185,7 +185,7 @@ const ElevationProfile = () => {
                 </button>
                 <button
                   type="button"
-                  className={`button button__green--primary button--xs ${isDrawActive ? 'activeBtn' : 'btn-toggle'}`}
+                  className={`button button__green--primary button--xs ${isDrawActive ? 'activeBtn' : 'toggle'}`}
                   onClick={drawLineElevation}
                 >
                   {t('drawProfile_txt')}

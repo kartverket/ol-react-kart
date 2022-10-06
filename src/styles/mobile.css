@@ -1,4 +1,7 @@
 @media screen and (max-width: 736px) {
+  .mt-3 {
+    margin-top: 0rem !important;
+  }
   .searchbar__wrapper {
     z-index: 13;
     position: relative;
@@ -33,7 +36,7 @@
     top: 12px !important;
   }
   .ol-geolocation {
-    bottom: 108px !important;
+    bottom: 92px !important;
     top: auto !important;
   }
   .nextbtn {
