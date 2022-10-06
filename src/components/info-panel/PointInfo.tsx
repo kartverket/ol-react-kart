@@ -28,6 +28,7 @@ import {
 } from '../../utils/n3api';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
+import FeatureInfo from './FeatureInfo';
 
 export interface IPunktInfo {
   datakilde: string;
@@ -61,7 +62,7 @@ const PointInfo = () => {
   const [nodplakatStedsnavn, setNodplakatStedsnavn] = useState('');
   const [nodplakatVeg, setNodplakatVeg] = useState('');
   const [showCoordinates, setShowCoordinates] = useState(false);
-  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(false);
+  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(true);
   const [projeksjoner, setProjeksjoner] = useState<IProsjektion[]>([]);
   const [coordinates, setCoordinates] = useState<Coordinate>();
   const [projection, setProjection] = useState<string>('25833');
@@ -550,10 +551,11 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <span className={style.ellipsisToggle}>{t('HereYouFind_text')}</span>
             <span className="material-icons-outlined">{showGetFeatureInfo ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
+        {showGetFeatureInfo ? <FeatureInfo /> : null}
       </div>
       {/* Eiendomsinformasjon open */}
       <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>

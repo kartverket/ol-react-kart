@@ -42,7 +42,10 @@
 html {
   box-sizing: border-box;
 }
-
+.ulContainer {
+  word-wrap: break-word;
+  overflow: auto;
+}
 searchbar__wrapper {
   min-width: 40rem;
 }

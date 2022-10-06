@@ -156,6 +156,9 @@ export interface IIncludedFields {
   field: IField[];
   capitalize?: boolean;
 }
+export interface IIncludedFieldsDictionary {
+  [key: string]: IField;
+}
 export interface IBaseLayers {
   setVisibleBaseLayer: any;
   layers: ILayer[];
