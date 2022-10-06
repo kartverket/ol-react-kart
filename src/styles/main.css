@@ -106,7 +106,9 @@ searchbar__wrapper {
   margin-left: 3.5rem;
   margin-right: 3.5rem;
 }
-
+.info {
+  width: 40rem;
+}
 .searchbar {
   min-width: 40rem;
 }

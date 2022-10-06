@@ -2,6 +2,13 @@
   .mt-3 {
     margin-top: 0rem !important;
   }
+  .infopanel {
+    margin-left: 1.2rem !important;
+    margin-right: 1.2rem !important;
+  }
+  .info {
+    width: 20rem !important;
+  }
   .searchbar__wrapper {
     z-index: 13;
     position: relative;
