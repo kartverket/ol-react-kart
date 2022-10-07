@@ -26,9 +26,9 @@ import {
   round,
   toDms,
 } from '../../utils/n3api';
+import FeatureInfo from './FeatureInfo';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
-import FeatureInfo from './FeatureInfo';
 
 export interface IPunktInfo {
   datakilde: string;
@@ -454,18 +454,9 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat1 ? `${style.selected} ${style.open}` : style.selected}>
             <h4 className=""> {t('Ansvar')}</h4>
-            <p className="body-text body-text--xs text-wrap info">
-              {' '}
-              {t('NodplakatText1')}
-            </p>
-            <p className="body-text body-text--xs text-wrap info">
-              {' '}
-              {t('NodplakatText2')}
-            </p>
-            <p className="body-text body-text--xs text-wrap info">
-              {' '}
-              {t('NodplakatText3')}
-            </p>
+            <p className="body-text body-text--xs text-wrap info">{t('NodplakatText1')}</p>
+            <p className="body-text body-text--xs text-wrap info">{t('NodplakatText2')}</p>
+            <p className="body-text body-text--xs text-wrap info">{t('NodplakatText3')}</p>
             <button
               className="button button__green--primary button--xs"
               onClick={() => {

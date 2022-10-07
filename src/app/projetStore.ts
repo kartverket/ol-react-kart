@@ -8601,7 +8601,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 },
                 {
                   alias: 'Status',
-                  name: 'siteConfigstattypename',
+                  name: 'siteconfigstattypename',
                 },
               ],
             },
@@ -8639,7 +8639,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 },
                 {
                   alias: 'Status',
-                  name: 'siteConfigstattypename',
+                  name: 'siteconfigstattypename',
                 },
               ],
             },

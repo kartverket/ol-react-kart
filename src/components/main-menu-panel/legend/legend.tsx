@@ -34,7 +34,7 @@ const Legend = () => {
         </div>
         {!collapsedLegend ? (
           <ul className="list-group list-group-flush">
-            {listLayers.map((project) =>
+            {listLayers.map(project =>
               project.Config.layer
                 .filter(w => w.options.visibility === true)
                 .map(

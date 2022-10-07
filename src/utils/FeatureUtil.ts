@@ -94,7 +94,7 @@ const arrayToObject = (array: any) =>
 
 export const parsePlainFeatureInfo = (data: any) => {
   let parsedFeatureInfo;
-  if (data === 'no features were found' || data.includes('Search returned no results')) return '';
+  if (data === 'no features were found' || data.includes('Search returned no results') || data.includes('Overforbruk')) return '';
   if (data.includes('Layer')) {
     const featureInfo = data.split('\n\n');
     featureInfo.shift();

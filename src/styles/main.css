@@ -56,7 +56,16 @@ searchbar__wrapper {
 .search-result-list-item {
   background-color: var(--gray_light); /* to be removed/changed */
 }
-
+.scale-image {
+  display: block;
+  width: 15%;
+  height: auto;
+}
+.symbol-image {
+  display: block;
+  width: 7%;
+  height: auto;
+}
 /* Align fixes for material-icons */
 .projectlist-item {
   display: flex;
