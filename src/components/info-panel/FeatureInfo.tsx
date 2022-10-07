@@ -263,7 +263,6 @@ const FeatureInfo = () => {
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
       appliedFields.map((feature: any) => {
         const attributes = feature.map((attribute: any) => {
-          console.log(attribute);
           return (
             <div key={attribute[0]}>
               <li className="ist-group-item">
