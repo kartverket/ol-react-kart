@@ -13,7 +13,8 @@ const FeatureInfo = () => {
   const [featureInfoPosition, setFeatureInfoPosition] = useState({ x: 0, y: 0 });
   const featureInfoRef = useRef<HTMLDivElement>(null);
   const map = useMap();
-  const listProjects = useProjectStore(state => state.projects);
+  const listProjects = useProjectStore((state) => state.projects);
+  const activeProject = useProjectStore(state => state.activeProject);
   const listLayers = listProjects.filter(project => {
     const filterLayers = project.Config.layer.filter(layer => {
       if (layer.options.visibility === true && layer.options.isbaselayer === false) {
@@ -170,7 +171,8 @@ const FeatureInfo = () => {
           const feature = featureInLayer[key];
           for (const key in feature) {
             const items = feature[key];
-            const attributes = compareIncludedFields(includedFields, items, subLayer.featuredict);
+            console.log(subLayer)
+            const attributes = compareIncludedFields(includedFields, items, activeProject.Config.featureDict);
             parsedResultsIncluded.push(attributes);
           }
         }
@@ -259,7 +261,7 @@ const FeatureInfo = () => {
         )
         .filter(w => w.length > 0);
       if (configLayer.length === 0) return <></>;
-
+      console.log(configLayer)
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
       appliedFields.map((feature: any) => {
         const attributes = feature.map((attribute: any) => {
@@ -302,7 +304,7 @@ const FeatureInfo = () => {
         });
         layers.push(
           <div key={key}>
-            <h3>{key}</h3>
+            <h3 className='text-capitalize'>{key}</h3>
             <ul className="list-group list-group-flush closeable-subcontent">{attributes}</ul>
           </div>,
         );
