@@ -121,13 +121,8 @@ export interface IWmsLayer {
 }
 
 export interface IFeatureInfoFormats {
-  format: any;
+  format: string;
 }
-
-// export interface IParamsWms {
-//   layers: string;
-//   format: string;
-// }
 
 export interface ILayers {
   Layer: IWmsLayer;

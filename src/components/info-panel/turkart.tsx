@@ -128,7 +128,7 @@ const Turkart = () => {
       .then(response => {
         mapReadyForDownload(response, urlLagTurkart);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         mapCreationFailed(error);
       });
     setShowSpinner(true);

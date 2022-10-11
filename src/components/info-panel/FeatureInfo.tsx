@@ -8,15 +8,15 @@ import useMap from '../../app/useMap';
 import { parseFeatureInfo } from '../../utils/FeatureUtil';
 
 const FeatureInfo = () => {
-  const [featureInfo, setFeatureInfo] = useState('');
+  const [featureInfos, setFeatureInfo] = useState<any[]>([]);
   const [featureInfoVisible, setFeatureInfoVisible] = useState(false);
   const [featureInfoPosition, setFeatureInfoPosition] = useState({ x: 0, y: 0 });
   const featureInfoRef = useRef<HTMLDivElement>(null);
   const map = useMap();
-  const listProjects = useProjectStore((state) => state.projects);
-  const activeProject = useProjectStore(state => state.activeProject);
-  const listLayers = listProjects.filter(project => {
-    const filterLayers = project.Config.layer.filter(layer => {
+  const listProjects = useProjectStore((state: { projects: any; }) => state.projects);
+  const activeProject = useProjectStore((state: { activeProject: any; }) => state.activeProject);
+  const listLayers = listProjects.filter((project: { Config: { layer: any[]; }; }) => {
+    const filterLayers = project.Config.layer.filter((layer: { options: { visibility: boolean; isbaselayer: boolean; }; }) => {
       if (layer.options.visibility === true && layer.options.isbaselayer === false) {
         return layer;
       }
@@ -25,59 +25,73 @@ const FeatureInfo = () => {
       return project;
     }
   });
-
-  useEffect(() => {
+  const onMapClick = (e: any) => {
     if (!map) return;
-    map.on('singleclick', e => {
-      const layers = map.getLayers().getArray();
-      layers.forEach(element => {
-        // @ts-expect-error ts-migrate(2339) FIXME: Property 'getSource' does not exist on type 'any'.
-        const source = element.getSource();
-        if (source.constructor.name === 'TileWMS') {
-          const formats = source.getParams().info_formats ?? [0, 'text/plain'];
-          let indexFormat = 0;
-          if (formats.indexOf('text/plain') > 0) {
-            indexFormat = formats.indexOf('text/plain');
-          } else if (formats.indexOf('text/xml') > 0) {
-            indexFormat = formats.indexOf('text/xml');
-          } else if (formats.indexOf('application/vnd.ogc.gml') > 0) {
-            indexFormat = formats.indexOf('application/vnd.ogc.gml');
-          } else if (formats.indexOf('application/json') > 0) {
-            indexFormat = formats.indexOf('application/json');
-          } else if (formats.indexOf('text/html') === 0) {
-            indexFormat = 1;
-          }
-          const url: string = source.getFeatureInfoUrl(
-            e.coordinate,
-            map.getView().getResolution(),
-            map.getView().getProjection(),
-            {
-              INFO_FORMAT: formats[indexFormat],
-              QUERY_LAYERS: source.getParams().layers,
-            },
-          );
-          if (url) {
-            fetch(url)
-              .then(response => response.text())
-              .then(data => {
-                const parsedFeature = parseFeatureInfo(data, formats[indexFormat]);
-                setFeatureInfo(parsedFeature);
+    setFeatureInfo([]);
+    const layers = map.getLayers().getArray();
+    layers.forEach(element => {
+      // @ts-expect-error ts-migrate(2339) FIXME: Property 'getSource' does not exist on type 'any'.
+      const source = element.getSource();
+      if (source.constructor.name === 'TileWMS') {
+        const info_format = source.getParams().info_format ?? 'text/plain';
+        const url: string = source.getFeatureInfoUrl(
+          e.coordinate,
+          map.getView().getResolution(),
+          map.getView().getProjection(),
+          {
+            INFO_FORMAT: info_format,
+            QUERY_LAYERS: source.getParams().layers,
+          },
+        );
+        const layernames = source.getParams().layers ?? '';
+        if (url) {
+          fetch(url)
+            .then(response => response.text())
+            .then(data => {
+              const parsedFeature = parseFeatureInfo(data, info_format);
+              if (parsedFeature) {
+                setFeatureInfo(prevFeatures => [...prevFeatures, { [layernames]: parsedFeature }]);
                 setFeatureInfoVisible(true);
                 setFeatureInfoPosition({ x: e.pixel[0], y: e.pixel[1] });
-              })
-              .catch(error => {
-                console.error('Error:', error);
-                setFeatureInfoVisible(false);
-              });
-          }
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              setFeatureInfoVisible(false);
+            });
         }
-      });
+      } else if (source.constructor.name === 'VectorSource') {
+        const getExtentForCoordinate = (coordinate: any, pixelTolerance: any, resolution: any) => {
+          const toleranceInMapUnits = pixelTolerance * resolution;
+          const minN = coordinate[0] - toleranceInMapUnits;
+          const minE = coordinate[1] - toleranceInMapUnits;
+          const maxN = coordinate[0] + toleranceInMapUnits;
+          const maxE = coordinate[1] + toleranceInMapUnits;
+          return [minN, minE, maxN, maxE];
+        };
+        const extent = getExtentForCoordinate(e.coordinate, 5, map.getView().getResolution());
+        const features = source.forEachFeatureInExtent(extent, (feature: any) => {
+          return feature.getProperties();
+        });
+        const feature = [features];
+        if (features) {
+          setFeatureInfo(prevFeatures => [...prevFeatures, ...feature]);
+          setFeatureInfoVisible(true);
+          setFeatureInfoPosition({ x: e.pixel[0], y: e.pixel[1] });
+        }
+      }
     });
+  };
+  useEffect(() => {
+    if (!map) return;
+    map.on('click', onMapClick);
+    return () => {
+      map.un('click', onMapClick);
+    };
   }, [map]);
   const capitalizeFirstLetter = (text: string) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
-
   const compareIncludedFields = (includedFields: IIncludedFieldsDictionary, feature: any, featureDict: any) => {
     const attributes = [];
     if (Object.keys(includedFields).length > 1) {
@@ -171,15 +185,14 @@ const FeatureInfo = () => {
           const feature = featureInLayer[key];
           for (const key in feature) {
             const items = feature[key];
-            console.log(subLayer)
-            const attributes = compareIncludedFields(includedFields, items, activeProject.Config.featureDict);
+            const attributes = compareIncludedFields(includedFields, items[0], activeProject.Config.featureDict);
             parsedResultsIncluded.push(attributes);
           }
         }
       }
     } else {
       for (const [key, value] of Object.entries(featureInLayer)) {
-        const attributes = compareIncludedFields(includedFields, value, subLayer.featuredict);
+        const attributes = compareIncludedFields(includedFields, value, activeProject.Config.featureDict);
         parsedResultsIncluded.push(attributes);
       }
     }
@@ -249,22 +262,24 @@ const FeatureInfo = () => {
     };
   };
   const prepareFeature = (info: any) => {
-    const layers:any[] = [];
+    const layers: any[] = [];
     for (const key in info) {
       const featureInLayer = info[key];
       const configLayer = listLayers
-        .map(project =>
+        .map((project: { Config: { layer: any[]; }; }) =>
           project.Config.layer
-            .filter(w => w.options.visibility === true)
-            .filter(w => w.params.layers === key)
+            .filter((w: { options: { visibility: boolean; }; }) => w.options.visibility === true)
+            .filter((w: { params: { layers: any; }; }) => w.params.layers === (featureInLayer.name ?? key))
             .map((wmsLayer: ILayer, wmsIndex: number) => wmsLayer),
         )
-        .filter(w => w.length > 0);
+        .filter((w: string | any[]) => w.length > 0);
       if (configLayer.length === 0) return <></>;
-      console.log(configLayer)
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
       appliedFields.map((feature: any) => {
         const attributes = feature.map((attribute: any) => {
+          if (!attribute[1]) {
+            return null;
+          }
           return (
             <div key={attribute[0]}>
               <li className="ist-group-item">
@@ -275,7 +290,9 @@ const FeatureInfo = () => {
               </li>
               <li className="ist-group-item">
                 <div className="row">
-                  <div className="col-5">{attribute[1].type != 'symbol' ? <span className='text-capitalize'>{attribute[0]}</span> : null}</div>
+                  <div className="col-5">
+                    {attribute[1].type != 'symbol' ? <span className="text-capitalize">{attribute[0]}</span> : null}
+                  </div>
                   {attribute[1].type == 'picture' ? (
                     <div className="col-5" onClick={() => showImage(attribute[1].url, attribute[1].name)}>
                       <img className="scale-image" src={attribute[1].url} />
@@ -304,7 +321,7 @@ const FeatureInfo = () => {
         });
         layers.push(
           <div key={key}>
-            <h3 className='text-capitalize'>{key}</h3>
+            <h3 className="text-capitalize">{key}</h3>
             <ul className="list-group list-group-flush closeable-subcontent">{attributes}</ul>
           </div>,
         );
@@ -317,10 +334,10 @@ const FeatureInfo = () => {
     );
   };
   const featureContent = () => {
-    if (Array.isArray(featureInfo)) {
-      return featureInfo.map(info => prepareFeature(info));
+    if (Array.isArray(featureInfos)) {
+      return featureInfos.map(info => prepareFeature(info));
     } else {
-      return <div>No info</div>;
+      return prepareFeature(featureInfos);
     }
   };
   return (

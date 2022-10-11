@@ -52,7 +52,6 @@ export const parseCSV = (data: any) => {
 };
 
 export const parseGmlFeatureInfo = (data: any) => {
-  let returnValue = '';
   const parser = new fxparser.XMLParser({
     ignoreAttributes: false,
     ignorePiTags: true,
@@ -61,12 +60,40 @@ export const parseGmlFeatureInfo = (data: any) => {
     allowBooleanAttributes: true,
   });
   const parsedGml = parser.parse(data);
-  if (parsedGml.msGMLOutput) {
-    returnValue = parsedGml.msGMLOutput;
+  let getProperties;
+  let parsedResult;
+  let returnResult;
+  if (Object.hasOwn(parsedGml, 'msGMLOutput')) {
+    if (Object.hasOwn(parsedGml.msGMLOutput, parsedGml.msGMLOutput.name + '_layer')) {
+      getProperties =
+        parsedGml.msGMLOutput[parsedGml.msGMLOutput.name + '_layer'][parsedGml.msGMLOutput.name + '_feature'];
+      parsedResult = [];
+      if (getProperties.constructor !== Array) {
+        getProperties = [getProperties];
+      }
+      for (let i = 0; i < getProperties.length; i++) {
+        parsedResult.push(getProperties[i]);
+      }
+    } else {
+      for (const element in parsedGml.msGMLOutput) {
+        if (element.endsWith('layer')) {
+          const layername = element.substring(0, element.indexOf('_layer'));
+          getProperties = parsedGml.msGMLOutput[element][layername + '_feature'];
+          parsedResult = [];
+          if (getProperties.constructor !== Array) {
+            getProperties = [getProperties];
+          }
+          for (let p = 0; p < getProperties.length; p++) {
+            parsedResult.push(getProperties[p]);
+          }
+          returnResult = { [layername]: arrayToObject(parsedResult) };
+        }
+      }
+    }
+    return returnResult;
   } else if (parsedGml.FeatureCollection) {
-    returnValue = parsedGml.FeatureCollection.featureMember;
+    return [parsedGml.FeatureCollection.featureMember];
   }
-  return [returnValue];
 };
 const mergeArrayToObject = (array_1: any, array_2: any): object => {
   const obj: Record<string, string | number> = {};
@@ -75,11 +102,15 @@ const mergeArrayToObject = (array_1: any, array_2: any): object => {
   }
   return obj;
 };
-const arrayToObject = (array: any) =>
-  array.reduce((obj: any, item: any) => {
+const arrayToObject = (array: any) => {
+  const obj = array.reduce((obj: any, item: any) => {
     if (typeof item === 'string' && item.length > 0) {
       const [key, value] = item.trim().split(' :');
-      obj[key] = value.replace(/'/g, '').trim();
+      if (key && value) {
+        obj[key] = value.replace(/'/g, '').trim();
+      } else {
+        obj[key] = '';
+      }
     } else {
       if (item.objid) {
         obj[item.objid] = item;
@@ -91,10 +122,13 @@ const arrayToObject = (array: any) =>
     }
     return obj;
   }, {});
+  return obj;
+};
 
 export const parsePlainFeatureInfo = (data: any) => {
   let parsedFeatureInfo;
-  if (data === 'no features were found' || data.includes('Search returned no results') || data.includes('Overforbruk')) return '';
+  if (data === 'no features were found' || data.includes('Search returned no results') || data.includes('Overforbruk'))
+    return '';
   if (data.includes('Layer')) {
     const featureInfo = data.split('\n\n');
     featureInfo.shift();
@@ -112,7 +146,7 @@ export const parsePlainFeatureInfo = (data: any) => {
             item = item.trim().replace(/=/g, ':').split('\n');
             return arrayToObject(item);
           });
-          return arrayToObject(feature);
+          return feature[0];
         } else {
           return {
             feature: feature1,
