@@ -276,6 +276,7 @@ const FeatureInfo = () => {
       if (configLayer.length === 0) return <></>;
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
       appliedFields.map((feature: any) => {
+        if (!Array.isArray(feature)) return <></>;
         const attributes = feature.map((attribute: any) => {
           if (!attribute[1]) {
             return null;
