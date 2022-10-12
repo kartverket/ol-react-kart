@@ -185,7 +185,7 @@ const MainMap = ({ children }: Props) => {
       myMap.setTarget(mapRef.current);
       setMap(myMap);
       window.olMap = myMap;
-      return () => myMap.setTarget(undefined);
+      //return () => myMap.setTarget(undefined);
     }
     generateToken();
     getClickCoordinates.activate(myMap);
