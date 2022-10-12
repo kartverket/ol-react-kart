@@ -62,7 +62,7 @@ const PointInfo = () => {
   const [nodplakatStedsnavn, setNodplakatStedsnavn] = useState('');
   const [nodplakatVeg, setNodplakatVeg] = useState('');
   const [showCoordinates, setShowCoordinates] = useState(false);
-  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(true);
+  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(false);
   const [projeksjoner, setProjeksjoner] = useState<IProsjektion[]>([]);
   const [coordinates, setCoordinates] = useState<Coordinate>();
   const [projection, setProjection] = useState<string>('25833');
@@ -237,8 +237,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-            ? nodplakatStedsnavnRef.current.value
-            : '',
+              ? nodplakatStedsnavnRef.current.value
+              : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
@@ -365,6 +365,20 @@ const PointInfo = () => {
               <span className="material-icons-outlined">{showNodplakat ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
+          {/* FeatureInfo */}
+          <div className="p-2 bg-light mb-2">
+            <div
+              onClick={() => {
+                setShowGetFeatureInfo(!showGetFeatureInfo);
+                setShow(!show);
+              }}
+              className={style.expandBtn}
+            >
+              <span className={style.ellipsisToggle}>{t('HereYouFind_text')}</span>
+              <span className="material-icons-outlined">{showGetFeatureInfo ? 'expand_less' : 'expand_more'}</span>
+            </div>
+          </div>
+
         </div>
       </div>
       {/* Koordinater open */}
@@ -532,7 +546,7 @@ const PointInfo = () => {
           </div>
         </div>
       </div>
-      {/* GetFeatureInfo */}
+      {/* FeatureInfo open*/}
       <div className={showGetFeatureInfo ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div

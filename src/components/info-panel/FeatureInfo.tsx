@@ -9,8 +9,6 @@ import { parseFeatureInfo } from '../../utils/FeatureUtil';
 
 const FeatureInfo = () => {
   const [featureInfos, setFeatureInfo] = useState<any[]>([]);
-  const [featureInfoVisible, setFeatureInfoVisible] = useState(false);
-  const [featureInfoPosition, setFeatureInfoPosition] = useState({ x: 0, y: 0 });
   const featureInfoRef = useRef<HTMLDivElement>(null);
   const map = useMap();
   const listProjects = useProjectStore((state: { projects: any; }) => state.projects);
@@ -51,13 +49,12 @@ const FeatureInfo = () => {
               const parsedFeature = parseFeatureInfo(data, info_format);
               if (parsedFeature) {
                 setFeatureInfo(prevFeatures => [...prevFeatures, { [layernames]: parsedFeature }]);
-                setFeatureInfoVisible(true);
-                setFeatureInfoPosition({ x: e.pixel[0], y: e.pixel[1] });
+              } else {
+                setFeatureInfo(prevFeatures => [...prevFeatures, { [layernames]: '' }]);
               }
             })
             .catch(error => {
               console.error('Error:', error);
-              setFeatureInfoVisible(false);
             });
         }
       } else if (source.constructor.name === 'VectorSource') {
@@ -76,8 +73,6 @@ const FeatureInfo = () => {
         const feature = [features];
         if (features) {
           setFeatureInfo(prevFeatures => [...prevFeatures, ...feature]);
-          setFeatureInfoVisible(true);
-          setFeatureInfoPosition({ x: e.pixel[0], y: e.pixel[1] });
         }
       }
     });
@@ -270,10 +265,11 @@ const FeatureInfo = () => {
           project.Config.layer
             .filter((w: { options: { visibility: boolean; }; }) => w.options.visibility === true)
             .filter((w: { params: { layers: any; }; }) => w.params.layers === (featureInLayer.name ?? key))
-            .map((wmsLayer: ILayer, wmsIndex: number) => wmsLayer),
+            .map((wmsLayer: ILayer) => wmsLayer),
         )
         .filter((w: string | any[]) => w.length > 0);
-      if (configLayer.length === 0) return <></>;
+      if (configLayer.length === 0) return <><span>Ingen lag valgt</span></>;
+      if (featureInLayer === "") return <><span>Ingen data</span></>;
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
       appliedFields.map((feature: any) => {
         if (!Array.isArray(feature)) return <></>;
@@ -346,11 +342,6 @@ const FeatureInfo = () => {
       <div
         ref={featureInfoRef}
         className="feature-info"
-        style={{
-          display: featureInfoVisible ? 'block' : 'none',
-          left: featureInfoPosition.x,
-          top: featureInfoPosition.y,
-        }}
       >
         {featureContent()}
       </div>
