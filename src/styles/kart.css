@@ -59,23 +59,6 @@
   width: 2.5rem;
   border-radius: 4px;
 }
-.ol-geolocation {
-  bottom: auto;
-  left: auto;
-  right: 1rem;
-  top: 7.1em;
-  z-index: 13;
-}
-.ol-geolocation button {
-  display: block;
-  margin: 1px;
-  padding: 0;
-  text-decoration: none;
-  text-align: center;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 4px;
-}
 .ol-popup {
   position: absolute;
   background-color: var(--white);
