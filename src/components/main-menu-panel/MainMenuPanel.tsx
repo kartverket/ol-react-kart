@@ -99,7 +99,7 @@ const MainMenuPanel = () => {
               </div>
               <div className="ps-2 pe-2">
                 <span className={` ${showActiveProject ? 'text-capitalize fw-semibold' : 'text-capitalize'} `}>
-                  {t(activeProject.ProjectName)}
+                  {t(activeProject.SiteTitle)}
                 </span>
               </div>
               <div className="ms-auto ps-2 pe-2">
