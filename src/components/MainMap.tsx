@@ -19,7 +19,7 @@ import { IProject } from '../MapCore/Models/config-model';
 import { addProject, selectCenter } from '../MapCore/Project/projectSlice';
 import { wmtsTileGrid } from '../MapCore/TileGrid/wmts';
 import { useBaseConfigStore, useBaseLayersStore, useBaseMapStore } from '../app/baseStore';
-import { center, marker, selection, useGlobalStore, wms } from '../app/globalStore';
+import { marker, useGlobalStore, IGlobalState } from '../app/globalStore';
 import MapContext from '../app/mapContext';
 import { useProjectStore } from '../app/projetStore';
 import pinOrange from '../assets/pin-md-orange.png';
@@ -45,39 +45,34 @@ const MainMap = ({ children }: Props) => {
   const baseMap = useBaseMapStore();
   const baseLayers = useBaseLayersStore();
 
-  const setSok = useGlobalStore(state => state.setSok);
-  const setGlobalCenter = useGlobalStore(state => state.setCenter);
-  const setGlobalMarker = useGlobalStore(state => state.setMarkerCenter);
-  const setGlobalLayers = useGlobalStore(state => state.setLayers);
-  const setGlobalZoom = useGlobalStore(state => state.setZoom);
-  const setGlobalSelection = useGlobalStore(state => state.setSelection);
-  const setGlobalWms = useGlobalStore(state => state.setWms);
-  const search = useGlobalStore(state => state.sok);
+  const setSok = useGlobalStore((state:IGlobalState) => state.setSok);
+  const setGlobalCenter = useGlobalStore((state:IGlobalState) => state.setCenter);
+  const setGlobalMarker = useGlobalStore((state:IGlobalState) => state.setMarkerCenter);
+  const setGlobalLayers = useGlobalStore((state:IGlobalState) => state.setLayers);
+  const setGlobalZoom = useGlobalStore((state:IGlobalState) => state.setZoom);
+  const setGlobalSelection = useGlobalStore((state:IGlobalState) => state.setSelection);
 
   const eventDispatch = useEventDispatch();
   const mapMoveEnd = MapMoveEnd(eventDispatch);
   const getClickCoordinates = GetClickCoordinates();
 
-  const projects = useProjectStore(state => state.projects);
   const toggleTile = useProjectStore(state => state.toggleTileLayer);
   const activeProject = useProjectStore(state => state.activeProject);
 
   const [token, setToken] = useState();
-
   const center = useEventSelector(selectCenter);
-
   const [mapInit, setMapInit] = useState(false);
-
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<OlMap | null>(null);
-
   const queryValues = queryString.parse(window.location.search);
   const hashValues = queryString.parse(window.location.hash);
   Object.assign(queryValues, hashValues);
 
-  const lat = Number(queryValues['lat']) || undefined;
-  const lon = Number(queryValues['lon']) || undefined;
-  const zoom = Number(queryValues['zoom']) || undefined;
+  const lat = Number(queryValues['lat']) || baseConfig.center[1];
+  const lon = Number(queryValues['lon']) || baseConfig.center[0];
+  const zoom = Number(queryValues['zoom']) || baseConfig.zoom;
+  setGlobalCenter([lon, lat]);
+  setGlobalZoom(zoom);
   const project = (queryValues['project'] as string) || activeProject;
   const layers = queryValues['layers'] as string;
   const markerLat = Number(queryValues['markerLat']) || undefined;
@@ -128,12 +123,10 @@ const MainMap = ({ children }: Props) => {
         resolutions[z] = size / Math.pow(2, z);
         matrixIds[z] = String(z);
       }
-      const center = baseConfig.center;
-      const zoom = baseConfig.zoom;
 
       const overlay = new Overlay({
         id: 'marker',
-        position: center,
+        position: [lon, lat],
         positioning: 'bottom-center',
         element: document.getElementById('marker') || document.createElement('marker'),
       });
@@ -173,7 +166,7 @@ const MainMap = ({ children }: Props) => {
         overlays: [overlay],
         target: 'map',
         view: new View({
-          center: center,
+          center: [lon, lat],
           projection: sm,
           zoom: zoom,
           minZoom: 3,
@@ -188,7 +181,7 @@ const MainMap = ({ children }: Props) => {
       myMap.setTarget(mapRef.current);
       setMap(myMap);
       window.olMap = myMap;
-      return () => myMap.setTarget(undefined);
+      //return () => myMap.setTarget(undefined);
     }
     generateToken();
     getClickCoordinates.activate(myMap);
@@ -196,16 +189,6 @@ const MainMap = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    const addWms: wms = {
-      showWms: true,
-      wms: wms,
-      addLayer: addLayer,
-    };
-    const selection: selection = {
-      showSelection: showSelection,
-      p: p,
-    };
-    const center: center = [lat, lon, zoom];
     const markerCenter: marker = [markerLat, markerLon];
 
     setGlobalCenter([lon, lat]);
@@ -213,7 +196,6 @@ const MainMap = ({ children }: Props) => {
     setGlobalMarker(markerCenter);
     setGlobalSelection(p);
     setSok(sok);
-    //setGlobalWms(addWms);
   }, [layers, sok, project, drawing, wms, addLayer, showSelection, p, lat, lon, zoom, markerLat, markerLon]);
 
   const mapConfig = {
@@ -297,7 +279,7 @@ const MainMap = ({ children }: Props) => {
       setMapInit(true);
       window.olMap.on('moveend', updateMapInfoState);
     }
-  }, [mapInit, activeProject.ProjectName, mapConfig.center, mapConfig.zoom]);
+  }, [mapInit, activeProject, layers, init]);
 
   useEffect(() => {
     if (activeProject.ProjectName) {

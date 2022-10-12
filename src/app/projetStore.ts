@@ -8601,7 +8601,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 },
                 {
                   alias: 'Status',
-                  name: 'siteConfigstattypename',
+                  name: 'siteconfigstattypename',
                 },
               ],
             },
@@ -8639,7 +8639,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 },
                 {
                   alias: 'Status',
-                  name: 'siteConfigstattypename',
+                  name: 'siteconfigstattypename',
                 },
               ],
             },
@@ -11363,17 +11363,17 @@ export const useProjectStore = create<IProjectList>(set => ({
   },
   toggleTileLayer: null,
 
-  setToggleLayer: (layername: string, ProjectName: string) =>
+  setToggleLayer: (guid: string, ProjectName: string) =>
     set(
       produce(state => {
         state.toggleTileLayer = state.projects
           .find((project: IProject) => project.ProjectName === ProjectName)
-          .Config.layer.find((layer: ILayer) => layer.name === layername);
+          .Config.layer.find((layer: ILayer) => layer.guid === guid);
         state.projects
           .find((project: IProject) => project.ProjectName === ProjectName)
-          .Config.layer.find((layer: ILayer) => layer.name === layername).options.visibility = !state.projects
+          .Config.layer.find((layer: ILayer) => layer.guid === guid).options.visibility = !state.projects
           .find((project: IProject) => project.ProjectName === ProjectName)
-          .Config.layer.find((layer: ILayer) => layer.name === layername).options.visibility;
+          .Config.layer.find((layer: ILayer) => layer.guid === guid).options.visibility;
       }),
     ),
   setToggleGroup: (groupid: number, ProjectName: string) =>

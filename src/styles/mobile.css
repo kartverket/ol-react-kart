@@ -1,4 +1,14 @@
 @media screen and (max-width: 736px) {
+  .mt-3 {
+    margin-top: 0rem !important;
+  }
+  .infopanel {
+    margin-left: 1.2rem !important;
+    margin-right: 1.2rem !important;
+  }
+  .info {
+    width: 20rem !important;
+  }
   .searchbar__wrapper {
     z-index: 13;
     position: relative;
@@ -6,6 +16,9 @@
     left: 0;
     margin: 7px;
     min-width: 20rem;
+  }
+  .searchbar {
+    min-width: 10rem !important;
   }
   .search-content {
     max-height: 80%;
@@ -107,6 +120,9 @@
   }
   .ol-scale-line {
     bottom: 18px !important;
+  }
+  .ol-mouse-position {
+    display: none;
   }
   .norgeskart-logo {
     padding-right: 30px;

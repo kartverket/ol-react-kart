@@ -70,17 +70,10 @@ export const addCustomProj = (code: string, extent?: Extent) => {
   addProjection(proj);
   return proj;
 };
-/*
-    export const toDms = (value: string | number) => {
-      const deg = parseInt(value, 10);
-      const min = parseInt((value - deg) * 60, 10);
-      const sec = ((value - deg - min / 60) * 3600);
-      return `${deg}° ${zerofill(min)}' ${zerofill(sec.toFixed(2))}''`;
-    } */
 export const zerofill = (value: string | number) => {
   return value < 10 ? `0${value}` : value;
 };
-export const getResolutionForScale = (scale: string, units: string | number) => {
+export const getResolutionForScale = (scale: string) => {
   const dpi = 25.4 / 0.28;
   const mpu = METERS_PER_UNIT;
   const inchesPerMeter = 39.37;

@@ -1,4 +1,3 @@
-// import queryString from 'query-string';
 /**
  * Sammling av url api's brukt i norgeskart.no ( ekstraktet fra gammel noprgeskart, bare for å finne de som er brukt i norgeskart.no )
  */
@@ -173,23 +172,6 @@ export const generateEmergencyPosterPreviewImageUrl = (minx: number, miny: numbe
   return `${urlOpenWms}${topo4}${window.innerWidth}&HEIGHT=${window.innerHeight}&BBOX=${minx},${miny},${maxx},${maxy}`;
 };
 
-// interface Params {
-//   hash: string;
-//   save: boolean;
-// }
-
-// export const generateGeoJSONUrl = (hash: string, save: boolean) => {
-//   const params: Params = {
-//     hash: '',
-//     save: false,
-//   };
-//   params.hash = hash;
-//   if (save) {
-//     params.save = true;
-//   }
-//   return url + 'ws/get-json.py?' + queryString.stringify(params);
-// };
-
 export const generateGeoJSONSaveUrl = () => {
   return `${url}ws/upload-json.py`;
 };
@@ -198,12 +180,14 @@ export const generateSearchMatrikkelNummerUrl = (query: string) => {
   return `${urlGeonorge}norgeskart/v1/matrikkel/eie/${query}`;
 };
 
-export const _constructMarkingFilter = (property: any) => {
-  return `${property.kommunenr}-${property.gardsnr}-${property.bruksnr}-${property.festenr}-${property.seksjonsnr}`;
-};
-
-export const generateMatrikkelWfsFilterUrl = (property: any) => {
-  return `${urlGeonorge}norgeskart/v1/teiger/${_constructMarkingFilter(property)}/`;
+export const generateMatrikkelWfsFilterUrl = (property: {
+  kommunenr: string;
+  gardsnr: string;
+  bruksnr: string;
+  festenr?: string;
+  seksjonsnr?: string;
+}) => {
+  return `${urlGeonorge}norgeskart/v1/teiger/${property.kommunenr}-${property.gardsnr}-${property.bruksnr}-${property.festenr}-${property.seksjonsnr}/`;
 };
 export const generateEiendomAddressUrl = (
   kommunenr: string,
@@ -589,36 +573,7 @@ export const getCoordinateSystems = (type: string) => {
     });
   return result;
 };
-export const isOutOfBounds = (coordinates: any) => {
-  return sosiCodes
-    .filter(el => {
-      if (el.bbox.MinX === undefined) {
-        throw new Error('Bounds undefined');
-      }
-      return (
-        coordinates.north.value < el.bbox.MinX ||
-        coordinates.north.value > el.bbox.MaxX ||
-        coordinates.east.value < el.bbox.MinY ||
-        coordinates.east.value > el.bbox.MaxY
-      );
-    })
-    .map(obj => obj);
-};
-export const isNotOutOfBounds = (coordinates: any) => {
-  return sosiCodes
-    .filter(el => {
-      if (el.bbox.MinX === undefined) {
-        throw new Error('Bounds undefined');
-      }
-      return (
-        coordinates.north.value > el.bbox.MinX &&
-        coordinates.north.value < el.bbox.MaxX &&
-        coordinates.east.value > el.bbox.MinY &&
-        coordinates.east.value < el.bbox.MaxY
-      );
-    })
-    .map(obj => obj);
-};
+
 export const generateUrlPrintCapabilities = (appId: string) => {
   return urlGeonorge + 'print/' + appId + '/capabilities.json';
 };
@@ -638,7 +593,6 @@ export const toDms = (value: string) => {
   const deg = parseInt(value, 10);
   const min = parseInt(((parseFloat(value) - deg) * 60).toString(), 10);
   const sec = parseInt(((parseFloat(value) - deg - min / 60) * 3600).toString(), 10);
-  //return `${deg}° ${zerofill(min)}' ${zerofill(parseInt(sec.toFixed(2), 10))}''`;
   return {
     degrees: deg,
     minutes: min,

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { Coordinate } from 'ol/coordinate';
-
 import { PrintBoxSelect } from '../../MapCore/printBoxSelect';
 import useMap from '../../app/useMap';
 import { generateLagTurkartUrl } from '../../utils/n3api';
@@ -27,7 +25,6 @@ const Turkart = () => {
   const { t } = useTranslation();
   const [scale, setScale] = useState<number>(25000);
   const [titel, setTitel] = useState<string>('Turkart');
-  const [coordinates, setCoordinates] = useState<Coordinate | null>(null);
   const [legend, setLegend] = useState<boolean>(false);
   const [trips, setTrips] = useState<boolean>(false);
   const [sweden, setSweden] = useState<boolean>(false);
@@ -131,7 +128,7 @@ const Turkart = () => {
       .then(response => {
         mapReadyForDownload(response, urlLagTurkart);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         mapCreationFailed(error);
       });
     setShowSpinner(true);

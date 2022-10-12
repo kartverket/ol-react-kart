@@ -25,8 +25,8 @@
   color: var(--white);
   opacity: 0.7;
   display: block;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin: 1px;
   padding: 0;
   text-align: center;
@@ -40,7 +40,24 @@
   background-color: var(--blue_hover);
 }
 .ol-control button:active {
-  background-color: var(--dark_blue_button);
+  background-color: var(--blue_dark_button);
+}
+.ol-geolocation {
+  bottom: auto;
+  left: auto;
+  right: 1rem;
+  top: 6.1em;
+  z-index: 13;
+}
+.ol-geolocation button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  text-decoration: none;
+  text-align: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 4px;
 }
 .ol-geolocation {
   bottom: auto;

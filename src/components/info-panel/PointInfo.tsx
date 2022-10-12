@@ -26,6 +26,7 @@ import {
   round,
   toDms,
 } from '../../utils/n3api';
+import FeatureInfo from './FeatureInfo';
 import style from './SearchBar.module.scss';
 import Turkart from './Turkart';
 
@@ -61,7 +62,7 @@ const PointInfo = () => {
   const [nodplakatStedsnavn, setNodplakatStedsnavn] = useState('');
   const [nodplakatVeg, setNodplakatVeg] = useState('');
   const [showCoordinates, setShowCoordinates] = useState(false);
-  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(false);
+  const [showGetFeatureInfo, setShowGetFeatureInfo] = useState(true);
   const [projeksjoner, setProjeksjoner] = useState<IProsjektion[]>([]);
   const [coordinates, setCoordinates] = useState<Coordinate>();
   const [projection, setProjection] = useState<string>('25833');
@@ -422,7 +423,6 @@ const PointInfo = () => {
         {showTurkart ? <Turkart /> : null}
       </div>
       {/* Fargeleggingskart open */}
-      {/*
       <div className={showFargeleggingskart ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
           <div
@@ -438,7 +438,6 @@ const PointInfo = () => {
           </div>
         </div>
       </div>
-      */}
       {/* Nodplakat open */}
       <div className={showNodplakat ? `${style.selected} ${style.open}` : style.selected}>
         <div className="p-2 bg-light mb-2">
@@ -455,18 +454,9 @@ const PointInfo = () => {
           </div>
           <div className={showNodplakat1 ? `${style.selected} ${style.open}` : style.selected}>
             <h4 className=""> {t('Ansvar')}</h4>
-            <p className="body-text body-text--xs text-wrap" style={{ width: '40rem' }}>
-              {' '}
-              {t('NodplakatText1')}
-            </p>
-            <p className="body-text body-text--xs text-wrap" style={{ width: '40rem' }}>
-              {' '}
-              {t('NodplakatText2')}
-            </p>
-            <p className="body-text body-text--xs text-wrap" style={{ width: '40rem' }}>
-              {' '}
-              {t('NodplakatText3')}
-            </p>
+            <p className="body-text body-text--xs text-wrap info">{t('NodplakatText1')}</p>
+            <p className="body-text body-text--xs text-wrap info">{t('NodplakatText2')}</p>
+            <p className="body-text body-text--xs text-wrap info">{t('NodplakatText3')}</p>
             <button
               className="button button__green--primary button--xs"
               onClick={() => {
@@ -552,10 +542,11 @@ const PointInfo = () => {
             }}
             className={style.expandBtn}
           >
-            <span className={style.ellipsisToggle}>{t('koordTrans')}</span>
+            <span className={style.ellipsisToggle}>{t('HereYouFind_text')}</span>
             <span className="material-icons-outlined">{showGetFeatureInfo ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
+        {showGetFeatureInfo ? <FeatureInfo /> : null}
       </div>
       {/* Eiendomsinformasjon open */}
       <div className={showMatrikkel ? `${style.selected} pointInfo` : style.selected}>

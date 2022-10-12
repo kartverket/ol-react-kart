@@ -12,8 +12,8 @@ export interface IMainMenuPanelProjectLayersProps {
 const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayersProps) => {
   const { t } = useTranslation();
   const project = useProjectStore();
-  const setToggleLayer = useProjectStore(state => state.setToggleLayer);
-  const setToggleGroup = useProjectStore(state => state.setToggleGroup);
+  const setToggleLayer = useProjectStore((state:any) => state.setToggleLayer);
+  const setToggleGroup = useProjectStore((state:any) => state.setToggleGroup);
 
   const tileLayers = project.projects.find((p: IProject) => p.ProjectName === ProjectName)?.Config.layer;
   const vectorLayers = project.projects.find((p: IProject) => p.ProjectName === ProjectName)?.Config.vector;
@@ -25,7 +25,7 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
   };
 
   const toggleLayer = (layer: ILayer): void => {
-    setToggleLayer(layer.name, ProjectName);
+    setToggleLayer(layer.guid, ProjectName);
   };
 
   const toggleLayerGroup = (group: IMapLayer): void => {
@@ -36,7 +36,7 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
     <>
       {layerGroups ? (
         <ul className="list-group list-group-flush">
-          {layerGroups.map((group, index) => (
+          {layerGroups.map((group:IMapLayer, index: number) => (
             <li key={index} className="list-group-item list-group-item-action pt-2 pb-2">
               <div
                 className="d-flex pt-2 pb-2"
@@ -56,33 +56,34 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
                   <ul className="list-group list-group-flush">
                     {tileLayers
                       ? tileLayers
-                          .filter(w => w.groupid && w.groupid === group.groupid)
-                          .map((tileLayer, wmsIndex) => (
+                          .filter((w:ILayer) => w.groupid && w.groupid === group.groupid)
+                          .map((tileLayer: ILayer, index:number) => (
                             <li
-                              key={wmsIndex}
+                              key={index}
                               className="list-group-item list-group-item-action pt-2 pb-2"
                               onClick={() => toggleLayer(tileLayer)}
                             >
                               <div className="d-flex p-0 checkbox">
                                 <input
                                   type="checkbox"
-                                  id={tileLayer.name}
-                                  defaultChecked={tileLayer.options.visibility === true ? true : false}
-                                  onClick={e => {
+                                  id={tileLayer.guid}
+                                  checked={tileLayer.options.visibility === true ? true : false}
+                                  onClick={(e) => {
                                     e.stopPropagation();
                                   }}
+                                  readOnly
                                 />
-                                <label htmlFor={tileLayer.name}>{t(tileLayer.name)}</label>
+                                <label htmlFor={tileLayer.guid}>{t(tileLayer.name)}</label>
                               </div>
                             </li>
                           ))
                       : null}
                     {vectorLayers
                       ? vectorLayers
-                          .filter(v => v.groupid && v.groupid === group.groupid)
-                          .map((vectorLayer, vectorIndex) => (
+                          .filter((v:IVector) => v.groupid && v.groupid === group.groupid)
+                          .map((vectorLayer: IVector, index:number) => (
                             <li
-                              key={vectorIndex}
+                              key={index}
                               className="list-group-item list-group-item-action pt-2 pb-2"
                               onClick={() => toggleVector(vectorLayer)}
                             >
@@ -90,10 +91,11 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
                                 <input
                                   type="checkbox"
                                   id={vectorLayer.name}
-                                  defaultChecked={vectorLayer.options.visibility === true ? true : false}
-                                  onChange={() => {
-                                    console.log('toggleVector');
+                                  checked={vectorLayer.options.visibility === true ? true : false}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
                                   }}
+                                  readOnly
                                 />
                                 <label htmlFor={vectorLayer.name}>{t(vectorLayer.name)}</label>
                               </div>

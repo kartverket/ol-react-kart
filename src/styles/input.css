@@ -1,38 +1,31 @@
 :root {
-  --inputHeight: 2.5rem;
+  --input--height: 2.5rem;
+  --input--margin-bottom: 2rem;
 }
 
 .inputField__wrapper {
-  width: 100%;
   position: relative;
-  /*height: 3rem;*/
-  height: var(--inputHeight);
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
 }
 
 .inputField__wrapper label {
-  position: absolute;
-  top: 0;
-  left: 0;
   color: var(--gray_dark);
 }
 
 .inputField {
-  position: relative;
+  display: block;
   width: 100%;
-  height: var(--inputHeight);
+  height: var(--input--height);
   padding: 0.5rem;
-  display: inline-flex;
-  border: 0.063rem solid var(--dark_blue_button);
+  border: 0.063rem solid var(--blue_dark_button);
   box-sizing: border-box;
   background: #ffffff;
   transition: linear, 0.2s linear;
   font-family: inherit;
   border-radius: 0.25rem;
-  top: 25px;
 }
 
 .inputField:focus-visible {
@@ -51,7 +44,7 @@ input[required] + label:after {
 
 .exclamation {
   position: absolute;
-  top: 25px;
+  top: 24px;
   right: 0;
   width: 25px;
   height: 40px;
@@ -64,12 +57,6 @@ input[required] + label:after {
 .exclamation i {
   position: absolute;
   top: 8px;
-}
-
-.inputField__helper__text {
-  position: absolute;
-  left: 0;
-  top: 70px;
 }
 
 input[type='text']:focus-visible:active {

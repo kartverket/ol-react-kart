@@ -16,7 +16,7 @@ export type wms = {
   addLayer?: string | undefined;
   wmsStyles?: string | undefined;
 };
-interface GlobalState {
+export interface IGlobalState {
   center?: center;
   zoom?: number;
   project?: string;
@@ -37,7 +37,7 @@ interface GlobalState {
   setWms: (wms: wms) => void;
   setDrawing: (drawing: string | undefined) => void;
 }
-const updateURL = (state: GlobalState) => {
+const updateURL = (state: IGlobalState) => {
   const { center, zoom, project, layers, marker, selection, sok, wms, drawing } = state;
   const query = {
     project: project ? project : undefined,
@@ -58,24 +58,24 @@ const updateURL = (state: GlobalState) => {
   });
   setQuery(_queryString);
 };
-export const useGlobalStore = create<GlobalState>(set => ({
+export const useGlobalStore = create<IGlobalState>(set => ({
   center: [0, 0],
   zoom: 10,
   layers: '',
   sok: '',
   setCenter: (center: center) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, center });
       return { ...state, center };
     }),
   setZoom: (zoom: number) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, zoom });
       return { ...state, zoom };
     }),
   setProject: (project: string | undefined) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, project });
       return { ...state, project };
     }),
   setLayers: (layers: string) =>
@@ -83,17 +83,17 @@ export const useGlobalStore = create<GlobalState>(set => ({
       const queryValues = queryString.parse(window.location.search);
       queryValues.layers = layers;
       setQuery(queryValues);
-      //updateURL(state);
+      updateURL({ ...state, layers });
       return { ...state, layers };
     }),
   setMarkerCenter: (marker: marker) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, marker });
       return { ...state, marker };
     }),
   setSelection: (selection: string | undefined) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, selection });
       return { ...state, selection };
     }),
   setSok: (sok: string) =>
@@ -106,12 +106,12 @@ export const useGlobalStore = create<GlobalState>(set => ({
     }),
   setWms: (wms: wms) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, wms });
       return { ...state, wms };
     }),
   setDrawing: (drawing: string | undefined) =>
     set(state => {
-      updateURL(state);
+      updateURL({ ...state, drawing });
       return { ...state, drawing };
     }),
 }));

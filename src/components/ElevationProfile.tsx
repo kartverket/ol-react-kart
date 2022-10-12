@@ -49,7 +49,7 @@ const ElevationProfile = () => {
         setElevationImage('');
         generateElevationChart(data as string);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         console.error('generateElevationProfile error: ', error);
       });
     return;
@@ -74,7 +74,7 @@ const ElevationProfile = () => {
         }
         setElevationImage(dataXml.ExecuteResponse.ProcessOutputs.Output.Data.ComplexData);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         console.error('generateElevationChart error: ', error);
       });
   };
@@ -185,7 +185,7 @@ const ElevationProfile = () => {
                 </button>
                 <button
                   type="button"
-                  className={`button button__green--primary button--xs ${isDrawActive ? 'activeBtn' : 'btn-toggle'}`}
+                  className={`button button__green--primary button--xs ${isDrawActive ? 'activeBtn' : 'toggle'}`}
                   onClick={drawLineElevation}
                 >
                   {t('drawProfile_txt')}

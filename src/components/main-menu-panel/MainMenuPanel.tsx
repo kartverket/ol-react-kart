@@ -65,7 +65,7 @@ const MainMenuPanel = () => {
                 </h1>
               </div>
               <div className="ms-auto p-2">
-                <button type="button" className="btn btn-light bg-transparent border-0" onClick={() => closeNav()}>
+                <button type="button" className="button bg-transparent border-0" onClick={() => closeNav()}>
                   <span className="material-icons-outlined">close</span>
                 </button>
               </div>
@@ -99,7 +99,7 @@ const MainMenuPanel = () => {
               </div>
               <div className="ps-2 pe-2">
                 <span className={` ${showActiveProject ? 'text-capitalize fw-semibold' : 'text-capitalize'} `}>
-                  {t(activeProject.ProjectName)}
+                  {t(activeProject.SiteTitle)}
                 </span>
               </div>
               <div className="ms-auto ps-2 pe-2">
