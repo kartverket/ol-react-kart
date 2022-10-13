@@ -237,8 +237,8 @@ const PointInfo = () => {
           nodplakatNameRef.current && nodplakatNameRef.current.value.length > 1
             ? nodplakatNameRef.current.value
             : nodplakatStedsnavnRef.current
-              ? nodplakatStedsnavnRef.current.value
-              : '',
+            ? nodplakatStedsnavnRef.current.value
+            : '',
         position1: geographicalText(googleCoordinates[1]) + ' nord',
         position2: geographicalText(googleCoordinates[0]) + ' øst',
         street: nodplakatVegRef.current ? nodplakatVegRef.current.value : '',
@@ -378,7 +378,6 @@ const PointInfo = () => {
               <span className="material-icons-outlined">{showGetFeatureInfo ? 'expand_less' : 'expand_more'}</span>
             </div>
           </div>
-
         </div>
       </div>
       {/* Koordinater open */}

@@ -11,14 +11,16 @@ const FeatureInfo = () => {
   const [featureInfos, setFeatureInfo] = useState<any[]>([]);
   const featureInfoRef = useRef<HTMLDivElement>(null);
   const map = useMap();
-  const listProjects = useProjectStore((state: { projects: any; }) => state.projects);
-  const activeProject = useProjectStore((state: { activeProject: any; }) => state.activeProject);
-  const listLayers = listProjects.filter((project: { Config: { layer: any[]; }; }) => {
-    const filterLayers = project.Config.layer.filter((layer: { options: { visibility: boolean; isbaselayer: boolean; }; }) => {
-      if (layer.options.visibility === true && layer.options.isbaselayer === false) {
-        return layer;
-      }
-    });
+  const listProjects = useProjectStore((state: { projects: any }) => state.projects);
+  const activeProject = useProjectStore((state: { activeProject: any }) => state.activeProject);
+  const listLayers = listProjects.filter((project: { Config: { layer: any[] } }) => {
+    const filterLayers = project.Config.layer.filter(
+      (layer: { options: { visibility: boolean; isbaselayer: boolean } }) => {
+        if (layer.options.visibility === true && layer.options.isbaselayer === false) {
+          return layer;
+        }
+      },
+    );
     if (filterLayers.length > 0) {
       return project;
     }
@@ -261,15 +263,25 @@ const FeatureInfo = () => {
     for (const key in info) {
       const featureInLayer = info[key];
       const configLayer = listLayers
-        .map((project: { Config: { layer: any[]; }; }) =>
+        .map((project: { Config: { layer: any[] } }) =>
           project.Config.layer
-            .filter((w: { options: { visibility: boolean; }; }) => w.options.visibility === true)
-            .filter((w: { params: { layers: any; }; }) => w.params.layers === (featureInLayer.name ?? key))
+            .filter((w: { options: { visibility: boolean } }) => w.options.visibility === true)
+            .filter((w: { params: { layers: any } }) => w.params.layers === (featureInLayer.name ?? key))
             .map((wmsLayer: ILayer) => wmsLayer),
         )
         .filter((w: string | any[]) => w.length > 0);
-      if (configLayer.length === 0) return <><span>Ingen lag valgt</span></>;
-      if (featureInLayer === "") return <><span>Ingen data</span></>;
+      if (configLayer.length === 0)
+        return (
+          <>
+            <span>Ingen lag valgt</span>
+          </>
+        );
+      if (featureInLayer === '')
+        return (
+          <>
+            <span>Ingen data</span>
+          </>
+        );
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
       appliedFields.map((feature: any) => {
         if (!Array.isArray(feature)) return <></>;
@@ -339,10 +351,7 @@ const FeatureInfo = () => {
   };
   return (
     <>
-      <div
-        ref={featureInfoRef}
-        className="feature-info"
-      >
+      <div ref={featureInfoRef} className="feature-info">
         {featureContent()}
       </div>
     </>

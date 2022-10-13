@@ -19,7 +19,7 @@ import { IProject } from '../MapCore/Models/config-model';
 import { addProject, selectCenter } from '../MapCore/Project/projectSlice';
 import { wmtsTileGrid } from '../MapCore/TileGrid/wmts';
 import { useBaseConfigStore, useBaseLayersStore, useBaseMapStore } from '../app/baseStore';
-import { marker, useGlobalStore, IGlobalState } from '../app/globalStore';
+import { IGlobalState, marker, useGlobalStore } from '../app/globalStore';
 import MapContext from '../app/mapContext';
 import { useProjectStore } from '../app/projetStore';
 import pinOrange from '../assets/pin-md-orange.png';
@@ -45,12 +45,12 @@ const MainMap = ({ children }: Props) => {
   const baseMap = useBaseMapStore();
   const baseLayers = useBaseLayersStore();
 
-  const setSok = useGlobalStore((state:IGlobalState) => state.setSok);
-  const setGlobalCenter = useGlobalStore((state:IGlobalState) => state.setCenter);
-  const setGlobalMarker = useGlobalStore((state:IGlobalState) => state.setMarkerCenter);
-  const setGlobalLayers = useGlobalStore((state:IGlobalState) => state.setLayers);
-  const setGlobalZoom = useGlobalStore((state:IGlobalState) => state.setZoom);
-  const setGlobalSelection = useGlobalStore((state:IGlobalState) => state.setSelection);
+  const setSok = useGlobalStore((state: IGlobalState) => state.setSok);
+  const setGlobalCenter = useGlobalStore((state: IGlobalState) => state.setCenter);
+  const setGlobalMarker = useGlobalStore((state: IGlobalState) => state.setMarkerCenter);
+  const setGlobalLayers = useGlobalStore((state: IGlobalState) => state.setLayers);
+  const setGlobalZoom = useGlobalStore((state: IGlobalState) => state.setZoom);
+  const setGlobalSelection = useGlobalStore((state: IGlobalState) => state.setSelection);
 
   const eventDispatch = useEventDispatch();
   const mapMoveEnd = MapMoveEnd(eventDispatch);

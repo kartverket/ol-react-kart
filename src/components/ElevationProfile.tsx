@@ -49,7 +49,7 @@ const ElevationProfile = () => {
         setElevationImage('');
         generateElevationChart(data as string);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('generateElevationProfile error: ', error);
       });
     return;
@@ -74,7 +74,7 @@ const ElevationProfile = () => {
         }
         setElevationImage(dataXml.ExecuteResponse.ProcessOutputs.Output.Data.ComplexData);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('generateElevationChart error: ', error);
       });
   };

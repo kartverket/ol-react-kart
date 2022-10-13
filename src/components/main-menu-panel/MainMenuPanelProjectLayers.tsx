@@ -12,8 +12,8 @@ export interface IMainMenuPanelProjectLayersProps {
 const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayersProps) => {
   const { t } = useTranslation();
   const project = useProjectStore();
-  const setToggleLayer = useProjectStore((state:any) => state.setToggleLayer);
-  const setToggleGroup = useProjectStore((state:any) => state.setToggleGroup);
+  const setToggleLayer = useProjectStore((state: any) => state.setToggleLayer);
+  const setToggleGroup = useProjectStore((state: any) => state.setToggleGroup);
 
   const tileLayers = project.projects.find((p: IProject) => p.ProjectName === ProjectName)?.Config.layer;
   const vectorLayers = project.projects.find((p: IProject) => p.ProjectName === ProjectName)?.Config.vector;
@@ -36,7 +36,7 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
     <>
       {layerGroups ? (
         <ul className="list-group list-group-flush">
-          {layerGroups.map((group:IMapLayer, index: number) => (
+          {layerGroups.map((group: IMapLayer, index: number) => (
             <li key={index} className="list-group-item list-group-item-action pt-2 pb-2">
               <div
                 className="d-flex pt-2 pb-2"
@@ -56,8 +56,8 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
                   <ul className="list-group list-group-flush">
                     {tileLayers
                       ? tileLayers
-                          .filter((w:ILayer) => w.groupid && w.groupid === group.groupid)
-                          .map((tileLayer: ILayer, index:number) => (
+                          .filter((w: ILayer) => w.groupid && w.groupid === group.groupid)
+                          .map((tileLayer: ILayer, index: number) => (
                             <li
                               key={index}
                               className="list-group-item list-group-item-action pt-2 pb-2"
@@ -68,7 +68,7 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
                                   type="checkbox"
                                   id={tileLayer.guid}
                                   checked={tileLayer.options.visibility === true ? true : false}
-                                  onClick={(e) => {
+                                  onClick={e => {
                                     e.stopPropagation();
                                   }}
                                   readOnly
@@ -80,8 +80,8 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
                       : null}
                     {vectorLayers
                       ? vectorLayers
-                          .filter((v:IVector) => v.groupid && v.groupid === group.groupid)
-                          .map((vectorLayer: IVector, index:number) => (
+                          .filter((v: IVector) => v.groupid && v.groupid === group.groupid)
+                          .map((vectorLayer: IVector, index: number) => (
                             <li
                               key={index}
                               className="list-group-item list-group-item-action pt-2 pb-2"
@@ -92,7 +92,7 @@ const MainMenuPanelProjectLayers = ({ ProjectName }: IMainMenuPanelProjectLayers
                                   type="checkbox"
                                   id={vectorLayer.name}
                                   checked={vectorLayer.options.visibility === true ? true : false}
-                                  onClick={(e) => {
+                                  onClick={e => {
                                     e.stopPropagation();
                                   }}
                                   readOnly

@@ -1,14 +1,21 @@
 // import { useEventStoreSelector } from '../Events/Event/eventHooks';
 import axios from 'axios';
 
+import OlFeature from 'ol/Feature';
 import Map from 'ol/Map';
 import { getTopLeft, getWidth } from 'ol/extent';
 import { GeoJSON, MVT } from 'ol/format';
+import OlGeometry from 'ol/geom/Geometry';
 import TileLayer from 'ol/layer/Tile';
 import OLVectorLayer from 'ol/layer/Vector';
 import { get } from 'ol/proj';
+import RenderFeature from 'ol/render/Feature';
 import { TileWMS, WMTS } from 'ol/source';
 import { Vector as VectorSource } from 'ol/source';
+import OlStyleFill from 'ol/style/Fill';
+import OlStyleStroke from 'ol/style/Stroke';
+import OlStyle from 'ol/style/Style';
+import OlStyleText from 'ol/style/Text';
 
 import { addCustomProj, loadCustomCrs } from '../../utils/projectionUtil';
 import { ILayer } from '../Models/config-model';
@@ -136,6 +143,7 @@ export const Layers = function (myMap: Map) {
           break;
         }
         case 'GEOJSON': {
+          console.log('GEOJSON');
           axios.get(`${layer.url}`).then(function (response) {
             const source = new VectorSource({
               features: new GeoJSON().readFeatures(response.data, {
@@ -147,10 +155,29 @@ export const Layers = function (myMap: Map) {
               source,
             });
             if (layer.style) {
-              vectorLayer.setStyle(createStyle(layer.style));
-              //   const fill = layer.style.regularshape.fill;
-
-              //   const newStyle = new Style({stroke: new Stroke({color: layer.style.regularshape})});
+              const textStyle = (feature: OlFeature<OlGeometry> | RenderFeature, resolution: any) => {
+                return new OlStyle({
+                  stroke: new OlStyleStroke({
+                    color: layer.style?.stroke?.color ?? 'rgb(128, 64, 64)',
+                    width: layer.style?.stroke?.width ?? 1,
+                  }),
+                  fill: new OlStyleFill({
+                    color: layer.style?.fill?.color ?? 'rgba(128, 128, 128, 0.1)',
+                  }),
+                  text: new OlStyleText({
+                    text: layer.style?.text?.text ? feature.get(layer.style?.text?.text as string) : feature.getId(),
+                    scale: layer.style?.text?.scale ?? 1.3,
+                    fill: new OlStyleFill({
+                      color: layer.style?.text?.fill.color ?? '#000000',
+                    }),
+                    stroke: new OlStyleStroke({
+                      color: layer.style?.text?.stroke.color ??'#FFF9AA',
+                      width: layer.style?.text?.stroke.width ?? 3.5,
+                    }),
+                  }),
+                });
+              };
+              vectorLayer.setStyle(textStyle);
             }
             vectorLayer.set('guid', layer.guid);
             map.addLayer(vectorLayer);

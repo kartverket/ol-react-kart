@@ -78,7 +78,7 @@ export interface IStroke {
   width: number;
 }
 export interface IText {
-  text: string;
+  text: string | Array<string> | undefined;
   scale: number;
   fill: IFill;
   stroke: IStroke;

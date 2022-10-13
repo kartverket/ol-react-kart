@@ -10058,7 +10058,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 width: 1,
               },
               text: {
-                text: '{id}',
+                text: 'id',
                 scale: 1.3,
                 fill: {
                   color: '#000000',
@@ -10121,7 +10121,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 width: 1,
               },
               text: {
-                text: '{n}',
+                text: 'n',
                 scale: 1.3,
                 fill: {
                   color: '#000000',
@@ -10224,7 +10224,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 width: 1,
               },
               text: {
-                text: '{id}',
+                text: 'id',
                 scale: 1.3,
                 fill: {
                   color: '#000000',
@@ -10287,7 +10287,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 width: 1,
               },
               text: {
-                text: '{id}',
+                text: 'id',
                 scale: 1.3,
                 fill: {
                   color: '#000000',
@@ -10346,7 +10346,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 width: 1,
               },
               text: {
-                text: '{id}',
+                text: 'id',
                 scale: 1.3,
                 fill: {
                   color: '#000000',
@@ -10405,7 +10405,7 @@ export const useProjectStore = create<IProjectList>(set => ({
                 width: 1,
               },
               text: {
-                text: '{id}',
+                text: 'id',
                 scale: 1.3,
                 fill: {
                   color: '#000000',
