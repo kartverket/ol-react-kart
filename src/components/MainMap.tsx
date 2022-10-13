@@ -7,6 +7,7 @@ import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay';
 import View from 'ol/View';
 import { ScaleLine, Zoom, defaults } from 'ol/control';
+import { Coordinate } from 'ol/coordinate';
 import { getTopLeft, getWidth } from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
 import Projection from 'ol/proj/Projection';
@@ -292,7 +293,7 @@ const MainMap = ({ children }: Props) => {
   const setCenterToGeolocation = () => {
     const successGetGeolocation = (position: any) => {
       const coordinates = [position.coords.longitude, position.coords.latitude];
-      setGlobalCenter(coordinates as any);
+      setGlobalCenter(coordinates as Coordinate);
     };
     const errorGetGeolcation = () => console.log('Unable to retrieve your location');
 

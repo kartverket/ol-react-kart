@@ -171,7 +171,7 @@ export const Layers = function (myMap: Map) {
                       color: layer.style?.text?.fill.color ?? '#000000',
                     }),
                     stroke: new OlStyleStroke({
-                      color: layer.style?.text?.stroke.color ??'#FFF9AA',
+                      color: layer.style?.text?.stroke.color ?? '#FFF9AA',
                       width: layer.style?.text?.stroke.width ?? 3.5,
                     }),
                   }),

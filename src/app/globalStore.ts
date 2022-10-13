@@ -2,8 +2,9 @@ import queryString from 'query-string';
 import setQuery from 'set-query-string';
 import create from 'zustand';
 
+import { Coordinate } from 'ol/coordinate';
+
 export type marker = [markerLat?: number, markerLon?: number];
-export type center = [lat?: number, lon?: number, zoom?: number];
 export type selection = {
   p?: string;
   showSelection?: boolean;
@@ -17,7 +18,7 @@ export type wms = {
   wmsStyles?: string | undefined;
 };
 export interface IGlobalState {
-  center?: center;
+  center?: Coordinate;
   zoom?: number;
   project?: string;
   layers?: string;
@@ -27,7 +28,7 @@ export interface IGlobalState {
   wms?: wms;
   drawing?: string;
 
-  setCenter: (center: center) => void;
+  setCenter: (center: Coordinate) => void;
   setZoom: (zoom: number) => void;
   setProject: (project: string | undefined) => void;
   setLayers: (layers: string) => void;
@@ -63,7 +64,7 @@ export const useGlobalStore = create<IGlobalState>(set => ({
   zoom: 10,
   layers: '',
   sok: '',
-  setCenter: (center: center) =>
+  setCenter: (center: Coordinate) =>
     set(state => {
       updateURL({ ...state, center });
       return { ...state, center };

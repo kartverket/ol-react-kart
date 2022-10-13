@@ -10048,6 +10048,7 @@ export const useProjectStore = create<IProjectList>(set => ({
             guid: '1.Hovedkart sjø',
             options: {
               visibility: false,
+              isbaselayer: false,
             },
             style: {
               fill: {
@@ -10111,6 +10112,7 @@ export const useProjectStore = create<IProjectList>(set => ({
             guid: '1.Norge 1:50000',
             options: {
               visibility: false,
+              isbaselayer: false,
             },
             style: {
               fill: {
@@ -10214,6 +10216,7 @@ export const useProjectStore = create<IProjectList>(set => ({
             guid: '1.Overseilingskart',
             options: {
               visibility: false,
+              isbaselayer: false,
             },
             style: {
               fill: {
@@ -10277,6 +10280,7 @@ export const useProjectStore = create<IProjectList>(set => ({
             guid: '1.Kystkart',
             options: {
               visibility: false,
+              isbaselayer: false,
             },
             style: {
               fill: {
@@ -10336,6 +10340,7 @@ export const useProjectStore = create<IProjectList>(set => ({
             guid: '1.Havnekart',
             options: {
               visibility: false,
+              isbaselayer: false,
             },
             style: {
               fill: {
@@ -10395,6 +10400,7 @@ export const useProjectStore = create<IProjectList>(set => ({
             guid: '1.Hovedkart Svalbard',
             options: {
               visibility: false,
+              isbaselayer: false,
             },
             style: {
               fill: {
@@ -11325,6 +11331,7 @@ export const useProjectStore = create<IProjectList>(set => ({
           guid: '3.Kommunenes fjelltopper',
           options: {
             visibility: false,
+            isbaselayer: false,
           },
           style: {
             regularshape: {

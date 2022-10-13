@@ -16,7 +16,7 @@ export const GetClickCoordinates = function () {
     activate(map: Map) {
       if (!isActive) {
         if (map) {
-          infoKey = map.on('singleclick', function (evt) {
+          infoKey = map.on('singleclick', evt => {
             const markerOerlay = map.getOverlayById('marker');
             if (markerOerlay) {
               markerOerlay.setPosition(evt.coordinate);

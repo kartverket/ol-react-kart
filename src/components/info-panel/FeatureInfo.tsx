@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import uniqid from 'uniqid';
 
-import { IField, IIncludedFields, IIncludedFieldsDictionary, ILayer } from '../../MapCore/Models/config-model';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import { Coordinate } from 'ol/coordinate';
+
+import { IIncludedFieldsDictionary, ILayer, IProject } from '../../MapCore/Models/config-model';
 import { useProjectStore } from '../../app/projetStore';
 import useMap from '../../app/useMap';
 import { parseFeatureInfo } from '../../utils/FeatureUtil';
@@ -11,21 +14,19 @@ const FeatureInfo = () => {
   const [featureInfos, setFeatureInfo] = useState<any[]>([]);
   const featureInfoRef = useRef<HTMLDivElement>(null);
   const map = useMap();
-  const listProjects = useProjectStore((state: { projects: any }) => state.projects);
-  const activeProject = useProjectStore((state: { activeProject: any }) => state.activeProject);
-  const listLayers = listProjects.filter((project: { Config: { layer: any[] } }) => {
-    const filterLayers = project.Config.layer.filter(
-      (layer: { options: { visibility: boolean; isbaselayer: boolean } }) => {
-        if (layer.options.visibility === true && layer.options.isbaselayer === false) {
-          return layer;
-        }
-      },
-    );
+  const listProjects = useProjectStore((state: { projects: IProject[] }) => state.projects);
+  const activeProject = useProjectStore((state: { activeProject: IProject }) => state.activeProject);
+  const listLayers = listProjects.filter((project: { Config: { layer: ILayer[] } }) => {
+    const filterLayers = project.Config.layer.filter((layer: ILayer) => {
+      if (layer.options.visibility === true && layer.options.isbaselayer === false) {
+        return layer;
+      }
+    });
     if (filterLayers.length > 0) {
       return project;
     }
   });
-  const onMapClick = (e: any) => {
+  const onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
     if (!map) return;
     setFeatureInfo([]);
     const layers = map.getLayers().getArray();
@@ -60,7 +61,8 @@ const FeatureInfo = () => {
             });
         }
       } else if (source.constructor.name === 'VectorSource') {
-        const getExtentForCoordinate = (coordinate: any, pixelTolerance: any, resolution: any) => {
+        const layername = element.get('guid') ?? '';
+        const getExtentForCoordinate = (coordinate: Coordinate, pixelTolerance: number, resolution: number) => {
           const toleranceInMapUnits = pixelTolerance * resolution;
           const minN = coordinate[0] - toleranceInMapUnits;
           const minE = coordinate[1] - toleranceInMapUnits;
@@ -68,13 +70,13 @@ const FeatureInfo = () => {
           const maxE = coordinate[1] + toleranceInMapUnits;
           return [minN, minE, maxN, maxE];
         };
-        const extent = getExtentForCoordinate(e.coordinate, 5, map.getView().getResolution());
-        const features = source.forEachFeatureInExtent(extent, (feature: any) => {
-          return feature.getProperties();
+        const extent = getExtentForCoordinate(e.coordinate, 5, map.getView().getResolution() as number);
+        const features: any[] = [];
+        source.forEachFeatureIntersectingExtent(extent, (feature: any) => {
+          features.push(feature.getProperties());
         });
-        const feature = [features];
         if (features) {
-          setFeatureInfo(prevFeatures => [...prevFeatures, ...feature]);
+          setFeatureInfo(prevFeatures => [...prevFeatures, { [layername]: features }]);
         }
       }
     });
@@ -176,76 +178,34 @@ const FeatureInfo = () => {
     }
     const includedFields = readIncludedFields(subLayer.includedfields);
     const parsedResultsIncluded: any[][][] = [];
-    if (Array.isArray(featureInLayer)) {
+    if (subLayer.distributionProtocol === 'GEOJSON') {
       for (const key in featureInLayer) {
-        if (key !== 'name') {
-          const feature = featureInLayer[key];
-          for (const key in feature) {
-            const items = feature[key];
-            const attributes = compareIncludedFields(includedFields, items[0], activeProject.Config.featureDict);
-            parsedResultsIncluded.push(attributes);
-          }
+        const items = featureInLayer[key];
+        if (Object.getPrototypeOf(items).constructor.name !== 'Polygon') {
+          const attributes = compareIncludedFields(includedFields, items, activeProject.Config.featureDict);
+          parsedResultsIncluded.push(attributes);
         }
       }
     } else {
-      for (const [key, value] of Object.entries(featureInLayer)) {
-        const attributes = compareIncludedFields(includedFields, value, activeProject.Config.featureDict);
-        parsedResultsIncluded.push(attributes);
+      if (Array.isArray(featureInLayer)) {
+        for (const key in featureInLayer) {
+          if (key !== 'name') {
+            const feature = featureInLayer[key];
+            for (const key in feature) {
+              const items = feature[key];
+              const attributes = compareIncludedFields(includedFields, items[0], activeProject.Config.featureDict);
+              parsedResultsIncluded.push(attributes);
+            }
+          }
+        }
+      } else {
+        for (const [key, value] of Object.entries(featureInLayer)) {
+          const attributes = compareIncludedFields(includedFields, value, activeProject.Config.featureDict);
+          parsedResultsIncluded.push(attributes);
+        }
       }
     }
     return parsedResultsIncluded;
-  };
-  const testFormat = (s: any) => {
-    if (typeof s === 'object') return 'isObject';
-    const rX = /^((\d+)|(true|false)|(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\+\d{2})|([\w\W]+))$/i;
-    const M = rX.exec(s);
-    if (!M) return '';
-    switch (M[1]) {
-      case M[2]:
-        return 'isNumeric';
-      case M[3]:
-        return 'isBoolean';
-      case M[4]:
-        return 'isDate';
-      case M[5]: {
-        if (M[5].length === 50 || M[5].length === 194) {
-          return 'isBboxInternal';
-        } else if (M[5].startsWith('{"type":"Point"')) {
-          return 'isBboxJsonPoint';
-        } else if (M[5].startsWith('{"type":"Polygon"')) {
-          return 'isBboxJsonPolygon';
-        } else if (M[5].startsWith('BOX(')) {
-          return 'isBboxSimple';
-        } else {
-          return 'isString';
-        }
-      }
-      default:
-        return false;
-    }
-  };
-  const prepareItemFormat = (v: any) => {
-    const test = testFormat(v);
-    switch (test) {
-      case 'isNumeric':
-        return <>{v}</>;
-      case 'isBoolean':
-        return <>{v}</>;
-      case 'isDate':
-        return <>{v}</>; // TODO: formatt?
-      case 'isBboxInternal':
-        return <>BBOX db internal</>; // TODO: klikke for å vise?
-      case 'isBboxJsonPoint':
-        return <>BBOX point</>; // TODO: klikke for å vise?
-      case 'isBboxJsonPolygon':
-        return <>BBOX polygon</>; // TODO: klikke for å vise?
-      case 'isBboxSimple':
-        return <>{v}</>; // TODO: klikke for å vise?
-      case 'isString':
-        return <>{v}</>;
-      default:
-        return <></>;
-    }
   };
   const showImage = (url: string, name: string) => {
     const img = new Image();
@@ -263,10 +223,10 @@ const FeatureInfo = () => {
     for (const key in info) {
       const featureInLayer = info[key];
       const configLayer = listLayers
-        .map((project: { Config: { layer: any[] } }) =>
+        .map((project: { Config: { layer: ILayer[] } }) =>
           project.Config.layer
-            .filter((w: { options: { visibility: boolean } }) => w.options.visibility === true)
-            .filter((w: { params: { layers: any } }) => w.params.layers === (featureInLayer.name ?? key))
+            .filter((w: ILayer) => w.options.visibility === true)
+            .filter((w: ILayer) => w.params.layers === (featureInLayer.name ?? key) || w.guid === key)
             .map((wmsLayer: ILayer) => wmsLayer),
         )
         .filter((w: string | any[]) => w.length > 0);
