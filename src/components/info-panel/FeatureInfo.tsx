@@ -11,6 +11,7 @@ import useMap from '../../app/useMap';
 import { parseFeatureInfo } from '../../utils/FeatureUtil';
 
 const FeatureInfo = () => {
+  const [showFeature, setShowFeature] = useState<number>(0);
   const [featureInfos, setFeatureInfo] = useState<any[]>([]);
   const featureInfoRef = useRef<HTMLDivElement>(null);
   const map = useMap();
@@ -42,6 +43,7 @@ const FeatureInfo = () => {
           {
             INFO_FORMAT: info_format,
             QUERY_LAYERS: source.getParams().layers,
+            feature_count: 10
           },
         );
         const layernames = source.getParams().layers ?? '';
@@ -243,7 +245,7 @@ const FeatureInfo = () => {
           </>
         );
       const appliedFields = applyIncludedFields(featureInLayer, configLayer[0][0]);
-      appliedFields.map((feature: any) => {
+      appliedFields.map((feature: any, index: number) => {
         if (!Array.isArray(feature)) return <></>;
         const attributes = feature.map((attribute: any) => {
           if (!attribute[1]) {
@@ -251,56 +253,68 @@ const FeatureInfo = () => {
           }
           return (
             <div key={attribute[0]}>
-              <li className="ist-group-item">
+              {attribute[1].type == 'symbol' ? (
                 <div className="row">
                   <div className="col-4"></div>
                   {attribute[1].type == 'symbol' ? <img className="symbol-image" src={attribute[1].url} /> : null}
                 </div>
-              </li>
-              <li className="ist-group-item">
-                <div className="row">
-                  <div className="col-5">
-                    {attribute[1].type != 'symbol' ? <span className="text-capitalize">{attribute[0]}</span> : null}
-                  </div>
-                  {attribute[1].type == 'picture' ? (
-                    <div className="col-5" onClick={() => showImage(attribute[1].url, attribute[1].name)}>
-                      <img className="scale-image" src={attribute[1].url} />
-                      <span>{attribute[1].name}</span>
-                    </div>
-                  ) : null}
-                  {attribute[1].type == 'link' ? (
-                    <div className="col-5">
-                      {attribute[1].url ? (
-                        <a className="text-info" href={attribute[1].url} target="_blank" rel="noopener noreferrer">
-                          {' '}
-                          <span>{attribute[1].name}</span>
-                        </a>
-                      ) : null}
-                    </div>
-                  ) : null}
-                  {!attribute[1].type ? (
-                    <div className="col-5">
-                      <span>{attribute[1]}</span>
-                    </div>
-                  ) : null}
+              ) : null}
+              <div className="row">
+                <div className="col-5">
+                  {attribute[1].type != 'symbol' ? <span className="text-capitalize">{attribute[0]}</span> : null}
                 </div>
-              </li>
+                {attribute[1].type == 'picture' ? (
+                  <div className="col-5" onClick={() => showImage(attribute[1].url, attribute[1].name)}>
+                    <img className="scale-image" src={attribute[1].url} />
+                    <span>{attribute[1].name}</span>
+                  </div>
+                ) : null}
+                {attribute[1].type == 'link' ? (
+                  <div className="col-5">
+                    {attribute[1].url ? (
+                      <a className="text-info" href={attribute[1].url} target="_blank" rel="noopener noreferrer">
+                        {' '}
+                        <span>{attribute[1].name}</span>
+                      </a>
+                    ) : null}
+                  </div>
+                ) : null}
+                {!attribute[1].type ? (
+                  <div className="col-5">
+                    <span>{attribute[1]}</span>
+                  </div>
+                ) : null}
+              </div>
             </div>
           );
         });
         layers.push(
           <div key={key}>
             <h3 className="text-capitalize">{key}</h3>
-            <ul className="list-group list-group-flush closeable-subcontent">{attributes}</ul>
+            {attributes}
           </div>,
         );
       });
     }
     return (
       <div className="ulContainer" key={uniqid()}>
-        {layers}
+        {layers.map((layer: any, index: number) => (
+          showFeature === index ? <div key={index}>{layer}</div> : null
+        ))}
+        <ul className="pagination">
+          {layers.map((layer: any, index: number) => (
+            <li key={index}>
+              <a className="page-link" href="#" onClick={() => toggleShowFeature(index)}>
+                {index + 1}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     );
+  };
+  const toggleShowFeature = (index: number) => {
+    setShowFeature(showFeature === index ? 0 : index);
   };
   const featureContent = () => {
     if (Array.isArray(featureInfos)) {
