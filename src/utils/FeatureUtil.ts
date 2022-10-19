@@ -140,14 +140,17 @@ export const parsePlainFeatureInfo = (data: any) => {
       r_layer[layerName] = subf.map((f: any) => {
         let feature = f.split(/(Feature[^\r\n]*)/);
         feature.shift();
-        const feature1 = feature.splice(0, 1)[0].split('Feature ')[1].replace(/:/g, '').trim();
         if (Array.isArray(feature) && feature[0].length > 1) {
-          feature = feature.map(item => {
-            item = item.trim().replace(/=/g, ':').split('\n');
-            return arrayToObject(item);
-          });
-          return feature[0];
+          feature = feature.map((item, index) => {
+            if (index % 2 !== 0) {
+              item = item.trim().replace(/=/g, ':').split('\n');
+              return arrayToObject(item);
+            }
+          })
+          feature = feature.filter((item: any) => item);
+          return feature;
         } else {
+          const feature1 = feature.splice(0, 1)[0].replace(/:/g, '').trim();
           return {
             feature: feature1,
           };

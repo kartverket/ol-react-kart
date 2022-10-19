@@ -195,8 +195,15 @@ const FeatureInfo = () => {
             const feature = featureInLayer[key];
             for (const key in feature) {
               const items = feature[key];
-              const attributes = compareIncludedFields(includedFields, items[0], activeProject.Config.featureDict);
-              parsedResultsIncluded.push(attributes);
+              if (Array.isArray(items)) {
+                items[0].forEach((element:any) => {
+                  const attributes = compareIncludedFields(includedFields, element, activeProject.Config.featureDict);
+                  parsedResultsIncluded.push(attributes);
+                });
+              } else {
+                const attributes = compareIncludedFields(includedFields, items[0], activeProject.Config.featureDict);
+                parsedResultsIncluded.push(attributes);
+              }
             }
           }
         }
