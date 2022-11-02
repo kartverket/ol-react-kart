@@ -8,7 +8,7 @@ import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
 
 import { selectClickCoordinates } from '../../MapCore/Events/getClickCoordinatesSlice';
-import { IAdresser, ISsrPunkt, ITeigInfo } from '../../components/search/search-model';
+import { IAdresser, ISsrPunkt, IEiendom, IGeoJsonCoordinates } from '../../components/search/search-model';
 import { useEventSelector } from '../../index';
 import { IProsjektion, getUTMZoneFromGeographicPoint } from '../../utils/mapUtil';
 import {
@@ -47,7 +47,8 @@ const PointInfo = () => {
   const clickCoordinates = useEventSelector(selectClickCoordinates);
   const [elevation, setElevation] = useState<IHoydeResult>({});
   const [address, setAddress] = useState<IAdresser>({});
-  const [matrikkel, setMatrikkel] = useState<ITeigInfo>();
+  const [matrikkel, setMatrikkel] = useState<IEiendom>();
+  const [matrikkelPolygon, setMatrikkelPolygon] = useState<IGeoJsonCoordinates>();
   const [stedsnavn, setStedsnavn] = useState<ISsrPunkt>({});
   const [emergencyPointInfo, setEmergencyPointInfo] = useState<any>({});
   const [show, setShow] = useState(true);
@@ -99,7 +100,7 @@ const PointInfo = () => {
         'EPSG:25833',
         'EPSG:4326',
       );
-      const matrikkelInfoUrl = generateMatrikkelInfoUrl(coordinates[1], coordinates[0], coordinates[1], coordinates[0]);
+      const matrikkelInfoUrl = generateMatrikkelInfoUrl(coordinates[1], coordinates[0]);
       const adressePunktsokUrl = generateAdressePunktsokUrl(50, coordinates[1], coordinates[0]);
       const eiendomAddress = generateEiendomAddressUrl(
         clickCoordinates?.coordinate[0].toString(),
@@ -124,11 +125,13 @@ const PointInfo = () => {
             ignorePiTags: true,
             removeNSPrefix: true,
           });
-          const matrikkelInfo = parser.parse(matrikkelInfoUrlResponse.data);
-          if (matrikkelInfo && matrikkelInfo.FeatureCollection && matrikkelInfo.FeatureCollection.featureMembers) {
-            setMatrikkel(matrikkelInfo.FeatureCollection.featureMembers.TEIGWFS as ITeigInfo);
+          const matrikkelInfo = matrikkelInfoUrlResponse.data;
+          if (matrikkelInfo) {
+            setMatrikkel(matrikkelInfo.features[0].properties as IEiendom);
+            setMatrikkelPolygon(matrikkelInfo.features[0].geometry as IGeoJsonCoordinates);
           } else {
             setMatrikkel(undefined);
+            setMatrikkelPolygon(undefined);
           }
           if (ssrPointUrlResponse.data && ssrPointUrlResponse.data.navn && ssrPointUrlResponse.data.navn.length > 0) {
             setStedsnavn(ssrPointUrlResponse.data as ISsrPunkt);
@@ -576,33 +579,33 @@ const PointInfo = () => {
             <span className="material-icons-outlined">{showMatrikkel ? 'expand_less' : 'expand_more'}</span>
           </div>
         </div>
-        {matrikkel && matrikkel.GARDSNR ? (
+        {matrikkel && matrikkel.gardsnummer ? (
           <div>
             <div className="container margin-bottom">
               <div className="row bg-light">
                 <div className="col-4">Kommunenr:</div>
-                <div className="col-8">{matrikkel.KOMMUNENR}</div>
+                <div className="col-8">{matrikkel.kommunenummer}</div>
               </div>
               <div className="row">
                 <div className="col-4">Gårdsnr:</div>
-                <div className="col-8">{matrikkel.GARDSNR}</div>
+                <div className="col-8">{matrikkel.gardsnummer}</div>
               </div>
               <div className="row bg-light">
                 <div className="col-4">Bruksnr:</div>
-                <div className="col-8">{matrikkel.BRUKSNR}</div>
+                <div className="col-8">{matrikkel.bruksnummer}</div>
               </div>
               <div className="row">
                 <div className="col-4">Festenr:</div>
-                <div className="col-8">{matrikkel.FESTENR}</div>
+                <div className="col-8">{matrikkel.festenummer}</div>
               </div>
               <div className="row bg-light">
                 <div className="col-4">Type:</div>
-                <div className="col-8">{matrikkel.EIENDOMSTYPE}</div>
+                <div className="col-8">{matrikkel.objekttype}</div>
               </div>
               <div className="row mt-3">
                 <a
                   className="button button__green--tertiary button--xs"
-                  href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.KOMMUNENR}/${matrikkel.GARDSNR}/${matrikkel.BRUKSNR}/${matrikkel.FESTENR}/${matrikkel.SEKSJONSNR}`}
+                  href={`https://seeiendom.kartverket.no/eiendom/${matrikkel.kommunenummer}/${matrikkel.gardsnummer}/${matrikkel.bruksnummer}/${matrikkel.festenummer}/${matrikkel.seksjonsnummer}`}
                   target="_blank"
                   rel="noreferrer"
                 >

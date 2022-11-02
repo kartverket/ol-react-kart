@@ -106,3 +106,25 @@ export interface ITeigInfo {
   UREGISTRERTJORDSAMEIE: boolean;
   boundedBy: any;
 }
+
+export interface IEiendom {
+  meterFraPunkt: number; //Distanse i meter til punktet det ble søkt etter.
+  kommunenummer: string; //Kommunenummer bestående av fire tegn med ledende 0 om nødvendig.
+  gardsnummer: number; //Del av et matrikkelnummer
+  bruksnummer: number; //Del av et matrikkelnummer
+  festenummer: number; //Del av et matrikkelnummer
+  seksjonsnummer: number; //Del av et matrikkelnummer
+  matrikkelnummertekst: string; //Generert tekst ut fra hvilken matrikkelenhet teigen tilhører. Eventuelt flere matrikkelnummere skyldes manglende, uavklarte grenser eller uregistrert jordsameie.
+  objekttype: string; //Stedfesting/geometri hentes fra to objekttyper, teig eller anleggsprojeksjonsflate. Den siste er «fotavtrykk» av volumer som fins over eller under teiger på terrenget
+  hovedområde: boolean; //Angir om området er teigens eller anleggsprojeksjonens hovedteig/hovedflate.
+  lokalid: number; //Lokal identifikator, tildelt av dataleverandør/dataforvalter (her matrikkelsystemet, Kartverket).
+  oppdateringsdato: string; //dato for siste endring på data-objektet i matrikkelsystemet
+  teigmedflerematrikkelenheter: boolean; //Teigen mangler indre avgrensing mellom de registrerte matrikkelnummerene
+  uregistrertjordsameie: boolean; //De registrerte matrikkelnummerene har andel i teigen
+  nøyaktighetsklasseteig: string; //Grov klassifisering(trafikklys) av stedfestingsnøyaktighet. (Grønt = ok, gult = sjekk!, rødt = store mangler)
+}
+
+export interface IGeoJsonCoordinates {
+  type: string;
+  coordinates: number[];
+}

@@ -72,10 +72,6 @@ export const generateEmergencyPosterServiceUrl = (config: {
   return `${urlGeonorge}/fop/fop?locationName=${locationName}&position1=${position1}&position2=${position2}&street=${street}&place=${place}&matrikkel=${matrikkel}&utm=${utm}&posDez=${posDez}&map=${map}`;
 };
 
-export const generateSearchMatrikkelVegUrl = (query: string | number | boolean) => {
-  return `${urlGeonorge}norgeskart/v1/matrikkel/veg/${encodeURIComponent(query)}`;
-};
-
 export const generateSearchMatrikkelAdresseUrl = (query: string | number | boolean) => {
   query = typeof query === 'string' ? query : '';
   query = query.indexOf(',') !== -1 ? query.replace(',', '*') : query + '';
@@ -129,8 +125,8 @@ export const generateAdressePunktsokUrl = (radius: number, lat: number, lon: num
   return `${urlAdressePunktsok}?radius=${radius}&lat=${lat}&lon=${lon}&treffPerSide=10`;
 };
 
-export const generateMatrikkelInfoUrl = (minx: number, miny: number, maxx: number, maxy: number) => {
-  return `${urlGeonorge}norgeskart/v1/teiger/bbox/${minx},${miny},${maxx},${maxy}`;
+export const generateMatrikkelInfoUrl = (minx: number, miny: number) => {
+  return `${urlGeonorge}eiendom/v1/punkt/omrader?radius=1&nord=${minx}&ost=${miny}&koordsys=4326`;
 };
 
 export const generateSeEiendomUrl = (knr: string, gnr: string, bnr: string, fnr: string, snr: string) => {
@@ -176,19 +172,6 @@ export const generateGeoJSONSaveUrl = () => {
   return `${url}ws/upload-json.py`;
 };
 
-export const generateSearchMatrikkelNummerUrl = (query: string) => {
-  return `${urlGeonorge}norgeskart/v1/matrikkel/eie/${query}`;
-};
-
-export const generateMatrikkelWfsFilterUrl = (property: {
-  kommunenr: string;
-  gardsnr: string;
-  bruksnr: string;
-  festenr?: string;
-  seksjonsnr?: string;
-}) => {
-  return `${urlGeonorge}norgeskart/v1/teiger/${property.kommunenr}-${property.gardsnr}-${property.bruksnr}-${property.festenr}-${property.seksjonsnr}/`;
-};
 export const generateEiendomAddressUrl = (
   kommunenr: string,
   gardsnr: string,
