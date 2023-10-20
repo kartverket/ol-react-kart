@@ -133,14 +133,14 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
       name: 'landkart',
       uuid: 'c0d063aa-59fc-42db-bc5d-a1c88f2bf256',
       description: 'Viser data fra Topografisk norgeskart WMS, Dybdedata WMS og Svalvard data fra Polar Instituttet',
-      url: 'https://cache.kartverket.no/norgeskart_bakgrunn/v1/wmts/1.0.0/',
+      url: 'https://cache.kartverket.no/topo/v1/wmts/1.0.0/',
       params: {
-        layers: 'norgeskart_bakgrunn',
+        layers: 'topo',
         format: 'image/png',
       },
       matrixprefix: false,
       matrixset: 'utm33n',
-      guid: '0.norgeskart_bakgrunn',
+      guid: '0.topo',
       options: {
         isbaselayer: true,
         singletile: false,
