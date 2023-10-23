@@ -7,11 +7,11 @@
       "name": "Landkart",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
       "params": {
-        "layers": "norgeskart_bakgrunn",
+        "layers": "topo",
         "format": "image/png"
       },
       "matrixprefix": "true",
-      "guid": "0.norgeskart_bakgrunn",
+      "guid": "0.topo",
       "options": {
         "isbaselayer": "true",
         "singletile": "false",
@@ -41,11 +41,11 @@
       "name": "Gråtone",
       "url": "https://gatekeeper1.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?|https://gatekeeper2.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?",
       "params": {
-        "layers": "norges_grunnkart_graatone",
+        "layers": "topograatone",
         "format": "image/png"
       },
       "matrixprefix": "true",
-      "guid": "0.norges_grunnkart_graatone",
+      "guid": "0.topograatone",
       "options": {
         "isbaselayer": "true",
         "singletile": "false",
