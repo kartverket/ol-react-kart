@@ -1,4 +1,4 @@
-import produce from 'immer';
+import {produce} from 'immer';
 import create from 'zustand';
 
 import { ILayer, IMapLayer, IProject, IProjectList } from '../MapCore/Models/config-model';

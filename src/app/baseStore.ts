@@ -1,4 +1,4 @@
-import produce from 'immer';
+import {produce} from "immer"
 import create from 'zustand';
 
 import { IBaseConfig, IBaseLayers, IBaseMap, ILayer } from '../MapCore/Models/config-model';
@@ -196,14 +196,14 @@ export const useBaseLayersStore = create<IBaseLayers>(set => ({
       name: 'gratone',
       uuid: 'e84c9a6d-2297-4323-9078-36ac4b8e35e4',
       description: 'Viser topografiske kart som er ment som bakgrunnskart',
-      url: 'https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/|https://cache.kartverket.no/norges_grunnkart_graatone/v1/wmts/1.0.0/',
+      url: 'https://cache.kartverket.no/topograatone/v1/wmts/1.0.0/|https://cache.kartverket.no/topograatone/v1/wmts/1.0.0/',
       params: {
-        layers: 'norges_grunnkart_graatone',
+        layers: 'topograatone',
         format: 'image/png',
       },
       matrixprefix: false,
       matrixset: 'utm33n',
-      guid: '0.norges_grunnkart_graatone',
+      guid: '0.topograatone',
       options: {
         isbaselayer: true,
         singletile: false,
