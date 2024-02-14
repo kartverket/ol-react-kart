@@ -45,7 +45,7 @@ export const generateMapLinkServiceUrl = (config: {
   const height = encodeURIComponent(config.HEIGHT);
   const bbox = encodeURIComponent(config.BBOX);
 
-  return `${urlOpenWms}wms.topo4?service=${service}&request=${request}&CRS=${crs}&FORMAT=${format}&BGCOLOR=${bgcolor}&TRANSPARENT=${transparent}&LAYERS=${layers}&VERSION=${version}&WIDTH=${width}&HEIGHT=${height}&BBOX=${bbox}`;
+  return `${urlOpenWms}wms.topo?service=${service}&request=${request}&CRS=${crs}&FORMAT=${format}&BGCOLOR=${bgcolor}&TRANSPARENT=${transparent}&LAYERS=${layers}&VERSION=${version}&WIDTH=${width}&HEIGHT=${height}&BBOX=${bbox}`;
 };
 
 export const generateEmergencyPosterServiceUrl = (config: {
