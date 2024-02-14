@@ -69,7 +69,7 @@ export const generateEmergencyPosterServiceUrl = (config: {
   const posDez = encodeURIComponent(config.posDez);
   const map = encodeURIComponent(config.map);
 
-  return `${urlGeonorge}/fop/fop?locationName=${locationName}&position1=${position1}&position2=${position2}&street=${street}&place=${place}&matrikkel=${matrikkel}&utm=${utm}&posDez=${posDez}&map=${map}`;
+  return `${urlGeonorge}/fop2/fop?locationName=${locationName}&position1=${position1}&position2=${position2}&street=${street}&place=${place}&matrikkel=${matrikkel}&utm=${utm}&posDez=${posDez}&map=${map}`;
 };
 
 export const generateSearchMatrikkelAdresseUrl = (query: string | number | boolean) => {
